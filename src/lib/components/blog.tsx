@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import {
   useColorMode,
   Heading,
@@ -12,7 +11,7 @@ import { ArticleJsonLd } from 'next-seo';
 import type React from 'react';
 // import { useRouter } from "next/router";
 
-// import type { IPosts } from '../types/custom-types';
+import type { IPosts } from '../types/custom-types';
 
 import Container from './Container';
 
@@ -21,7 +20,7 @@ export default function BlogLayout({
   post,
 }: {
   children: React.ReactNode;
-  post: any;
+  post: IPosts;
 }) {
   const { colorMode } = useColorMode();
   const textColor = {
@@ -43,16 +42,13 @@ export default function BlogLayout({
     <Container>
       <ArticleJsonLd
         // eslint-disable-next-line
-        url={
-          'https://nextjs-chakra-mdx.vercel.app/blog/' +
-          post.metaInformation.slug
-        }
-        title={post.metaInformation.title}
+        url={'https://nextjs-chakra-mdx.vercel.app/blog/' + post.slug}
+        title={post.title}
         images={['']}
-        datePublished={parseDate(post.metaInformation.publishedAt)}
-        dateModified={parseDate(post.metaInformation.modifiedAt)}
+        datePublished={parseDate(post.publishedAt)}
+        dateModified={parseDate(post.modifiedAt)}
         authorName="Frank O"
-        description={post.metaInformation.summary}
+        description={post.summary}
       />
       <Stack
         as="article"
@@ -72,7 +68,7 @@ export default function BlogLayout({
           w="100%"
         >
           <Heading letterSpacing="tight" mb={2} as="h1" size="2xl">
-            {post.metaInformation.title}
+            {post.title}
           </Heading>
           <Flex
             justify="space-between"
@@ -91,11 +87,11 @@ export default function BlogLayout({
               />
               <Box fontSize="sm" color={textColor[colorMode]}>
                 {'Frank / '}
-                {parseDate(post.metaInformation.publishedAt)}
+                {parseDate(post.publishedAt)}
               </Box>
             </Flex>
             {/* <Text fontSize="sm" color="gray.500" minWidth="100px" mt={[2, 0]}>
-              {post.metaInformation.readingTime}
+              {post.readingTime}
             </Text> */}
           </Flex>
         </Flex>
