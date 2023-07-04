@@ -4,9 +4,9 @@ const defaultSEOConfig = {
   titleTemplate: "%s | nextarter-chakra",
   defaultTitle: "nextarter-chakra",
   description: "Next.js + chakra-ui + TypeScript template",
-  canonical: "https://nextarter-chakra.sznm.dev",
+  canonical: "https://nextjs-chakra-mdx.vercel.app/",
   openGraph: {
-    url: "https://nextarter-chakra.sznm.dev",
+    url: "https://nextjs-chakra-mdx.vercel.app/",
     title: "nextarter-chakra",
     description: "Next.js + chakra-ui + TypeScript template",
     images: [
