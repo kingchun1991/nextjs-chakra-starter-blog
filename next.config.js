@@ -1,19 +1,24 @@
-const withPWA = require("next-pwa")({
-  dest: "public",
-  disable:
-    process.env.NODE_ENV === "development" ||
-    process.env.NODE_ENV === "preview" ||
-    process.env.NODE_ENV === "production",
-  // delete two lines above to enable PWA in production deployment
-  // add your own icons to public/manifest.json
-  // to re-generate manifest.json, you can visit https://tomitm.github.io/appmanifest/
-});
+const withMDX = require('@next/mdx')({
+  extension: /\.mdx?$/,
+  options: {
+    remarkPlugins: [],
+    rehypePlugins: [],
+    providerImportSource: "@mdx-js/react",
+  },
+})
 
-/** @type {import('next').NextConfig} */
-module.exports = withPWA({
+const withPWA = require('next-pwa')({
+  dest: 'public',
+  disable: process.env.NODE_ENV === 'development' ||
+    process.env.NODE_ENV === 'preview' ||
+    process.env.NODE_ENV === 'production',
+})
+
+module.exports = withPWA(withMDX({
   swcMinify: true,
   reactStrictMode: true,
+  pageExtensions: ['ts', 'tsx', 'js', 'jsx', 'md', 'mdx'],
   eslint: {
-    dirs: ["src"],
+    dirs: ['src'],
   },
-});
+}))
