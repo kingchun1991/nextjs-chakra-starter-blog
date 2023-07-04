@@ -7,7 +7,7 @@ const OPEN_IN_GITHUB_TEXT = "Open in Github";
 
 test("should shown home page", async ({ page }) => {
   await page.goto(LOCAL_HOST_URL);
-  await expect(page.locator("h1")).toContainText("nextarter-chakra");
+  await expect(page.locator("h1")).toContainText("nextjs-chakra-mdx");
   await expect(
     page.locator("a", { hasText: USE_THIS_TEMPLATE_TEXT })
   ).toBeVisible();
@@ -26,7 +26,7 @@ test("click use this template should redirect to github generate project", async
 
   await newPage.waitForLoadState();
   expect(newPage.url()).toBe(
-    "https://github.com/sozonome/nextarter-chakra/generate"
+    "https://github.com/sozonome/nextjs-chakra-mdx/generate"
   );
 });
 
@@ -41,5 +41,5 @@ test("click use this template should redirect to github repo", async ({
   ]);
 
   await newPage.waitForLoadState();
-  expect(newPage.url()).toBe("https://github.com/sozonome/nextarter-chakra");
+  expect(newPage.url()).toBe("https://github.com/sozonome/nextjs-chakra-mdx");
 });
