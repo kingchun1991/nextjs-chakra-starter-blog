@@ -52,7 +52,11 @@ export default function BlogLayout({
           description: `${post.metaInformation.summary}`,
           images: [
             {
-              url: `https://og.sznm.dev/api/generate?heading=${post.metaInformation.title}&text=${post.metaInformation.summary}&template=plain&center=true`,
+              url: `https://og.sznm.dev/api/generate?heading=${encodeURIComponent(
+                post.metaInformation.title
+              )}&text=${encodeURIComponent(
+                post.metaInformation.summary
+              )}&template=plain&center=true`,
               alt: 'nextjs-chakra-mdx og-image',
             },
           ],
