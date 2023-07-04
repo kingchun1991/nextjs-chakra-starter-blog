@@ -42,7 +42,7 @@ export default function BlogLayout({
     <Container>
       <ArticleJsonLd
         // eslint-disable-next-line
-        url={'https://standingify.com/blog/' + post.slug}
+        url={'https://nextjs-chakra-mdx.vercel.app/blog/' + post.slug}
         title={post.title}
         images={['']}
         datePublished={parseDate(post.publishedAt)}
