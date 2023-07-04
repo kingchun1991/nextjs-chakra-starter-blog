@@ -41,7 +41,7 @@ const CTASection = () => {
       <Flex justifyContent="center" alignItems="center" gap={2}>
         <Button
           as="a"
-          href="https://github.com/sozonome/nextarter-chakra/generate"
+          href="https://github.com/kingchun1991/nextjs-chakra-mdx/generate"
           target="_blank"
           size="sm"
         >
