@@ -1,37 +1,23 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { MDXRemote } from 'next-mdx-remote';
 import { serialize } from 'next-mdx-remote/serialize';
-import { NextSeo } from 'next-seo';
 
 import { getFiles, getFileBySlug } from '../../data/mdx';
 import BlogLayout from '../../lib/components/blog';
 import MDXComponents from '../../lib/components/MDXComponents';
-// import type { IPosts } from '../../lib/types/custom-types';
+import type { IPosts } from '../../lib/types/custom-types';
 
 export default function Blog({
   mdxSource,
   post,
 }: {
   mdxSource: any;
-  post: any;
+  post: IPosts;
 }) {
   return (
-    <>
-      <NextSeo
-        title={post.metaInformation.title}
-        description=""
-        openGraph={{
-          type: 'website',
-          locale: 'en',
-          url: `https://nextjs-chakra-mdx.vercel.app/blog/${post.metaInformation.slug}`,
-          title: `${post.metaInformation.title}`,
-          description: '',
-        }}
-      />
-      <BlogLayout post={post}>
-        <MDXRemote {...mdxSource} components={MDXComponents} />
-      </BlogLayout>
-    </>
+    <BlogLayout post={post}>
+      <MDXRemote {...mdxSource} components={MDXComponents} />
+    </BlogLayout>
   );
 }
 

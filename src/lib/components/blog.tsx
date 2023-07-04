@@ -8,7 +8,7 @@ import {
   Box,
 } from '@chakra-ui/react';
 import { parseISO, format } from 'date-fns';
-import { ArticleJsonLd } from 'next-seo';
+import { ArticleJsonLd, NextSeo } from 'next-seo';
 import type React from 'react';
 // import { useRouter } from "next/router";
 
@@ -41,6 +41,23 @@ export default function BlogLayout({
   };
   return (
     <Container>
+      <NextSeo
+        title={post.metaInformation.title}
+        description=""
+        openGraph={{
+          type: 'website',
+          locale: 'en',
+          url: `https://nextjs-chakra-mdx.vercel.app/blog/${post.metaInformation.slug}`,
+          title: `${post.metaInformation.title}`,
+          description: `${post.metaInformation.summary}`,
+          images: [
+            {
+              url: `https://og.sznm.dev/api/generate?heading=${post.metaInformation.title}&text=${post.metaInformation.summary}&template=plain&center=true`,
+              alt: 'nextjs-chakra-mdx og-image',
+            },
+          ],
+        }}
+      />
       <ArticleJsonLd
         // eslint-disable-next-line
         url={`https://nextjs-chakra-mdx.vercel.app/blog/${post.metaInformation.slug}`}
