@@ -26,7 +26,7 @@ test("click use this template should redirect to github generate project", async
 
   await newPage.waitForLoadState();
   expect(newPage.url()).toBe(
-    "https://github.com/sozonome/nextjs-chakra-mdx/generate"
+    "https://github.com/kingchun1991/nextjs-chakra-mdx/generate"
   );
 });
 
@@ -41,5 +41,5 @@ test("click use this template should redirect to github repo", async ({
   ]);
 
   await newPage.waitForLoadState();
-  expect(newPage.url()).toBe("https://github.com/sozonome/nextjs-chakra-mdx");
+  expect(newPage.url()).toBe("https://github.com/kingchun1991/nextjs-chakra-mdx");
 });

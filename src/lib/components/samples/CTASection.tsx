@@ -1,7 +1,7 @@
 import { Box, Button, Flex, Image, Link } from '@chakra-ui/react';
 import { AiFillGithub } from 'react-icons/ai';
 
-const repoLink = 'https://github.com/sozonome/nextarter-chakra';
+const repoLink = 'https://github.com/kingchun1991/nextjs-chakra-mdx';
 
 const CTASection = () => {
   return (

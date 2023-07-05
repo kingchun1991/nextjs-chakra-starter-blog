@@ -1,13 +1,18 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import {
   Box,
-  Alert,
   Code,
   Heading,
   Link,
   Text,
   Divider,
   useColorMode,
+  Table,
+  Thead,
+  Tbody,
+  Tr,
+  Th,
+  Td,
 } from '@chakra-ui/react';
 // import { jsx } from "@emotion/react";
 import Image from 'next/image';
@@ -41,25 +46,19 @@ const CustomLink = (props: any) => {
 };
 
 const Quote = (props: any) => {
-  const { colorMode } = useColorMode();
-  const bgColor = {
-    light: 'blue.50',
-    dark: 'blue.900',
-  };
+  useColorMode();
 
   return (
-    <Alert
+    <Box
+      as="blockquote"
+      pl={4}
+      py={2}
+      borderLeft="4px solid"
+      borderColor="blue.500"
+      color="gray.600"
+      fontStyle="italic"
       mt={4}
-      w="98%"
-      bg={bgColor[colorMode]}
-      variant="left-accent"
-      status="info"
-      css={{
-        '> *:first-of-type': {
-          marginTop: 0,
-          marginLeft: 8,
-        },
-      }}
+      mb={4}
       {...props}
     />
   );
@@ -127,6 +126,21 @@ const Hr = () => {
   return <Divider borderColor={borderColor[colorMode]} my={4} w="100%" />;
 };
 
+const PreformattedCode = (props: any) => {
+  return (
+    <pre style={{ overflowX: 'scroll' }}>
+      <Code {...props} />
+    </pre>
+  );
+};
+
+const MDXTable = (props: any) => <Table {...props} />;
+const TableHead = (props: any) => <Thead {...props} />;
+const TableRow = (props: any) => <Tr {...props} />;
+const TableData = (props: any) => <Td {...props} />;
+const TableHeader = (props: any) => <Th {...props} />;
+const TableBody = (props: any) => <Tbody {...props} />;
+
 const MDXComponents = {
   // eslint-disable-next-line
   h1: (props: any) => <Heading as="h1" size="xl" my={4} {...props} />,
@@ -168,6 +182,13 @@ const MDXComponents = {
   image: CustomImage,
   hr: Hr,
   a: CustomLink,
+  pre: PreformattedCode,
+  table: MDXTable,
+  th: TableHead,
+  tr: TableRow,
+  td: TableData,
+  thead: TableHeader,
+  tbody: TableBody,
 };
 
 export { CustomLink };
