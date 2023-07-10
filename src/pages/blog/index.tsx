@@ -54,7 +54,7 @@ export default function Blog({ posts }: { posts: IPosts[] }) {
           px={4}
         >
           <Heading letterSpacing="tight" mb={4} as="h1" size="2xl">
-            Beginers Guides ({filteredBlogPosts.length} posts)
+            Blog ({filteredBlogPosts.length} posts)
           </Heading>
           <InputGroup mb={4} mr={4} w="100%">
             <Input
