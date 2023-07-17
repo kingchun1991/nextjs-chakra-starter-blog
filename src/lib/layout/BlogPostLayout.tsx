@@ -1,3 +1,5 @@
+'use client';
+
 import {
   Heading,
   Flex,
@@ -7,34 +9,36 @@ import {
   InputRightElement,
 } from '@chakra-ui/react';
 import dynamic from 'next/dynamic';
-import { useEffect, useState } from 'react';
+import { useState, useEffect } from 'react';
 
-import { getAllFilesFrontMatter } from '../../data/mdx';
-import type { IPosts } from '../../lib/types/custom-types';
+import type { IPosts } from '../types/custom-types';
 
-// import { SearchIcon } from "@chakra-ui/icons";
+const Container = dynamic(() => import('~/lib/components/Container'));
+const BlogPost = dynamic(() => import('~/lib/layout/BlogPost'));
 
-const BlogPost = dynamic(() => import('../../lib/layout/BlogPost'));
-const Container = dynamic(() => import('../../lib/components/Container'));
-
-export default function Blog({ posts }: { posts: IPosts[] }) {
+export default function BlogPostLayout({ posts }: { posts: IPosts[] }) {
   const [searchValue, setSearchValue] = useState('');
-  const filteredBlogPosts = posts
-    .sort(
-      (a: IPosts, b: IPosts) =>
-        Number(new Date(b.publishedAt)) - Number(new Date(a.publishedAt))
-    )
-    .filter((post: IPosts) =>
-      post?.title?.toLowerCase().includes(searchValue.toLowerCase())
-    );
   const [isClient, setIsClient] = useState(false);
+
   useEffect(() => {
     setIsClient(typeof window !== 'undefined');
   }, []);
 
+  const filteredBlogPosts = posts
+    .sort((a: IPosts, b: IPosts) =>
+      a.publishedAt && b.publishedAt
+        ? Number(new Date(b.publishedAt)) - Number(new Date(a.publishedAt))
+        : 0
+    )
+    .filter(
+      (post: IPosts) =>
+        post?.title?.toLowerCase().includes(searchValue.toLowerCase())
+    );
+
   if (!isClient) {
     return <div>Loading..</div>;
   }
+
   return (
     <Container>
       <Stack
@@ -68,15 +72,10 @@ export default function Blog({ posts }: { posts: IPosts[] }) {
           </InputGroup>
           {!filteredBlogPosts.length && 'No posts found :('}
           {filteredBlogPosts.map((post: IPosts) => (
-            <BlogPost key={post.title} {...post} />
+            <BlogPost key={post.title || ''} {...post} />
           ))}
         </Flex>
       </Stack>
     </Container>
   );
-}
-
-export async function getStaticProps() {
-  const posts: IPosts[] = await getAllFilesFrontMatter('blog');
-  return { props: { posts } };
 }

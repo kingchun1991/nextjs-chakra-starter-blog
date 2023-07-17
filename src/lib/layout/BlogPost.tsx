@@ -1,3 +1,5 @@
+'use client';
+
 import { useColorMode, Heading, Text, Flex, Box, Link } from '@chakra-ui/react';
 import { parseISO, format } from 'date-fns';
 import Image from 'next/image';

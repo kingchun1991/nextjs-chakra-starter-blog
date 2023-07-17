@@ -41,8 +41,18 @@ export async function getFileBySlug(type: string, slug: string) {
     : fs.readFileSync(path.join(root, 'data', `${type}.mdx`), 'utf8');
   const { data, content } = matter(source);
 
+  const newPost: IPosts = {
+    publishedAt: data.publishedAt,
+    modifiedAt: data.modifiedAt,
+    slug,
+    summary: data.summary,
+    title: data.title,
+    image: data.image,
+    category: data.category,
+  };
+
   return {
     mdx: content,
-    metaInformation: data,
+    metaInformation: newPost,
   };
 }
