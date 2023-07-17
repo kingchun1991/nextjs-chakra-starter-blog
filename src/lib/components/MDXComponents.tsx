@@ -1,3 +1,6 @@
+/* eslint-disable react/no-unstable-nested-components */
+/* eslint-disable react/destructuring-assignment */
+
 'use client';
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
@@ -15,8 +18,8 @@ import {
   Tr,
   Th,
   Td,
+  Alert,
 } from '@chakra-ui/react';
-// import { jsx } from "@emotion/react";
 import Image from 'next/image';
 import NextLink from 'next/link';
 
@@ -66,6 +69,17 @@ const Quote = (props: any) => {
   );
 };
 
+const CustomCallout = (props: any) => {
+  return (
+    <Alert status="success" {...props}>
+      <Box as="span" mr="2">
+        {props.icon}
+      </Box>
+      {props.children}
+    </Alert>
+  );
+};
+
 const DocsHeading = (props: any) => (
   <Heading
     css={{
@@ -88,32 +102,25 @@ const DocsHeading = (props: any) => (
     mt="2em"
   >
     <Box pointerEvents="auto">
-      {
-        // eslint-disable-next-line
-        props.children
-      }
-      {
-        // eslint-disable-next-line
-        props.id && (
-          <Box
-            aria-label="anchor"
-            as="a"
-            color="blue.500"
-            fontWeight="normal"
-            outline="none"
-            _focus={{
-              opacity: 1,
-              boxShadow: 'outline',
-            }}
-            opacity="0"
-            ml="0.375rem"
-            // eslint-disable-next-line
-            href={`#${props.id}`}
-          >
-            #
-          </Box>
-        )
-      }
+      {props.children}
+      {props.id && (
+        <Box
+          aria-label="anchor"
+          as="a"
+          color="blue.500"
+          fontWeight="normal"
+          outline="none"
+          _focus={{
+            opacity: 1,
+            boxShadow: 'outline',
+          }}
+          opacity="0"
+          ml="0.375rem"
+          href={`#${props.id}`}
+        >
+          #
+        </Box>
+      )}
     </Box>
   </Heading>
 );
@@ -144,41 +151,29 @@ const TableHeader = (props: any) => <Th {...props} />;
 const TableBody = (props: any) => <Tbody {...props} />;
 
 const MDXComponents = {
-  // eslint-disable-next-line
   h1: (props: any) => <Heading as="h1" size="xl" my={4} {...props} />,
-  // eslint-disable-next-line
   h2: (props: any) => (
     <DocsHeading as="h2" size="lg" fontWeight="bold" {...props} />
   ),
-  // eslint-disable-next-line
   h3: (props: any) => (
     <DocsHeading as="h3" size="md" fontWeight="bold" {...props} />
   ),
-  // eslint-disable-next-line
   h4: (props: any) => (
     <DocsHeading as="h4" size="sm" fontWeight="bold" {...props} />
   ),
-  // eslint-disable-next-line
   h5: (props: any) => (
     <DocsHeading as="h5" size="sm" fontWeight="bold" {...props} />
   ),
-  // eslint-disable-next-line
   h6: (props: any) => (
     <DocsHeading as="h6" size="xs" fontWeight="bold" {...props} />
   ),
-  // eslint-disable-next-line
   inlineCode: (props: any) => (
     <Code colorScheme="yellow" fontSize="0.84em" {...props} />
   ),
-  // eslint-disable-next-line
   br: (props: any) => <Box height="24px" {...props} />,
-  // eslint-disable-next-line
   p: (props: any) => <Text as="p" mt={0} lineHeight="tall" {...props} />,
-  // eslint-disable-next-line
   ul: (props: any) => <Box as="ul" pt={2} pl={4} ml={2} {...props} />,
-  // eslint-disable-next-line
   ol: (props: any) => <Box as="ol" pt={2} pl={4} ml={2} {...props} />,
-  // eslint-disable-next-line
   li: (props: any) => <Box as="li" pb={1} {...props} />,
   blockquote: Quote,
   image: CustomImage,
@@ -191,6 +186,7 @@ const MDXComponents = {
   td: TableData,
   thead: TableHeader,
   tbody: TableBody,
+  CustomCallout,
 };
 
 export { CustomLink };
