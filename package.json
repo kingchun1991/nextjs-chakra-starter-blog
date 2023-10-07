@@ -22,7 +22,7 @@
     "prepare": "husky install"
   },
   "dependencies": {
-    "@chakra-ui/next-js": "^2.1.4",
+    "@chakra-ui/next-js": "^2.1.5",
     "@chakra-ui/react": "2.8.2",
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",
@@ -32,34 +32,34 @@
     "fs": "0.0.2",
     "gray-matter": "^4.0.3",
     "next-mdx-remote": "^4.4.1",
-    "framer-motion": "^10.12.21",
+    "framer-motion": "^10.16.4",
     "next": "13.5.6",
     "next-pwa": "^5.6.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-icons": "^4.10.1"
+    "react-icons": "^4.11.0"
   },
   "devDependencies": {
     "@commitlint/cli": "^18.4.2",
-    "@commitlint/config-conventional": "^17.6.6",
+    "@commitlint/config-conventional": "^17.7.0",
     "@commitlint/cz-commitlint": "^18.4.2",
-    "@playwright/test": "^1.36.1",
-    "@types/react": "^18.2.15",
+    "@playwright/test": "^1.38.1",
+    "@types/react": "^18.2.25",
     "commitizen": "^4.3.0",
     "cross-env": "^7.0.3",
-    "eslint": "^8.45.0",
-    "eslint-config-next": "^13.4.10",
+    "eslint": "^8.51.0",
+    "eslint-config-next": "^13.5.4",
     "eslint-config-sznm": "^2.0.2",
     "husky": "^8.0.3",
     "lint-staged": "^15.1.0",
-    "next-sitemap": "^4.1.8",
-    "prettier": "^3.0.0",
+    "next-sitemap": "^4.2.3",
+    "prettier": "^3.0.3",
     "standard-version": "^9.5.0",
-    "typescript": "^5.1.6"
+    "typescript": "^5.2.2"
   },
   "engines": {
     "node": ">=16.x.x",
     "pnpm": ">=8"
   },
-  "packageManager": "pnpm@8.1.0"
+  "packageManager": "pnpm@8.8.0"
 }
