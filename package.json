@@ -40,7 +40,7 @@
     "react-icons": "^4.10.1"
   },
   "devDependencies": {
-    "@commitlint/cli": "^17.6.7",
+    "@commitlint/cli": "^18.4.0",
     "@commitlint/config-conventional": "^17.6.6",
     "@commitlint/cz-commitlint": "^17.5.0",
     "@playwright/test": "^1.36.1",
