@@ -29,7 +29,7 @@
     "@mdx-js/loader": "^2.3.0",
     "@next/mdx": "^13.4.10",
     "date-fns": "^2.30.0",
-    "fs": "0.0.1-security",
+    "fs": "0.0.2",
     "gray-matter": "^4.0.3",
     "next-mdx-remote": "^4.4.1",
     "framer-motion": "^10.12.21",
