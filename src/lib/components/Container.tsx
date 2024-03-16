@@ -6,7 +6,7 @@ const Container = ({ children }: { children: React.ReactNode }) => {
 
   const bgColor = {
     light: 'white',
-    dark: '#171717',
+    dark: 'dark.500',
   };
 
   const color = {
