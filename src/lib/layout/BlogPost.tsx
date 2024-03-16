@@ -1,8 +1,15 @@
 'use client';
 
-import { useColorMode, Heading, Text, Flex, Box, Link } from '@chakra-ui/react';
+import {
+  useColorMode,
+  Heading,
+  Text,
+  Flex,
+  Box,
+  Link,
+  Image,
+} from '@chakra-ui/react';
 import { parseISO, format } from 'date-fns';
-import Image from 'next/image';
 import NextLink from 'next/link';
 
 const BlogPost = ({
@@ -52,7 +59,7 @@ const BlogPost = ({
               justifyContent="start"
               width="100%"
             >
-              <Image src={imgPath} width={1000} height={600} alt="image" />
+              <Image src={imgPath} width={1000} height={400} alt="image" />
               <Heading size="md" as="h3" mb={1} fontWeight="medium">
                 {title}
               </Heading>
