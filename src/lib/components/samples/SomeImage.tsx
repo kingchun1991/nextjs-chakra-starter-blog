@@ -12,6 +12,7 @@ const SomeImage = () => {
       <HelperImage src={`/nextjs-icon-${colorMode}.svg`} label="NextJS" />
       <HelperImage src="/chakra-ui-logomark-colored.svg" label="Chakra UI" />
       <HelperImage src="/ts-logo-512.svg" label="TypeScript" />
+      <HelperImage src="/mdx-icon.svg" label="MDX" />
     </Flex>
   );
 };
