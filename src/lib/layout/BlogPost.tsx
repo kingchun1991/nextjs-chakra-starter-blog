@@ -32,7 +32,11 @@ const BlogPost = ({
 }) => {
   const { colorMode } = useColorMode();
 
-  const imgPath = `/images/${image}`;
+  const imgPath = image
+    ? `/images/${image}`
+    : `https://og.sznm.dev/api/generate?heading=${encodeURIComponent(
+        title
+      )}&text=${encodeURIComponent(summary)}&template=plain&center=true`;
 
   const secondaryTextColor = {
     light: 'gray.700',
