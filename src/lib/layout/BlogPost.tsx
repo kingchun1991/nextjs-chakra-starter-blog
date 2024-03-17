@@ -59,7 +59,9 @@ const BlogPost = ({
               justifyContent="start"
               width="100%"
             >
-              <Image src={imgPath} width={1000} height={400} alt="image" />
+              <Box maxWidth={1000}>
+                <Image src={imgPath} width="100%" height="auto" alt="image" />
+              </Box>
               <Heading size="md" as="h3" mb={1} fontWeight="medium">
                 {title}
               </Heading>

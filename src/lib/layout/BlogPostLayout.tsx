@@ -1,3 +1,5 @@
+/* eslint-disable import/no-duplicates */
+
 'use client';
 
 import {
@@ -7,6 +9,9 @@ import {
   Input,
   InputGroup,
   InputRightElement,
+  BreadcrumbLink,
+  Breadcrumb,
+  BreadcrumbItem,
 } from '@chakra-ui/react';
 import dynamic from 'next/dynamic';
 import { useState, useEffect } from 'react';
@@ -57,6 +62,14 @@ export default function BlogPostLayout({ posts }: { posts: IPosts[] }) {
           height="100%"
           px={4}
         >
+          <Breadcrumb>
+            <BreadcrumbItem>
+              <BreadcrumbLink href="/">Home</BreadcrumbLink>
+            </BreadcrumbItem>
+            <BreadcrumbItem isCurrentPage>
+              <BreadcrumbLink href="#">Blog</BreadcrumbLink>
+            </BreadcrumbItem>
+          </Breadcrumb>
           <Heading letterSpacing="tight" mb={4} as="h1" size="2xl">
             Blog ({filteredBlogPosts.length} posts)
           </Heading>
