@@ -13,6 +13,7 @@ export interface IFrontMatter {
   summary: string;
   title: string;
   wordCount: number;
+  draft: boolean;
 }
 
 export interface IPosts {
@@ -23,4 +24,5 @@ export interface IPosts {
   title: string;
   image: string;
   category: string;
+  draft: boolean;
 }

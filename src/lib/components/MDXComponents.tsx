@@ -23,6 +23,15 @@ import {
 import Image from 'next/image';
 import NextLink from 'next/link';
 
+import ProductSimple from './Card';
+
+const ProductCard = (props: any) => {
+  const { imgsrc, title, price, url } = props;
+  return (
+    <ProductSimple imgsrc={imgsrc} title={title} price={price} url={url} />
+  );
+};
+
 const CustomImage = (props: any) => {
   const { width, height, src, alt } = props;
   return <Image width={width} height={height} src={src} alt={alt} />;
@@ -187,6 +196,7 @@ const MDXComponents = {
   thead: TableHeader,
   tbody: TableBody,
   CustomCallout,
+  card: (props: any) => ProductCard(props),
 };
 
 export { CustomLink };

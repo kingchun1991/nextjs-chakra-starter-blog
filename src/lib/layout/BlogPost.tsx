@@ -20,6 +20,7 @@ const BlogPost = ({
   slug,
   image,
   category,
+  draft,
 }: {
   title: string;
   publishedAt: string;
@@ -29,6 +30,7 @@ const BlogPost = ({
   slug: string;
   image: string;
   category: string;
+  draft: boolean;
 }) => {
   const { colorMode } = useColorMode();
 
@@ -46,6 +48,11 @@ const BlogPost = ({
   if (!summary || !title) {
     return <div>Loading...</div>;
   }
+
+  if (draft) {
+    return null;
+  }
+
   return (
     <NextLink href={`/${category}/${slug}`} passHref>
       <Link w="100%" _hover={{ textDecoration: 'none' }}>

@@ -29,6 +29,7 @@ export async function getAllFilesFrontMatter(type: string) {
       title: data.title,
       image: data.image,
       category: data.category,
+      draft: data.draft,
     };
 
     return [...allPosts, newPost];
@@ -49,6 +50,7 @@ export async function getFileBySlug(type: string, slug: string) {
     title: data.title,
     image: data.image,
     category: data.category,
+    draft: data.draft,
   };
 
   return {

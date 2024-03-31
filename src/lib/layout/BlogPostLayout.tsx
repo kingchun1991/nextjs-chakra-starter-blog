@@ -46,49 +46,56 @@ export default function BlogPostLayout({ posts }: { posts: IPosts[] }) {
 
   return (
     <Container>
-      <Stack
+      <Flex
         as="main"
-        spacing={8}
+        flexDirection="column"
         justifyContent="center"
-        alignItems="flex-start"
+        alignItems="center"
         m="0 auto 4rem auto"
         maxWidth="auto"
       >
-        <Flex
-          flexDirection="column"
-          justifyContent="flex-start"
+        <Stack
+          spacing={8}
+          justifyContent="center"
           alignItems="flex-start"
           maxWidth="auto"
-          height="100%"
-          px={4}
         >
-          <Breadcrumb>
-            <BreadcrumbItem>
-              <BreadcrumbLink href="/">Home</BreadcrumbLink>
-            </BreadcrumbItem>
-            <BreadcrumbItem isCurrentPage>
-              <BreadcrumbLink href="#">Blog</BreadcrumbLink>
-            </BreadcrumbItem>
-          </Breadcrumb>
-          <Heading letterSpacing="tight" mb={4} as="h1" size="2xl">
-            Blog ({filteredBlogPosts.length} posts)
-          </Heading>
-          <InputGroup mb={4} mr={4} w="100%">
-            <Input
-              aria-label="Search by title"
-              placeholder="Search by title"
-              onChange={(e) => setSearchValue(e.target.value)}
-            />
-            <InputRightElement>
-              {/* <SearchIcon color="gray.300" /> */}
-            </InputRightElement>
-          </InputGroup>
-          {!filteredBlogPosts.length && 'No posts found :('}
-          {filteredBlogPosts.map((post: IPosts) => (
-            <BlogPost key={post.title || ''} {...post} />
-          ))}
-        </Flex>
-      </Stack>
+          <Flex
+            flexDirection="column"
+            justifyContent="flex-start"
+            alignItems="flex-start"
+            maxWidth="auto"
+            height="100%"
+            px={4}
+          >
+            <Heading letterSpacing="tight" mb={4} as="h1" size="xl">
+              Blog ({filteredBlogPosts.length} posts)
+            </Heading>
+            <Breadcrumb>
+              <BreadcrumbItem>
+                <BreadcrumbLink href="/">Home</BreadcrumbLink>
+              </BreadcrumbItem>
+              <BreadcrumbItem isCurrentPage>
+                <BreadcrumbLink href="#">Blog</BreadcrumbLink>
+              </BreadcrumbItem>
+            </Breadcrumb>
+            <InputGroup mb={4} mr={4} w="100%">
+              <Input
+                aria-label="Search by title"
+                placeholder="Search by title"
+                onChange={(e) => setSearchValue(e.target.value)}
+              />
+              <InputRightElement>
+                {/* <SearchIcon color="gray.300" /> */}
+              </InputRightElement>
+            </InputGroup>
+            {!filteredBlogPosts.length && 'No posts found :('}
+            {filteredBlogPosts.map((post: IPosts) => (
+              <BlogPost key={post.title || ''} {...post} />
+            ))}
+          </Flex>
+        </Stack>
+      </Flex>
     </Container>
   );
 }
