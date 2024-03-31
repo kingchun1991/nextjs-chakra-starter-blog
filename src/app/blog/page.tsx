@@ -1,8 +1,8 @@
 import type { Metadata } from 'next';
 
-import { getAllFilesFrontMatter } from '../../data/mdx';
-import type { IPosts } from '../../lib/types/custom-types';
-import BlogPostLayout from '~/lib/layout/BlogPostLayout';
+import { getAllFilesFrontMatter } from '../../lib/utils/mdx';
+import BlogPostLayout from 'lib/layout/BlogPostLayout';
+import type { IPosts } from 'lib/types/custom-types';
 
 export const metadata: Metadata = {
   title: 'Blog',

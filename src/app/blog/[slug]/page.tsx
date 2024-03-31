@@ -4,8 +4,8 @@ import { serialize } from 'next-mdx-remote/serialize';
 
 import BlogLayout from 'lib/components/blog';
 import { baseUrl } from 'lib/constants/baseUrl';
-import { getFiles, getFileBySlug } from '~/data/mdx';
-import type { IPosts } from '~/lib/types/custom-types';
+import type { IPosts } from 'lib/types/custom-types';
+import { getFiles, getFileBySlug } from 'lib/utils/mdx';
 
 type Props = {
   params: { slug: string };
