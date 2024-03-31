@@ -4,7 +4,7 @@ const Footer = () => {
   return (
     <Flex as="footer" width="full" justifyContent="center">
       <Text fontSize="sm">
-        {new Date().getFullYear()} -{' '}
+        2022 - {new Date().getFullYear()}{' '}
         <Link
           href="https://nextjs-chakra-mdx.vercel.app/"
           isExternal

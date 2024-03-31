@@ -8,6 +8,7 @@ import {
   Box,
   Link,
   Image,
+  Avatar,
 } from '@chakra-ui/react';
 import { parseISO, format } from 'date-fns';
 import NextLink from 'next/link';
@@ -21,6 +22,7 @@ const BlogPost = ({
   image,
   category,
   draft,
+  author,
 }: {
   title: string;
   publishedAt: string;
@@ -31,6 +33,7 @@ const BlogPost = ({
   image: string;
   category: string;
   draft: boolean;
+  author: string;
 }) => {
   const { colorMode } = useColorMode();
 
@@ -52,6 +55,19 @@ const BlogPost = ({
   if (draft) {
     return null;
   }
+
+  const textColor = {
+    light: 'gray.700',
+    dark: 'gray.400',
+  };
+  const dateFormat = 'MMMM dd, yyyy';
+  const parseDate = (dateString: string) => {
+    try {
+      return format(parseISO(dateString), dateFormat);
+    } catch (error) {
+      return '';
+    }
+  };
 
   return (
     <NextLink href={`/${category}/${slug}`} passHref>
@@ -79,9 +95,19 @@ const BlogPost = ({
             </Flex>
           </Flex>
           <Text color={secondaryTextColor[colorMode]}>{summary}</Text>
-          <Text color="gray.500" minWidth="140px" textAlign="left" mb={4}>
-            {format(parseISO(publishedAt), 'MMMM dd, yyyy')}
-          </Text>
+          <Flex align="center">
+            <Avatar
+              size="xs"
+              name={author}
+              src="../images/portrait.jpeg"
+              mr={2}
+            />
+            <Box fontSize="sm" color={textColor[colorMode]}>
+              {author}
+              {' / '}
+              {parseDate(publishedAt)}
+            </Box>
+          </Flex>
         </Box>
       </Link>
     </NextLink>

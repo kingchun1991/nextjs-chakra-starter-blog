@@ -74,12 +74,13 @@ export default function BlogLayout({
             <Flex align="center">
               <Avatar
                 size="xs"
-                name="Frank"
+                name={post.author}
                 src="../images/portrait.jpeg"
                 mr={2}
               />
               <Box fontSize="sm" color={textColor[colorMode]}>
-                {'Frank / '}
+                {post.author}
+                {' / '}
                 {parseDate(post.publishedAt)}
               </Box>
             </Flex>
