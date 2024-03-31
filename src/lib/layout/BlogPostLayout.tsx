@@ -30,6 +30,7 @@ export default function BlogPostLayout({ posts }: { posts: IPosts[] }) {
   }, []);
 
   const filteredBlogPosts = posts
+    .filter((post: IPosts) => !post.draft)
     .sort((a: IPosts, b: IPosts) =>
       a.publishedAt && b.publishedAt
         ? Number(new Date(b.publishedAt)) - Number(new Date(a.publishedAt))
