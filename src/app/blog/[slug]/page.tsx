@@ -2,8 +2,9 @@
 import type { Metadata } from 'next';
 import { serialize } from 'next-mdx-remote/serialize';
 
+import BlogLayout from 'lib/components/blog';
+import { baseUrl } from 'lib/constants/baseUrl';
 import { getFiles, getFileBySlug } from '~/data/mdx';
-import BlogLayout from '~/lib/components/blog';
 import type { IPosts } from '~/lib/types/custom-types';
 
 type Props = {
@@ -39,12 +40,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     openGraph: {
       type: 'website',
       locale: 'en',
-      url: `https://nextjs-chakra-mdx.vercel.app/blog/${metaInformation.slug}`,
+      url: `${baseUrl}/${metaInformation.slug}`,
       title: `${metaInformation.title}`,
       description: `${metaInformation.summary}`,
       images: [
         {
-          url: `https://og.sznm.dev/api/generate?heading=${encodeURIComponent(
+          url: `${baseUrl}/api/og/cover?heading=${encodeURIComponent(
             metaInformation.title
           )}&text=${encodeURIComponent(
             metaInformation.summary
@@ -58,7 +59,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       title: metaInformation.title,
       description: metaInformation.summary,
       images: [
-        `https://og.sznm.dev/api/generate?heading=${encodeURIComponent(
+        `${baseUrl}/api/og/cover?heading=${encodeURIComponent(
           metaInformation.title
         )}&text=${encodeURIComponent(
           metaInformation.summary

@@ -5,15 +5,13 @@ import type { NextRequest } from 'next/server';
 import TemplateSwitcher from 'lib/components/image-templates/TemplateWrapper';
 import { outfitBold, outfitMedium } from 'lib/utils/font/outfit';
 
-export const config = {
-  runtime: 'edge',
-};
+export const runtime = 'edge';
 
-export default async function handler(req: NextRequest) {
+export const GET = async (request: NextRequest) => {
   const outfitMediumFontData = await outfitMedium;
   const outfitBoldFontData = await outfitBold;
 
-  const { searchParams } = new URL(req.url);
+  const { searchParams } = request.nextUrl;
   const heading = searchParams.get('heading')?.slice(0, 100);
   const text = searchParams.get('text')?.slice(0, 200);
   const template = searchParams.get('template')?.slice(0, 200);
@@ -38,4 +36,4 @@ export default async function handler(req: NextRequest) {
       },
     ],
   });
-}
+};

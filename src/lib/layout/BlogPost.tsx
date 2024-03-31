@@ -13,6 +13,8 @@ import {
 import { parseISO, format } from 'date-fns';
 import NextLink from 'next/link';
 
+import { baseUrl } from '../constants/baseUrl';
+
 const BlogPost = ({
   title,
   publishedAt,
@@ -39,7 +41,7 @@ const BlogPost = ({
 
   const imgPath = image
     ? `/images/${image}`
-    : `https://og.sznm.dev/api/generate?heading=${encodeURIComponent(
+    : `${baseUrl}/api/og/cover?heading=${encodeURIComponent(
         title
       )}&text=${encodeURIComponent(summary)}&template=plain&center=true`;
 
