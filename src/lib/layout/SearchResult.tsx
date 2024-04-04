@@ -11,6 +11,7 @@ import {
   Highlight,
   Flex,
   Heading,
+  useBreakpointValue,
 } from '@chakra-ui/react';
 import { FaRegFileAlt, FaTags } from 'react-icons/fa';
 
@@ -173,8 +174,8 @@ const SearchResult = ({
                               )}&template=plain&center=true`
                         }
                         alt={item.frontmatter.title}
-                        width={160}
-                        height={100}
+                        width={useBreakpointValue({ base: '100', md: '160' })}
+                        height={useBreakpointValue({ base: '100', md: '100' })}
                       />
                     </Box>
 
@@ -237,7 +238,7 @@ const SearchResult = ({
               </Box>
             ))
           ) : (
-            <Box className="search-result-empty">
+            <Box className="search-result-empty" textAlign="center" p={8}>
               <Icon as={FaRegFileAlt} boxSize="42px" />
               <Text className="mt-4">
                 No results for &quot;<strong>{searchString}</strong>&quot;
