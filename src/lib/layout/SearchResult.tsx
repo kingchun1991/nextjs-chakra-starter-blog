@@ -5,17 +5,14 @@ import {
   Box,
   Text,
   Link,
-  Image,
   HStack,
   Icon,
   Highlight,
   Flex,
   Heading,
-  useBreakpointValue,
 } from '@chakra-ui/react';
 import { FaRegFileAlt, FaTags } from 'react-icons/fa';
 
-import { baseUrl } from '../constants/baseUrl';
 import { plainify, titleify } from 'lib/utils/textConverter';
 
 export interface ISearchItem {
@@ -162,7 +159,7 @@ const SearchResult = ({
                     m={2}
                     gap="2"
                   >
-                    <Box className="search-result-item-image" flex="1">
+                    {/* <Box className="search-result-item-image" flex="1">
                       <Image
                         src={
                           item.frontmatter.image
@@ -177,7 +174,7 @@ const SearchResult = ({
                         width={useBreakpointValue({ base: '100', md: '160' })}
                         height={useBreakpointValue({ base: '100', md: '100' })}
                       />
-                    </Box>
+                    </Box> */}
 
                     <Box className="search-result-item-body" flex="3">
                       <Link
