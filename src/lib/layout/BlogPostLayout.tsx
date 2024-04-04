@@ -2,17 +2,11 @@
 
 'use client';
 
-import {
-  Heading,
-  Flex,
-  Stack,
-  BreadcrumbLink,
-  Breadcrumb,
-  BreadcrumbItem,
-} from '@chakra-ui/react';
+import { Flex, Stack } from '@chakra-ui/react';
 import dynamic from 'next/dynamic';
 import { useState, useEffect } from 'react';
 
+import Hero from '../components/Hero';
 import type { IPosts } from '../types/custom-types';
 
 const Container = dynamic(() => import('~/lib/components/Container'));
@@ -47,6 +41,7 @@ export default function BlogPostLayout({ posts }: { posts: IPosts[] }) {
         m="0 auto 4rem auto"
         maxWidth="auto"
       >
+        <Hero title="Blog" />
         <Stack
           spacing={8}
           justifyContent="center"
@@ -61,17 +56,6 @@ export default function BlogPostLayout({ posts }: { posts: IPosts[] }) {
             height="100%"
             px={4}
           >
-            <Heading letterSpacing="tight" mb={4} as="h1" size="xl">
-              Blog ({filteredBlogPosts.length} posts)
-            </Heading>
-            <Breadcrumb>
-              <BreadcrumbItem>
-                <BreadcrumbLink href="/">Home</BreadcrumbLink>
-              </BreadcrumbItem>
-              <BreadcrumbItem isCurrentPage>
-                <BreadcrumbLink href="#">Blog</BreadcrumbLink>
-              </BreadcrumbItem>
-            </Breadcrumb>
             {!filteredBlogPosts.length && 'No posts found :('}
             {filteredBlogPosts.map((post: IPosts) => (
               <BlogPost key={post.title || ''} {...post} />
