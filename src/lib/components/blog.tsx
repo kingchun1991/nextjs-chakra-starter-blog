@@ -14,6 +14,7 @@ import { MDXRemote } from 'next-mdx-remote';
 import type { MDXRemoteSerializeResult } from 'next-mdx-remote';
 
 import type { IPosts } from '../types/custom-types';
+// import similerItems from '../utils/similarItems';
 import MDXComponents from '~/lib/components/MDXComponents';
 // import { useRouter } from "next/router";
 
@@ -41,6 +42,7 @@ export default function BlogLayout({
       return '';
     }
   };
+  // const similarPosts = similerItems(post, posts, post.slug!);
   return (
     <Container>
       <Stack

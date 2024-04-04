@@ -196,7 +196,7 @@ const MDXComponents = {
   thead: TableHeader,
   tbody: TableBody,
   CustomCallout,
-  card: (props: any) => ProductCard(props),
+  ProductCard: (props: any) => ProductCard(props),
 };
 
 export { CustomLink };

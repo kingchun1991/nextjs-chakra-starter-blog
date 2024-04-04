@@ -11,11 +11,10 @@ import {
   Image,
   Button,
 } from '@chakra-ui/react';
-import { useRouter } from 'next/router';
 
 export default function ProductSimple(props: any) {
   const data = props;
-  const router = useRouter();
+
   return (
     <Center py={12}>
       <Box
@@ -69,7 +68,7 @@ export default function ProductSimple(props: any) {
               size="md"
               border="2px"
               borderColor="dark.500"
-              onClick={() => router.push(data.url)}
+              onClick={() => window.open(data.url, '_blank')}
             >
               <Text fontWeight={800} fontSize="xl">
                 {data.price} from Amazon
