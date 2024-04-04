@@ -51,3 +51,5 @@ sitemap*.xml
 # VS Code
 .vscode/settings.json
 .env
+.json/posts.json
+.json/search.json

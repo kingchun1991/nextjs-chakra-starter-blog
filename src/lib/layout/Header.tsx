@@ -19,6 +19,7 @@ import { FiChevronDown, FiChevronRight } from 'react-icons/fi';
 import { GiHamburgerMenu } from 'react-icons/gi';
 
 // import Link from "next/link";
+import SearchModal from './SearchModal';
 import ThemeToggle from './ThemeToggle';
 
 interface NavItem {
@@ -233,6 +234,7 @@ const Header = () => {
           direction="row"
           spacing={6}
         >
+          <SearchModal />
           <ThemeToggle />
         </Stack>
       </Flex>

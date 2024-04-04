@@ -6,9 +6,6 @@ import {
   Heading,
   Flex,
   Stack,
-  Input,
-  InputGroup,
-  InputRightElement,
   BreadcrumbLink,
   Breadcrumb,
   BreadcrumbItem,
@@ -22,7 +19,6 @@ const Container = dynamic(() => import('~/lib/components/Container'));
 const BlogPost = dynamic(() => import('~/lib/layout/BlogPost'));
 
 export default function BlogPostLayout({ posts }: { posts: IPosts[] }) {
-  const [searchValue, setSearchValue] = useState('');
   const [isClient, setIsClient] = useState(false);
 
   useEffect(() => {
@@ -35,10 +31,6 @@ export default function BlogPostLayout({ posts }: { posts: IPosts[] }) {
       a.publishedAt && b.publishedAt
         ? Number(new Date(b.publishedAt)) - Number(new Date(a.publishedAt))
         : 0
-    )
-    .filter(
-      (post: IPosts) =>
-        post?.title?.toLowerCase().includes(searchValue.toLowerCase())
     );
 
   if (!isClient) {
@@ -80,16 +72,6 @@ export default function BlogPostLayout({ posts }: { posts: IPosts[] }) {
                 <BreadcrumbLink href="#">Blog</BreadcrumbLink>
               </BreadcrumbItem>
             </Breadcrumb>
-            <InputGroup mb={4} mr={4} w="100%">
-              <Input
-                aria-label="Search by title"
-                placeholder="Search by title"
-                onChange={(e) => setSearchValue(e.target.value)}
-              />
-              <InputRightElement>
-                {/* <SearchIcon color="gray.300" /> */}
-              </InputRightElement>
-            </InputGroup>
             {!filteredBlogPosts.length && 'No posts found :('}
             {filteredBlogPosts.map((post: IPosts) => (
               <BlogPost key={post.title || ''} {...post} />

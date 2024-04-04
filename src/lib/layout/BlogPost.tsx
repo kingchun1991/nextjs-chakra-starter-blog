@@ -40,7 +40,7 @@ const BlogPost = ({
   const { colorMode } = useColorMode();
 
   const imgPath = image
-    ? `/images/${image}`
+    ? `${image}`
     : `${baseUrl}/api/og/cover?heading=${encodeURIComponent(
         title
       )}&text=${encodeURIComponent(summary)}&template=plain&center=true`;
