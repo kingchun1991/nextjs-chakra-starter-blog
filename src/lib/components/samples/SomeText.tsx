@@ -4,7 +4,7 @@ const SomeText = () => {
   return (
     <Grid textAlign="center">
       <Heading as="h1" size="lg">
-        nextjs-chakra-mdx
+        nextjs-chakra-starter-blog
       </Heading>
 
       <Text fontSize="xs">

@@ -9,13 +9,13 @@ export const metadata: Metadata = {
   description:
     'The is the description of blog from Static Metadata: https://nextjs.org/docs/app/building-your-application/optimizing/metadata#default-fields',
   openGraph: {
-    url: 'https://nextjs-chakra-mdx.vercel.app/blog',
-    title: 'Blog | nextjs-chakra-mdx',
+    url: 'https://nextjs-chakra-starter-blog.vercel.app/blog',
+    title: 'Blog | nextjs-chakra-starter-blog',
     description:
       'The is the description of blog from Static Metadata: https://nextjs.org/docs/app/building-your-application/optimizing/metadata#default-fields',
     images: {
-      url: 'https://og-image.sznm.dev/Blog.png?theme=dark&md=1&fontSize=100px&images=https%3A%2F%2Fassets.vercel.com%2Fimage%2Fupload%2Ffront%2Fassets%2Fdesign%2Fnextjs-white-logo.svg',
-      alt: 'nextjs-chakra-mdx og-image',
+      url: 'https://nextjs-chakra-starter-blog.vercel.app/api/og/cover?heading=Blog%20|%20nextjs-chakra-starter-blog&template=plain&center=true',
+      alt: 'Blog | nextjs-chakra-starter-blog og-image',
     },
   },
 };

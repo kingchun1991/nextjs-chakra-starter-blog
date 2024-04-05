@@ -50,7 +50,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
           )}&text=${encodeURIComponent(
             metaInformation.summary
           )}&template=plain&center=true`,
-          alt: 'nextjs-chakra-mdx og-image',
+          alt: 'nextjs-chakra-starter-blog og-image',
         },
       ],
     },

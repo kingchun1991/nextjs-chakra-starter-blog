@@ -6,11 +6,11 @@ const Footer = () => {
       <Text fontSize="sm">
         2022 - {new Date().getFullYear()}{' '}
         <Link
-          href="https://nextjs-chakra-mdx.vercel.app/"
+          href="https://nextjs-chakra-starter-blog.vercel.app/"
           isExternal
           rel="noopener noreferrer"
         >
-          nextjs-chakra-mdx
+          nextjs-chakra-starter-blog
         </Link>
       </Text>
     </Flex>

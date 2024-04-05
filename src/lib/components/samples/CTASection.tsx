@@ -1,7 +1,7 @@
 import { Box, Button, Flex, Image, Link } from '@chakra-ui/react';
 import { AiFillGithub } from 'react-icons/ai';
 
-const repoLink = 'https://github.com/kingchun1991/nextjs-chakra-mdx';
+const repoLink = 'https://github.com/kingchun1991/nextjs-chakra-starter-blog';
 
 const CTASection = () => {
   return (
@@ -39,7 +39,7 @@ const CTASection = () => {
       <Flex justifyContent="center" alignItems="center" gap={2}>
         <Button
           as="a"
-          href="https://github.com/kingchun1991/nextjs-chakra-mdx/generate"
+          href="https://github.com/kingchun1991/nextjs-chakra-starter-blog/generate"
           target="_blank"
           size="sm"
         >

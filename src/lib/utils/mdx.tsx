@@ -7,15 +7,15 @@ import type { IPosts } from '../types/custom-types';
 const root = process.cwd();
 
 export async function getFiles(type: string) {
-  return fs.readdirSync(path.join(root, 'data', type));
+  return fs.readdirSync(path.join(root, 'content', type));
 }
 
 export async function getAllFilesFrontMatter(type: string) {
-  const files = fs.readdirSync(path.join(root, 'data', type));
+  const files = fs.readdirSync(path.join(root, 'content', type));
 
   return files.reduce((allPosts: IPosts[], postSlug: string) => {
     const source = fs.readFileSync(
-      path.join(root, 'data', type, postSlug),
+      path.join(root, 'content', type, postSlug),
       'utf8'
     );
 
@@ -39,8 +39,8 @@ export async function getAllFilesFrontMatter(type: string) {
 
 export async function getFileBySlug(type: string, slug: string) {
   const source = slug
-    ? fs.readFileSync(path.join(root, 'data', type, `${slug}.mdx`), 'utf8')
-    : fs.readFileSync(path.join(root, 'data', `${type}.mdx`), 'utf8');
+    ? fs.readFileSync(path.join(root, 'content', type, `${slug}.mdx`), 'utf8')
+    : fs.readFileSync(path.join(root, 'content', `${type}.mdx`), 'utf8');
   const { data, content } = matter(source);
 
   const newPost: IPosts = {
