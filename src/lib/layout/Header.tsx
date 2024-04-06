@@ -34,6 +34,10 @@ const NAV_ITEMS: Array<NavItem> = [
     href: '/blog',
   },
   {
+    label: 'Tags',
+    href: '/tags',
+  },
+  {
     label: 'About',
     href: '/about',
   },
