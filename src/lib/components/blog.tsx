@@ -86,7 +86,7 @@ export default function BlogLayout({
               </Box>
             </Flex>
             <Text fontSize="sm" color="gray.500" minWidth="100px" mt={[2, 0]}>
-              {post.readingTime}
+              {post.readingTime ?? ''}
             </Text>
           </Flex>
         </Flex>

@@ -28,7 +28,7 @@ export interface IPosts {
   draft?: boolean;
   author: string;
   tags?: string[];
-  readingTime: string;
+  readingTime?: string;
 }
 
 export interface IAbout {
