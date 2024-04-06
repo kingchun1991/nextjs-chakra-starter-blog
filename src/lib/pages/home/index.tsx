@@ -11,6 +11,7 @@ const Home = () => {
         Latest
       </Heading>
       <Text fontSize="s">A blog created with Next.js and Chakra UI</Text>
+      <SomeImage />
       <Divider />
       <Flex
         direction="column"
@@ -22,7 +23,7 @@ const Home = () => {
         w="full"
       >
         <SomeText />
-        <SomeImage />
+
         <CTASection />
       </Flex>
     </Box>

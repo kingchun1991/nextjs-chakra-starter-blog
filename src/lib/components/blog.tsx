@@ -9,7 +9,8 @@ import {
   Avatar,
   Box,
   Text,
-  // Tag,
+  Tag,
+  VStack,
 } from '@chakra-ui/react';
 import { parseISO, format } from 'date-fns';
 import { MDXRemote } from 'next-mdx-remote';
@@ -72,19 +73,27 @@ export default function BlogLayout({
             w="100%"
             mb={4}
           >
-            <Flex align="center">
-              <Avatar
-                size="xs"
-                name={post.author}
-                src="../images/portrait.jpeg"
-                mr={2}
-              />
+            <VStack spacing={4} align="stretch">
               <Box fontSize="sm" color={textColor[colorMode]}>
+                <Avatar
+                  size="xs"
+                  name={post.author}
+                  src="../images/portrait.jpeg"
+                  mr={2}
+                />
+
                 {post.author}
                 {' / '}
                 {parseDate(post?.publishedAt ?? '')}
               </Box>
-            </Flex>
+              <Box fontSize="sm" color={textColor[colorMode]}>
+                {post.tags?.map((tag) => (
+                  <Tag key={tag} ml={2} variant="solid" colorScheme="teal">
+                    {tag}
+                  </Tag>
+                ))}
+              </Box>
+            </VStack>
             <Text fontSize="sm" color="gray.500" minWidth="100px" mt={[2, 0]}>
               {post.readingTime ?? ''}
             </Text>

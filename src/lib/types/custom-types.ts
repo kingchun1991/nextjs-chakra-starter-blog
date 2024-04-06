@@ -1,14 +1,7 @@
-interface IReadingTime {
-  text: string;
-  minutes: number;
-  time: number;
-  words: number;
-}
-
 export interface IFrontMatter {
   publishedAt: string;
   modifiedAt: string;
-  readingTime: IReadingTime;
+  readingTime?: string;
   slug: string;
   summary: string;
   title: string;

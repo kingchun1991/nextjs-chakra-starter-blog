@@ -2,7 +2,7 @@
 
 'use client';
 
-import { Divider, Flex, Heading, Stack } from '@chakra-ui/react';
+import { Box, Divider, Flex, Heading, Stack } from '@chakra-ui/react';
 import dynamic from 'next/dynamic';
 import { useState, useEffect } from 'react';
 
@@ -32,41 +32,44 @@ export default function BlogPostLayout({ posts }: { posts: IPosts[] }) {
   }
 
   return (
-    <Container>
+    <Box>
       {/* <Hero title="Blog" /> */}
       <Heading letterSpacing="tight" mb={4} as="h1" size="2xl">
         Blog ({filteredBlogPosts.length} posts)
       </Heading>
-      <Divider />
-      <Flex
-        as="main"
-        flexDirection="column"
-        justifyContent="center"
-        alignItems="center"
-        m="0 auto 4rem auto"
-        maxWidth="auto"
-      >
-        <Stack
-          spacing={8}
+      <Container>
+        <Divider />
+        <Flex
+          as="main"
+          flexDirection="column"
           justifyContent="center"
-          alignItems="flex-start"
+          alignItems="center"
+          p="2"
+          m="0 auto 4rem auto"
           maxWidth="auto"
         >
-          <Flex
-            flexDirection="column"
-            justifyContent="flex-start"
+          <Stack
+            spacing={8}
+            justifyContent="center"
             alignItems="flex-start"
             maxWidth="auto"
-            height="100%"
-            px={4}
           >
-            {!filteredBlogPosts.length && 'No posts found :('}
-            {filteredBlogPosts.map((post: IPosts) => (
-              <BlogPost key={post.title || ''} {...post} />
-            ))}
-          </Flex>
-        </Stack>
-      </Flex>
-    </Container>
+            <Flex
+              flexDirection="column"
+              justifyContent="flex-start"
+              alignItems="flex-start"
+              maxWidth="auto"
+              height="100%"
+              px={4}
+            >
+              {!filteredBlogPosts.length && 'No posts found :('}
+              {filteredBlogPosts.map((post: IPosts) => (
+                <BlogPost key={post.title || ''} {...post} />
+              ))}
+            </Flex>
+          </Stack>
+        </Flex>
+      </Container>
+    </Box>
   );
 }
