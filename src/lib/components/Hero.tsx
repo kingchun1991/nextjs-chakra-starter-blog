@@ -29,7 +29,7 @@ export default function Hero({ title }: { title: string }) {
 
         <Breadcrumb color="white">
           <BreadcrumbItem>
-            <BreadcrumbLink href="/">Home</BreadcrumbLink>
+            <BreadcrumbLink href="/">ChakraBlog</BreadcrumbLink>
           </BreadcrumbItem>
           <BreadcrumbItem isCurrentPage>
             <BreadcrumbLink href="#">

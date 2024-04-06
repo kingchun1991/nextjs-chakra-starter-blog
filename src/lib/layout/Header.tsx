@@ -224,7 +224,7 @@ const Header = () => {
             fontFamily="heading"
             color={useColorModeValue('gray.800', 'white')}
           >
-            <Link href="/">Home</Link>
+            <Link href="/">NextJSBlog</Link>
           </Text>
 
           <Flex display={{ base: 'none', md: 'flex' }} ml={10}>

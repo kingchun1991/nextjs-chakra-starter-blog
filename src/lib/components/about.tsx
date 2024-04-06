@@ -1,7 +1,7 @@
 'use client';
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Heading, Flex, Stack, Avatar } from '@chakra-ui/react';
+import { Heading, Flex, Stack, Avatar, Divider } from '@chakra-ui/react';
 import { MDXRemote } from 'next-mdx-remote';
 import type { MDXRemoteSerializeResult } from 'next-mdx-remote';
 
@@ -29,34 +29,21 @@ export default function AboutLayout({
         as="article"
         spacing={8}
         justifyContent="center"
+        alignItems="left"
         m="0 auto 4rem auto"
-        maxWidth="900px"
         w="100%"
         px={2}
       >
-        <Flex
-          flexDirection="column"
-          justifyContent="flex-start"
-          alignItems="flex-start"
-          maxWidth="900px"
-          w="100%"
-        >
-          <Flex
-            justify="space-between"
-            align={['initial', 'center']}
-            direction={['column', 'row']}
-            mt={2}
-            w="100%"
-            mb={4}
-          >
-            <Flex align="center">
-              <Avatar size="2xl" name={post.author} src={post.image} mr={2} />
-            </Flex>
-          </Flex>
-          <Heading letterSpacing="tight" mb={2} as="h1" size="2xl">
-            {post.title}
-          </Heading>
+        <Heading letterSpacing="tight" mb={4} as="h1" size="2xl">
+          About
+        </Heading>
+        <Divider />
+        <Flex align="left" justifyContent="left">
+          <Avatar size="2xl" name={post.author} src={post.image} mr={2} />
         </Flex>
+        <Heading letterSpacing="tight" mb={2} as="h1" size="2xl">
+          {post.title}
+        </Heading>
         <MDXRemote {...mdxSource} components={MDXComponents} />
       </Stack>
     </Container>

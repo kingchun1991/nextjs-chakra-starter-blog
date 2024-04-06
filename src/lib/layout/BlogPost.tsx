@@ -9,9 +9,9 @@ import {
   Link,
   Image,
   Avatar,
+  Tag,
 } from '@chakra-ui/react';
 import { parseISO, format } from 'date-fns';
-import NextLink from 'next/link';
 
 import { baseUrl } from '../constants/baseUrl';
 import type { IPosts } from '../types/custom-types';
@@ -26,6 +26,7 @@ const BlogPost = ({
   category,
   draft,
   author,
+  tags,
 }: IPosts) => {
   const { colorMode } = useColorMode();
 
@@ -62,47 +63,45 @@ const BlogPost = ({
   };
 
   return (
-    <NextLink href={`/${category}/${slug}`} passHref>
-      <Link w="100%" _hover={{ textDecoration: 'none' }}>
-        <Box as="div" mb={10} display="block" width="100%">
-          <Flex
-            width="100%"
-            align="flex-start"
-            justifyContent="space-between"
-            flexDirection={['column', 'row']}
-          >
-            <Flex
-              as="div"
-              flexDirection="column"
-              align="flex-start"
-              justifyContent="start"
-              width="100%"
-            >
-              <Box maxWidth={1000}>
-                <Image src={imgPath} width="100%" height="auto" alt="image" />
-              </Box>
-              <Heading size="md" as="h3" mb={1} fontWeight="medium">
-                {title}
-              </Heading>
-            </Flex>
-          </Flex>
-          <Text color={secondaryTextColor[colorMode]}>{summary}</Text>
-          <Flex align="center">
-            <Avatar
-              size="xs"
-              name={author}
-              src="../images/portrait.jpeg"
-              mr={2}
-            />
-            <Box fontSize="sm" color={textColor[colorMode]}>
-              {author}
-              {' / '}
-              {parseDate(publishedAt ?? '')}
-            </Box>
-          </Flex>
+    <Box as="div" mb={10} display="block" width="100%">
+      <Flex
+        width="100%"
+        align="flex-start"
+        justifyContent="space-between"
+        flexDirection={['column', 'row']}
+      >
+        <Flex
+          as="div"
+          flexDirection="column"
+          align="flex-start"
+          justifyContent="start"
+          width="100%"
+        >
+          <Box maxWidth={1000}>
+            <Image src={imgPath} width="100%" height="auto" alt="image" />
+          </Box>
+          <Link href={`/${category}/${slug}`}>
+            <Heading size="md" as="h3" mb={1} fontWeight="medium">
+              {title}
+            </Heading>
+          </Link>
+        </Flex>
+      </Flex>
+      <Text color={secondaryTextColor[colorMode]}>{summary}</Text>
+      <Flex align="center">
+        <Avatar size="xs" name={author} src="../images/portrait.jpeg" mr={2} />
+        <Box fontSize="sm" color={textColor[colorMode]}>
+          {author}
+          {' / '}
+          {parseDate(publishedAt ?? '')}
         </Box>
-      </Link>
-    </NextLink>
+      </Flex>
+      {tags?.map((tag) => (
+        <Tag key={tag} ml={2} variant="solid" colorScheme="teal">
+          {tag}
+        </Tag>
+      ))}
+    </Box>
   );
 };
 

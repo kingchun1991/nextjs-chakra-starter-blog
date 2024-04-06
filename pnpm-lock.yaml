@@ -65,6 +65,9 @@ dependencies:
   react-icons:
     specifier: ^4.12.0
     version: 4.12.0(react@18.2.0)
+  reading-duration:
+    specifier: ^1.1.2
+    version: 1.1.2
 
 devDependencies:
   '@commitlint/cli':
@@ -9143,6 +9146,10 @@ packages:
       string_decoder: 1.3.0
       util-deprecate: 1.0.2
     dev: true
+
+  /reading-duration@1.1.2:
+    resolution: {integrity: sha512-rm/bVuqGCZ6Ox1R9lIkgOa5+PG96MDD5n8w62k/6+woRTGT3Wss76c/LBo9hBgpUVQSYqw2uSyshBKOksrQ7xA==}
+    dev: false
 
   /redent@3.0.0:
     resolution: {integrity: sha512-6tDA8g98We0zd0GvVeMT9arEOnTw9qM03L9cJXaCjrip1OO764RDBLBfrB4cwzNGDj5OA5ioymC9GkizgWJDUg==}

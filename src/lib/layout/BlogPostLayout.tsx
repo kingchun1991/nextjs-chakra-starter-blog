@@ -2,11 +2,11 @@
 
 'use client';
 
-import { Flex, Stack } from '@chakra-ui/react';
+import { Divider, Flex, Heading, Stack } from '@chakra-ui/react';
 import dynamic from 'next/dynamic';
 import { useState, useEffect } from 'react';
 
-import Hero from '../components/Hero';
+// import Hero from '../components/Hero';
 import type { IPosts } from '../types/custom-types';
 
 const Container = dynamic(() => import('~/lib/components/Container'));
@@ -33,7 +33,11 @@ export default function BlogPostLayout({ posts }: { posts: IPosts[] }) {
 
   return (
     <Container>
-      <Hero title="Blog" />
+      {/* <Hero title="Blog" /> */}
+      <Heading letterSpacing="tight" mb={4} as="h1" size="2xl">
+        Blog ({filteredBlogPosts.length} posts)
+      </Heading>
+      <Divider />
       <Flex
         as="main"
         flexDirection="column"

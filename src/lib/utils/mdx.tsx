@@ -1,6 +1,7 @@
 import fs from 'fs';
 import matter from 'gray-matter';
 import path from 'path';
+import readingDuration from 'reading-duration';
 
 import type { IPosts } from '../types/custom-types';
 
@@ -31,6 +32,8 @@ export async function getAllFilesFrontMatter(type: string) {
       category: data.category,
       draft: data.draft,
       author: data.author,
+      tags: data.tags,
+      readingTime: readingDuration(data.content),
     };
 
     return [...allPosts, newPost];
@@ -53,6 +56,8 @@ export async function getFileBySlug(type: string, slug: string) {
     category: data.category,
     draft: data.draft,
     author: data.author,
+    tags: data.tags,
+    readingTime: readingDuration(content),
   };
 
   return {

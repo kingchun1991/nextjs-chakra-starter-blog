@@ -8,6 +8,8 @@ import {
   Stack,
   Avatar,
   Box,
+  Text,
+  // Tag,
 } from '@chakra-ui/react';
 import { parseISO, format } from 'date-fns';
 import { MDXRemote } from 'next-mdx-remote';
@@ -16,7 +18,6 @@ import type { MDXRemoteSerializeResult } from 'next-mdx-remote';
 import type { IPosts } from '../types/custom-types';
 // import similerItems from '../utils/similarItems';
 import MDXComponents from '~/lib/components/MDXComponents';
-// import { useRouter } from "next/router";
 
 import Container from './Container';
 
@@ -84,9 +85,9 @@ export default function BlogLayout({
                 {parseDate(post?.publishedAt ?? '')}
               </Box>
             </Flex>
-            {/* <Text fontSize="sm" color="gray.500" minWidth="100px" mt={[2, 0]}>
-              {post.metaInformation.readingTime}
-            </Text> */}
+            <Text fontSize="sm" color="gray.500" minWidth="100px" mt={[2, 0]}>
+              {post.readingTime}
+            </Text>
           </Flex>
         </Flex>
         <MDXRemote {...mdxSource} components={MDXComponents} />
