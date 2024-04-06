@@ -15,6 +15,7 @@ import {
 import { parseISO, format } from 'date-fns';
 import { MDXRemote } from 'next-mdx-remote';
 import type { MDXRemoteSerializeResult } from 'next-mdx-remote';
+import readingDuration from 'reading-duration';
 
 import type { IPosts } from '../types/custom-types';
 // import similerItems from '../utils/similarItems';
@@ -95,7 +96,10 @@ export default function BlogLayout({
               </Box>
             </VStack>
             <Text fontSize="sm" color="gray.500" minWidth="100px" mt={[2, 0]}>
-              {post.readingTime ?? ''}
+              {readingDuration(JSON.stringify(mdxSource), {
+                wordsPerMinute: 200,
+                emoji: false,
+              }) ?? ''}
             </Text>
           </Flex>
         </Flex>

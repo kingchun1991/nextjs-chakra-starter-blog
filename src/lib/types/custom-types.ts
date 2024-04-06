@@ -1,7 +1,6 @@
 export interface IFrontMatter {
   publishedAt: string;
   modifiedAt: string;
-  readingTime?: string;
   slug: string;
   summary: string;
   title: string;
@@ -21,7 +20,6 @@ export interface IPosts {
   draft?: boolean;
   author: string;
   tags?: string[];
-  readingTime?: string;
 }
 
 export interface IAbout {
