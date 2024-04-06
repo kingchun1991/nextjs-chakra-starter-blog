@@ -33,6 +33,7 @@ export default function BlogPostLayout({ posts }: { posts: IPosts[] }) {
 
   return (
     <Container>
+      <Hero title="Blog" />
       <Flex
         as="main"
         flexDirection="column"
@@ -41,7 +42,6 @@ export default function BlogPostLayout({ posts }: { posts: IPosts[] }) {
         m="0 auto 4rem auto"
         maxWidth="auto"
       >
-        <Hero title="Blog" />
         <Stack
           spacing={8}
           justifyContent="center"

@@ -1,9 +1,10 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import type { Metadata } from 'next';
+import { serialize } from 'next-mdx-remote/serialize';
 
-// import { getAllFilesFrontMatter } from '../../lib/utils/mdx';
-// import BlogPostLayout from 'lib/layout/BlogPostLayout';
-// import type { IPosts } from 'lib/types/custom-types';
-import About from '~/lib/pages/about';
+import { getFileBySlug } from 'lib/utils/mdx';
+import AboutLayout from '~/lib/components/about';
+import type { IPosts } from '~/lib/types/custom-types';
 
 export const metadata: Metadata = {
   title: 'About',
@@ -21,12 +22,18 @@ export const metadata: Metadata = {
   },
 };
 
-// async function getData() {
-//   const posts: IPosts[] = await getAllFilesFrontMatter('About');
-//   return posts;
-// }
+async function getAbout() {
+  return getFileBySlug('about', '_index');
+}
 
 export default async function index() {
-  // const posts = (await getData()) as IPosts[];
-  return <About />;
+  const {
+    metaInformation,
+    mdx,
+  }: {
+    metaInformation: IPosts;
+    mdx: string;
+  } = await getAbout();
+  const mdxSource = await serialize(mdx);
+  return <AboutLayout post={metaInformation} mdxSource={mdxSource} />;
 }

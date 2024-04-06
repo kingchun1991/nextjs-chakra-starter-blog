@@ -14,6 +14,7 @@ import { parseISO, format } from 'date-fns';
 import NextLink from 'next/link';
 
 import { baseUrl } from '../constants/baseUrl';
+import type { IPosts } from '../types/custom-types';
 
 const BlogPost = ({
   title,
@@ -25,18 +26,7 @@ const BlogPost = ({
   category,
   draft,
   author,
-}: {
-  title: string;
-  publishedAt: string;
-  // eslint-disable-next-line react/no-unused-prop-types
-  modifiedAt: string;
-  summary: string;
-  slug: string;
-  image: string;
-  category: string;
-  draft: boolean;
-  author: string;
-}) => {
+}: IPosts) => {
   const { colorMode } = useColorMode();
 
   const imgPath = image
@@ -107,7 +97,7 @@ const BlogPost = ({
             <Box fontSize="sm" color={textColor[colorMode]}>
               {author}
               {' / '}
-              {parseDate(publishedAt)}
+              {parseDate(publishedAt ?? '')}
             </Box>
           </Flex>
         </Box>

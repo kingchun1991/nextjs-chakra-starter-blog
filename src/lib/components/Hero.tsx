@@ -19,15 +19,15 @@ export default function Hero({ title }: { title: string }) {
       minHeight={150}
       minWidth="auto"
       justifyContent="center"
-      bg="black" // Add this line to set the background color to black
-      width="100%" // Add this line to set the width to 100%
+      bg="black"
+      width="100%"
     >
       <Flex direction="column" gap={4}>
-        <Heading size="3xl" fontWeight="extrabold">
-          <Text as="span">{title}</Text>
+        <Heading size="3xl" fontWeight="extrabold" color="white">
+          <Text>{title}</Text>
         </Heading>
 
-        <Breadcrumb>
+        <Breadcrumb color="white">
           <BreadcrumbItem>
             <BreadcrumbLink href="/">Home</BreadcrumbLink>
           </BreadcrumbItem>

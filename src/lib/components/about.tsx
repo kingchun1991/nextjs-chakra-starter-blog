@@ -1,45 +1,27 @@
 'use client';
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import {
-  useColorMode,
-  Heading,
-  Flex,
-  Stack,
-  Avatar,
-  Box,
-} from '@chakra-ui/react';
-import { parseISO, format } from 'date-fns';
+import { Heading, Flex, Stack, Avatar } from '@chakra-ui/react';
 import { MDXRemote } from 'next-mdx-remote';
 import type { MDXRemoteSerializeResult } from 'next-mdx-remote';
 
 import type { IPosts } from '../types/custom-types';
-// import similerItems from '../utils/similarItems';
 import MDXComponents from '~/lib/components/MDXComponents';
-// import { useRouter } from "next/router";
 
 import Container from './Container';
 
-export default function BlogLayout({
+export default function AboutLayout({
   mdxSource,
   post,
 }: {
   mdxSource: MDXRemoteSerializeResult;
   post: IPosts;
 }) {
-  const { colorMode } = useColorMode();
-  const textColor = {
-    light: 'gray.700',
-    dark: 'gray.400',
-  };
-  const dateFormat = 'MMMM dd, yyyy';
-  const parseDate = (dateString: string) => {
-    try {
-      return format(parseISO(dateString), dateFormat);
-    } catch (error) {
-      return '';
-    }
-  };
+  // const { colorMode } = useColorMode();
+  // const textColor = {
+  //   light: 'gray.700',
+  //   dark: 'gray.400',
+  // };
   // const similarPosts = similerItems(post, posts, post.slug!);
   return (
     <Container>
@@ -47,7 +29,6 @@ export default function BlogLayout({
         as="article"
         spacing={8}
         justifyContent="center"
-        alignItems="flex-start"
         m="0 auto 4rem auto"
         maxWidth="900px"
         w="100%"
@@ -60,9 +41,6 @@ export default function BlogLayout({
           maxWidth="900px"
           w="100%"
         >
-          <Heading letterSpacing="tight" mb={2} as="h1" size="2xl">
-            {post.title}
-          </Heading>
           <Flex
             justify="space-between"
             align={['initial', 'center']}
@@ -72,22 +50,12 @@ export default function BlogLayout({
             mb={4}
           >
             <Flex align="center">
-              <Avatar
-                size="xs"
-                name={post.author}
-                src="../images/portrait.jpeg"
-                mr={2}
-              />
-              <Box fontSize="sm" color={textColor[colorMode]}>
-                {post.author}
-                {' / '}
-                {parseDate(post?.publishedAt ?? '')}
-              </Box>
+              <Avatar size="2xl" name={post.author} src={post.image} mr={2} />
             </Flex>
-            {/* <Text fontSize="sm" color="gray.500" minWidth="100px" mt={[2, 0]}>
-              {post.metaInformation.readingTime}
-            </Text> */}
           </Flex>
+          <Heading letterSpacing="tight" mb={2} as="h1" size="2xl">
+            {post.title}
+          </Heading>
         </Flex>
         <MDXRemote {...mdxSource} components={MDXComponents} />
       </Stack>

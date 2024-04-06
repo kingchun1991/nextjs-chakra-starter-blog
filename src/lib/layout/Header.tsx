@@ -33,6 +33,10 @@ const NAV_ITEMS: Array<NavItem> = [
     label: 'Blog',
     href: '/blog',
   },
+  {
+    label: 'About',
+    href: '/about',
+  },
 ];
 
 const DesktopSubNav = ({ label, href }: NavItem) => {

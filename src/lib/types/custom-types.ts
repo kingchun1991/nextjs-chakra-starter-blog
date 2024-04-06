@@ -18,15 +18,22 @@ export interface IFrontMatter {
 }
 
 export interface IPosts {
-  publishedAt: string;
-  modifiedAt: string;
-  slug: string;
+  publishedAt?: string;
+  modifiedAt?: string;
+  slug?: string;
   summary: string;
   title: string;
   image: string;
-  category: string;
-  draft: boolean;
+  category?: string;
+  draft?: boolean;
   author: string;
+}
+
+export interface IAbout {
+  meta_title: string;
+  title: string;
+  image: string;
+  description: string;
 }
 
 export type Post = {
