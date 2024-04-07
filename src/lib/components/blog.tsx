@@ -99,7 +99,7 @@ export default function BlogLayout({
               </Box>
             </VStack>
             <Text fontSize="sm" color="gray.500" minWidth="100px" mt={[2, 0]}>
-              {readingDuration(JSON.stringify(mdxSource), {
+              {readingDuration(String(mdxSource.frontmatter.content), {
                 wordsPerMinute: 200,
                 emoji: false,
               }) ?? ''}
