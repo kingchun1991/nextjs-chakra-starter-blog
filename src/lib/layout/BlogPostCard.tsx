@@ -107,7 +107,7 @@ const BlogPostCard = ({
           </Tag>
         </Link>
       ))}
-      <Link as={NextLink} href={`/blog/${slug}`} ml="auto">
+      <Link as={NextLink} href={`/${category}/${slug}`} ml="auto">
         <Text color="teal.500" fontSize="sm" align="right" p="2">
           Read more &rarr;
         </Text>
