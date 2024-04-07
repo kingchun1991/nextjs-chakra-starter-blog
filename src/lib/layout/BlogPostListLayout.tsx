@@ -42,8 +42,8 @@ export default function BlogPostListLayout({
         tagSelected === 'All' || post.tags?.includes(tagSelected)
     )
     .sort((a: IPosts, b: IPosts) =>
-      a.publishedAt && b.publishedAt
-        ? Number(new Date(b.publishedAt)) - Number(new Date(a.publishedAt))
+      a.modifiedAt && b.modifiedAt
+        ? Number(new Date(b.modifiedAt)) - Number(new Date(a.modifiedAt))
         : 0
     );
   const postsPerPage = 2;

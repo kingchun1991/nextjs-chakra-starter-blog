@@ -21,8 +21,8 @@ export default function BlogPostListLayout({ posts }: { posts: IPosts[] }) {
   const filteredBlogPosts = posts
     .filter((post: IPosts) => !post.draft)
     .sort((a: IPosts, b: IPosts) =>
-      a.publishedAt && b.publishedAt
-        ? Number(new Date(b.publishedAt)) - Number(new Date(a.publishedAt))
+      a.modifiedAt && b.modifiedAt
+        ? Number(new Date(b.modifiedAt)) - Number(new Date(a.modifiedAt))
         : 0
     )
     .slice(0, 5);

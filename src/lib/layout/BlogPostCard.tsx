@@ -19,8 +19,8 @@ import type { IPosts } from '../types/custom-types';
 
 const BlogPostCard = ({
   title,
-  publishedAt,
-  // modifiedAt,
+  // publishedAt,
+  modifiedAt,
   summary,
   slug,
   image,
@@ -96,7 +96,7 @@ const BlogPostCard = ({
         <Box fontSize="sm" color={textColor[colorMode]}>
           {author}
           {' / '}
-          {parseDate(publishedAt ?? '')}
+          {parseDate(modifiedAt ?? '')}
         </Box>
       </Flex>
 

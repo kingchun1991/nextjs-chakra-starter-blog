@@ -44,6 +44,9 @@ export default function BlogLayout({
     }
   };
   // const similarPosts = similerItems(post, posts, post.slug!);
+  const modifiedAt = post?.modifiedAt ?? '';
+  const formattedModifyDate = parseDate(modifiedAt);
+
   return (
     <Container>
       <Stack
@@ -82,10 +85,10 @@ export default function BlogLayout({
                   src="../images/portrait.jpeg"
                   mr={2}
                 />
-
                 {post.author}
                 {' / '}
-                {parseDate(post?.publishedAt ?? '')}
+                First Published on {parseDate(post?.publishedAt ?? '')}
+                {modifiedAt && ` & Modified on ${formattedModifyDate}`}
               </Box>
               <Box fontSize="sm" color={textColor[colorMode]}>
                 {post.tags?.map((tag) => (
