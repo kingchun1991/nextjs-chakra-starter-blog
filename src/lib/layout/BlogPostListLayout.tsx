@@ -9,7 +9,7 @@ import {
   Heading,
   Grid,
   GridItem,
-  Text,
+  Link,
 } from '@chakra-ui/react';
 import dynamic from 'next/dynamic';
 import { useState, useEffect } from 'react';
@@ -17,9 +17,15 @@ import { useState, useEffect } from 'react';
 import type { IPosts } from '../types/custom-types';
 
 const Container = dynamic(() => import('~/lib/components/Container'));
-const BlogPost = dynamic(() => import('~/lib/layout/BlogPost'));
+const BlogPostCard = dynamic(() => import('~/lib/layout/BlogPostCard'));
 
-export default function BlogPostLayout({ posts }: { posts: IPosts[] }) {
+export default function BlogPostListLayout({
+  posts,
+  tagSelected,
+}: {
+  posts: IPosts[];
+  tagSelected: string;
+}) {
   const [isClient, setIsClient] = useState(false);
 
   useEffect(() => {
@@ -28,6 +34,10 @@ export default function BlogPostLayout({ posts }: { posts: IPosts[] }) {
 
   const filteredBlogPosts = posts
     .filter((post: IPosts) => !post.draft)
+    .filter(
+      (post: IPosts) =>
+        tagSelected === 'all' || post.tags?.includes(tagSelected)
+    )
     .sort((a: IPosts, b: IPosts) =>
       a.publishedAt && b.publishedAt
         ? Number(new Date(b.publishedAt)) - Number(new Date(a.publishedAt))
@@ -63,14 +73,38 @@ export default function BlogPostLayout({ posts }: { posts: IPosts[] }) {
           p="2"
           m="0 auto 4rem auto"
         >
-          <GridItem area="nav" colSpan={{ base: 1, md: 0 }}>
-            <Text size="md">All</Text>
+          <GridItem
+            area="nav"
+            colSpan={1}
+            display={{ base: 'none', md: 'block' }}
+          >
+            <Box
+              key="all"
+              flexDirection="row"
+              color={tagSelected === 'all' ? 'orange' : 'inherit'}
+            >
+              <Link
+                key="blog"
+                href="/blog"
+                pointerEvents={tagSelected === 'all' ? 'none' : 'auto'}
+              >
+                All
+              </Link>
+            </Box>
             <Box>
               {Object.keys(tagCounts).map((tag: string) => (
-                <Box key={tag} flexDirection="row">
-                  <Text size="md">
+                <Box
+                  key={tag}
+                  flexDirection="row"
+                  color={tagSelected === tag ? 'orange' : 'inherit'}
+                >
+                  <Link
+                    key={tag}
+                    href={tagSelected === tag ? undefined : `/tags/${tag}`}
+                    pointerEvents={tagSelected === tag ? 'none' : 'auto'}
+                  >
                     {tag} ({tagCounts[tag]})
-                  </Text>
+                  </Link>
                 </Box>
               ))}
             </Box>
@@ -79,7 +113,7 @@ export default function BlogPostLayout({ posts }: { posts: IPosts[] }) {
             <Flex flexDirection="column" height="100%" px={4}>
               {!filteredBlogPosts.length && 'No posts found :('}
               {filteredBlogPosts.map((post: IPosts) => (
-                <BlogPost key={post.title || ''} {...post} />
+                <BlogPostCard key={post.title || ''} {...post} />
               ))}
             </Flex>
           </GridItem>

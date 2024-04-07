@@ -1,8 +1,8 @@
 import type { Metadata } from 'next';
 
 import { getAllFilesFrontMatter } from '../../lib/utils/mdx';
-import BlogPostLayout from 'lib/layout/BlogPostLayout';
 import type { IPosts } from 'lib/types/custom-types';
+import BlogList from '~/lib/pages/blogList';
 
 export const metadata: Metadata = {
   title: 'Blog',
@@ -27,5 +27,5 @@ async function getData() {
 
 export default async function index() {
   const posts = (await getData()) as IPosts[];
-  return <BlogPostLayout posts={posts} />;
+  return <BlogList posts={posts} tagSelected="all" />;
 }

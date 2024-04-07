@@ -2,7 +2,7 @@
 
 'use client';
 
-import { Box, Divider, Flex, Heading, Stack, Text } from '@chakra-ui/react';
+import { Box, Divider, Flex, Heading, Stack, Link } from '@chakra-ui/react';
 import dynamic from 'next/dynamic';
 import { useState, useEffect } from 'react';
 
@@ -73,9 +73,9 @@ export default function TagsLayout({ posts }: { posts: IPosts[] }) {
               px={4}
             >
               {Object.entries(tagCounts).map(([tag, count]) => (
-                <Text key={tag}>
+                <Link key={tag} href={`/tags/${tag}`}>
                   {tag} ({count})
-                </Text>
+                </Link>
               ))}
             </Flex>
           </Stack>

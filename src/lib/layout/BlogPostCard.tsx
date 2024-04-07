@@ -16,7 +16,7 @@ import { parseISO, format } from 'date-fns';
 import { baseUrl } from '../constants/baseUrl';
 import type { IPosts } from '../types/custom-types';
 
-const BlogPost = ({
+const BlogPostCard = ({
   title,
   publishedAt,
   // modifiedAt,
@@ -105,4 +105,4 @@ const BlogPost = ({
   );
 };
 
-export default BlogPost;
+export default BlogPostCard;
