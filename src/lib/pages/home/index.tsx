@@ -1,10 +1,10 @@
 import { Box, Divider, Flex, Heading, Text } from '@chakra-ui/react';
 
-import CTASection from '~/lib/components/samples/CTASection';
 import SomeImage from '~/lib/components/samples/SomeImage';
-import SomeText from '~/lib/components/samples/SomeText';
+import LatestBlogPostListLayout from '~/lib/layout/LatestBlogPostListLayout';
+import type { IPosts } from '~/lib/types/custom-types';
 
-const Home = () => {
+const Home = ({ posts }: { posts: IPosts[] }) => {
   return (
     <Box>
       <Heading letterSpacing="tight" mb={4} as="h1" size="2xl">
@@ -22,9 +22,7 @@ const Home = () => {
         mb={8}
         w="full"
       >
-        <SomeText />
-
-        <CTASection />
+        <LatestBlogPostListLayout posts={posts} />
       </Flex>
     </Box>
   );
