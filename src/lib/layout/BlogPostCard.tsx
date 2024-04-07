@@ -101,10 +101,17 @@ const BlogPostCard = ({
       </Flex>
 
       {tags?.map((tag) => (
-        <Tag key={tag} ml={2} variant="solid" colorScheme="teal">
-          {tag}
-        </Tag>
+        <Link as={NextLink} href={`/tags/${tag}`}>
+          <Tag key={tag} ml={2} variant="solid" colorScheme="teal">
+            {tag}
+          </Tag>
+        </Link>
       ))}
+      <Link as={NextLink} href={`/${category}/${slug}`} ml="auto">
+        <Text color="teal.500" fontSize="sm" align="right" p="2">
+          Read more &rarr;
+        </Text>
+      </Link>
     </Box>
   );
 };

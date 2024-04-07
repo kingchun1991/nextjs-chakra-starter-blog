@@ -12,6 +12,7 @@ import {
   Link,
 } from '@chakra-ui/react';
 import dynamic from 'next/dynamic';
+import NextLink from 'next/link';
 import { useState, useEffect } from 'react';
 
 import type { IPosts } from '../types/custom-types';
@@ -84,6 +85,7 @@ export default function BlogPostListLayout({
               color={tagSelected === 'All' ? 'orange' : 'inherit'}
             >
               <Link
+                as={NextLink}
                 key="blog"
                 href="/blog"
                 pointerEvents={tagSelected === 'All' ? 'none' : 'auto'}
@@ -99,8 +101,9 @@ export default function BlogPostListLayout({
                   color={tagSelected === tag ? 'orange' : 'inherit'}
                 >
                   <Link
+                    as={NextLink}
                     key={tag}
-                    href={tagSelected === tag ? undefined : `/tags/${tag}`}
+                    href={`/tags/${tag}`}
                     pointerEvents={tagSelected === tag ? 'none' : 'auto'}
                   >
                     {tag} ({tagCounts[tag]})

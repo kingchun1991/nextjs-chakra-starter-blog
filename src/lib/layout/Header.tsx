@@ -15,11 +15,11 @@ import {
   useDisclosure,
   Spacer,
 } from '@chakra-ui/react';
+import NextLink from 'next/link';
 import { AiOutlineClose } from 'react-icons/ai';
 import { FiChevronDown, FiChevronRight } from 'react-icons/fi';
 import { GiHamburgerMenu } from 'react-icons/gi';
 
-// import Link from "next/link";
 import SearchModal from './SearchModal';
 import ThemeToggle from './ThemeToggle';
 
@@ -47,6 +47,7 @@ const NAV_ITEMS: Array<NavItem> = [
 const DesktopSubNav = ({ label, href }: NavItem) => {
   return (
     <Link
+      as={NextLink}
       href={href}
       role="group"
       display="block"
@@ -92,6 +93,7 @@ const DesktopNav = () => {
           <Popover trigger="hover" placement="bottom-start">
             <PopoverTrigger>
               <Link
+                as={NextLink}
                 p={2}
                 href={navItem.href ?? '#'}
                 fontSize="sm"
@@ -172,7 +174,7 @@ const MobileNavItem = ({ label, children, href }: NavItem) => {
         >
           {children &&
             children.map((child) => (
-              <Link key={child.label} py={2} href={child.href}>
+              <Link as={NextLink} key={child.label} py={2} href={child.href}>
                 {child.label}
               </Link>
             ))}
@@ -217,7 +219,9 @@ const Header = () => {
             fontFamily="heading"
             color={useColorModeValue('gray.800', 'white')}
           >
-            <Link href="/">NextJSBlog</Link>
+            <Link as={NextLink} href="/">
+              NextJSBlog
+            </Link>
           </Text>
 
           <Flex display={{ base: 'none', md: 'flex' }} ml={10}>
