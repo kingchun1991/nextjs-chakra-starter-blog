@@ -23,7 +23,7 @@ export interface ISearchItem {
     summary: string;
     image?: string;
     description?: string;
-    categories?: string[];
+    // categories?: string[];
     tags?: string[];
   };
   content: string;
@@ -38,7 +38,7 @@ export interface ISearchGroup {
       summary: string;
       image?: string;
       description?: string;
-      categories?: string[];
+      // categories?: string[];
       tags?: string[];
     };
     content: string;
@@ -161,18 +161,18 @@ const SearchResult = ({
                   >
                     {/* <Box className="search-result-item-image" flex="1">
                       <Image
-                        src={
-                          item.frontmatter.image
-                            ? item.frontmatter.image
-                            : `${baseUrl}/api/og/cover?heading=${encodeURIComponent(
-                                item.frontmatter.title
-                              )}&text=${encodeURIComponent(
-                                item.frontmatter.summary
-                              )}&template=plain&center=true`
-                        }
-                        alt={item.frontmatter.title}
-                        width={useBreakpointValue({ base: '100', md: '160' })}
-                        height={useBreakpointValue({ base: '100', md: '100' })}
+                      src={
+                        item.frontmatter.image
+                        ? item.frontmatter.image
+                        : `${baseUrl}/api/og/cover?heading=${encodeURIComponent(
+                          item.frontmatter.title
+                          )}&text=${encodeURIComponent(
+                          item.frontmatter.summary
+                          )}&template=plain&center=true`
+                      }
+                      alt={item.frontmatter.title}
+                      width={useBreakpointValue({ base: '100', md: '160' })}
+                      height={useBreakpointValue({ base: '100', md: '100' })}
                       />
                     </Box> */}
 
@@ -199,7 +199,7 @@ const SearchResult = ({
                         </Text>
                       )}
                       <Box className="search-result-item-taxonomies">
-                        {item.frontmatter.categories && (
+                        {/* {item.frontmatter.categories && (
                           <HStack spacing={2}>
                             <Icon as={FaRegFileAlt} />
                             {item.frontmatter.categories.map(
@@ -214,7 +214,7 @@ const SearchResult = ({
                               )
                             )}
                           </HStack>
-                        )}
+                        )} */}
                         {item.frontmatter.tags && (
                           <HStack spacing={2}>
                             <Icon as={FaTags} />

@@ -35,7 +35,7 @@ export type Post = {
     meta_title?: string;
     description?: string;
     image?: string;
-    categories: string[];
+    // categories: string[];
     author: string;
     tags: string[];
     date?: string;
