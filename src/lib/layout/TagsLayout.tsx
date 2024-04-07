@@ -4,6 +4,7 @@
 
 import { Box, Divider, Flex, Heading, Stack, Link } from '@chakra-ui/react';
 import dynamic from 'next/dynamic';
+import NextLink from 'next/link';
 import { useState, useEffect } from 'react';
 
 // import Hero from '../components/Hero';
@@ -73,7 +74,7 @@ export default function TagsLayout({ posts }: { posts: IPosts[] }) {
               px={4}
             >
               {Object.entries(tagCounts).map(([tag, count]) => (
-                <Link key={tag} href={`/tags/${tag}`}>
+                <Link as={NextLink} key={tag} href={`/tags/${tag}`}>
                   {tag} ({count})
                 </Link>
               ))}

@@ -27,5 +27,5 @@ async function getData() {
 
 export default async function index() {
   const posts = (await getData()) as IPosts[];
-  return <BlogList posts={posts} tagSelected="all" />;
+  return <BlogList posts={posts} tagSelected="All" />;
 }

@@ -36,7 +36,7 @@ export default function BlogPostListLayout({
     .filter((post: IPosts) => !post.draft)
     .filter(
       (post: IPosts) =>
-        tagSelected === 'all' || post.tags?.includes(tagSelected)
+        tagSelected === 'All' || post.tags?.includes(tagSelected)
     )
     .sort((a: IPosts, b: IPosts) =>
       a.publishedAt && b.publishedAt
@@ -62,7 +62,7 @@ export default function BlogPostListLayout({
   return (
     <Box>
       <Heading letterSpacing="tight" mb={4} as="h1" size="2xl">
-        Blog ({filteredBlogPosts.length} posts)
+        {tagSelected} ({filteredBlogPosts.length} posts)
       </Heading>
       <Container>
         <Divider />
@@ -79,14 +79,14 @@ export default function BlogPostListLayout({
             display={{ base: 'none', md: 'block' }}
           >
             <Box
-              key="all"
+              key="All"
               flexDirection="row"
-              color={tagSelected === 'all' ? 'orange' : 'inherit'}
+              color={tagSelected === 'All' ? 'orange' : 'inherit'}
             >
               <Link
                 key="blog"
                 href="/blog"
-                pointerEvents={tagSelected === 'all' ? 'none' : 'auto'}
+                pointerEvents={tagSelected === 'All' ? 'none' : 'auto'}
               >
                 All
               </Link>

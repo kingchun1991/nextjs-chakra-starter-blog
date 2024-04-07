@@ -13,6 +13,7 @@ import {
   useColorModeValue,
   useBreakpointValue,
   useDisclosure,
+  Spacer,
 } from '@chakra-ui/react';
 import { AiOutlineClose } from 'react-icons/ai';
 import { FiChevronDown, FiChevronRight } from 'react-icons/fi';
@@ -210,21 +211,9 @@ const Header = () => {
         borderColor={useColorModeValue('gray.200', 'gray.900')}
         align="center"
       >
-        <Flex
-          flex={{ base: 1, md: 'auto' }}
-          ml={{ base: -2 }}
-          display={{ base: 'flex', md: 'none' }}
-        >
-          <IconButton
-            onClick={onToggle}
-            icon={isOpen ? <AiOutlineClose /> : <GiHamburgerMenu />}
-            variant="ghost"
-            aria-label="Toggle Navigation"
-          />
-        </Flex>
-        <Flex flex={{ base: 1 }} justify={{ base: 'center', md: 'start' }}>
+        <Flex flex={{ base: 1 }} justify={{ base: 'left', md: 'start' }}>
           <Text
-            textAlign={useBreakpointValue({ base: 'center', md: 'left' })}
+            textAlign={useBreakpointValue({ base: 'left', md: 'left' })}
             fontFamily="heading"
             color={useColorModeValue('gray.800', 'white')}
           >
@@ -235,15 +224,27 @@ const Header = () => {
             <DesktopNav />
           </Flex>
         </Flex>
-
+        <Spacer />
         <Stack
           flex={{ base: 1, md: 0 }}
           justify="flex-end"
           direction="row"
-          spacing={6}
+          spacing={2}
         >
           <SearchModal />
           <ThemeToggle />
+          <Flex
+            flex={{ base: 1, md: 'auto' }}
+            ml={{ base: -2 }}
+            display={{ base: 'flex', md: 'none' }}
+          >
+            <IconButton
+              onClick={onToggle}
+              icon={isOpen ? <AiOutlineClose /> : <GiHamburgerMenu />}
+              variant="ghost"
+              aria-label="Toggle Navigation"
+            />
+          </Flex>
         </Stack>
       </Flex>
 

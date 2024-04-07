@@ -12,6 +12,7 @@ import {
   Tag,
 } from '@chakra-ui/react';
 import { parseISO, format } from 'date-fns';
+import NextLink from 'next/link';
 
 import { baseUrl } from '../constants/baseUrl';
 import type { IPosts } from '../types/custom-types';
@@ -80,14 +81,16 @@ const BlogPostCard = ({
           <Box maxWidth={1000}>
             <Image src={imgPath} width="100%" height="auto" alt="image" />
           </Box>
-          <Link href={`/${category}/${slug}`}>
+          <Link as={NextLink} href={`/${category}/${slug}`}>
             <Heading size="md" as="h3" mb={1} fontWeight="medium">
               {title}
             </Heading>
           </Link>
         </Flex>
       </Flex>
-      <Text color={secondaryTextColor[colorMode]}>{summary}</Text>
+      <Text color={secondaryTextColor[colorMode]} noOfLines={2}>
+        {summary}
+      </Text>
       <Flex align="center">
         <Avatar size="xs" name={author} src="../images/portrait.jpeg" mr={2} />
         <Box fontSize="sm" color={textColor[colorMode]}>
@@ -96,6 +99,7 @@ const BlogPostCard = ({
           {parseDate(publishedAt ?? '')}
         </Box>
       </Flex>
+
       {tags?.map((tag) => (
         <Tag key={tag} ml={2} variant="solid" colorScheme="teal">
           {tag}
