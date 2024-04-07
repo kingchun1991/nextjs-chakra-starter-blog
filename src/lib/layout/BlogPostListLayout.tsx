@@ -10,11 +10,13 @@ import {
   Grid,
   GridItem,
   Link,
+  Center,
 } from '@chakra-ui/react';
 import dynamic from 'next/dynamic';
 import NextLink from 'next/link';
 import { useState, useEffect } from 'react';
 
+import Pagination from '../components/pagination';
 import type { IPosts } from '../types/custom-types';
 
 const Container = dynamic(() => import('~/lib/components/Container'));
@@ -44,6 +46,15 @@ export default function BlogPostListLayout({
         ? Number(new Date(b.publishedAt)) - Number(new Date(a.publishedAt))
         : 0
     );
+  const postsPerPage = 2;
+  const totalPages = Math.ceil(filteredBlogPosts.length / postsPerPage);
+  const [currentPage, setCurrentPage] = useState(1);
+  const handlePageChange = (page: number) => {
+    setCurrentPage(page);
+  };
+  const startIndex = (currentPage - 1) * postsPerPage;
+  const endIndex = startIndex + postsPerPage;
+  const currentPosts = filteredBlogPosts.slice(startIndex, endIndex);
 
   const tagCounts: { [key: string]: number } = {};
   filteredBlogPosts.forEach((post: IPosts) => {
@@ -114,11 +125,18 @@ export default function BlogPostListLayout({
           </GridItem>
           <GridItem area="main" colSpan={{ base: 5, md: 4 }}>
             <Flex flexDirection="column" height="100%" px={4}>
-              {!filteredBlogPosts.length && 'No posts found :('}
-              {filteredBlogPosts.map((post: IPosts) => (
+              {!currentPosts.length && 'No posts found :('}
+              {currentPosts.map((post: IPosts) => (
                 <BlogPostCard key={post.title || ''} {...post} />
               ))}
             </Flex>
+            <Center>
+              <Pagination
+                currentPage={currentPage}
+                totalPages={totalPages}
+                onPageChange={handlePageChange}
+              />
+            </Center>
           </GridItem>
         </Grid>
       </Container>
