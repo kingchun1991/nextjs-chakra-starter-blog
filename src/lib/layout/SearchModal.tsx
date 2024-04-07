@@ -63,10 +63,12 @@ const SearchModal = () => {
   return (
     <>
       <IconButton
-        aria-label="theme toggle"
+        variant="ghost"
+        aria-label="Toggle Search"
         icon={<RiSearchLine />}
         onClick={onOpen}
       />
+
       <Modal isOpen={isOpen} onClose={onClose} size="xl">
         <ModalOverlay />
         <ModalContent>

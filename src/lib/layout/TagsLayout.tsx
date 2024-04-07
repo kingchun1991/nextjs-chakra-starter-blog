@@ -1,4 +1,3 @@
-/* eslint-disable no-plusplus */
 /* eslint-disable import/no-duplicates */
 
 'use client';
@@ -31,7 +30,7 @@ export default function TagsLayout({ posts }: { posts: IPosts[] }) {
   filteredBlogPosts.forEach((post: IPosts) => {
     post?.tags?.forEach((tag: string) => {
       if (tagCounts[tag]) {
-        tagCounts[tag]++;
+        tagCounts[tag] += 1;
       } else {
         tagCounts[tag] = 1;
       }
