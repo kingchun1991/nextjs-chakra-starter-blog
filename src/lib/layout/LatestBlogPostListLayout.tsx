@@ -34,13 +34,7 @@ export default function BlogPostListLayout({ posts }: { posts: IPosts[] }) {
   return (
     <Box>
       <Container>
-        <Grid
-          templateAreas={`"nav main"`}
-          templateRows="repeat(2, 1fr)"
-          templateColumns="repeat(5, 1fr)"
-          p="2"
-          m="0 auto 4rem auto"
-        >
+        <Grid templateAreas={`"nav main"`} p="2" m="0 auto 4rem auto">
           <GridItem area="main" colSpan={5}>
             <Flex flexDirection="column" height="100%" px={4}>
               {!filteredBlogPosts.length && 'No posts found :('}

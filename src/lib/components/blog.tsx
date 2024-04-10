@@ -22,6 +22,7 @@ import type { IPosts } from '../types/custom-types';
 import MDXComponents from '~/lib/components/MDXComponents';
 
 import Container from './Container';
+import Share from './Share';
 
 export default function BlogLayout({
   mdxSource,
@@ -107,6 +108,14 @@ export default function BlogLayout({
           </Flex>
         </Flex>
         <MDXRemote {...mdxSource} components={MDXComponents} />
+        <Flex alignItems="center" gridColumn="4" className="lg:col-4">
+          <Text mr={3}>Share :</Text>
+          <Share
+            title={post.title}
+            description={post.summary}
+            slug={post.slug!}
+          />
+        </Flex>
       </Stack>
     </Container>
   );

@@ -1,4 +1,5 @@
-import { Box, Divider, Flex, Heading, Text } from '@chakra-ui/react';
+import { Box, Divider, Flex, Heading, Link, Text } from '@chakra-ui/react';
+import NextLink from 'next/link';
 
 import SomeImage from '~/lib/components/samples/SomeImage';
 import LatestBlogPostListLayout from '~/lib/layout/LatestBlogPostListLayout';
@@ -23,6 +24,11 @@ const Home = ({ posts }: { posts: IPosts[] }) => {
         w="full"
       >
         <LatestBlogPostListLayout posts={posts} />
+        <Link as={NextLink} href="/blog" ml="auto">
+          <Text color="teal.500" fontSize="sm" align="right" p="2">
+            All Posts &rarr;
+          </Text>
+        </Link>
       </Flex>
     </Box>
   );
