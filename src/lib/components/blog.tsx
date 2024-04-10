@@ -89,7 +89,7 @@ export default function BlogLayout({
                 {post.author}
                 {' / '}
                 First Published on {parseDate(post?.publishedAt ?? '')}
-                {modifiedAt && ` & Modified on ${formattedModifyDate}`}
+                {modifiedAt && ` •  Modified on ${formattedModifyDate}`}
               </Box>
               <Box fontSize="sm" color={textColor[colorMode]}>
                 {post.tags?.map((tag) => (
