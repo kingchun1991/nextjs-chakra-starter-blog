@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 /* eslint-disable react/no-unstable-nested-components */
 /* eslint-disable react/destructuring-assignment */
 
@@ -89,50 +90,39 @@ const CustomCallout = (props: any) => {
   );
 };
 
-const DocsHeading = (props: any) => (
-  <Heading
-    css={{
-      scrollMarginTop: '100px',
-      scrollSnapMargin: '100px', // Safari
-      '&[id]': {
-        pointerEvents: 'none',
-      },
-      '&[id]:before': {
-        display: 'block',
-        height: ' 6rem',
-        marginTop: '-6rem',
-        visibility: 'hidden',
-        content: `""`,
-      },
-      '&[id]:hover a': { opacity: 1 },
-    }}
-    {...props}
-    mb="1em"
-    mt="2em"
-  >
-    <Box pointerEvents="auto">
-      {props.children}
-      {props.id && (
-        <Box
-          aria-label="anchor"
-          as="a"
-          color="blue.500"
-          fontWeight="normal"
-          outline="none"
-          _focus={{
-            opacity: 1,
-            boxShadow: 'outline',
-          }}
-          opacity="0"
-          ml="0.375rem"
-          href={`#${props.id}`}
-        >
-          #
-        </Box>
-      )}
-    </Box>
-  </Heading>
-);
+// Define a type for the props
+type CustomHeadingProps = {
+  as: React.ElementType;
+  id?: string; // Make id optional since it's not always required
+  [key: string]: any; // This allows for any other props
+};
+
+const CustomHeading: React.FC<CustomHeadingProps> = ({ as, id, ...props }) => {
+  if (id) {
+    return (
+      <Link href={`#${id}`}>
+        <NextLink href={`#${id}`}>
+          <Heading
+            as={as}
+            display="inline"
+            id={id}
+            lineHeight="1em"
+            {...props}
+            _hover={{
+              _before: {
+                content: '"#"',
+                position: 'relative',
+                marginLeft: '-1.2ch',
+                paddingRight: '0.2ch',
+              },
+            }}
+          />
+        </NextLink>
+      </Link>
+    );
+  }
+  return <Heading as={as} {...props} />;
+};
 
 const Hr = () => {
   const { colorMode } = useColorMode();
@@ -160,22 +150,12 @@ const TableHeader = (props: any) => <Th {...props} />;
 const TableBody = (props: any) => <Tbody {...props} />;
 
 const MDXComponents = {
-  h1: (props: any) => <Heading as="h1" size="xl" my={4} {...props} />,
-  h2: (props: any) => (
-    <DocsHeading as="h2" size="lg" fontWeight="bold" {...props} />
-  ),
-  h3: (props: any) => (
-    <DocsHeading as="h3" size="md" fontWeight="bold" {...props} />
-  ),
-  h4: (props: any) => (
-    <DocsHeading as="h4" size="sm" fontWeight="bold" {...props} />
-  ),
-  h5: (props: any) => (
-    <DocsHeading as="h5" size="sm" fontWeight="bold" {...props} />
-  ),
-  h6: (props: any) => (
-    <DocsHeading as="h6" size="xs" fontWeight="bold" {...props} />
-  ),
+  h1: (props: any) => <CustomHeading as="h1" {...props} />,
+  h2: (props: any) => <CustomHeading as="h2" {...props} />,
+  h3: (props: any) => <CustomHeading as="h3" {...props} />,
+  h4: (props: any) => <CustomHeading as="h4" {...props} />,
+  h5: (props: any) => <CustomHeading as="h5" {...props} />,
+  h6: (props: any) => <CustomHeading as="h6" {...props} />,
   inlineCode: (props: any) => (
     <Code colorScheme="yellow" fontSize="0.84em" {...props} />
   ),

@@ -1,6 +1,8 @@
 import fs from 'fs';
 import matter from 'gray-matter';
+import { serialize } from 'next-mdx-remote/serialize';
 import path from 'path';
+import rehypeSlug from 'rehype-slug';
 
 import type { IPosts } from '../types/custom-types';
 
@@ -57,8 +59,16 @@ export async function getFileBySlug(type: string, slug: string) {
     tags: data.tags,
   };
 
+  const options = {
+    mdxOptions: {
+      rehypePlugins: [rehypeSlug],
+    },
+  };
+
+  const mdxSource = await serialize(content, options);
+
   return {
-    mdx: content,
+    mdxSource,
     metaInformation: newPost,
   };
 }

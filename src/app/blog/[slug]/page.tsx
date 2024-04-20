@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import type { Metadata } from 'next';
-import { serialize } from 'next-mdx-remote/serialize';
+import type { MDXRemoteSerializeResult } from 'next-mdx-remote';
 
 import BlogLayout from 'lib/components/blog';
 import { baseUrl } from 'lib/constants/baseUrl';
@@ -73,11 +73,11 @@ export default async function Page({ params }: Props) {
   const { slug } = params;
   const {
     metaInformation,
-    mdx,
+    mdxSource,
   }: {
     metaInformation: IPosts;
-    mdx: string;
+    mdxSource: MDXRemoteSerializeResult;
   } = await getPost(slug);
-  const mdxSource = await serialize(mdx);
+
   return <BlogLayout post={metaInformation} mdxSource={mdxSource} />;
 }
