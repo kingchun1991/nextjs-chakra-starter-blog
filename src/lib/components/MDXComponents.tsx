@@ -24,7 +24,8 @@ import {
 import Image from 'next/image';
 import NextLink from 'next/link';
 
-import ProductSimple from './Card';
+import ProductSimple from './MDXComponents/Card';
+import { TableOfContents } from './MDXComponents/TableOfContents';
 
 const ProductCard = (props: any) => {
   const { imgsrc, title, price, url } = props;
@@ -177,6 +178,7 @@ const MDXComponents = {
   tbody: TableBody,
   CustomCallout,
   ProductCard: (props: any) => ProductCard(props),
+  TableOfContents,
 };
 
 export { CustomLink };
