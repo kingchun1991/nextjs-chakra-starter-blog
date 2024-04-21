@@ -17,12 +17,11 @@ import { MDXRemote } from 'next-mdx-remote';
 import type { MDXRemoteSerializeResult } from 'next-mdx-remote';
 import readingDuration from 'reading-duration';
 
+import Container from '../components/Container';
+import Share from '../components/Share';
 import type { IPosts } from '../types/custom-types';
 // import similerItems from '../utils/similarItems';
 import MDXComponents from '~/lib/components/MDXComponents';
-
-import Container from './Container';
-import Share from './Share';
 
 export default function BlogLayout({
   mdxSource,
