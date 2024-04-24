@@ -14,6 +14,7 @@ import {
   useBreakpointValue,
   useDisclosure,
   Spacer,
+  Image,
 } from '@chakra-ui/react';
 import NextLink from 'next/link';
 import { AiOutlineClose } from 'react-icons/ai';
@@ -213,22 +214,38 @@ const Header = () => {
         borderColor={useColorModeValue('gray.200', 'gray.900')}
         align="center"
       >
-        <Flex flex={{ base: 1 }} justify={{ base: 'left', md: 'start' }}>
-          <Text
-            textAlign={useBreakpointValue({ base: 'left', md: 'left' })}
-            fontFamily="heading"
-            color={useColorModeValue('gray.800', 'white')}
-          >
-            <Link as={NextLink} href="/">
-              NextJSBlog
-            </Link>
-          </Text>
-
-          <Flex display={{ base: 'none', md: 'flex' }} ml={10}>
-            <DesktopNav />
-          </Flex>
+        <Flex
+          flex={{ base: 1 }}
+          justify={{ base: 'left', md: 'start' }}
+          align="center"
+        >
+          <Link as={NextLink} href="/">
+            <Text
+              textAlign={useBreakpointValue({ base: 'left', md: 'left' })}
+              fontFamily="heading"
+              color={useColorModeValue('gray.800', 'white')}
+            >
+              <Flex align="center">
+                <Box>
+                  <Image
+                    src="/api/og/logo"
+                    alt="Logo"
+                    boxSize="50px"
+                    objectFit="cover"
+                  />
+                </Box>
+                <Box>NextJSBlog</Box>
+              </Flex>
+            </Text>
+          </Link>
         </Flex>
+
+        <Flex display={{ base: 'none', md: 'flex' }} ml={10}>
+          <DesktopNav />
+        </Flex>
+
         <Spacer />
+
         <Stack
           flex={{ base: 1, md: 0 }}
           justify="flex-end"
