@@ -182,7 +182,7 @@ const SearchResult = ({
                         className="search-result-item-title search-result-item-link"
                       >
                         <Heading size="md" as="h3" mb={1} fontWeight="medium">
-                          {matchUnderline(item.frontmatter.title, searchString)}
+                          {matchContent(item.frontmatter.title, searchString)}
                         </Heading>
                       </Link>
                       {item.frontmatter.description && (
