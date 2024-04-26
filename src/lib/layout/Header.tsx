@@ -234,7 +234,7 @@ const Header = () => {
                     objectFit="cover"
                   />
                 </Box>
-                <Box>NextJSBlog</Box>
+                <Box display={{ base: 'none', md: 'flex' }}>NextJSBlog</Box>
               </Flex>
             </Text>
           </Link>

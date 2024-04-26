@@ -1,6 +1,10 @@
 import { ImageResponse } from '@vercel/og';
 
+import { outfitBold, outfitMedium } from 'lib/utils/font/outfit';
+
 export async function GET() {
+  const outfitMediumFontData = await outfitMedium;
+  const outfitBoldFontData = await outfitBold;
   return new ImageResponse(
     (
       <div
@@ -21,6 +25,18 @@ export async function GET() {
     {
       width: 100,
       height: 100,
+      fonts: [
+        {
+          name: 'Outfit',
+          data: outfitMediumFontData,
+          weight: 500,
+        },
+        {
+          name: 'Outfit',
+          data: outfitBoldFontData,
+          weight: 700,
+        },
+      ],
     }
   );
 }
