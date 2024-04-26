@@ -14,7 +14,6 @@ import {
 import { parseISO, format } from 'date-fns';
 import NextLink from 'next/link';
 
-import { baseUrl } from '../constants/baseUrl';
 import type { IPosts } from '../types/custom-types';
 
 const BlogPostCard = ({
@@ -33,7 +32,7 @@ const BlogPostCard = ({
 
   const imgPath = image
     ? `${image}`
-    : `${baseUrl}/api/og/cover?heading=${encodeURIComponent(
+    : `/api/og/cover?heading=${encodeURIComponent(
         title
       )}&text=${encodeURIComponent(summary)}&template=plain&center=true`;
 
@@ -79,7 +78,7 @@ const BlogPostCard = ({
           width="100%"
         >
           <Box maxWidth={1000}>
-            <Image src={imgPath} width="100%" height="auto" alt="image" />
+            <Image src={imgPath} width="100%" height="auto" alt={title} />
           </Box>
           <Link as={NextLink} href={`/${category}/${slug}`}>
             <Heading size="md" as="h3" mb={1} fontWeight="medium">
