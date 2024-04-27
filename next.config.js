@@ -19,6 +19,7 @@ module.exports = withPWA(
   withMDX({
     swcMinify: true,
     reactStrictMode: true,
+    transpilePackages: ['next-mdx-remote'],
     pageExtensions: ['ts', 'tsx', 'js', 'jsx', 'md', 'mdx'],
     eslint: {
       dirs: ['src'],
