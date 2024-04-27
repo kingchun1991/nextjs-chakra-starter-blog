@@ -16,7 +16,7 @@ export interface IPosts {
   summary: string;
   title: string;
   image: string;
-  category?: string;
+  categories: string[];
   draft?: boolean;
   author: string;
   tags?: string[];

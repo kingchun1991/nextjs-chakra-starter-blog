@@ -11,10 +11,12 @@ import {
   Text,
   Tag,
   VStack,
+  Icon,
 } from '@chakra-ui/react';
 import { parseISO, format } from 'date-fns';
 import { MDXRemote } from 'next-mdx-remote';
 import type { MDXRemoteSerializeResult } from 'next-mdx-remote';
+import { FaRegFileAlt, FaTags } from 'react-icons/fa';
 import readingDuration from 'reading-duration';
 
 import Container from '../components/Container';
@@ -88,9 +90,18 @@ export default function BlogLayout({
                 {post.author}
                 {' / '}
                 First Published on {parseDate(post?.publishedAt ?? '')}
-                {modifiedAt && ` •  Modified on ${formattedModifyDate}`}
+                {modifiedAt && ` |  Modified on ${formattedModifyDate}`}
               </Box>
               <Box fontSize="sm" color={textColor[colorMode]}>
+                <Icon as={FaRegFileAlt} />
+                {post.categories?.map((category) => (
+                  <Tag key={category} ml={2} variant="solid" colorScheme="teal">
+                    {category}
+                  </Tag>
+                ))}
+              </Box>
+              <Box fontSize="sm" color={textColor[colorMode]}>
+                <Icon as={FaTags} />
                 {post.tags?.map((tag) => (
                   <Tag key={tag} ml={2} variant="solid" colorScheme="teal">
                     {tag}

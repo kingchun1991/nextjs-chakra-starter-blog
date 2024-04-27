@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+
 'use client';
 
 import {
@@ -23,7 +25,7 @@ const BlogPostCard = ({
   summary,
   slug,
   image,
-  category,
+  categories,
   draft,
   author,
   tags,
@@ -80,7 +82,7 @@ const BlogPostCard = ({
           <Box maxWidth={1000}>
             <Image src={imgPath} width="100%" height="auto" alt={title} />
           </Box>
-          <Link as={NextLink} href={`/${category}/${slug}`}>
+          <Link as={NextLink} href={`/blog/${slug}`}>
             <Heading size="md" as="h3" mb={1} fontWeight="medium">
               {title}
             </Heading>
@@ -106,7 +108,7 @@ const BlogPostCard = ({
           </Tag>
         </Link>
       ))}
-      <Link as={NextLink} href={`/${category}/${slug}`} ml="auto">
+      <Link as={NextLink} href={`/blog/${slug}`} ml="auto">
         <Text color="teal.500" fontSize="sm" align="right" p="2">
           Read more &rarr;
         </Text>
