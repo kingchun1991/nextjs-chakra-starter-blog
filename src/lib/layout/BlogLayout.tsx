@@ -12,11 +12,12 @@ import {
   Tag,
   VStack,
   Icon,
+  HStack,
 } from '@chakra-ui/react';
 import { parseISO, format } from 'date-fns';
 import { MDXRemote } from 'next-mdx-remote';
 import type { MDXRemoteSerializeResult } from 'next-mdx-remote';
-import { FaRegFileAlt, FaTags } from 'react-icons/fa';
+import { FaRegFolder, FaTags, FaRegClock } from 'react-icons/fa';
 import readingDuration from 'reading-duration';
 
 import Container from '../components/Container';
@@ -37,7 +38,7 @@ export default function BlogLayout({
     light: 'gray.700',
     dark: 'gray.400',
   };
-  const dateFormat = 'MMMM dd, yyyy';
+  const dateFormat = 'dd MMM, yyyy';
   const parseDate = (dateString: string) => {
     try {
       return format(parseISO(dateString), dateFormat);
@@ -46,6 +47,8 @@ export default function BlogLayout({
     }
   };
   // const similarPosts = similerItems(post, posts, post.slug!);
+  const publishedAt = post?.publishedAt ?? '';
+  const formattedPublishedDate = parseDate(publishedAt);
   const modifiedAt = post?.modifiedAt ?? '';
   const formattedModifyDate = parseDate(modifiedAt);
 
@@ -79,36 +82,29 @@ export default function BlogLayout({
             w="100%"
             mb={4}
           >
-            <VStack spacing={4} align="stretch">
-              <Box fontSize="sm" color={textColor[colorMode]}>
-                <Avatar
-                  size="xs"
-                  name={post.author}
-                  src="../images/avatar.png"
-                  mr={2}
-                />
+            <HStack spacing={4} align="stretch">
+              <Box color={textColor[colorMode]}>
+                <Avatar size="xs" name={post.author} mr={2} />
                 {post.author}
-                {' / '}
-                First Published on {parseDate(post?.publishedAt ?? '')}
-                {modifiedAt && ` |  Modified on ${formattedModifyDate}`}
               </Box>
-              <Box fontSize="sm" color={textColor[colorMode]}>
-                <Icon as={FaRegFileAlt} />
+
+              <Box color={textColor[colorMode]}>
+                <Icon as={FaRegFolder} />
                 {post.categories?.map((category) => (
                   <Tag key={category} ml={2} variant="solid" colorScheme="teal">
                     {category}
                   </Tag>
                 ))}
               </Box>
-              <Box fontSize="sm" color={textColor[colorMode]}>
-                <Icon as={FaTags} />
-                {post.tags?.map((tag) => (
-                  <Tag key={tag} ml={2} variant="solid" colorScheme="teal">
-                    {tag}
-                  </Tag>
-                ))}
+              <Box color={textColor[colorMode]}>
+                <Icon as={FaRegClock} />
+                <Text as="time" p={1}>
+                  {modifiedAt
+                    ? `${formattedModifyDate}`
+                    : `${formattedPublishedDate}`}
+                </Text>
               </Box>
-            </VStack>
+            </HStack>
             <Text fontSize="sm" color="gray.500" minWidth="100px" mt={[2, 0]}>
               {readingDuration(String(mdxSource.frontmatter.content), {
                 wordsPerMinute: 200,
@@ -119,12 +115,26 @@ export default function BlogLayout({
         </Flex>
         <MDXRemote {...mdxSource} components={MDXComponents} />
         <Flex alignItems="center" gridColumn="4" className="lg:col-4">
-          <Text mr={3}>Share :</Text>
-          <Share
-            title={post.title}
-            description={post.summary}
-            slug={post.slug!}
-          />
+          <VStack spacing={4} align="stretch">
+            <Box color={textColor[colorMode]}>
+              <Icon as={FaTags} />
+              {post.tags?.map((tag) => (
+                <Tag key={tag} ml={2} variant="solid" colorScheme="teal">
+                  {tag}
+                </Tag>
+              ))}
+            </Box>
+            <Box color={textColor[colorMode]}>
+              <HStack spacing={4} align="stretch">
+                <Text mr={3}>Share :</Text>
+                <Share
+                  title={post.title}
+                  description={post.summary}
+                  slug={post.slug!}
+                />
+              </HStack>
+            </Box>
+          </VStack>
         </Flex>
       </Stack>
     </Container>
