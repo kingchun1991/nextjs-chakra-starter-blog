@@ -13,8 +13,10 @@ import {
   VStack,
   Icon,
   HStack,
+  Link,
 } from '@chakra-ui/react';
 import { parseISO, format } from 'date-fns';
+import NextLink from 'next/link';
 import { MDXRemote } from 'next-mdx-remote';
 import type { MDXRemoteSerializeResult } from 'next-mdx-remote';
 import { FaRegFolder, FaTags, FaRegClock } from 'react-icons/fa';
@@ -83,12 +85,12 @@ export default function BlogLayout({
             mb={4}
           >
             <HStack spacing={4} align="stretch">
-              <Box color={textColor[colorMode]}>
+              <Box fontSize="sm" color={textColor[colorMode]}>
                 <Avatar size="xs" name={post.author} mr={2} />
                 {post.author}
               </Box>
 
-              <Box color={textColor[colorMode]}>
+              <Box fontSize="sm" color={textColor[colorMode]}>
                 <Icon as={FaRegFolder} />
                 {post.categories?.map((category) => (
                   <Tag key={category} ml={2} variant="solid" colorScheme="teal">
@@ -96,7 +98,7 @@ export default function BlogLayout({
                   </Tag>
                 ))}
               </Box>
-              <Box color={textColor[colorMode]}>
+              <Box fontSize="sm" color={textColor[colorMode]}>
                 <Icon as={FaRegClock} />
                 <Text as="time" p={1}>
                   {modifiedAt
@@ -105,13 +107,13 @@ export default function BlogLayout({
                 </Text>
               </Box>
             </HStack>
-            <Text fontSize="sm" color="gray.500" minWidth="100px" mt={[2, 0]}>
-              {readingDuration(String(mdxSource.frontmatter.content), {
-                wordsPerMinute: 200,
-                emoji: false,
-              }) ?? ''}
-            </Text>
           </Flex>
+          <Text fontSize="sm" color="gray.500" minWidth="100px" mt={[2, 0]}>
+            {readingDuration(String(mdxSource.frontmatter.content), {
+              wordsPerMinute: 200,
+              emoji: false,
+            }) ?? ''}
+          </Text>
         </Flex>
         <MDXRemote {...mdxSource} components={MDXComponents} />
         <Flex alignItems="center" gridColumn="4" className="lg:col-4">
@@ -119,9 +121,11 @@ export default function BlogLayout({
             <Box color={textColor[colorMode]}>
               <Icon as={FaTags} />
               {post.tags?.map((tag) => (
-                <Tag key={tag} ml={2} variant="solid" colorScheme="teal">
-                  {tag}
-                </Tag>
+                <Link as={NextLink} href={`/tags/${tag}`}>
+                  <Tag key={tag} ml={2} variant="solid" colorScheme="teal">
+                    {tag}
+                  </Tag>
+                </Link>
               ))}
             </Box>
             <Box color={textColor[colorMode]}>
