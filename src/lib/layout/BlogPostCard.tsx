@@ -93,7 +93,7 @@ const BlogPostCard = ({
         {summary}
       </Text>
       <Flex align="center">
-        <Avatar size="xs" name={author} src="../images/portrait.jpeg" mr={2} />
+        <Avatar size="xs" name={author} src="../images/avatar.png" mr={2} />
         <Box fontSize="sm" color={textColor[colorMode]}>
           {author}
           {' / '}

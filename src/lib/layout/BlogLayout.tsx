@@ -84,7 +84,7 @@ export default function BlogLayout({
                 <Avatar
                   size="xs"
                   name={post.author}
-                  src="../images/portrait.jpeg"
+                  src="../images/avatar.png"
                   mr={2}
                 />
                 {post.author}
