@@ -38,7 +38,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     title: metaInformation.title,
     description: `${metaInformation.summary} for Dynamic Metadata: https://nextjs.org/docs/app/building-your-application/optimizing/metadata#dynamic-metadata`,
     openGraph: {
-      type: 'website',
+      type: 'article',
       locale: 'en',
       url: `${baseUrl}/${metaInformation.slug}`,
       title: `${metaInformation.title}`,
@@ -50,7 +50,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
           )}&text=${encodeURIComponent(
             metaInformation.summary
           )}&template=plain&center=true`,
-          alt: 'nextjs-chakra-starter-blog og-image',
+          alt: `${metaInformation.title} og-image`,
         },
       ],
     },

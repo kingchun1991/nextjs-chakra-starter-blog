@@ -92,7 +92,7 @@ const BlogPostCard = ({
       <Text color={secondaryTextColor[colorMode]} noOfLines={2}>
         {summary}
       </Text>
-      <Flex align="center">
+      <Flex align="center" p={2}>
         <Avatar size="xs" name={author} src="../images/avatar.png" mr={2} />
         <Box fontSize="sm" color={textColor[colorMode]}>
           {author}
