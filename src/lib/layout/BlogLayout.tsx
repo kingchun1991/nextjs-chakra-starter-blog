@@ -161,6 +161,23 @@ export default function BlogLayout({
             </Box>
           </VStack>
         </Flex>
+        <Box className="giscus" />
+        <script
+          src="https://giscus.app/client.js"
+          data-repo="kingchun1991/nextjs-chakra-starter-blog"
+          data-repo-id="R_kgDOJ2sHHw"
+          data-category="General"
+          data-category-id="DIC_kwDOJ2sHH84CfEZU"
+          data-mapping="title"
+          data-strict="0"
+          data-reactions-enabled="1"
+          data-emit-metadata="0"
+          data-input-position="bottom"
+          data-theme="preferred_color_scheme"
+          data-lang="en"
+          crossOrigin="anonymous"
+          async
+        />
       </Stack>
     </Container>
   );
