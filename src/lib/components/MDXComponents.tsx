@@ -25,6 +25,7 @@ import Image from 'next/image';
 import NextLink from 'next/link';
 
 import ProductSimple from './MDXComponents/Card';
+import { CodeBlock } from './MDXComponents/CodeBlock';
 import { CustomAlert } from './MDXComponents/CustomAlert';
 import { TableOfContents } from './MDXComponents/TableOfContents';
 
@@ -136,14 +137,6 @@ const Hr = () => {
   return <Divider borderColor={borderColor[colorMode]} my={4} w="100%" />;
 };
 
-const PreformattedCode = (props: any) => {
-  return (
-    <pre style={{ overflowX: 'scroll' }}>
-      <Code {...props} />
-    </pre>
-  );
-};
-
 const MDXTable = (props: any) => <Table {...props} />;
 const TableHead = (props: any) => <Thead {...props} />;
 const TableRow = (props: any) => <Tr {...props} />;
@@ -158,9 +151,7 @@ const MDXComponents = {
   h4: (props: any) => <CustomHeading as="h4" {...props} />,
   h5: (props: any) => <CustomHeading as="h5" {...props} />,
   h6: (props: any) => <CustomHeading as="h6" {...props} />,
-  inlineCode: (props: any) => (
-    <Code colorScheme="yellow" fontSize="0.84em" {...props} />
-  ),
+  inlineCode: (props: any) => <Code {...props} />,
   br: (props: any) => <Box height="24px" {...props} />,
   p: (props: any) => <Text as="p" mt={0} lineHeight="tall" {...props} />,
   ul: (props: any) => <Box as="ul" pt={2} pl={4} ml={2} {...props} />,
@@ -170,7 +161,9 @@ const MDXComponents = {
   image: CustomImage,
   hr: Hr,
   a: CustomLink,
-  pre: PreformattedCode,
+  pre: (props: any) => {
+    return <CodeBlock {...props} />;
+  },
   table: MDXTable,
   th: TableHead,
   tr: TableRow,
