@@ -43,7 +43,7 @@ export const CodeBlock: React.FC<CodeBlockProps> = ({
         language={language}
       >
         {({ className, style, tokens, getLineProps, getTokenProps }) => (
-          <pre className={className} style={{ ...style }}>
+          <pre className={className} style={{ ...style, overflowX: 'auto' }}>
             {tokens.map((line, i) => (
               <Box {...getLineProps({ line, key: i })}>
                 {line.map((token, key) => (
