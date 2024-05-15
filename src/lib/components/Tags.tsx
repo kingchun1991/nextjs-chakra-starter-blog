@@ -6,7 +6,7 @@ const Tags = ({ tags }: { tags: string[] }) => {
   return (
     <Wrap justifyContent="flex-start" align={['initial', 'center']}>
       <WrapItem>
-        <Icon as={FaTags} />
+        <Icon as={FaTags} m={1} />
       </WrapItem>
       {tags?.map((tag) => (
         <WrapItem key={tag} alignItems="center">
