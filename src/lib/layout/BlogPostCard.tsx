@@ -16,6 +16,7 @@ import {
 import { parseISO, format } from 'date-fns';
 import NextLink from 'next/link';
 
+import Tags from '../components/Tags';
 import type { IPosts } from '../types/custom-types';
 
 const BlogPostCard = ({
@@ -101,13 +102,7 @@ const BlogPostCard = ({
         </Box>
       </Flex>
 
-      {tags?.map((tag) => (
-        <Link as={NextLink} href={`/tags/${tag}`}>
-          <Tag key={tag} ml={2} variant="solid" colorScheme="teal">
-            {tag}
-          </Tag>
-        </Link>
-      ))}
+      <Tags tags={tags ?? []} />
       <Link as={NextLink} href={`/blog/${slug}`} ml="auto">
         <Text color="teal.500" fontSize="sm" align="right" p="2">
           Read more &rarr;

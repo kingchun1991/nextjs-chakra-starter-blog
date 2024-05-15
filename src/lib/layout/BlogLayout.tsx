@@ -10,23 +10,21 @@ import {
   Box,
   Text,
   Tag,
-  VStack,
   Icon,
   HStack,
-  Link,
   WrapItem,
   Wrap,
   Spacer,
 } from '@chakra-ui/react';
 import { parseISO, format } from 'date-fns';
-import NextLink from 'next/link';
 import { MDXRemote } from 'next-mdx-remote';
 import type { MDXRemoteSerializeResult } from 'next-mdx-remote';
-import { FaRegFolder, FaTags, FaRegClock } from 'react-icons/fa';
+import { FaRegFolder, FaRegClock } from 'react-icons/fa';
 import readingDuration from 'reading-duration';
 
 import Container from '../components/Container';
 import Share from '../components/Share';
+import Tags from '../components/Tags';
 import type { IPosts } from '../types/custom-types';
 // import similerItems from '../utils/similarItems';
 import MDXComponents from '~/lib/components/MDXComponents';
@@ -135,32 +133,21 @@ export default function BlogLayout({
           </Wrap>
         </Flex>
         <MDXRemote {...mdxSource} components={MDXComponents} />
-        <Flex alignItems="center" gridColumn="4" className="lg:col-4">
-          <VStack spacing={4} align="stretch">
-            <Box color={textColor[colorMode]}>
-              <HStack spacing={1} align="stretch" alignItems="center">
-                <Icon as={FaTags} />
-                {post.tags?.map((tag) => (
-                  <Link as={NextLink} href={`/tags/${tag}`}>
-                    <Tag key={tag} ml={2} variant="solid" colorScheme="teal">
-                      {tag}
-                    </Tag>
-                  </Link>
-                ))}
-              </HStack>
-            </Box>
-            <Box color={textColor[colorMode]}>
-              <HStack spacing={4} align="stretch" alignItems="center">
-                <Text mr={3}>Share :</Text>
-                <Share
-                  title={post.title}
-                  description={post.summary}
-                  slug={post.slug!}
-                />
-              </HStack>
-            </Box>
-          </VStack>
-        </Flex>
+
+        <Box color={textColor[colorMode]}>
+          <Tags tags={post.tags ?? []} />
+        </Box>
+        <Box color={textColor[colorMode]}>
+          <HStack spacing={4} align="stretch" alignItems="center">
+            <Text mr={3}>Share :</Text>
+            <Share
+              title={post.title}
+              description={post.summary}
+              slug={post.slug!}
+            />
+          </HStack>
+        </Box>
+
         <Box className="giscus" />
         <script
           src="https://giscus.app/client.js"
