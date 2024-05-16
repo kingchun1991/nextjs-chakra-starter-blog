@@ -5,7 +5,7 @@ import { FaTags } from 'react-icons/fa';
 const Tags = ({ tags }: { tags: string[] }) => {
   return (
     <Wrap justifyContent="flex-start" align={['initial', 'center']}>
-      <WrapItem>
+      <WrapItem alignItems="center">
         <Icon as={FaTags} m={1} />
       </WrapItem>
       {tags?.map((tag) => (
