@@ -41,13 +41,18 @@ export default function BlogPostListLayout({
     .filter(
       (post: IPosts) =>
         tagSelected === 'All' ||
-        post.tags?.includes(tagSelected.replace(/-/g, ' '))
+        post.tags?.some((tag: string) =>
+          tag
+            .toLowerCase()
+            .includes(tagSelected.replace(/-/g, ' ').toLowerCase())
+        )
     )
     .sort((a: IPosts, b: IPosts) =>
       a.modifiedAt && b.modifiedAt
         ? Number(new Date(b.modifiedAt)) - Number(new Date(a.modifiedAt))
         : 0
     );
+
   const postsPerPage = 2;
   const totalPages = Math.ceil(filteredBlogPosts.length / postsPerPage);
   const [currentPage, setCurrentPage] = useState(1);
@@ -68,6 +73,10 @@ export default function BlogPostListLayout({
       }
     });
   });
+  const matchedTag =
+    Object.keys(tagCounts).find(
+      (tag: string) => tagSelected === slugify(tag)
+    ) || tagSelected;
 
   if (!isClient) {
     return <div>Loading..</div>;
@@ -76,7 +85,7 @@ export default function BlogPostListLayout({
   return (
     <Box>
       <Heading letterSpacing="tight" mb={4} as="h1" size="2xl">
-        {tagSelected} ({filteredBlogPosts.length} posts)
+        {matchedTag} ({filteredBlogPosts.length} posts)
       </Heading>
       <Container>
         <Divider />
@@ -111,13 +120,15 @@ export default function BlogPostListLayout({
                 <Box
                   key={tag}
                   flexDirection="row"
-                  color={tagSelected === tag ? 'orange' : 'inherit'}
+                  color={tagSelected === slugify(tag) ? 'orange' : 'inherit'}
                 >
                   <Link
                     as={NextLink}
                     key={tag}
                     href={`/tags/${slugify(tag)}`}
-                    pointerEvents={tagSelected === tag ? 'none' : 'auto'}
+                    pointerEvents={
+                      tagSelected === slugify(tag) ? 'none' : 'auto'
+                    }
                   >
                     {tag} ({tagCounts[tag]})
                   </Link>
