@@ -1,12 +1,12 @@
 /* eslint-disable func-names */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-// import { slug } from 'github-slugger';
+import { slug } from 'github-slugger';
 import { marked } from 'marked';
 
 // slugify
-// export const slugify = (content: string) => {
-//   return slug(content);
-// };
+export const slugify = (content: string) => {
+  return slug(content);
+};
 
 // // markdownify
 export const markdownify = (content: string, div?: boolean) => {

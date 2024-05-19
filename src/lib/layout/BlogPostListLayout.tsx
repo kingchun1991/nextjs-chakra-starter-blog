@@ -18,6 +18,7 @@ import { useState, useEffect } from 'react';
 
 import Pagination from '../components/pagination';
 import type { IPosts } from '../types/custom-types';
+import { slugify } from '../utils/textConverter';
 
 const Container = dynamic(() => import('~/lib/components/Container'));
 const BlogPostCard = dynamic(() => import('~/lib/layout/BlogPostCard'));
@@ -39,7 +40,8 @@ export default function BlogPostListLayout({
     .filter((post: IPosts) => !post.draft)
     .filter(
       (post: IPosts) =>
-        tagSelected === 'All' || post.tags?.includes(tagSelected)
+        tagSelected === 'All' ||
+        post.tags?.includes(tagSelected.replace(/-/g, ' '))
     )
     .sort((a: IPosts, b: IPosts) =>
       a.modifiedAt && b.modifiedAt
@@ -114,7 +116,7 @@ export default function BlogPostListLayout({
                   <Link
                     as={NextLink}
                     key={tag}
-                    href={`/tags/${tag}`}
+                    href={`/tags/${slugify(tag)}`}
                     pointerEvents={tagSelected === tag ? 'none' : 'auto'}
                   >
                     {tag} ({tagCounts[tag]})

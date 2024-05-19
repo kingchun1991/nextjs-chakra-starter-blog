@@ -9,6 +9,7 @@ import { useState, useEffect } from 'react';
 
 // import Hero from '../components/Hero';
 import type { IPosts } from '../types/custom-types';
+import { slugify } from '../utils/textConverter';
 
 const Container = dynamic(() => import('~/lib/components/Container'));
 
@@ -74,7 +75,7 @@ export default function TagsLayout({ posts }: { posts: IPosts[] }) {
               px={4}
             >
               {Object.entries(tagCounts).map(([tag, count]) => (
-                <Link as={NextLink} key={tag} href={`/tags/${tag}`}>
+                <Link as={NextLink} key={tag} href={`/tags/${slugify(tag)}`}>
                   {tag} ({count})
                 </Link>
               ))}

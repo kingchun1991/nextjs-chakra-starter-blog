@@ -84,7 +84,7 @@ const BlogPostCard = ({
             <Image src={imgPath} width="100%" height="auto" alt={title} />
           </Box>
           <Link as={NextLink} href={`/blog/${slug}`}>
-            <Heading size="md" as="h3" mb={1} fontWeight="medium">
+            <Heading size="md" as="h3" m={1} fontWeight="medium">
               {title}
             </Heading>
           </Link>
