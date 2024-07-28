@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "author": "sozonome",
+  "packageManager": "pnpm@8.15.4",
   "scripts": {
     "dev": "pnpm generate-json && next dev",
     "build": "pnpm generate-json && next build",
