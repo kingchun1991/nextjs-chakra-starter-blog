@@ -29,7 +29,7 @@
     "@chakra-ui/react": "^2.8.2",
     "@emotion/react": "^11.11.4",
     "@emotion/styled": "^11.11.0",
-    "@mdx-js/loader": "^3.0.0",
+    "@mdx-js/loader": "3.1.0",
     "@next/mdx": "^14.2.12",
     "@vercel/og": "^0.6.2",
     "clsx": "^2.1.0",
