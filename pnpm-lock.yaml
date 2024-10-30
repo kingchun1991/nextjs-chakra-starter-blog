@@ -21,11 +21,11 @@ dependencies:
     specifier: ^11.11.0
     version: 11.11.0(@emotion/react@11.11.4)(@types/react@18.3.1)(react@18.2.0)
   '@mdx-js/loader':
-    specifier: ^3.0.0
-    version: 3.0.0(webpack@5.88.1)
+    specifier: 3.1.0
+    version: 3.1.0(webpack@5.88.1)
   '@next/mdx':
     specifier: ^14.2.12
-    version: 14.2.12(@mdx-js/loader@3.0.0)
+    version: 14.2.12(@mdx-js/loader@3.1.0)
   '@vercel/og':
     specifier: ^0.6.2
     version: 0.6.2
@@ -2898,10 +2898,13 @@ packages:
       call-bind: 1.0.7
     dev: true
 
-  /@mdx-js/loader@3.0.0(webpack@5.88.1):
-    resolution: {integrity: sha512-9kLv83YtgxpoXVYHaf0ygx1dmhCffo0MQCv6KtNG67jy/JlBK/2Q0dSWfuuyStP3jnZKABHfbjv8zsiT1buu6A==}
+  /@mdx-js/loader@3.1.0(webpack@5.88.1):
+    resolution: {integrity: sha512-xU/lwKdOyfXtQGqn3VnJjlDrmKXEvMi1mgYxVmukEUtVycIz1nh7oQ40bKTd4cA7rLStqu0740pnhGYxGoqsCg==}
     peerDependencies:
       webpack: '>=5'
+    peerDependenciesMeta:
+      webpack:
+        optional: true
     dependencies:
       '@mdx-js/mdx': 3.0.0
       source-map: 0.7.4
@@ -2987,7 +2990,7 @@ packages:
       glob: 10.3.10
     dev: true
 
-  /@next/mdx@14.2.12(@mdx-js/loader@3.0.0):
+  /@next/mdx@14.2.12(@mdx-js/loader@3.1.0):
     resolution: {integrity: sha512-9EBEbraXmkIZAgFjCFr7CQJzspbbOg+IvKEXScE0x496ohXn/Gs5EysuUKO2U2jRnv13rPbR5NFOgNqvsG7+Pw==}
     peerDependencies:
       '@mdx-js/loader': '>=0.15.0'
@@ -2998,7 +3001,7 @@ packages:
       '@mdx-js/react':
         optional: true
     dependencies:
-      '@mdx-js/loader': 3.0.0(webpack@5.88.1)
+      '@mdx-js/loader': 3.1.0(webpack@5.88.1)
       source-map: 0.7.4
     dev: false
 
