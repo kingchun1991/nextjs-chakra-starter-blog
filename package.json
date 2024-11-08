@@ -31,7 +31,7 @@
     "@emotion/styled": "^11.11.0",
     "@mdx-js/loader": "3.1.0",
     "@next/mdx": "^14.2.12",
-    "@vercel/og": "^0.6.2",
+    "@vercel/og": "0.6.3",
     "clsx": "^2.1.0",
     "date-fns": "^2.30.0",
     "framer-motion": "^11.0.14",
