@@ -7,7 +7,7 @@ import { getAllFilesFrontMatter } from 'lib/utils/mdx';
 import BlogList from '~/lib/pages/blogList';
 
 type Props = {
-  params: { slug: string };
+  params: Promise<{ slug: string }>;
 };
 
 async function getData() {
@@ -44,7 +44,7 @@ export async function generateStaticParams() {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   // read route params
-  const { slug } = params;
+  const { slug } = await params;
 
   return {
     title: slug,
@@ -78,7 +78,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 
 export default async function Page({ params }: Props) {
-  const { slug } = params;
+  const { slug } = await params;
   const posts = (await getData()) as IPosts[];
 
   return <BlogList posts={posts} tagSelected={slug} />;

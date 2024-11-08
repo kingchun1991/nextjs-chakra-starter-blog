@@ -8,7 +8,7 @@ import { getFiles, getFileBySlug } from 'lib/utils/mdx';
 import BlogLayout from '~/lib/layout/BlogLayout';
 
 type Props = {
-  params: { slug: string };
+  params: Promise<{ slug: string }>;
 };
 
 export async function generateStaticParams() {
@@ -25,7 +25,7 @@ async function getPost(slug: any) {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   // read route params
-  const { slug } = params;
+  const { slug } = await params;
 
   // fetch data
   const {
@@ -70,7 +70,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 
 export default async function Page({ params }: Props) {
-  const { slug } = params;
+  const { slug } = await params;
   const {
     metaInformation,
     mdxSource,
