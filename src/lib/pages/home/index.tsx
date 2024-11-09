@@ -1,9 +1,9 @@
 import { Box, Divider, Flex, Heading, Link, Text } from '@chakra-ui/react';
 import NextLink from 'next/link';
 
-import SomeImage from '~/lib/components/samples/SomeImage';
-import LatestBlogPostListLayout from '~/lib/layout/LatestBlogPostListLayout';
-import type { IPosts } from '~/lib/types/custom-types';
+import SomeImage from '@/lib/components/samples/SomeImage';
+import LatestBlogPostListLayout from '@/lib/layout/LatestBlogPostListLayout';
+import type { IPosts } from '@/lib/types/custom-types';
 
 const Home = ({ posts }: { posts: IPosts[] }) => {
   return (

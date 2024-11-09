@@ -1,10 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import type { Metadata } from 'next';
 
-import { baseUrl } from 'lib/constants/baseUrl';
-import type { IPosts } from 'lib/types/custom-types';
-import { getAllFilesFrontMatter } from 'lib/utils/mdx';
-import BlogList from '~/lib/pages/blogList';
+import { baseUrl } from '@/lib/constants/baseUrl';
+import BlogList from '@/lib/pages/blogList';
+import type { IPosts } from '@/lib/types/custom-types';
+import { getAllFilesFrontMatter } from '@/lib/utils/mdx';
 
 type Props = {
   params: Promise<{ slug: string }>;

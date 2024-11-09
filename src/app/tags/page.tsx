@@ -1,8 +1,8 @@
 import type { Metadata } from 'next';
 
-import TagsLayout from 'lib/layout/TagsLayout';
-import type { IPosts } from 'lib/types/custom-types';
-import { getAllFilesFrontMatter } from 'lib/utils/mdx';
+import TagsLayout from '@/lib/layout/TagsLayout';
+import type { IPosts } from '@/lib/types/custom-types';
+import { getAllFilesFrontMatter } from '@/lib/utils/mdx';
 
 export const metadata: Metadata = {
   title: 'Tags',

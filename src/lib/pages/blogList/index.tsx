@@ -1,5 +1,5 @@
-import BlogPostListLayout from '~/lib/layout/BlogPostListLayout';
-import type { IPosts } from '~/lib/types/custom-types';
+import BlogPostListLayout from '@/lib/layout/BlogPostListLayout';
+import type { IPosts } from '@/lib/types/custom-types';
 
 const BlogList = ({
   posts,

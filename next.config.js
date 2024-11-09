@@ -17,7 +17,7 @@ const withPWA = require('next-pwa')({
 
 module.exports = withPWA(
   withMDX({
-    swcMinify: true,
+    // swcMinify: true,
     reactStrictMode: true,
     transpilePackages: ['next-mdx-remote'],
     pageExtensions: ['ts', 'tsx', 'js', 'jsx', 'md', 'mdx'],

@@ -6,7 +6,7 @@ import { MDXRemote } from 'next-mdx-remote';
 import type { MDXRemoteSerializeResult } from 'next-mdx-remote';
 
 import type { IPosts } from '../types/custom-types';
-import MDXComponents from '~/lib/components/MDXComponents';
+import MDXComponents from '@/lib/components/MDXComponents';
 
 import Container from './Container';
 

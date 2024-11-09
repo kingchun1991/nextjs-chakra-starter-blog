@@ -13,7 +13,7 @@ import {
 } from '@chakra-ui/react';
 import { FaRegFileAlt, FaTags } from 'react-icons/fa';
 
-import { plainify, titleify } from 'lib/utils/textConverter';
+import { plainify, titleify } from '@/lib/utils/textConverter';
 
 export interface ISearchItem {
   group: string;

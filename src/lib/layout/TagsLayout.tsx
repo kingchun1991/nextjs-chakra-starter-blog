@@ -11,7 +11,7 @@ import { useState, useEffect } from 'react';
 import type { IPosts } from '../types/custom-types';
 import { slugify } from '../utils/textConverter';
 
-const Container = dynamic(() => import('~/lib/components/Container'));
+const Container = dynamic(() => import('@/lib/components/Container'));
 
 export default function TagsLayout({ posts }: { posts: IPosts[] }) {
   const [isClient, setIsClient] = useState(false);

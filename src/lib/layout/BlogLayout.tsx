@@ -27,7 +27,7 @@ import Share from '../components/Share';
 import Tags from '../components/Tags';
 import type { IPosts } from '../types/custom-types';
 // import similerItems from '../utils/similarItems';
-import MDXComponents from '~/lib/components/MDXComponents';
+import MDXComponents from '@/lib/components/MDXComponents';
 
 export default function BlogLayout({
   mdxSource,

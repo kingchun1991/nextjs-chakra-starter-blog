@@ -22,7 +22,7 @@ import {
 import { useState } from 'react';
 import { RiSearchLine } from 'react-icons/ri';
 
-import searchData from '~/../.json/search.json' assert { type: 'json' };
+import searchData from '../../../.json/search.json' assert { type: 'json' };
 
 import SearchResult, { type ISearchItem } from './SearchResult';
 

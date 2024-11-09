@@ -2,7 +2,7 @@
 
 import clsx from 'clsx';
 
-import type { OgImageOption } from 'lib/types/ogImageOption';
+import type { OgImageOption } from '@/lib/types/ogImageOption';
 
 type ColorTemplateProps = Omit<OgImageOption, 'template'>;
 

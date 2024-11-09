@@ -1,8 +1,8 @@
 import type { Metadata } from 'next';
 
 import { getAllFilesFrontMatter } from '../../lib/utils/mdx';
-import type { IPosts } from 'lib/types/custom-types';
-import BlogList from '~/lib/pages/blogList';
+import BlogList from '@/lib/pages/blogList';
+import type { IPosts } from '@/lib/types/custom-types';
 
 export const metadata: Metadata = {
   title: 'Blog',

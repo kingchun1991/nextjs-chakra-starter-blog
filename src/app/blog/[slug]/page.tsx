@@ -2,10 +2,10 @@
 import type { Metadata } from 'next';
 import type { MDXRemoteSerializeResult } from 'next-mdx-remote';
 
-import { baseUrl } from 'lib/constants/baseUrl';
-import type { IPosts } from 'lib/types/custom-types';
-import { getFiles, getFileBySlug } from 'lib/utils/mdx';
-import BlogLayout from '~/lib/layout/BlogLayout';
+import { baseUrl } from '@/lib/constants/baseUrl';
+import BlogLayout from '@/lib/layout/BlogLayout';
+import type { IPosts } from '@/lib/types/custom-types';
+import { getFiles, getFileBySlug } from '@/lib/utils/mdx';
 
 type Props = {
   params: Promise<{ slug: string }>;

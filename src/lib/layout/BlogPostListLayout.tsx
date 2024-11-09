@@ -20,8 +20,8 @@ import Pagination from '../components/pagination';
 import type { IPosts } from '../types/custom-types';
 import { slugify } from '../utils/textConverter';
 
-const Container = dynamic(() => import('~/lib/components/Container'));
-const BlogPostCard = dynamic(() => import('~/lib/layout/BlogPostCard'));
+const Container = dynamic(() => import('@/lib/components/Container'));
+const BlogPostCard = dynamic(() => import('@/lib/layout/BlogPostCard'));
 
 export default function BlogPostListLayout({
   posts,

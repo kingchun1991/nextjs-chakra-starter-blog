@@ -1,6 +1,6 @@
-import Home from '~/lib/pages/home';
-import type { IPosts } from '~/lib/types/custom-types';
-import { getAllFilesFrontMatter } from '~/lib/utils/mdx';
+import Home from '@/lib/pages/home';
+import type { IPosts } from '@/lib/types/custom-types';
+import { getAllFilesFrontMatter } from '@/lib/utils/mdx';
 
 async function getData() {
   const posts: IPosts[] = await getAllFilesFrontMatter('blog');

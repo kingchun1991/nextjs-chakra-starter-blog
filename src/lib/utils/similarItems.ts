@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import type { Post } from 'lib/types/custom-types';
+import type { Post } from '@/lib/types/custom-types';
 
 // similer products
 const similerItems = (

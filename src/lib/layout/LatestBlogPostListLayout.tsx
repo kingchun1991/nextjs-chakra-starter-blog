@@ -8,8 +8,8 @@ import { useState, useEffect } from 'react';
 
 import type { IPosts } from '../types/custom-types';
 
-const Container = dynamic(() => import('~/lib/components/Container'));
-const BlogPostCard = dynamic(() => import('~/lib/layout/BlogPostCard'));
+const Container = dynamic(() => import('@/lib/components/Container'));
+const BlogPostCard = dynamic(() => import('@/lib/layout/BlogPostCard'));
 
 export default function BlogPostListLayout({ posts }: { posts: IPosts[] }) {
   const [isClient, setIsClient] = useState(false);

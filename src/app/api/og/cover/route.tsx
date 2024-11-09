@@ -2,8 +2,8 @@
 import { ImageResponse } from '@vercel/og';
 import type { NextRequest } from 'next/server';
 
-import TemplateSwitcher from 'lib/components/image-templates/TemplateWrapper';
-import { outfitBold, outfitMedium } from 'lib/utils/font/outfit';
+import TemplateSwitcher from '@/lib/components/image-templates/TemplateWrapper';
+import { outfitBold, outfitMedium } from '@/lib/utils/font/outfit';
 
 export const runtime = 'edge';
 
