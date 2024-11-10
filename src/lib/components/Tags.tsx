@@ -1,4 +1,4 @@
-import { Tag, Link, Icon, Wrap, WrapItem } from '@chakra-ui/react';
+import { Tag, Link, Icon, HStack, Flex } from '@chakra-ui/react';
 import NextLink from 'next/link';
 import { FaTags } from 'react-icons/fa';
 
@@ -6,20 +6,24 @@ import { slugify } from '../utils/textConverter';
 
 const Tags = ({ tags }: { tags: string[] }) => {
   return (
-    <Wrap justifyContent="flex-start" align={['initial', 'center']}>
-      <WrapItem alignItems="center">
+    <HStack
+      wrap="wrap"
+      justifyContent="flex-start"
+      align={['initial', 'center']}
+    >
+      <Flex align="flex-start" alignItems="center">
         <Icon as={FaTags} m={1} />
-      </WrapItem>
+      </Flex>
       {tags?.map((tag) => (
-        <WrapItem key={tag} alignItems="center">
+        <Flex align="flex-start" key={tag} alignItems="center">
           <Link as={NextLink} href={`/tags/${slugify(tag)}`}>
             <Tag m={1} variant="solid" colorScheme="teal" p="1">
               {tag}
             </Tag>
           </Link>
-        </WrapItem>
+        </Flex>
       ))}
-    </Wrap>
+    </HStack>
   );
 };
 

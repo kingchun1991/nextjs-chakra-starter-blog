@@ -12,8 +12,6 @@ import {
   Tag,
   Icon,
   HStack,
-  WrapItem,
-  Wrap,
   Spacer,
 } from '@chakra-ui/react';
 import { parseISO, format } from 'date-fns';
@@ -77,23 +75,26 @@ export default function BlogLayout({
           <Heading letterSpacing="tight" mb={2} as="h1" size="2xl">
             {post.title}
           </Heading>
-          <Wrap
+          <HStack
+            wrap="wrap"
             justifyContent="flex-start"
             align={['initial', 'center']}
             mt={2}
             w="100%"
             mb={4}
           >
-            <WrapItem
+            <Flex
+              align="flex-start"
               fontSize="sm"
               color={textColor[colorMode]}
               alignItems="center"
             >
               <Avatar size="xs" name={post.author} mr={2} />
               {post.author}
-            </WrapItem>
+            </Flex>
 
-            <WrapItem
+            <Flex
+              align="flex-start"
               fontSize="sm"
               color={textColor[colorMode]}
               alignItems="center"
@@ -104,8 +105,9 @@ export default function BlogLayout({
                   {category}
                 </Tag>
               ))}
-            </WrapItem>
-            <WrapItem
+            </Flex>
+            <Flex
+              align="flex-start"
               fontSize="sm"
               color={textColor[colorMode]}
               alignItems="center"
@@ -116,9 +118,10 @@ export default function BlogLayout({
                   ? `${formattedModifyDate}`
                   : `${formattedPublishedDate}`}
               </Text>
-            </WrapItem>
+            </Flex>
             <Spacer />
-            <WrapItem
+            <Flex
+              align="flex-start"
               fontSize="sm"
               color={textColor[colorMode]}
               alignItems="center"
@@ -129,8 +132,8 @@ export default function BlogLayout({
                   emoji: false,
                 }) ?? ''}
               </Text>
-            </WrapItem>
-          </Wrap>
+            </Flex>
+          </HStack>
         </Flex>
         <MDXRemote {...mdxSource} components={MDXComponents} />
 
