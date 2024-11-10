@@ -257,21 +257,19 @@ const Header = () => {
           flex={{ base: 1, md: 0 }}
           justify="flex-end"
           direction="row"
-          spacing={2}
+          spacing={3}
         >
           <SearchModal />
           <ThemeToggle />
+          <Spacer />
           <Flex
             flex={{ base: 1, md: 'auto' }}
             ml={{ base: -2 }}
             display={{ base: 'flex', md: 'none' }}
           >
-            <IconButton
-              onClick={onToggle}
-              icon={isOpen ? <AiOutlineClose /> : <GiHamburgerMenu />}
-              variant="ghost"
-              aria-label="Toggle Navigation"
-            />
+            <IconButton aria-label="Toggle Navigation" onClick={onToggle}>
+              {isOpen ? <AiOutlineClose /> : <GiHamburgerMenu />}
+            </IconButton>
           </Flex>
         </Stack>
       </Flex>

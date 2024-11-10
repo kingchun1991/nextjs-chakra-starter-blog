@@ -29,13 +29,14 @@ export const CodeBlock: React.FC<CodeBlockProps> = ({
       <Tooltip label={hasCopied ? 'Copied!' : 'Copy code'} placement="top">
         <IconButton
           aria-label="Copy code"
-          icon={<FiCopy />}
           size="sm"
           position="absolute"
           top="0"
           right="0"
           onClick={onCopy}
-        />
+        >
+          <FiCopy />
+        </IconButton>
       </Tooltip>
       <Highlight
         theme={colorMode === 'light' ? themes.nightOwlLight : themes.nightOwl}

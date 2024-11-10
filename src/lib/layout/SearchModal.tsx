@@ -61,12 +61,9 @@ const SearchModal = () => {
 
   return (
     <>
-      <IconButton
-        variant="ghost"
-        aria-label="Toggle Search"
-        icon={<FaSearch />}
-        onClick={onOpen}
-      />
+      <IconButton variant="ghost" aria-label="Toggle Search" onClick={onOpen}>
+        <FaSearch />
+      </IconButton>
 
       <Modal isOpen={isOpen} onClose={onClose} size="xl">
         <ModalOverlay />

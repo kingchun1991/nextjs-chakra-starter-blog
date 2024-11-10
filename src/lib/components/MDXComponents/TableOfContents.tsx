@@ -34,7 +34,9 @@ export const TableOfContents: React.FC<TableOfContentsProps> = ({
           icon={<MdKeyboardArrowDown />}
           transform={isOpen ? 'rotate(180deg)' : ''}
           transition="transform 0.3s ease-in-out"
-        />
+        >
+          <MdKeyboardArrowDown />
+        </IconButton>
       </Button>
       {isOpen && (
         <Box p={2} pr={6}>

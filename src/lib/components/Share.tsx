@@ -22,7 +22,6 @@ const Share = ({
       <ListItem display="inline-block">
         <IconButton
           aria-label="facebook share button"
-          icon={<FaFacebook />}
           onClick={() =>
             window.open(
               `https://facebook.com/sharer/sharer.php?u=${baseUrl}/${slug}`,
@@ -30,7 +29,9 @@ const Share = ({
             )
           }
           variant="unstyled"
-        />
+        >
+          <FaFacebook />
+        </IconButton>
       </ListItem>
       <ListItem display="inline-block">
         <IconButton
@@ -43,12 +44,13 @@ const Share = ({
             )
           }
           variant="unstyled"
-        />
+        >
+          <FaXTwitter />
+        </IconButton>
       </ListItem>
       <ListItem display="inline-block">
         <IconButton
           aria-label="linkedin share button"
-          icon={<FaLinkedin />}
           onClick={() =>
             window.open(
               `https://www.linkedin.com/shareArticle?mini=true&url=${baseUrl}/${slug}&title=${title}&summary=${description}&source=${baseUrl}`,
@@ -56,12 +58,13 @@ const Share = ({
             )
           }
           variant="unstyled"
-        />
+        >
+          <FaLinkedin />
+        </IconButton>
       </ListItem>
       <ListItem display="inline-block">
         <IconButton
           aria-label="pinterest share button"
-          icon={<FaPinterest />}
           onClick={() =>
             window.open(
               `https://pinterest.com/pin/create/button/?url=${baseUrl}/${slug}&media=&description=${description}`,
@@ -69,7 +72,9 @@ const Share = ({
             )
           }
           variant="unstyled"
-        />
+        >
+          <FaPinterest />
+        </IconButton>
       </ListItem>
     </List>
   );
