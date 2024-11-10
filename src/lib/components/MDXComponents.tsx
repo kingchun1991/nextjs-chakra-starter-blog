@@ -60,7 +60,14 @@ const CustomLink = (props: any) => {
     );
   }
 
-  return <Link color={color[colorMode]} isExternal {...props} />;
+  return (
+    <Link
+      color={color[colorMode]}
+      target="_blank"
+      rel="noopener noreferrer"
+      {...props}
+    />
+  );
 };
 
 const Quote = (props: any) => {

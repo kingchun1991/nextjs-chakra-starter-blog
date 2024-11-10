@@ -7,7 +7,7 @@ const Footer = () => {
         2022 - {new Date().getFullYear()}{' '}
         <Link
           href="https://nextjs-chakra-starter-blog.vercel.app/"
-          isExternal
+          target="_blank"
           rel="noopener noreferrer"
         >
           nextjs-chakra-starter-blog

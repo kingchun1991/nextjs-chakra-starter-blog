@@ -10,7 +10,7 @@ const CTASection = () => {
         <Flex marginY={4} justifyContent="center" gap={2}>
           <Link
             aria-label="Deploy to Vercel"
-            isExternal
+            target="_blank"
             rel="noopener noreferrer"
             href="https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fsozonome%2Fnextarter-chakra"
           >
@@ -23,7 +23,7 @@ const CTASection = () => {
 
           <Link
             aria-label="Deploy to Netlify"
-            isExternal
+            target="_blank"
             rel="noopener noreferrer"
             href="https://app.netlify.com/start/deploy?repository=https://github.com/sozonome/nextarter-chakra"
           >
