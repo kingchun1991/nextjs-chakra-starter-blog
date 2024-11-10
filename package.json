@@ -46,7 +46,7 @@
     "reading-duration": "^1.1.2",
     "rehype-slug": "^6.0.0",
     "rss": "^1.2.2",
-    "turbo": "^2.0.9"
+    "turbo": "2.2.3"
   },
   "devDependencies": {
     "@commitlint/cli": "^19.5.0",
