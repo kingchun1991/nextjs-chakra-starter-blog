@@ -6,7 +6,7 @@ import { Box, Flex, Grid, GridItem } from '@chakra-ui/react';
 import dynamic from 'next/dynamic';
 import { useState, useEffect } from 'react';
 
-import type { IPosts } from '../types/custom-types';
+import type { IPosts } from '@/lib/types/custom-types';
 
 const Container = dynamic(() => import('@/lib/components/Container'));
 const BlogPostCard = dynamic(() => import('@/lib/layout/BlogPostCard'));

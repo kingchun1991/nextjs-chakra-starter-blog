@@ -8,8 +8,8 @@ import NextLink from 'next/link';
 import { useState, useEffect } from 'react';
 
 // import Hero from '../components/Hero';
-import type { IPosts } from '../types/custom-types';
-import { slugify } from '../utils/textConverter';
+import type { IPosts } from '@/lib/types/custom-types';
+import { slugify } from '@/lib/utils/textConverter';
 
 const Container = dynamic(() => import('@/lib/components/Container'));
 

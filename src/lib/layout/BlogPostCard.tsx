@@ -16,8 +16,8 @@ import {
 import { parseISO, format } from 'date-fns';
 import NextLink from 'next/link';
 
-import Tags from '../components/Tags';
-import type { IPosts } from '../types/custom-types';
+import Tags from '@/lib/components/Tags';
+import type { IPosts } from '@/lib/types/custom-types';
 
 const BlogPostCard = ({
   title,

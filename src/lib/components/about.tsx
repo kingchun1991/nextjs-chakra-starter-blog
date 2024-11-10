@@ -5,10 +5,9 @@ import { Heading, Flex, Stack, Avatar, Divider, Box } from '@chakra-ui/react';
 import { MDXRemote } from 'next-mdx-remote';
 import type { MDXRemoteSerializeResult } from 'next-mdx-remote';
 
-import type { IPosts } from '../types/custom-types';
+import Container from '@/lib/components/Container';
 import MDXComponents from '@/lib/components/MDXComponents';
-
-import Container from './Container';
+import type { IPosts } from '@/lib/types/custom-types';
 
 export default function AboutLayout({
   mdxSource,

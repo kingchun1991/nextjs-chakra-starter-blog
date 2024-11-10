@@ -22,12 +22,12 @@ import type { MDXRemoteSerializeResult } from 'next-mdx-remote';
 import { FaRegFolder, FaRegClock } from 'react-icons/fa';
 import readingDuration from 'reading-duration';
 
-import Container from '../components/Container';
-import Share from '../components/Share';
-import Tags from '../components/Tags';
-import type { IPosts } from '../types/custom-types';
-// import similerItems from '../utils/similarItems';
+import Container from '@/lib/components/Container';
 import MDXComponents from '@/lib/components/MDXComponents';
+import Share from '@/lib/components/Share';
+import Tags from '@/lib/components/Tags';
+import type { IPosts } from '@/lib/types/custom-types';
+// import similerItems from '../utils/similarItems';
 
 export default function BlogLayout({
   mdxSource,

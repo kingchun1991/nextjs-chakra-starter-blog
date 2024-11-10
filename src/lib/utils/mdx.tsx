@@ -4,7 +4,7 @@ import { serialize } from 'next-mdx-remote/serialize';
 import path from 'path';
 import rehypeSlug from 'rehype-slug';
 
-import type { IPosts } from '../types/custom-types';
+import type { IPosts } from '@/lib/types/custom-types';
 
 const root = process.cwd();
 

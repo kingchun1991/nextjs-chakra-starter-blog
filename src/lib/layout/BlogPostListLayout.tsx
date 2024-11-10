@@ -16,9 +16,9 @@ import dynamic from 'next/dynamic';
 import NextLink from 'next/link';
 import { useState, useEffect } from 'react';
 
-import Pagination from '../components/pagination';
-import type { IPosts } from '../types/custom-types';
-import { slugify } from '../utils/textConverter';
+import Pagination from '@/lib/components/pagination';
+import type { IPosts } from '@/lib/types/custom-types';
+import { slugify } from '@/lib/utils/textConverter';
 
 const Container = dynamic(() => import('@/lib/components/Container'));
 const BlogPostCard = dynamic(() => import('@/lib/layout/BlogPostCard'));
