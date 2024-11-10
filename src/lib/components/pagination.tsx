@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
-import { ChevronLeftIcon, ChevronRightIcon } from '@chakra-ui/icons';
 import { Box, Button, ButtonGroup } from '@chakra-ui/react';
+import { FaChevronLeft, FaChevronRight } from 'react-icons/fa6';
 
 type PaginationProps = {
   currentPage: number;
@@ -23,7 +23,7 @@ const Pagination: React.FC<PaginationProps> = ({
     <Box>
       <ButtonGroup>
         <Button
-          leftIcon={<ChevronLeftIcon />}
+          leftIcon={<FaChevronLeft />}
           onClick={() => handlePageChange(currentPage - 1)}
           isDisabled={currentPage === 1}
         >
@@ -39,7 +39,7 @@ const Pagination: React.FC<PaginationProps> = ({
           </Button>
         ))}
         <Button
-          rightIcon={<ChevronRightIcon />}
+          rightIcon={<FaChevronRight />}
           onClick={() => handlePageChange(currentPage + 1)}
           isDisabled={currentPage === totalPages}
         >

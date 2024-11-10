@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/no-shadow */
 /* eslint-disable import/no-extraneous-dependencies */
-import { SearchIcon } from '@chakra-ui/icons';
 import {
   Box,
   Flex,
@@ -20,7 +19,7 @@ import {
   useDisclosure,
 } from '@chakra-ui/react';
 import { useState } from 'react';
-import { RiSearchLine } from 'react-icons/ri';
+import { FaSearch } from 'react-icons/fa';
 
 import searchData from '../../../.json/search.json' assert { type: 'json' };
 
@@ -65,7 +64,7 @@ const SearchModal = () => {
       <IconButton
         variant="ghost"
         aria-label="Toggle Search"
-        icon={<RiSearchLine />}
+        icon={<FaSearch />}
         onClick={onOpen}
       />
 
@@ -84,7 +83,7 @@ const SearchModal = () => {
                 autoComplete="off"
               />
               <InputLeftElement>
-                <SearchIcon />
+                <FaSearch />
               </InputLeftElement>
             </InputGroup>
             <SearchResult
