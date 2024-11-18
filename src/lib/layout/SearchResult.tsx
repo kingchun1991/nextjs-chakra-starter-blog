@@ -141,7 +141,7 @@ const SearchResult = ({
                   // letterSpacing="tight"
                   mb={2}
                   as="h1"
-                  size="l"
+                  size="lg"
                 >
                   {titleify(result.group)}
                 </Heading>
@@ -200,8 +200,10 @@ const SearchResult = ({
                       )}
                       <Box className="search-result-item-taxonomies">
                         {item.frontmatter.categories && (
-                          <HStack spacing={2}>
-                            <Icon as={FaRegFileAlt} />
+                          <HStack gap={2}>
+                            <Icon>
+                              <FaRegFileAlt />
+                            </Icon>
                             {item.frontmatter.categories.map(
                               (category, index) => (
                                 <Text key={category}>
@@ -216,8 +218,10 @@ const SearchResult = ({
                           </HStack>
                         )}
                         {item.frontmatter.tags && (
-                          <HStack spacing={2}>
-                            <Icon as={FaTags} />
+                          <HStack gap={2}>
+                            <Icon>
+                              <FaTags />
+                            </Icon>
                             {item.frontmatter.tags.map((tag, index) => (
                               <Text key={tag}>
                                 {matchUnderline(tag, searchString)}

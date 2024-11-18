@@ -1,14 +1,10 @@
 /* eslint-disable @typescript-eslint/no-shadow */
-import {
-  Box,
-  useColorMode,
-  IconButton,
-  useClipboard,
-  Tooltip,
-} from '@chakra-ui/react';
+import { Box } from '@chakra-ui/react';
 import { Highlight, themes } from 'prism-react-renderer';
 import type React from 'react';
-import { FiCopy } from 'react-icons/fi';
+// import { FiCopy } from 'react-icons/fi';
+
+// import { Tooltip } from '@/components/ui/tooltip';
 
 interface CodeBlockProps {
   children: React.ReactElement;
@@ -21,12 +17,11 @@ export const CodeBlock: React.FC<CodeBlockProps> = ({
 }) => {
   const language = className?.replace(/language-/, '') || 'typescript';
   const codeString = children.props.children.toString().trim();
-  const { colorMode } = useColorMode();
-  const { hasCopied, onCopy } = useClipboard(codeString);
+  // const { hasCopied, onCopy } = useClipboard(codeString);
 
   return (
     <Box position="relative" width="100%">
-      <Tooltip label={hasCopied ? 'Copied!' : 'Copy code'} placement="top">
+      {/* <Tooltip label={hasCopied ? 'Copied!' : 'Copy code'} placement="top">
         <IconButton
           aria-label="Copy code"
           size="sm"
@@ -37,9 +32,10 @@ export const CodeBlock: React.FC<CodeBlockProps> = ({
         >
           <FiCopy />
         </IconButton>
-      </Tooltip>
+      </Tooltip> */}
       <Highlight
-        theme={colorMode === 'light' ? themes.nightOwlLight : themes.nightOwl}
+        // theme={colorMode === 'light' ? themes.nightOwlLight : themes.nightOwl}
+        theme={themes.nightOwl}
         code={codeString}
         language={language}
       >

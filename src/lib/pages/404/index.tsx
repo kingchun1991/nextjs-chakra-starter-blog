@@ -37,8 +37,8 @@ const Page404 = () => {
           <Text fontSize="sm" color="gray">
             It&apos;s Okay!
           </Text>
-          <Button as={Link} href="/" size="sm">
-            Let&apos;s Head Back
+          <Button asChild size="sm">
+            <Link href="/">Let&apos;s Head Back</Link>
           </Button>
         </Box>
       </Box>

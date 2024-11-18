@@ -1,11 +1,10 @@
 'use client';
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Heading, Flex, Stack, Avatar, Divider, Box } from '@chakra-ui/react';
+import { Heading, Flex, Stack, Avatar, Separator, Box } from '@chakra-ui/react';
 import { MDXRemote } from 'next-mdx-remote';
 import type { MDXRemoteSerializeResult } from 'next-mdx-remote';
 
-import Container from '@/lib/components/Container';
 import MDXComponents from '@/lib/components/MDXComponents';
 import type { IPosts } from '@/lib/types/custom-types';
 
@@ -27,12 +26,12 @@ export default function AboutLayout({
       <Heading letterSpacing="tight" mb={4} as="h1" size="2xl">
         About
       </Heading>
-      <Divider />
+      <Separator />
 
-      <Container>
+      <Box>
         <Stack
           as="article"
-          spacing={8}
+          gap={8}
           justifyContent="center"
           alignItems="left"
           m="0 auto 4rem auto"
@@ -40,14 +39,17 @@ export default function AboutLayout({
           px={2}
         >
           <Flex align="left" justifyContent="left">
-            <Avatar size="2xl" name={post.author} src={post.image} mr={2} />
+            <Avatar.Root size="2xl">
+              <Avatar.Image src={post.image} />
+              <Avatar.Fallback>{post.author}</Avatar.Fallback>
+            </Avatar.Root>
           </Flex>
           <Heading letterSpacing="tight" mb={2} as="h1" size="2xl">
             {post.title}
           </Heading>
           <MDXRemote {...mdxSource} components={MDXComponents} />
         </Stack>
-      </Container>
+      </Box>
     </Box>
   );
 }

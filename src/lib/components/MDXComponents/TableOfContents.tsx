@@ -10,7 +10,7 @@ type TableOfContentsProps = {
 export const TableOfContents: React.FC<TableOfContentsProps> = ({
   children,
 }) => {
-  const { isOpen, onToggle } = useDisclosure();
+  const { open, onToggle } = useDisclosure();
 
   return (
     <Box mt={8} w="full" rounded="md" bg="slate.300">
@@ -26,19 +26,20 @@ export const TableOfContents: React.FC<TableOfContentsProps> = ({
         _dark={{ bg: 'slate.600', color: 'slate.200' }}
         onClick={onToggle}
         aria-label="Toggle Table of Contents"
+        variant="plain"
       >
         <MdBookmark />
         <span style={{ marginRight: 6 }}>Table of Contents</span>
         <IconButton
           aria-label="Toggle"
-          icon={<MdKeyboardArrowDown />}
-          transform={isOpen ? 'rotate(180deg)' : ''}
+          transform={open ? 'rotate(180deg)' : ''}
           transition="transform 0.3s ease-in-out"
+          variant="plain"
         >
           <MdKeyboardArrowDown />
         </IconButton>
       </Button>
-      {isOpen && (
+      {open && (
         <Box p={2} pr={6}>
           {children}
         </Box>

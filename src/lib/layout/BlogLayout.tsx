@@ -2,14 +2,11 @@
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import {
-  useColorMode,
   Heading,
   Flex,
   Stack,
-  Avatar,
   Box,
   Text,
-  Tag,
   Icon,
   HStack,
   Spacer,
@@ -20,11 +17,13 @@ import type { MDXRemoteSerializeResult } from 'next-mdx-remote';
 import { FaRegFolder, FaRegClock } from 'react-icons/fa';
 import readingDuration from 'reading-duration';
 
-import Container from '@/lib/components/Container';
+import { Avatar } from '@/components/ui/avatar';
+import { Tag } from '@/components/ui/tag';
 import MDXComponents from '@/lib/components/MDXComponents';
 import Share from '@/lib/components/Share';
 import Tags from '@/lib/components/Tags';
 import type { IPosts } from '@/lib/types/custom-types';
+
 // import similerItems from '../utils/similarItems';
 
 export default function BlogLayout({
@@ -34,11 +33,6 @@ export default function BlogLayout({
   mdxSource: MDXRemoteSerializeResult;
   post: IPosts;
 }) {
-  const { colorMode } = useColorMode();
-  const textColor = {
-    light: 'gray.700',
-    dark: 'gray.400',
-  };
   const dateFormat = 'dd MMM, yyyy';
   const parseDate = (dateString: string) => {
     try {
@@ -54,10 +48,10 @@ export default function BlogLayout({
   const formattedModifyDate = parseDate(modifiedAt);
 
   return (
-    <Container>
+    <Box>
       <Stack
         as="article"
-        spacing={8}
+        gap={8}
         justifyContent="center"
         alignItems="flex-start"
         m="0 auto 4rem auto"
@@ -86,7 +80,8 @@ export default function BlogLayout({
             <Flex
               align="flex-start"
               fontSize="sm"
-              color={textColor[colorMode]}
+              color="gray.700"
+              _dark={{ color: 'gray.400' }}
               alignItems="center"
             >
               <Avatar size="xs" name={post.author} mr={2} />
@@ -96,12 +91,15 @@ export default function BlogLayout({
             <Flex
               align="flex-start"
               fontSize="sm"
-              color={textColor[colorMode]}
+              color="gray.700"
+              _dark={{ color: 'gray.400' }}
               alignItems="center"
             >
-              <Icon as={FaRegFolder} />
-              {post.categories?.map((category) => (
-                <Tag key={category} ml={2} variant="solid" colorScheme="teal">
+              <Icon>
+                <FaRegFolder />
+              </Icon>
+              {post.categories.map((category) => (
+                <Tag key={category} colorPalette="teal" variant="solid">
                   {category}
                 </Tag>
               ))}
@@ -109,10 +107,13 @@ export default function BlogLayout({
             <Flex
               align="flex-start"
               fontSize="sm"
-              color={textColor[colorMode]}
+              color="gray.700"
+              _dark={{ color: 'gray.400' }}
               alignItems="center"
             >
-              <Icon as={FaRegClock} />
+              <Icon>
+                <FaRegClock />
+              </Icon>
               <Text as="time" p={1}>
                 {modifiedAt
                   ? `${formattedModifyDate}`
@@ -123,7 +124,8 @@ export default function BlogLayout({
             <Flex
               align="flex-start"
               fontSize="sm"
-              color={textColor[colorMode]}
+              color="gray.700"
+              _dark={{ color: 'gray.400' }}
               alignItems="center"
             >
               <Text fontSize="sm" color="gray.500" minWidth="100px" mt={[2, 0]}>
@@ -137,11 +139,11 @@ export default function BlogLayout({
         </Flex>
         <MDXRemote {...mdxSource} components={MDXComponents} />
 
-        <Box color={textColor[colorMode]}>
+        <Box color="gray.700" _dark={{ color: 'gray.400' }}>
           <Tags tags={post.tags ?? []} />
         </Box>
-        <Box color={textColor[colorMode]}>
-          <HStack spacing={4} align="stretch" alignItems="center">
+        <Box color="gray.700" _dark={{ color: 'gray.400' }}>
+          <HStack gap={4} align="stretch" alignItems="center">
             <Text mr={3}>Share :</Text>
             <Share
               title={post.title}
@@ -169,6 +171,6 @@ export default function BlogLayout({
           async
         />
       </Stack>
-    </Container>
+    </Box>
   );
 }

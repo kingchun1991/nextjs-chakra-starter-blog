@@ -1,13 +1,12 @@
 'use client';
 
+import { Heading, Text, Flex } from '@chakra-ui/react';
+
 import {
-  Heading,
-  Text,
-  Flex,
-  Breadcrumb,
-  BreadcrumbItem,
+  BreadcrumbCurrentLink,
   BreadcrumbLink,
-} from '@chakra-ui/react';
+  BreadcrumbRoot,
+} from '@/components/ui/breadcrumb';
 
 export default function Hero({ title }: { title: string }) {
   return (
@@ -27,22 +26,18 @@ export default function Hero({ title }: { title: string }) {
           <Text>{title}</Text>
         </Heading>
 
-        <Breadcrumb color="white">
-          <BreadcrumbItem>
-            <BreadcrumbLink href="/">ChakraBlog</BreadcrumbLink>
-          </BreadcrumbItem>
-          <BreadcrumbItem isCurrentPage>
-            <BreadcrumbLink href="#">
-              <Text
-                as="span"
-                bgGradient="linear(to-br, blue.300, blue.700)"
-                bgClip="text"
-              >
-                {title}
-              </Text>
-            </BreadcrumbLink>
-          </BreadcrumbItem>
-        </Breadcrumb>
+        <BreadcrumbRoot>
+          <BreadcrumbLink href="/">ChakraBlog</BreadcrumbLink>
+          <BreadcrumbCurrentLink>
+            <Text
+              as="span"
+              bgGradient="linear(to-br, blue.300, blue.700)"
+              bgClip="text"
+            >
+              {title}
+            </Text>
+          </BreadcrumbCurrentLink>
+        </BreadcrumbRoot>
       </Flex>
     </Flex>
   );

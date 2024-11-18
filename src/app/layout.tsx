@@ -1,6 +1,6 @@
 import type { Metadata, Viewport } from 'next';
 
-import Providers from '@/app/providers';
+import { Provider } from '@/components/ui/provider';
 import Layout from '@/lib/layout';
 
 type RootLayoutProps = {
@@ -44,11 +44,11 @@ export const viewport: Viewport = {
 
 const RootLayout = ({ children }: RootLayoutProps) => {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <body>
-        <Providers>
+        <Provider>
           <Layout>{children}</Layout>
-        </Providers>
+        </Provider>
       </body>
     </html>
   );

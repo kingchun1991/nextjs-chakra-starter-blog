@@ -1,4 +1,4 @@
-import { IconButton, ListItem, List } from '@chakra-ui/react';
+import { Box, HStack, IconButton } from '@chakra-ui/react';
 import {
   FaFacebook,
   FaLinkedin,
@@ -18,65 +18,64 @@ const Share = ({
   slug: string;
 }) => {
   return (
-    <List as="ul" display="flex" flexWrap="wrap">
-      <ListItem display="inline-block">
+    <HStack gap="6" wrap="wrap">
+      <Box display="inline-block">
         <IconButton
           aria-label="facebook share button"
           onClick={() =>
             window.open(
-              `https://facebook.com/sharer/sharer.php?u=${baseUrl}/${slug}`,
+              `https://facebook.com/sharer/sharer.php?u=${baseUrl}${slug}`,
               '_blank'
             )
           }
-          variant="unstyled"
+          variant="plain"
         >
           <FaFacebook />
         </IconButton>
-      </ListItem>
-      <ListItem display="inline-block">
+      </Box>
+      <Box display="inline-block">
         <IconButton
           aria-label="x share button"
-          icon={<FaXTwitter />}
           onClick={() =>
             window.open(
-              `https://x.com/share?url=${baseUrl}/${slug}&text=${title}`,
+              `https://x.com/share?url=${baseUrl}${slug}&text=${title}`,
               '_blank'
             )
           }
-          variant="unstyled"
+          variant="plain"
         >
           <FaXTwitter />
         </IconButton>
-      </ListItem>
-      <ListItem display="inline-block">
+      </Box>
+      <Box display="inline-block">
         <IconButton
           aria-label="linkedin share button"
           onClick={() =>
             window.open(
-              `https://www.linkedin.com/shareArticle?mini=true&url=${baseUrl}/${slug}&title=${title}&summary=${description}&source=${baseUrl}`,
+              `https://www.linkedin.com/shareArticle?mini=true&url=${baseUrl}${slug}&title=${title}&summary=${description}&source=${baseUrl}`,
               '_blank'
             )
           }
-          variant="unstyled"
+          variant="plain"
         >
           <FaLinkedin />
         </IconButton>
-      </ListItem>
-      <ListItem display="inline-block">
+      </Box>
+      <Box display="inline-block">
         <IconButton
           aria-label="pinterest share button"
           onClick={() =>
             window.open(
-              `https://pinterest.com/pin/create/button/?url=${baseUrl}/${slug}&media=&description=${description}`,
+              `https://pinterest.com/pin/create/button/?url=${baseUrl}${slug}&media=&description=${description}`,
               '_blank'
             )
           }
-          variant="unstyled"
+          variant="plain"
         >
           <FaPinterest />
         </IconButton>
-      </ListItem>
-    </List>
+      </Box>
+    </HStack>
   );
 };
 

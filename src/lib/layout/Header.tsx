@@ -1,16 +1,13 @@
+/* eslint-disable react/no-unused-prop-types */
 import {
   Box,
   Flex,
   Text,
   IconButton,
   Stack,
-  Collapse,
+  Collapsible,
   Icon,
   Link,
-  Popover,
-  PopoverTrigger,
-  PopoverContent,
-  useColorModeValue,
   useBreakpointValue,
   useDisclosure,
   Spacer,
@@ -20,8 +17,15 @@ import { AiOutlineClose } from 'react-icons/ai';
 import { FiChevronDown, FiChevronRight } from 'react-icons/fi';
 import { GiHamburgerMenu } from 'react-icons/gi';
 
+import { ColorModeButton } from '@/components/ui/color-mode';
+import {
+  HoverCardArrow,
+  HoverCardContent,
+  HoverCardRoot,
+  HoverCardTrigger,
+} from '@/components/ui/hover-card';
+
 import SearchModal from './SearchModal';
-import ThemeToggle from './ThemeToggle';
 
 interface NavItem {
   label: string;
@@ -53,7 +57,7 @@ const DesktopSubNav = ({ label, href }: NavItem) => {
       display="block"
       p={2}
       rounded="md"
-      _hover={{ bg: useColorModeValue('pink.50', 'gray.900') }}
+      _hover={{ bg: { base: 'pink.50', _dark: 'gray.900' } }}
     >
       <Stack direction="row" align="center">
         <Box>
@@ -82,115 +86,102 @@ const DesktopSubNav = ({ label, href }: NavItem) => {
 };
 
 const DesktopNav = () => {
-  const linkColor = useColorModeValue('gray.600', 'gray.200');
-  const linkHoverColor = useColorModeValue('gray.800', 'white');
-  const popoverContentBgColor = useColorModeValue('white', 'gray.800');
-
   return (
-    <Stack direction="row" spacing={4}>
+    <Stack direction="row" gap={4}>
       {NAV_ITEMS.map((navItem) => (
         <Box key={navItem.label}>
-          <Popover trigger="hover" placement="bottom-start">
-            <PopoverTrigger>
+          <HoverCardRoot>
+            <HoverCardTrigger asChild>
               <Link
                 as={NextLink}
                 p={2}
                 href={navItem.href ?? '#'}
                 fontSize="sm"
                 fontWeight={500}
-                color={linkColor}
+                color="gray.600"
+                _dark={{ color: 'gray.200' }}
                 _hover={{
                   textDecoration: 'none',
-                  color: linkHoverColor,
+                  color: { base: 'gray.800', _dark: 'white' },
                 }}
               >
                 {navItem.label}
               </Link>
-            </PopoverTrigger>
+            </HoverCardTrigger>
 
             {navItem.children && (
-              <PopoverContent
-                border={0}
-                boxShadow="xl"
-                bg={popoverContentBgColor}
-                p={4}
-                rounded="xl"
-                minW="sm"
-              >
+              <HoverCardContent>
+                <HoverCardArrow />
                 <Stack>
                   {navItem.children.map((child) => (
                     <DesktopSubNav key={child.label} {...child} />
                   ))}
                 </Stack>
-              </PopoverContent>
+              </HoverCardContent>
             )}
-          </Popover>
+          </HoverCardRoot>
         </Box>
       ))}
     </Stack>
   );
 };
 
-const MobileNavItem = ({ label, children, href }: NavItem) => {
-  const { isOpen, onToggle } = useDisclosure();
+const MobileNavItem = ({ label, children }: NavItem) => {
+  const { open, onToggle } = useDisclosure();
 
   return (
-    <Stack spacing={4} onClick={children && onToggle}>
+    <Stack gap={4} onClick={children && onToggle}>
       <Flex
         py={2}
         as={Link}
-        href={href ?? '#'}
+        // href={href ?? '#'}
         justify="space-between"
         align="center"
         _hover={{
           textDecoration: 'none',
         }}
       >
-        <Text
-          fontWeight={600}
-          color={useColorModeValue('gray.600', 'gray.200')}
-        >
+        <Text fontWeight={600} color="gray.600" _dark={{ color: 'gray.200' }}>
           {label}
         </Text>
         {children && (
           <Icon
             as={FiChevronDown}
             transition="all .25s ease-in-out"
-            transform={isOpen ? 'rotate(180deg)' : ''}
+            transform={open ? 'rotate(180deg)' : ''}
             w={6}
             h={6}
           />
         )}
       </Flex>
 
-      <Collapse in={isOpen} animateOpacity style={{ marginTop: '0!important' }}>
-        <Stack
-          mt={2}
-          pl={4}
-          borderLeft={1}
-          borderStyle="solid"
-          borderColor={useColorModeValue('gray.200', 'gray.700')}
-          align="start"
-        >
-          {children &&
-            children.map((child) => (
-              <Link as={NextLink} key={child.label} py={2} href={child.href}>
-                {child.label}
-              </Link>
-            ))}
-        </Stack>
-      </Collapse>
+      <Collapsible.Root open={open} style={{ marginTop: '0!important' }}>
+        <Collapsible.Content>
+          <Stack
+            mt={2}
+            pl={4}
+            borderLeft={1}
+            borderStyle="solid"
+            borderColor="gray.200"
+            _dark={{ borderColor: 'gray.700' }}
+            align="start"
+          >
+            {children &&
+              children.map((child) => (
+                <Link as={NextLink} key={child.label} py={2} href={child.href}>
+                  {child.label}
+                </Link>
+              ))}
+          </Stack>
+        </Collapsible.Content>
+      </Collapsible.Root>
     </Stack>
   );
 };
 
 const MobileNav = () => {
   return (
-    <Stack
-      bg={useColorModeValue('white', 'gray.800')}
-      p={4}
-      display={{ md: 'none' }}
-    >
+    <Stack bg="white" _dark={{ bg: 'gray.800' }} p={4} display={{ md: 'none' }}>
       {NAV_ITEMS.map((navItem) => (
         <MobileNavItem key={navItem.label} {...navItem} />
       ))}
@@ -199,18 +190,14 @@ const MobileNav = () => {
 };
 
 const Header = () => {
-  const { isOpen, onToggle } = useDisclosure();
+  const { open, onToggle } = useDisclosure();
   return (
     <Box>
       <Flex
-        bg={useColorModeValue('white', 'gray.800')}
-        color={useColorModeValue('gray.600', 'white')}
         minH="60px"
         py={{ base: 2 }}
         px={{ base: 4 }}
-        borderBottom={1}
         borderStyle="solid"
-        borderColor={useColorModeValue('gray.200', 'gray.900')}
         align="center"
       >
         <Flex
@@ -222,7 +209,8 @@ const Header = () => {
             <Text
               textAlign={useBreakpointValue({ base: 'left', md: 'left' })}
               fontFamily="heading"
-              color={useColorModeValue('gray.800', 'white')}
+              color="gray.800"
+              _dark={{ color: 'white' }}
             >
               <Flex align="center">
                 <Box>
@@ -257,10 +245,10 @@ const Header = () => {
           flex={{ base: 1, md: 0 }}
           justify="flex-end"
           direction="row"
-          spacing={3}
+          gap={3}
         >
           <SearchModal />
-          <ThemeToggle />
+          <ColorModeButton />
           <Spacer />
           <Flex
             flex={{ base: 1, md: 'auto' }}
@@ -268,15 +256,17 @@ const Header = () => {
             display={{ base: 'flex', md: 'none' }}
           >
             <IconButton aria-label="Toggle Navigation" onClick={onToggle}>
-              {isOpen ? <AiOutlineClose /> : <GiHamburgerMenu />}
+              {open ? <AiOutlineClose /> : <GiHamburgerMenu />}
             </IconButton>
           </Flex>
         </Stack>
       </Flex>
 
-      <Collapse in={isOpen} animateOpacity>
-        <MobileNav />
-      </Collapse>
+      <Collapsible.Root open={open}>
+        <Collapsible.Content>
+          <MobileNav />
+        </Collapsible.Content>
+      </Collapsible.Root>
     </Box>
   );
 };

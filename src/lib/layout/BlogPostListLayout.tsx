@@ -4,23 +4,28 @@
 
 import {
   Box,
-  Divider,
+  Separator,
   Flex,
   Heading,
   Grid,
   GridItem,
   Link,
   Center,
+  HStack,
 } from '@chakra-ui/react';
 import dynamic from 'next/dynamic';
 import NextLink from 'next/link';
 import { useState, useEffect } from 'react';
 
-import Pagination from '@/lib/components/pagination';
+import {
+  PaginationItems,
+  PaginationNextTrigger,
+  PaginationPrevTrigger,
+  PaginationRoot,
+} from '@/components/ui/pagination';
 import type { IPosts } from '@/lib/types/custom-types';
 import { slugify } from '@/lib/utils/textConverter';
 
-const Container = dynamic(() => import('@/lib/components/Container'));
 const BlogPostCard = dynamic(() => import('@/lib/layout/BlogPostCard'));
 
 export default function BlogPostListLayout({
@@ -54,11 +59,9 @@ export default function BlogPostListLayout({
     );
 
   const postsPerPage = 2;
-  const totalPages = Math.ceil(filteredBlogPosts.length / postsPerPage);
+  // const totalPages = Math.ceil(filteredBlogPosts.length / postsPerPage);
   const [currentPage, setCurrentPage] = useState(1);
-  const handlePageChange = (page: number) => {
-    setCurrentPage(page);
-  };
+
   const startIndex = (currentPage - 1) * postsPerPage;
   const endIndex = startIndex + postsPerPage;
   const currentPosts = filteredBlogPosts.slice(startIndex, endIndex);
@@ -87,8 +90,8 @@ export default function BlogPostListLayout({
       <Heading letterSpacing="tight" mb={4} as="h1" size="2xl">
         {matchedTag} ({filteredBlogPosts.length} posts)
       </Heading>
-      <Container>
-        <Divider />
+      <Box>
+        <Separator />
         <Grid
           templateAreas={`"nav main"`}
           templateRows="repeat(2, 1fr)"
@@ -144,15 +147,28 @@ export default function BlogPostListLayout({
               ))}
             </Flex>
             <Center>
-              <Pagination
+              {/* <Pagination
                 currentPage={currentPage}
                 totalPages={totalPages}
                 onPageChange={handlePageChange}
-              />
+              /> */}
+              <PaginationRoot
+                count={filteredBlogPosts.length}
+                onPageChange={(e) => setCurrentPage(e.page)}
+                pageSize={postsPerPage}
+                defaultPage={1}
+                variant="solid"
+              >
+                <HStack>
+                  <PaginationPrevTrigger />
+                  <PaginationItems />
+                  <PaginationNextTrigger />
+                </HStack>
+              </PaginationRoot>
             </Center>
           </GridItem>
         </Grid>
-      </Container>
+      </Box>
     </Box>
   );
 }

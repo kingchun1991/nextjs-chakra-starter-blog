@@ -4,7 +4,6 @@
 import {
   Box,
   Center,
-  useColorModeValue,
   Heading,
   Text,
   Stack,
@@ -22,7 +21,8 @@ export default function ProductSimple(props: any) {
         p={6}
         maxW="330px"
         w="full"
-        bg={useColorModeValue('white', 'gray.800')}
+        bg="white"
+        _dark={{ bg: 'gray.800' }}
         boxShadow="2xl"
         rounded="lg"
         pos="relative"

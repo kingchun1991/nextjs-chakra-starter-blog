@@ -2,16 +2,13 @@
 
 'use client';
 
-import { Box, Divider, Flex, Heading, Stack, Link } from '@chakra-ui/react';
-import dynamic from 'next/dynamic';
+import { Box, Separator, Flex, Heading, Stack, Link } from '@chakra-ui/react';
 import NextLink from 'next/link';
 import { useState, useEffect } from 'react';
 
 // import Hero from '../components/Hero';
 import type { IPosts } from '@/lib/types/custom-types';
 import { slugify } from '@/lib/utils/textConverter';
-
-const Container = dynamic(() => import('@/lib/components/Container'));
 
 export default function TagsLayout({ posts }: { posts: IPosts[] }) {
   const [isClient, setIsClient] = useState(false);
@@ -49,40 +46,39 @@ export default function TagsLayout({ posts }: { posts: IPosts[] }) {
       <Heading letterSpacing="tight" mb={4} as="h1" size="2xl">
         Tags
       </Heading>
-      <Container>
-        <Divider />
-        <Flex
-          as="main"
-          flexDirection="column"
+
+      <Separator />
+      <Flex
+        as="main"
+        flexDirection="column"
+        justifyContent="center"
+        alignItems="center"
+        p="2"
+        m="0 auto 4rem auto"
+        maxWidth="auto"
+      >
+        <Stack
+          gap={8}
           justifyContent="center"
-          alignItems="center"
-          p="2"
-          m="0 auto 4rem auto"
+          alignItems="flex-start"
           maxWidth="auto"
         >
-          <Stack
-            spacing={8}
-            justifyContent="center"
+          <Flex
+            flexDirection="column"
+            justifyContent="flex-start"
             alignItems="flex-start"
             maxWidth="auto"
+            height="100%"
+            px={4}
           >
-            <Flex
-              flexDirection="column"
-              justifyContent="flex-start"
-              alignItems="flex-start"
-              maxWidth="auto"
-              height="100%"
-              px={4}
-            >
-              {Object.entries(tagCounts).map(([tag, count]) => (
-                <Link as={NextLink} key={tag} href={`/tags/${slugify(tag)}`}>
-                  {tag} ({count})
-                </Link>
-              ))}
-            </Flex>
-          </Stack>
-        </Flex>
-      </Container>
+            {Object.entries(tagCounts).map(([tag, count]) => (
+              <Link as={NextLink} key={tag} href={`/tags/${slugify(tag)}`}>
+                {tag} ({count})
+              </Link>
+            ))}
+          </Flex>
+        </Stack>
+      </Flex>
     </Box>
   );
 }

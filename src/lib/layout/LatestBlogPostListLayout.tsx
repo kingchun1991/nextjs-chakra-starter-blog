@@ -8,7 +8,6 @@ import { useState, useEffect } from 'react';
 
 import type { IPosts } from '@/lib/types/custom-types';
 
-const Container = dynamic(() => import('@/lib/components/Container'));
 const BlogPostCard = dynamic(() => import('@/lib/layout/BlogPostCard'));
 
 export default function BlogPostListLayout({ posts }: { posts: IPosts[] }) {
@@ -33,18 +32,16 @@ export default function BlogPostListLayout({ posts }: { posts: IPosts[] }) {
 
   return (
     <Box>
-      <Container>
-        <Grid templateAreas={`"nav main"`} p="2" m="0 auto 4rem auto">
-          <GridItem area="main" colSpan={5}>
-            <Flex flexDirection="column" height="100%" px={4}>
-              {!filteredBlogPosts.length && 'No posts found :('}
-              {filteredBlogPosts.map((post: IPosts) => (
-                <BlogPostCard key={post.title || ''} {...post} />
-              ))}
-            </Flex>
-          </GridItem>
-        </Grid>
-      </Container>
+      <Grid templateAreas={`"nav main"`} p="2" m="0 auto 4rem auto">
+        <GridItem area="main" colSpan={5}>
+          <Flex flexDirection="column" height="100%" px={4}>
+            {!filteredBlogPosts.length && 'No posts found :('}
+            {filteredBlogPosts.map((post: IPosts) => (
+              <BlogPostCard key={post.title || ''} {...post} />
+            ))}
+          </Flex>
+        </GridItem>
+      </Grid>
     </Box>
   );
 }

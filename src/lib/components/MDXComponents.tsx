@@ -11,22 +11,17 @@ import {
   Heading,
   Link,
   Text,
-  Divider,
-  useColorMode,
+  Separator,
   Table,
-  Thead,
-  Tbody,
-  Tr,
-  Th,
-  Td,
-  Alert,
+  List,
 } from '@chakra-ui/react';
 import Image from 'next/image';
 import NextLink from 'next/link';
 
+import { Alert } from '@/components/ui/alert';
+
 import ProductSimple from './MDXComponents/Card';
 import { CodeBlock } from './MDXComponents/CodeBlock';
-import { CustomAlert } from './MDXComponents/CustomAlert';
 import { TableOfContents } from './MDXComponents/TableOfContents';
 
 const ProductCard = (props: any) => {
@@ -43,11 +38,6 @@ const CustomImage = (props: any) => {
 
 const CustomLink = (props: any) => {
   const { href } = props;
-  const { colorMode } = useColorMode();
-  const color = {
-    light: 'blue.500',
-    dark: 'blue.500',
-  };
 
   // const href = props.href;
   const isInternalLink = href && (href.startsWith('/') || href.startsWith('#'));
@@ -55,14 +45,15 @@ const CustomLink = (props: any) => {
   if (isInternalLink) {
     return (
       <NextLink href={href} passHref>
-        <Link color={color[colorMode]} {...props} />
+        <Link color="blue.500" _dark={{ color: 'blue.500' }} {...props} />
       </NextLink>
     );
   }
 
   return (
     <Link
-      color={color[colorMode]}
+      color="blue.500"
+      _dark={{ color: 'blue.500' }}
       target="_blank"
       rel="noopener noreferrer"
       {...props}
@@ -71,8 +62,6 @@ const CustomLink = (props: any) => {
 };
 
 const Quote = (props: any) => {
-  useColorMode();
-
   return (
     <Box
       as="blockquote"
@@ -88,18 +77,6 @@ const Quote = (props: any) => {
     />
   );
 };
-
-const CustomCallout = (props: any) => {
-  return (
-    <Alert status="success" {...props}>
-      <Box as="span" mr="2">
-        {props.icon}
-      </Box>
-      {props.children}
-    </Alert>
-  );
-};
-
 // Define a type for the props
 type CustomHeadingProps = {
   as: React.ElementType;
@@ -135,21 +112,22 @@ const CustomHeading: React.FC<CustomHeadingProps> = ({ as, id, ...props }) => {
 };
 
 const Hr = () => {
-  const { colorMode } = useColorMode();
-  const borderColor = {
-    light: 'gray.200',
-    dark: 'gray.600',
-  };
-
-  return <Divider borderColor={borderColor[colorMode]} my={4} w="100%" />;
+  return (
+    <Separator
+      borderColor="gray.200"
+      _dark={{ borderColor: 'gray.600' }}
+      my={4}
+      w="100%"
+    />
+  );
 };
 
-const MDXTable = (props: any) => <Table {...props} />;
-const TableHead = (props: any) => <Thead {...props} />;
-const TableRow = (props: any) => <Tr {...props} />;
-const TableData = (props: any) => <Td {...props} />;
-const TableHeader = (props: any) => <Th {...props} />;
-const TableBody = (props: any) => <Tbody {...props} />;
+const MDXTable = (props: any) => <Table.Root {...props} />;
+const TableHead = (props: any) => <Table.Header {...props} />;
+const TableRow = (props: any) => <Table.Row {...props} />;
+const TableData = (props: any) => <Table.Cell {...props} />;
+const TableHeader = (props: any) => <Table.Header {...props} />;
+const TableBody = (props: any) => <Table.Body {...props} />;
 
 const MDXComponents = {
   h1: (props: any) => <CustomHeading as="h1" {...props} />,
@@ -161,8 +139,8 @@ const MDXComponents = {
   inlineCode: (props: any) => <Code {...props} />,
   br: (props: any) => <Box height="24px" {...props} />,
   p: (props: any) => <Text as="p" mt={0} lineHeight="tall" {...props} />,
-  ul: (props: any) => <Box as="ul" pt={2} pl={4} ml={2} {...props} />,
-  ol: (props: any) => <Box as="ol" pt={2} pl={4} ml={2} {...props} />,
+  ul: (props: any) => <List.Root as="ul" pt={2} pl={4} ml={2} {...props} />,
+  ol: (props: any) => <List.Root as="ol" pt={2} pl={4} ml={2} {...props} />,
   li: (props: any) => <Box as="li" pb={1} {...props} />,
   blockquote: Quote,
   image: CustomImage,
@@ -177,10 +155,9 @@ const MDXComponents = {
   td: TableData,
   thead: TableHeader,
   tbody: TableBody,
-  CustomCallout,
+  Alert,
   ProductCard: (props: any) => ProductCard(props),
   TableOfContents,
-  CustomAlert,
 };
 
 export { CustomLink };

@@ -1,4 +1,4 @@
-import { Box, Divider, Flex, Heading, Link, Text } from '@chakra-ui/react';
+import { Box, Separator, Flex, Heading, Link, Text } from '@chakra-ui/react';
 import NextLink from 'next/link';
 
 import SomeImage from '@/lib/components/samples/SomeImage';
@@ -13,7 +13,7 @@ const Home = ({ posts }: { posts: IPosts[] }) => {
       </Heading>
       <Text fontSize="s">A blog created with Next.js and Chakra UI</Text>
       <SomeImage />
-      <Divider />
+      <Separator />
       <Flex
         direction="column"
         alignItems="center"
@@ -25,7 +25,7 @@ const Home = ({ posts }: { posts: IPosts[] }) => {
       >
         <LatestBlogPostListLayout posts={posts} />
         <Link as={NextLink} href="/blog" ml="auto">
-          <Text color="teal.500" fontSize="sm" align="right" p="2">
+          <Text color="teal.500" fontSize="sm" p="2">
             All Posts &rarr;
           </Text>
         </Link>

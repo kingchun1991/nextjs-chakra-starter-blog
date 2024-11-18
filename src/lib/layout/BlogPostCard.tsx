@@ -3,7 +3,6 @@
 'use client';
 
 import {
-  useColorMode,
   Heading,
   Text,
   Flex,
@@ -11,7 +10,6 @@ import {
   Link,
   Image,
   Avatar,
-  Tag,
 } from '@chakra-ui/react';
 import { parseISO, format } from 'date-fns';
 import NextLink from 'next/link';
@@ -31,18 +29,11 @@ const BlogPostCard = ({
   author,
   tags,
 }: IPosts) => {
-  const { colorMode } = useColorMode();
-
   const imgPath = image
     ? `${image}`
     : `/api/og/cover?heading=${encodeURIComponent(
         title
       )}&text=${encodeURIComponent(summary)}&template=plain&center=true`;
-
-  const secondaryTextColor = {
-    light: 'gray.700',
-    dark: 'gray.400',
-  };
 
   if (!summary || !title) {
     return <div>Loading...</div>;
@@ -56,6 +47,7 @@ const BlogPostCard = ({
     light: 'gray.700',
     dark: 'gray.400',
   };
+
   const dateFormat = 'MMMM dd, yyyy';
   const parseDate = (dateString: string) => {
     try {
@@ -90,12 +82,15 @@ const BlogPostCard = ({
           </Link>
         </Flex>
       </Flex>
-      <Text color={secondaryTextColor[colorMode]} noOfLines={2}>
+      <Text color="gray.700" _dark={{ color: 'gray.400' }} lineClamp={2}>
         {summary}
       </Text>
       <Flex align="center" p={2}>
-        <Avatar size="xs" name={author} src="../images/avatar.png" mr={2} />
-        <Box fontSize="sm" color={textColor[colorMode]}>
+        <Avatar.Root size="xs">
+          <Avatar.Image src="../images/avatar.png" />
+          <Avatar.Fallback>{author}</Avatar.Fallback>
+        </Avatar.Root>
+        <Box fontSize="sm" color="gray.700" _dark={{ color: 'gray.400' }}>
           {author}
           {' / '}
           {parseDate(modifiedAt ?? '')}
@@ -104,7 +99,7 @@ const BlogPostCard = ({
 
       <Tags tags={tags ?? []} />
       <Link as={NextLink} href={`/blog/${slug}`} ml="auto">
-        <Text color="teal.500" fontSize="sm" align="right" p="2">
+        <Text color="teal.500" fontSize="sm" p="2">
           Read more &rarr;
         </Text>
       </Link>
