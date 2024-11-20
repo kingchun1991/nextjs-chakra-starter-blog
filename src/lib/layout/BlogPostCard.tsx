@@ -90,7 +90,12 @@ const BlogPostCard = ({
           <Avatar.Image src="../images/avatar.png" />
           <Avatar.Fallback>{author}</Avatar.Fallback>
         </Avatar.Root>
-        <Box fontSize="sm" color="gray.700" _dark={{ color: 'gray.400' }}>
+        <Box
+          ml={2}
+          fontSize="sm"
+          color="gray.700"
+          _dark={{ color: 'gray.400' }}
+        >
           {author}
           {' / '}
           {parseDate(modifiedAt ?? '')}

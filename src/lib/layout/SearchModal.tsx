@@ -64,13 +64,14 @@ const SearchModal = () => {
           <DialogTitle>Search</DialogTitle>
         </DialogHeader>
         <DialogBody>
-          <InputGroup flex="1" startElement={<FaSearch />}>
+          <InputGroup flex="1" startElement={<FaSearch />} width="100%">
             <Input
               placeholder="Search..."
               value={searchString}
               onChange={handleSearch}
               autoFocus
               autoComplete="off"
+              width="100%"
             />
           </InputGroup>
           <SearchResult

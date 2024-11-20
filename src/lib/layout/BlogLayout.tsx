@@ -85,7 +85,7 @@ export default function BlogLayout({
               alignItems="center"
             >
               <Avatar size="xs" name={post.author} mr={2} />
-              {post.author}
+              <Box ml={1}>{post.author}</Box>
             </Flex>
 
             <Flex
@@ -98,11 +98,13 @@ export default function BlogLayout({
               <Icon>
                 <FaRegFolder />
               </Icon>
-              {post.categories.map((category) => (
-                <Tag key={category} colorPalette="teal" variant="solid">
-                  {category}
-                </Tag>
-              ))}
+              <Box ml={1}>
+                {post.categories.map((category) => (
+                  <Tag key={category} colorPalette="teal" variant="solid">
+                    {category}
+                  </Tag>
+                ))}
+              </Box>
             </Flex>
             <Flex
               align="flex-start"
@@ -114,11 +116,13 @@ export default function BlogLayout({
               <Icon>
                 <FaRegClock />
               </Icon>
-              <Text as="time" p={1}>
-                {modifiedAt
-                  ? `${formattedModifyDate}`
-                  : `${formattedPublishedDate}`}
-              </Text>
+              <Box ml={1}>
+                <Text as="time" p={1}>
+                  {modifiedAt
+                    ? `${formattedModifyDate}`
+                    : `${formattedPublishedDate}`}
+                </Text>
+              </Box>
             </Flex>
             <Spacer />
             <Flex

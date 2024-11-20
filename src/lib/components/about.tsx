@@ -38,7 +38,7 @@ export default function AboutLayout({
           w="100%"
           px={2}
         >
-          <Flex align="left" justifyContent="left">
+          <Flex align="center" justifyContent="center">
             <Avatar.Root size="2xl">
               <Avatar.Image src={post.image} />
               <Avatar.Fallback>{post.author}</Avatar.Fallback>
