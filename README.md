@@ -11,7 +11,7 @@
 
 - 🚀 **Next.js 15** - **React 18**
 - ⛓️ **TypeScript**
-- **Chakra-UI** v2
+- **Chakra-UI** v3
 - ✔️ **toolings** for linting, formatting, and conventions configured
   - `eslint`, `prettier`, `husky`, `lint-staged`, `commitlint`, `commitizen`, and `standard-version`
   - `pre-commit`, `pre-push`, `commit-msg`, `prepare-commit-msg` hook configured
