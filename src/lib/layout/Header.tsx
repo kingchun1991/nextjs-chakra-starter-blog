@@ -13,7 +13,7 @@ import {
   Spacer,
 } from '@chakra-ui/react';
 import NextLink from 'next/link';
-import { AiOutlineClose } from 'react-icons/ai';
+import { AiOutlineClose, AiOutlineGithub } from 'react-icons/ai';
 import { FiChevronDown, FiChevronRight } from 'react-icons/fi';
 import { GiHamburgerMenu } from 'react-icons/gi';
 
@@ -249,13 +249,30 @@ const Header = () => {
         >
           <SearchModal />
           <ColorModeButton />
+          <IconButton
+            as={Link}
+            aria-label="GitHub Repository"
+            bg="transparent"
+            color="black"
+            _dark={{ bg: 'black', color: 'white' }}
+          >
+            <Link href="https://github.com/kingchun1991/nextjs-chakra-starter-blog">
+              <AiOutlineGithub />
+            </Link>
+          </IconButton>
           <Spacer />
           <Flex
             flex={{ base: 1, md: 'auto' }}
             ml={{ base: -2 }}
             display={{ base: 'flex', md: 'none' }}
           >
-            <IconButton aria-label="Toggle Navigation" onClick={onToggle}>
+            <IconButton
+              aria-label="Toggle Navigation"
+              onClick={onToggle}
+              bg="transparent"
+              color="black"
+              _dark={{ bg: 'black', color: 'white' }}
+            >
               {open ? <AiOutlineClose /> : <GiHamburgerMenu />}
             </IconButton>
           </Flex>
