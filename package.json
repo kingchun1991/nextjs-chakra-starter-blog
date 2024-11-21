@@ -25,7 +25,7 @@
   },
   "dependencies": {
     "@chakra-ui/react": "^3.1.1",
-    "@emotion/react": "^11.13.3",
+    "@emotion/react": "11.13.5",
     "@mdx-js/loader": "3.1.0",
     "@next/mdx": "^15.0.3",
     "@vercel/og": "^0.6.2",
