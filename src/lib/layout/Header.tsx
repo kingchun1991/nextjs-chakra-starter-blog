@@ -256,7 +256,11 @@ const Header = () => {
             color="black"
             _dark={{ bg: 'black', color: 'white' }}
           >
-            <Link href="https://github.com/kingchun1991/nextjs-chakra-starter-blog">
+            <Link
+              target="_blank"
+              rel="noopener noreferrer"
+              href="https://github.com/kingchun1991/nextjs-chakra-starter-blog"
+            >
               <AiOutlineGithub />
             </Link>
           </IconButton>
