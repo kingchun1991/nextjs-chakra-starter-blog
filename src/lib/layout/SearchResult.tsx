@@ -11,7 +11,7 @@ import {
   Flex,
   Heading,
 } from '@chakra-ui/react';
-import { FaRegFileAlt, FaTags } from 'react-icons/fa';
+import { LuFileText, LuTags } from 'react-icons/lu';
 
 import { plainify, titleify } from '@/lib/utils/textConverter';
 
@@ -202,7 +202,7 @@ const SearchResult = ({
                         {item.frontmatter.categories && (
                           <HStack gap={2}>
                             <Icon>
-                              <FaRegFileAlt />
+                              <LuFileText />
                             </Icon>
                             {item.frontmatter.categories.map(
                               (category, index) => (
@@ -220,7 +220,7 @@ const SearchResult = ({
                         {item.frontmatter.tags && (
                           <HStack gap={2}>
                             <Icon>
-                              <FaTags />
+                              <LuTags />
                             </Icon>
                             {item.frontmatter.tags.map((tag, index) => (
                               <Text key={tag}>
@@ -240,7 +240,7 @@ const SearchResult = ({
             ))
           ) : (
             <Box className="search-result-empty" textAlign="center" p={8}>
-              <Icon as={FaRegFileAlt} boxSize="42px" />
+              <Icon as={LuFileText} boxSize="42px" />
               <Text className="mt-4">
                 No results for &quot;<strong>{searchString}</strong>&quot;
               </Text>

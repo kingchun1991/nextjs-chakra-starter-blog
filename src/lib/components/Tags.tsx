@@ -1,6 +1,6 @@
 import { Link, Icon, HStack, Flex } from '@chakra-ui/react';
 import NextLink from 'next/link';
-import { FaTags } from 'react-icons/fa';
+import { LuTags } from 'react-icons/lu';
 
 import { slugify } from '../utils/textConverter';
 import { Tag } from '@/components/ui/tag';
@@ -14,7 +14,7 @@ const Tags = ({ tags }: { tags: string[] }) => {
     >
       <Flex align="flex-start" alignItems="center">
         <Icon m={1}>
-          <FaTags />
+          <LuTags />
         </Icon>
       </Flex>
       {tags?.map((tag) => (

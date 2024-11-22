@@ -13,9 +13,13 @@ import {
   Spacer,
 } from '@chakra-ui/react';
 import NextLink from 'next/link';
-import { AiOutlineClose, AiOutlineGithub } from 'react-icons/ai';
-import { FiChevronDown, FiChevronRight } from 'react-icons/fi';
-import { GiHamburgerMenu } from 'react-icons/gi';
+import {
+  LuGithub,
+  LuMenu,
+  LuX,
+  LuChevronDown,
+  LuChevronRight,
+} from 'react-icons/lu';
 
 import { ColorModeButton } from '@/components/ui/color-mode';
 import {
@@ -59,7 +63,9 @@ const DesktopSubNav = ({ title, url }: NavItem) => {
           align="center"
           flex={1}
         >
-          <Icon color="pink.400" w={5} h={5} as={FiChevronRight} />
+          <Icon color="pink.400" w={5} h={5}>
+            <LuChevronRight />
+          </Icon>
         </Flex>
       </Stack>
     </Link>
@@ -90,11 +96,11 @@ const DesktopNav = () => {
               </Link>
             </HoverCardTrigger>
 
-            {navItem.items && (
+            {navItem.children && (
               <HoverCardContent>
                 <HoverCardArrow />
                 <Stack>
-                  {navItem.items.map((child) => (
+                  {navItem.children.map((child) => (
                     <DesktopSubNav key={child.title} {...child} />
                   ))}
                 </Stack>
@@ -107,11 +113,11 @@ const DesktopNav = () => {
   );
 };
 
-const MobileNavItem = ({ title, items }: NavItem) => {
+const MobileNavItem = ({ title, children }: NavItem) => {
   const { open, onToggle } = useDisclosure();
 
   return (
-    <Stack gap={4} onClick={items && onToggle}>
+    <Stack gap={4} onClick={children && onToggle}>
       <Flex
         py={2}
         as={Link}
@@ -125,14 +131,15 @@ const MobileNavItem = ({ title, items }: NavItem) => {
         <Text fontWeight={600} color="gray.600" _dark={{ color: 'gray.200' }}>
           {title}
         </Text>
-        {items && (
+        {children && (
           <Icon
-            as={FiChevronDown}
             transition="all .25s ease-in-out"
             transform={open ? 'rotate(180deg)' : ''}
             w={6}
             h={6}
-          />
+          >
+            <LuChevronDown />
+          </Icon>
         )}
       </Flex>
 
@@ -147,10 +154,10 @@ const MobileNavItem = ({ title, items }: NavItem) => {
             _dark={{ borderColor: 'gray.700' }}
             align="start"
           >
-            {items &&
-              items.map((item) => (
-                <Link as={NextLink} key={item.title} py={2} href={item.url}>
-                  {item.title}
+            {children &&
+              children.map((child) => (
+                <Link as={NextLink} key={child.title} py={2} href={child.url}>
+                  {child.title}
                 </Link>
               ))}
           </Stack>
@@ -242,7 +249,7 @@ const Header = () => {
               rel="noopener noreferrer"
               href={siteConfig.repoUrl}
             >
-              <AiOutlineGithub />
+              <LuGithub />
             </Link>
           </IconButton>
           <Spacer />
@@ -258,7 +265,7 @@ const Header = () => {
               color="black"
               _dark={{ bg: 'black', color: 'white' }}
             >
-              {open ? <AiOutlineClose /> : <GiHamburgerMenu />}
+              {open ? <LuX /> : <LuMenu />}
             </IconButton>
           </Flex>
         </Stack>

@@ -14,7 +14,7 @@ import {
 import { parseISO, format } from 'date-fns';
 import { MDXRemote } from 'next-mdx-remote';
 import type { MDXRemoteSerializeResult } from 'next-mdx-remote';
-import { FaRegFolder, FaRegClock } from 'react-icons/fa';
+import { LuFolder, LuClock } from 'react-icons/lu';
 import readingDuration from 'reading-duration';
 
 import { Avatar } from '@/components/ui/avatar';
@@ -23,6 +23,7 @@ import MDXComponents from '@/lib/components/MDXComponents';
 import Share from '@/lib/components/Share';
 import Tags from '@/lib/components/Tags';
 import type { IPosts } from '@/lib/types/custom-types';
+import { giscusConfig } from '@/site.config';
 
 // import similerItems from '../utils/similarItems';
 
@@ -96,7 +97,7 @@ export default function BlogLayout({
               alignItems="center"
             >
               <Icon>
-                <FaRegFolder />
+                <LuFolder />
               </Icon>
               <Box ml={1}>
                 {post.categories.map((category) => (
@@ -114,7 +115,7 @@ export default function BlogLayout({
               alignItems="center"
             >
               <Icon>
-                <FaRegClock />
+                <LuClock />
               </Icon>
               <Box ml={1}>
                 <Text as="time" p={1}>
@@ -160,8 +161,8 @@ export default function BlogLayout({
         <Box className="giscus" />
         <script
           src="https://giscus.app/client.js"
-          data-repo="kingchun1991/nextjs-chakra-starter-blog"
-          data-repo-id="R_kgDOJ2sHHw"
+          data-repo={giscusConfig.repo}
+          data-repo-id={giscusConfig.repo_id}
           data-category="General"
           data-category-id="DIC_kwDOJ2sHH84CfEZU"
           data-mapping="title"

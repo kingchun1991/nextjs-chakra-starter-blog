@@ -8,11 +8,31 @@ export const siteConfig: SitesConfig = {
   repoBranch: 'main',
   donationUrl: 'https://opencollective.com/chakra-ui',
   navigation: [
-    { title: 'Blog', url: '/blog' },
+    {
+      title: 'Blog',
+      url: '/blog',
+      // children: [
+      //   { title: 'Blog2', url: '/blog/blog2' },
+      //   {
+      //     title: 'Blog3',
+      //     url: '/antiepidemiczone/rat',
+      //   },
+      // ],
+    },
     { title: 'Tags', url: '/tags' },
     { title: 'About', url: '/about' },
   ],
 };
+
+export const giscusConfig: GiscusConfig = {
+  repo: 'kingchun1991/nextjs-chakra-starter-blog',
+  repo_id: 'R_kgDOJ2sHHw',
+};
+
+interface GiscusConfig {
+  repo: string;
+  repo_id: string;
+}
 
 interface SitesConfig {
   title: string;
@@ -31,5 +51,5 @@ export interface NavItem {
   url?: string;
   external?: boolean;
   status?: string;
-  items?: NavItem[];
+  children?: NavItem[];
 }

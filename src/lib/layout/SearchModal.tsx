@@ -2,7 +2,7 @@
 /* eslint-disable import/no-extraneous-dependencies */
 import { Box, Flex, IconButton, Input, Kbd, Spacer } from '@chakra-ui/react';
 import { useState } from 'react';
-import { FaSearch } from 'react-icons/fa';
+import { LuSearch } from 'react-icons/lu';
 
 import searchData from '../../../.json/search.json' assert { type: 'json' };
 import {
@@ -56,7 +56,7 @@ const SearchModal = () => {
     <DialogRoot placement="center">
       <DialogTrigger asChild>
         <IconButton variant="ghost" aria-label="Toggle Search">
-          <FaSearch />
+          <LuSearch />
         </IconButton>
       </DialogTrigger>
       <DialogContent>
@@ -64,7 +64,7 @@ const SearchModal = () => {
           <DialogTitle>Search</DialogTitle>
         </DialogHeader>
         <DialogBody>
-          <InputGroup flex="1" startElement={<FaSearch />} width="100%">
+          <InputGroup flex="1" startElement={<LuSearch />} width="100%">
             <Input
               placeholder="Search..."
               value={searchString}
