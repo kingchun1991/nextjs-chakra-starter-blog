@@ -8,9 +8,9 @@ export const siteConfig: SitesConfig = {
   repoBranch: 'main',
   donationUrl: 'https://opencollective.com/chakra-ui',
   navigation: [
-    { title: 'Playground', url: 'playground' },
-    { title: 'Guides', url: 'guides' },
-    { title: 'Blog', url: 'blog' },
+    { title: 'Blog', url: '/blog' },
+    { title: 'Tags', url: '/tags' },
+    { title: 'About', url: '/about' },
   ],
 };
 

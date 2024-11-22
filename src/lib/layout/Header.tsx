@@ -24,35 +24,16 @@ import {
   HoverCardRoot,
   HoverCardTrigger,
 } from '@/components/ui/hover-card';
+import type { NavItem } from '@/site.config';
+import { siteConfig } from '@/site.config';
 
 import SearchModal from './SearchModal';
 
-interface NavItem {
-  label: string;
-  // eslint-disable-next-line react/no-unused-prop-types
-  children?: Array<NavItem>;
-  href?: string;
-}
-const NAV_ITEMS: Array<NavItem> = [
-  {
-    label: 'Blog',
-    href: '/blog',
-  },
-  {
-    label: 'Tags',
-    href: '/tags',
-  },
-  {
-    label: 'About',
-    href: '/about',
-  },
-];
-
-const DesktopSubNav = ({ label, href }: NavItem) => {
+const DesktopSubNav = ({ title, url }: NavItem) => {
   return (
     <Link
       as={NextLink}
-      href={href}
+      href={url}
       role="group"
       display="block"
       p={2}
@@ -66,7 +47,7 @@ const DesktopSubNav = ({ label, href }: NavItem) => {
             _groupHover={{ color: 'pink.400' }}
             fontWeight={500}
           >
-            {label}
+            {title}
           </Text>
         </Box>
         <Flex
@@ -88,14 +69,14 @@ const DesktopSubNav = ({ label, href }: NavItem) => {
 const DesktopNav = () => {
   return (
     <Stack direction="row" gap={4}>
-      {NAV_ITEMS.map((navItem) => (
-        <Box key={navItem.label}>
+      {siteConfig.navigation.map((navItem) => (
+        <Box key={navItem.title}>
           <HoverCardRoot>
             <HoverCardTrigger asChild>
               <Link
                 as={NextLink}
                 p={2}
-                href={navItem.href ?? '#'}
+                href={navItem.url ?? '#'}
                 fontSize="sm"
                 fontWeight={500}
                 color="gray.600"
@@ -105,16 +86,16 @@ const DesktopNav = () => {
                   color: { base: 'gray.800', _dark: 'white' },
                 }}
               >
-                {navItem.label}
+                {navItem.title}
               </Link>
             </HoverCardTrigger>
 
-            {navItem.children && (
+            {navItem.items && (
               <HoverCardContent>
                 <HoverCardArrow />
                 <Stack>
-                  {navItem.children.map((child) => (
-                    <DesktopSubNav key={child.label} {...child} />
+                  {navItem.items.map((child) => (
+                    <DesktopSubNav key={child.title} {...child} />
                   ))}
                 </Stack>
               </HoverCardContent>
@@ -126,11 +107,11 @@ const DesktopNav = () => {
   );
 };
 
-const MobileNavItem = ({ label, children }: NavItem) => {
+const MobileNavItem = ({ title, items }: NavItem) => {
   const { open, onToggle } = useDisclosure();
 
   return (
-    <Stack gap={4} onClick={children && onToggle}>
+    <Stack gap={4} onClick={items && onToggle}>
       <Flex
         py={2}
         as={Link}
@@ -142,9 +123,9 @@ const MobileNavItem = ({ label, children }: NavItem) => {
         }}
       >
         <Text fontWeight={600} color="gray.600" _dark={{ color: 'gray.200' }}>
-          {label}
+          {title}
         </Text>
-        {children && (
+        {items && (
           <Icon
             as={FiChevronDown}
             transition="all .25s ease-in-out"
@@ -166,10 +147,10 @@ const MobileNavItem = ({ label, children }: NavItem) => {
             _dark={{ borderColor: 'gray.700' }}
             align="start"
           >
-            {children &&
-              children.map((child) => (
-                <Link as={NextLink} key={child.label} py={2} href={child.href}>
-                  {child.label}
+            {items &&
+              items.map((item) => (
+                <Link as={NextLink} key={item.title} py={2} href={item.url}>
+                  {item.title}
                 </Link>
               ))}
           </Stack>
@@ -182,8 +163,8 @@ const MobileNavItem = ({ label, children }: NavItem) => {
 const MobileNav = () => {
   return (
     <Stack bg="white" _dark={{ bg: 'gray.800' }} p={4} display={{ md: 'none' }}>
-      {NAV_ITEMS.map((navItem) => (
-        <MobileNavItem key={navItem.label} {...navItem} />
+      {siteConfig.navigation.map((navItem) => (
+        <MobileNavItem key={navItem.title} {...navItem} />
       ))}
     </Stack>
   );
@@ -259,7 +240,7 @@ const Header = () => {
             <Link
               target="_blank"
               rel="noopener noreferrer"
-              href="https://github.com/kingchun1991/nextjs-chakra-starter-blog"
+              href={siteConfig.repoUrl}
             >
               <AiOutlineGithub />
             </Link>
