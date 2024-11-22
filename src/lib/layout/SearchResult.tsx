@@ -164,7 +164,7 @@ const SearchResult = ({
                         src={
                           item.frontmatter.image
                             ? item.frontmatter.image
-                            : `${baseUrl}/api/og/cover?heading=${encodeURIComponent(
+                            : `${siteConfig.url}/api/og/cover?heading=${encodeURIComponent(
                                 item.frontmatter.title
                               )}&text=${encodeURIComponent(
                                 item.frontmatter.summary

@@ -2,10 +2,10 @@
 import type { Metadata } from 'next';
 import type { MDXRemoteSerializeResult } from 'next-mdx-remote';
 
-import { baseUrl } from '@/lib/constants/baseUrl';
 import BlogLayout from '@/lib/layout/BlogLayout';
 import type { IPosts } from '@/lib/types/custom-types';
 import { getFiles, getFileBySlug } from '@/lib/utils/mdx';
+import { siteConfig } from '@/site.config';
 
 type Props = {
   params: Promise<{ slug: string }>;
@@ -40,12 +40,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     openGraph: {
       type: 'article',
       locale: 'en',
-      url: `${baseUrl}/${metaInformation.slug}`,
+      url: `${siteConfig.url}/${metaInformation.slug}`,
       title: `${metaInformation.title}`,
       description: `${metaInformation.summary}`,
       images: [
         {
-          url: `${baseUrl}/api/og/cover?heading=${encodeURIComponent(
+          url: `${siteConfig.url}/api/og/cover?heading=${encodeURIComponent(
             metaInformation.title
           )}&text=${encodeURIComponent(
             metaInformation.summary
@@ -59,7 +59,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       title: metaInformation.title,
       description: metaInformation.summary,
       images: [
-        `${baseUrl}/api/og/cover?heading=${encodeURIComponent(
+        `${siteConfig.url}/api/og/cover?heading=${encodeURIComponent(
           metaInformation.title
         )}&text=${encodeURIComponent(
           metaInformation.summary

@@ -8,10 +8,10 @@ import type { IPosts } from '@/lib/types/custom-types';
 const Home = ({ posts }: { posts: IPosts[] }) => {
   return (
     <Box>
-      <Heading letterSpacing="tight" mb={4} as="h1" size="2xl">
+      <Heading letterSpacing="tight" mb={4} as="h1" size="3xl">
         Latest
       </Heading>
-      <Text fontSize="s">A blog created with Next.js and Chakra UI</Text>
+      <Text fontSize="l">A blog created with Next.js and Chakra UI</Text>
       <SomeImage />
       <Separator />
       <Flex

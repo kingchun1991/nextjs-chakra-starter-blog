@@ -2,16 +2,17 @@ import type { Metadata, Viewport } from 'next';
 
 import { Provider } from '@/components/ui/provider';
 import Layout from '@/lib/layout';
+import { siteConfig } from '@/site.config';
 
 type RootLayoutProps = {
   children: React.ReactNode;
 };
 
-const APP_NAME = 'nextjs-chakra-starter-blog';
+const APP_NAME = siteConfig.title;
 
 export const metadata: Metadata = {
-  title: { default: APP_NAME, template: '%s | nextjs-chakra-starter-blog' },
-  description: 'Next.js + chakra-ui + TypeScript + mdx template',
+  title: { default: APP_NAME, template: siteConfig.titleTemplate },
+  description: siteConfig.description,
   applicationName: APP_NAME,
   appleWebApp: {
     capable: true,
@@ -22,12 +23,12 @@ export const metadata: Metadata = {
     telephone: false,
   },
   openGraph: {
-    url: 'https://nextjs-chakra-starter-blog.vercel.app',
-    title: 'nextjs-chakra-starter-blog',
-    description: 'Next.js + chakra-ui + TypeScript + MDX template',
+    url: siteConfig.url,
+    title: siteConfig.title,
+    description: siteConfig.description,
     images: {
-      url: 'https://nextjs-chakra-starter-blog.vercel.app/api/og/cover?heading=nextjs-chakra-starter-blog&template=plain&center=true',
-      alt: 'nextjs-chakra-starter-blog og-image',
+      url: `${siteConfig.url}/api/og/cover?heading=${siteConfig.title}&template=plain&center=true`,
+      alt: `${siteConfig.title} og-image`,
     },
   },
   twitter: {
@@ -44,7 +45,7 @@ export const viewport: Viewport = {
 
 const RootLayout = ({ children }: RootLayoutProps) => {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang={siteConfig.language} suppressHydrationWarning>
       <body>
         <Provider>
           <Layout>{children}</Layout>

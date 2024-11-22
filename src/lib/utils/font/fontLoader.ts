@@ -1,4 +1,4 @@
-import { baseUrl } from '@/lib/constants/baseUrl';
+import { siteConfig } from '@/site.config';
 
 export const fontLoader = (url: string) =>
-  fetch(new URL(url, baseUrl)).then((res) => res.arrayBuffer());
+  fetch(new URL(url, siteConfig.url)).then((res) => res.arrayBuffer());

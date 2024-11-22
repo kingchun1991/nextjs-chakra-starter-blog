@@ -1,7 +1,7 @@
 import type { MetadataRoute } from 'next';
 
 const manifest = (): MetadataRoute.Manifest => ({
-  short_name: 'nextarter-chakra',
+  short_name: 'nextjs-chakra-starter-blog',
   name: 'Next.js App Template',
   lang: 'en',
   start_url: '/',

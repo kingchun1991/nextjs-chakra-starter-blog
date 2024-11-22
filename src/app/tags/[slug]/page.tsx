@@ -1,10 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import type { Metadata } from 'next';
 
-import { baseUrl } from '@/lib/constants/baseUrl';
 import BlogList from '@/lib/pages/blogList';
 import type { IPosts } from '@/lib/types/custom-types';
 import { getAllFilesFrontMatter } from '@/lib/utils/mdx';
+import { siteConfig } from '@/site.config';
 
 type Props = {
   params: Promise<{ slug: string }>;
@@ -52,12 +52,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     openGraph: {
       type: 'website',
       locale: 'en',
-      url: `${baseUrl}/${slug}`,
+      url: `${siteConfig.url}/${slug}`,
       title: `${slug}`,
       description: `${slug}`,
       images: [
         {
-          url: `${baseUrl}/api/og/cover?heading=${encodeURIComponent(
+          url: `${siteConfig.url}/api/og/cover?heading=${encodeURIComponent(
             slug
           )}&text=${encodeURIComponent(slug)}&template=plain&center=true`,
           alt: 'nextjs-chakra-starter-blog og-image',
@@ -69,7 +69,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       title: slug,
       description: 'blog',
       images: [
-        `${baseUrl}/api/og/cover?heading=${encodeURIComponent(
+        `${siteConfig.url}/api/og/cover?heading=${encodeURIComponent(
           slug
         )}&text=${encodeURIComponent('blog')}&template=plain&center=true`,
       ],

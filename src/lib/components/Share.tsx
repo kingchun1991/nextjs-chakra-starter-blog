@@ -6,7 +6,7 @@ import {
   FaXTwitter,
 } from 'react-icons/fa6';
 
-import { baseUrl } from '@/lib/constants/baseUrl';
+import { siteConfig } from '@/site.config';
 
 const Share = ({
   title,
@@ -24,7 +24,7 @@ const Share = ({
           aria-label="facebook share button"
           onClick={() =>
             window.open(
-              `https://facebook.com/sharer/sharer.php?u=${baseUrl}${slug}`,
+              `https://facebook.com/sharer/sharer.php?u=${siteConfig.url}/blog/${slug}`,
               '_blank'
             )
           }
@@ -38,7 +38,7 @@ const Share = ({
           aria-label="x share button"
           onClick={() =>
             window.open(
-              `https://x.com/share?url=${baseUrl}${slug}&text=${title}`,
+              `https://x.com/share?url=${siteConfig.url}/blog/${slug}&text=${title}`,
               '_blank'
             )
           }
@@ -52,7 +52,7 @@ const Share = ({
           aria-label="linkedin share button"
           onClick={() =>
             window.open(
-              `https://www.linkedin.com/shareArticle?mini=true&url=${baseUrl}${slug}&title=${title}&summary=${description}&source=${baseUrl}`,
+              `https://www.linkedin.com/shareArticle?mini=true&url=${siteConfig.url}/blog/${slug}&title=${title}&summary=${description}&source=${siteConfig.url}`,
               '_blank'
             )
           }
@@ -66,7 +66,7 @@ const Share = ({
           aria-label="pinterest share button"
           onClick={() =>
             window.open(
-              `https://pinterest.com/pin/create/button/?url=${baseUrl}${slug}&media=&description=${description}`,
+              `https://pinterest.com/pin/create/button/?url=${siteConfig.url}/blog/${slug}&media=&description=${description}`,
               '_blank'
             )
           }
