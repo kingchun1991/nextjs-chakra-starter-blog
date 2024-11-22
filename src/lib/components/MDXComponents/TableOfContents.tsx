@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 
 import { Box, Button, IconButton, useDisclosure } from '@chakra-ui/react';
-import { MdBookmark, MdKeyboardArrowDown } from 'react-icons/md';
+import { LuBookmark, LuChevronDown } from 'react-icons/lu';
 
 type TableOfContentsProps = {
   children: React.ReactNode;
@@ -28,7 +28,7 @@ export const TableOfContents: React.FC<TableOfContentsProps> = ({
         aria-label="Toggle Table of Contents"
         variant="plain"
       >
-        <MdBookmark />
+        <LuBookmark />
         <span style={{ marginRight: 6 }}>Table of Contents</span>
         <IconButton
           aria-label="Toggle"
@@ -36,7 +36,7 @@ export const TableOfContents: React.FC<TableOfContentsProps> = ({
           transition="transform 0.3s ease-in-out"
           variant="plain"
         >
-          <MdKeyboardArrowDown />
+          <LuChevronDown />
         </IconButton>
       </Button>
       {open && (
