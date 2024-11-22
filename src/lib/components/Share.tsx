@@ -1,5 +1,10 @@
 import { Box, HStack, IconButton } from '@chakra-ui/react';
-import { LuFacebook, LuLinkedin, LuTwitter } from 'react-icons/lu';
+import {
+  FaFacebook,
+  FaLinkedin,
+  FaPinterest,
+  FaXTwitter,
+} from 'react-icons/fa6';
 
 import { siteConfig } from '@/site.config';
 
@@ -25,7 +30,7 @@ const Share = ({
           }
           variant="plain"
         >
-          <LuFacebook />
+          <FaFacebook />
         </IconButton>
       </Box>
       <Box display="inline-block">
@@ -39,7 +44,7 @@ const Share = ({
           }
           variant="plain"
         >
-          <LuTwitter />
+          <FaXTwitter />
         </IconButton>
       </Box>
       <Box display="inline-block">
@@ -53,10 +58,10 @@ const Share = ({
           }
           variant="plain"
         >
-          <LuLinkedin />
+          <FaLinkedin />
         </IconButton>
       </Box>
-      {/* <Box display="inline-block">
+      <Box display="inline-block">
         <IconButton
           aria-label="pinterest share button"
           onClick={() =>
@@ -69,7 +74,7 @@ const Share = ({
         >
           <FaPinterest />
         </IconButton>
-      </Box> */}
+      </Box>
     </HStack>
   );
 };
