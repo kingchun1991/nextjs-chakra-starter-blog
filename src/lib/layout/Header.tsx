@@ -113,35 +113,37 @@ const DesktopNav = () => {
   );
 };
 
-const MobileNavItem = ({ title, children }: NavItem) => {
+const MobileNavItem = ({ title, url, children }: NavItem) => {
   const { open, onToggle } = useDisclosure();
 
   return (
     <Stack gap={4} onClick={children && onToggle}>
-      <Flex
-        py={2}
-        as={Link}
-        // href={href ?? '#'}
-        justify="space-between"
-        align="center"
-        _hover={{
-          textDecoration: 'none',
-        }}
-      >
-        <Text fontWeight={600} color="gray.600" _dark={{ color: 'gray.200' }}>
-          {title}
-        </Text>
-        {children && (
-          <Icon
-            transition="all .25s ease-in-out"
-            transform={open ? 'rotate(180deg)' : ''}
-            w={6}
-            h={6}
-          >
-            <LuChevronDown />
-          </Icon>
-        )}
-      </Flex>
+      <Link href={url ?? '#'}>
+        <Flex
+          py={2}
+          as={Link}
+          // href={href ?? '#'}
+          justify="space-between"
+          align="center"
+          _hover={{
+            textDecoration: 'none',
+          }}
+        >
+          <Text fontWeight={600} color="gray.600" _dark={{ color: 'gray.200' }}>
+            {title}
+          </Text>
+          {children && (
+            <Icon
+              transition="all .25s ease-in-out"
+              transform={open ? 'rotate(180deg)' : ''}
+              w={6}
+              h={6}
+            >
+              <LuChevronDown />
+            </Icon>
+          )}
+        </Flex>
+      </Link>
 
       <Collapsible.Root open={open} style={{ marginTop: '0!important' }}>
         <Collapsible.Content>
