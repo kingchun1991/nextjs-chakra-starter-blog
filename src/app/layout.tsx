@@ -31,7 +31,7 @@ export const metadata: Metadata = {
     },
   },
   twitter: {
-    creator: '@sozonome',
+    creator: '@agstnsnathaniel',
     card: 'summary_large_image',
   },
 };
