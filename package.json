@@ -24,7 +24,7 @@
     "generate-json": "node scripts/jsonGenerator.js"
   },
   "dependencies": {
-    "@chakra-ui/react": "^3.1.1",
+    "@chakra-ui/react": "3.2.2",
     "@emotion/react": "^11.13.3",
     "@mdx-js/loader": "3.1.0",
     "@next/mdx": "^15.0.3",
