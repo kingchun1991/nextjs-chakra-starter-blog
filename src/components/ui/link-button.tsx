@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-empty-object-type */
 'use client';
 
 import type { HTMLChakraProps, RecipeProps } from '@chakra-ui/react';
