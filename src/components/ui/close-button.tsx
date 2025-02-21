@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-empty-object-type */
 import type { ButtonProps as ChakraCloseButtonProps } from '@chakra-ui/react';
 import { IconButton as ChakraIconButton } from '@chakra-ui/react';
 import * as React from 'react';
