@@ -16,10 +16,21 @@ draft: false
 <TableOfContents>
 
 - [Table Of Contents](#table-of-contents)
+- [Markdown Table](#markdown-table)
 - [Callout with icon](#callout-with-icon)
 - [Card](#card)
+- [Mermaid Diagram](#mermaid-diagram)
+- [github callout](#github-callout)
+- [Steps](#steps)
 
 </TableOfContents>
+
+# Markdown Table
+
+| Name  | Age |
+| ----- | --- |
+| Alice | 20  |
+| Bob   | 21  |
 
 # Callout with icon
 
@@ -48,6 +59,21 @@ graph LR
 
     B --> D[海外消費]
     B --> E[網上簽賬]
+```
+
+```mermaid
+graph LR
+    A[消費] --> B[選擇合適信用卡]
+    B --> C[使用現金回贈網站]
+    C --> D[購買商品/服務]
+    D --> E[獲得雙重回贈]
+    E --> F[節省金錢]
+    style A fill:#f9d5e5,stroke:#333,stroke-width:2px
+    style B fill:#eeac99,stroke:#333,stroke-width:2px
+    style C fill:#e06377,stroke:#333,stroke-width:2px
+    style D fill:#c83349,stroke:#333,stroke-width:2px
+    style E fill:#5b9aa0,stroke:#333,stroke-width:2px
+    style F fill:#d6eadf,stroke:#333,stroke-width:2px
 ```
 
 # github callout
