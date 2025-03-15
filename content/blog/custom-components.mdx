@@ -22,6 +22,7 @@ draft: false
 - [Mermaid Diagram](#mermaid-diagram)
 - [github callout](#github-callout)
 - [Steps](#steps)
+- [Timeline Example](#timeline-example)
 
 </TableOfContents>
 
@@ -90,15 +91,17 @@ graph LR
 > [!TIP]
 > Alternatively to `UNOPTIMIZED=1`, to continue using `next/image`, you can use an alternative image optimization provider such as Imgix, Cloudinary or Akamai. See [image optimization documentation](https://nextjs.org/docs/app/building-your-application/deploying/static-exports#image-optimization) for more details.
 
-# Steps
+# Timeline Example
 
-<steps>
-  <step>
-    <h3>Step 1</h3>
-    <p>Description for step 1.</p>
-  </step>
-  <step>
-    <h3>Step 2</h3>
-    <p>Description for step 2.</p>
-  </step>
-</steps>
+<Timeline>
+  <TimelineItem
+    title="Phase 1"
+    subtitle="2024-01-01"
+    avatar="https://gravatar.com/avatar/fdfbdfa4600c9305f2c9bfa7b591b78d?s=400&d=robohash&r=x"
+  >
+    Description for phase 1.
+  </TimelineItem>
+  <TimelineItem title="Phase 2" subtitle="2024-02-01">
+    Description for phase 2.
+  </TimelineItem>
+</Timeline>
