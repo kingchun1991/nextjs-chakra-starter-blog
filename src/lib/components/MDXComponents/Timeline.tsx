@@ -1,15 +1,14 @@
 import { Text, Timeline as ChakraTimeline, Avatar } from '@chakra-ui/react';
 import { LuShip } from 'react-icons/lu';
+import { ReactNode } from 'react';
 
-export const Timeline = ({ children, ...props }) => {
+export const Timeline = ({ children, ...props }: { children: ReactNode }) => {
   return (
     <ChakraTimeline.Root size="lg" {...props}>
       {children}
     </ChakraTimeline.Root>
   );
 };
-
-import { ReactNode } from 'react';
 
 export const TimelineItem = ({
   title,
