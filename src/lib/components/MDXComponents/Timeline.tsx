@@ -1,10 +1,10 @@
 import { Text, Timeline as ChakraTimeline, Avatar } from '@chakra-ui/react';
-import { LuShip } from 'react-icons/lu';
+import { LuCheck } from 'react-icons/lu';
 import { ReactNode } from 'react';
 
 export const Timeline = ({ children, ...props }: { children: ReactNode }) => {
   return (
-    <ChakraTimeline.Root size="lg" {...props}>
+    <ChakraTimeline.Root size="xl" {...props}>
       {children}
     </ChakraTimeline.Root>
   );
@@ -30,15 +30,15 @@ export const TimelineItem = ({
         <ChakraTimeline.Indicator>
           {avatar ? (
             typeof avatar === 'string' ? (
-              <Avatar.Root size="sm">
+              <Avatar.Root size="full">
                 <Avatar.Image src={avatar} />
-                <Avatar.Fallback name="Sage" />
+                <Avatar.Fallback name="avatar" />
               </Avatar.Root>
             ) : (
               avatar
             )
           ) : (
-            <LuShip />
+            <LuCheck />
           )}
         </ChakraTimeline.Indicator>
       </ChakraTimeline.Connector>
