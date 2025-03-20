@@ -28,7 +28,7 @@ export const Mermaid = ({
     }
   }, [colorMode]);
 
-  const containerId = `mermaid-${Math.random().toString(36).substr(2, 9)}`;
+  const containerId = `mermaid-${crypto.randomUUID()}`;
 
   return (
     <div
