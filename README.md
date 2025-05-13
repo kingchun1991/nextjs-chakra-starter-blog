@@ -11,7 +11,7 @@
 
 ## 🔋 ⚡ Battery Packed template
 
-- 🚀 **Next.js 15** - **React 18**
+- 🚀 **Next.js 15** - **React 19**
 - ⛓️ **TypeScript**
 - **Chakra-UI** v3
 - ✔️ **toolings** for linting, formatting, and conventions configured
