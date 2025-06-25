@@ -6,7 +6,7 @@
   "packageManager": "pnpm@10.12.3",
   "engines": {
     "node": ">=22.16.x",
-    "pnpm": ">=10"
+    "pnpm": ">=9"
   },
   "pnpm": {
     "neverBuiltDependencies": []
