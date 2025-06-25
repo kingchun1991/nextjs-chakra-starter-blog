@@ -37,7 +37,7 @@
     "@mdx-js/loader": "3.1.0",
     "@next/mdx": "^15.3.3",
     "@vercel/og": "^0.6.2",
-    "clsx": "^2.1.0",
+    "clsx": "2.1.1",
     "commit-and-tag-version": "^12.5.1",
     "date-fns": "^2.30.0",
     "fs": "0.0.2",
