@@ -57,7 +57,7 @@
     "reading-duration": "^1.1.2",
     "rehype-slug": "^6.0.0",
     "rss": "^1.2.2",
-    "turbo": "2.3.0"
+    "turbo": "2.5.4"
   },
   "devDependencies": {
     "@chakra-ui/cli": "^3.21.0",
