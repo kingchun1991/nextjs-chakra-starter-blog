@@ -17,7 +17,9 @@ export const CodeBlock: React.FC<CodeBlockProps> = ({
   className,
 }) => {
   const language = className?.replace(/language-/, '') || 'typescript';
-  const codeString = children.props.children.toString().trim();
+  const codeString = (children.props as { children: string }).children
+    .toString()
+    .trim();
   // const { hasCopied, onCopy } = useClipboard(codeString);
 
   return (
