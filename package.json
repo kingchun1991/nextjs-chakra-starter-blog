@@ -44,7 +44,7 @@
     "github-slugger": "^2.0.0",
     "gray-matter": "^4.0.3",
     "knip": "^5.61.0",
-    "marked": "^14.1.1",
+    "marked": "^16.0.0",
     "mermaid": "^11.4.1",
     "next": "^15.3.3",
     "next-mdx-remote": "^4.4.1",
