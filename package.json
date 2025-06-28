@@ -68,7 +68,7 @@
     "@types/react": "^19.1.8",
     "commitizen": "^4.3.1",
     "cross-env": "^7.0.3",
-    "eslint": "^8.57.1",
+    "eslint": "^9.30.0",
     "eslint-config-next": "^15.3.3",
     "eslint-config-sznm": "^2.0.4",
     "husky": "^9.1.7",
