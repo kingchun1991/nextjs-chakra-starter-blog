@@ -8,9 +8,7 @@ import {
   Collapsible,
   Icon,
   Link,
-  useBreakpointValue,
   useDisclosure,
-  Spacer,
 } from '@chakra-ui/react';
 import NextLink from 'next/link';
 import {
@@ -195,33 +193,34 @@ const Header = () => {
           justify={{ base: 'left', md: 'start' }}
           align="center"
         >
-          <Link as={NextLink} href="/">
-            <Text
-              textAlign={useBreakpointValue({ base: 'left', md: 'left' })}
-              fontFamily="heading"
-              color="gray.800"
-              _dark={{ color: 'white' }}
-            >
-              <Flex align="center">
-                <Box>
-                  <Text
-                    fontSize={25}
-                    color="teal"
-                    bg="transparent"
-                    w="100%"
-                    h="100%"
-                    textAlign="center"
-                    justifyContent="center"
-                    alignItems="center"
-                    p="1"
-                    as="b"
-                  >
-                    N.
-                  </Text>
-                </Box>
-                <Box display={{ base: 'none', md: 'flex' }}>NextJSBlog</Box>
-              </Flex>
-            </Text>
+          <Link as={NextLink} href="/" _hover={{ textDecoration: 'none' }}>
+            <Flex align="center" gap={2}>
+              <Box>
+                <Text
+                  fontSize="2xl"
+                  color="teal.500"
+                  _dark={{ color: 'teal.300' }}
+                  fontWeight="bold"
+                  lineHeight={1}
+                >
+                  {siteConfig.title.charAt(0).toUpperCase()}.
+                </Text>
+              </Box>
+              <Box display={{ base: 'none', md: 'block' }}>
+                <Text
+                  fontSize="lg"
+                  fontWeight="semibold"
+                  color="gray.800"
+                  _dark={{ color: 'white' }}
+                >
+                  {siteConfig.title
+                    .split('-')
+                    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+                    .join(' ')
+                    .replace(/^./, (match) => match.toUpperCase())}
+                </Text>
+              </Box>
+            </Flex>
           </Link>
         </Flex>
 
@@ -229,32 +228,35 @@ const Header = () => {
           <DesktopNav />
         </Flex>
 
-        <Spacer />
-
         <Stack
           flex={{ base: 1, md: 0 }}
           justify="flex-end"
           direction="row"
           gap={3}
+          align="center"
         >
           <SearchModal />
           <ColorModeButton />
-          <IconButton
-            as={Link}
+          <Link
+            href={siteConfig.repoUrl}
+            target="_blank"
+            rel="noopener noreferrer"
             aria-label="GitHub Repository"
-            bg="transparent"
-            color="black"
-            _dark={{ bg: 'black', color: 'white' }}
           >
-            <Link
-              target="_blank"
-              rel="noopener noreferrer"
-              href={siteConfig.repoUrl}
+            <IconButton
+              aria-label="GitHub Repository"
+              bg="transparent"
+              color="gray.600"
+              _dark={{ color: 'gray.400' }}
+              _hover={{
+                color: 'gray.800',
+                _dark: { color: 'white' },
+              }}
+              size="sm"
             >
               <LuGithub />
-            </Link>
-          </IconButton>
-          <Spacer />
+            </IconButton>
+          </Link>
           <Flex
             flex={{ base: 1, md: 'auto' }}
             ml={{ base: -2 }}
@@ -264,8 +266,13 @@ const Header = () => {
               aria-label="Toggle Navigation"
               onClick={onToggle}
               bg="transparent"
-              color="black"
-              _dark={{ bg: 'black', color: 'white' }}
+              color="gray.600"
+              _dark={{ color: 'gray.400' }}
+              _hover={{
+                color: 'gray.800',
+                _dark: { color: 'white' },
+              }}
+              size="sm"
             >
               {open ? <LuX /> : <LuMenu />}
             </IconButton>
