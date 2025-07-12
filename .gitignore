@@ -54,3 +54,4 @@ sitemap*.xml
 .json/posts.json
 .json/search.json
 public/rss.xml
+.vscode/doc/*

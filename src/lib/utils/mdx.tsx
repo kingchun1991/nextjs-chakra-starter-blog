@@ -3,6 +3,7 @@ import matter from 'gray-matter';
 import { serialize } from 'next-mdx-remote/serialize';
 import path from 'path';
 import rehypeSlug from 'rehype-slug';
+import remarkGfm from 'remark-gfm';
 
 import type { IPosts } from '@/lib/types/custom-types';
 
@@ -61,8 +62,11 @@ export async function getFileBySlug(type: string, slug: string) {
 
   const options = {
     mdxOptions: {
+      remarkPlugins: [remarkGfm],
       rehypePlugins: [rehypeSlug],
+      format: 'mdx' as const,
     },
+    scope: {},
   };
 
   const mdxSource = await serialize(content, options);

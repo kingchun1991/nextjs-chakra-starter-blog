@@ -23,7 +23,8 @@ import ProductSimple from './MDXComponents/Card';
 import { CodeBlock } from './MDXComponents/CodeBlock';
 import { TableOfContents } from './MDXComponents/TableOfContents';
 import { Mermaid } from './MDXComponents/Mermaid';
-import { Timeline, TimelineItem } from './MDXComponents/Timeline'; // Updated import for timeline components
+import { Timeline, TimelineItem } from './MDXComponents/Timeline';
+import EnhancedTable from './MDXComponents/EnhancedTable'; // Add EnhancedTable import
 
 const ProductCard = (props: any) => {
   const { imgsrc, title, price, url } = props;
@@ -38,26 +39,29 @@ const CustomImage = (props: any) => {
 };
 
 const CustomLink = (props: any) => {
-  const { href } = props;
-
-  // const href = props.href;
+  const { href, ...rest } = props;
   const isInternalLink = href && (href.startsWith('/') || href.startsWith('#'));
 
   if (isInternalLink) {
     return (
-      <NextLink href={href} passHref>
-        <Link color="blue.500" _dark={{ color: 'blue.500' }} {...props} />
-      </NextLink>
+      <Link
+        as={NextLink}
+        href={href}
+        color="blue.500"
+        _dark={{ color: 'blue.500' }}
+        {...rest}
+      />
     );
   }
 
   return (
     <Link
+      href={href}
       color="blue.500"
       _dark={{ color: 'blue.500' }}
       target="_blank"
       rel="noopener noreferrer"
-      {...props}
+      {...rest}
     />
   );
 };
@@ -88,25 +92,20 @@ type CustomHeadingProps = {
 const CustomHeading: React.FC<CustomHeadingProps> = ({ as, id, ...props }) => {
   if (id) {
     return (
-      <Link href={`#${id}`}>
-        <NextLink href={`#${id}`}>
-          <Heading
-            as={as}
-            display="inline"
-            id={id}
-            lineHeight="1em"
-            {...props}
-            _hover={{
-              _before: {
-                content: '"#"',
-                position: 'relative',
-                marginLeft: '-1.2ch',
-                paddingRight: '0.2ch',
-              },
-            }}
-          />
-        </NextLink>
-      </Link>
+      <Heading
+        as={as}
+        id={id}
+        lineHeight="1em"
+        {...props}
+        _hover={{
+          _before: {
+            content: '"#"',
+            position: 'relative',
+            marginLeft: '-1.2ch',
+            paddingRight: '0.2ch',
+          },
+        }}
+      />
     );
   }
   return <Heading as={as} {...props} />;
@@ -123,11 +122,77 @@ const Hr = () => {
   );
 };
 
-const MDXTable = (props: any) => <Table.Root {...props} />;
-const TableHead = (props: any) => <Table.Header {...props} />;
-const TableRow = (props: any) => <Table.Row {...props} />;
-const TableData = (props: any) => <Table.Cell {...props} />;
-const TableHeader = (props: any) => <Table.Header {...props} />;
+const MDXTable = (props: any) => (
+  <Box overflowX="auto" my={6}>
+    <Table.Root
+      variant="outline"
+      size="md"
+      colorScheme="gray"
+      bg="white"
+      _dark={{ bg: 'gray.800' }}
+      borderRadius="md"
+      shadow="sm"
+      width="100%"
+      {...props}
+    />
+  </Box>
+);
+
+const TableHead = (props: any) => (
+  <Table.Header bg="gray.50" _dark={{ bg: 'gray.700' }} {...props} />
+);
+
+const TableRow = (props: any) => (
+  <Table.Row
+    _hover={{
+      bg: 'gray.50',
+      _dark: { bg: 'gray.700' },
+    }}
+    transition="background-color 0.2s"
+    {...props}
+  />
+);
+
+const TableData = (props: any) => {
+  const { style, ...rest } = props;
+  const textAlign = style?.textAlign || props.align || 'left';
+
+  return (
+    <Table.Cell
+      px={4}
+      py={3}
+      borderColor="gray.200"
+      _dark={{ borderColor: 'gray.600' }}
+      fontSize="sm"
+      verticalAlign="top"
+      textAlign={textAlign}
+      {...rest}
+    />
+  );
+};
+
+const TableHeader = (props: any) => {
+  const { style, ...rest } = props;
+  const textAlign = style?.textAlign || props.align || 'left';
+
+  return (
+    <Table.ColumnHeader
+      px={4}
+      py={3}
+      fontWeight="semibold"
+      fontSize="sm"
+      color="gray.700"
+      borderColor="gray.200"
+      textAlign={textAlign}
+      _dark={{
+        color: 'gray.200',
+        borderColor: 'gray.600',
+      }}
+      {...rest}
+    />
+  );
+};
+
 const TableBody = (props: any) => <Table.Body {...props} />;
 
 const MDXComponents = {
@@ -161,16 +226,17 @@ const MDXComponents = {
     return <CodeBlock {...props} />;
   },
   table: MDXTable,
-  th: TableHead,
-  tr: TableRow,
-  td: TableData,
-  thead: TableHeader,
+  thead: TableHead,
   tbody: TableBody,
+  tr: TableRow,
+  th: TableHeader,
+  td: TableData,
   Alert,
   ProductCard: (props: any) => ProductCard(props),
   TableOfContents,
   Timeline,
   TimelineItem,
+  EnhancedTable, // Add EnhancedTable to the mapping
 };
 
 export { CustomLink };
