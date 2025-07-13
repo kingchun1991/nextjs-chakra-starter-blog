@@ -9,7 +9,8 @@
 
 ## 🔋 ⚡ Battery Packed template
 
-- 🚀 **Next.js 15** - **React 19**
+- 🚀 **Next.js 15**
+- **React 19**
 - ⛓️ **TypeScript**
 - **Chakra-UI** v3
 - ✔️ **toolings** for linting, formatting, and conventions configured
@@ -22,10 +23,16 @@
 - 🤖 **Automatic Dependency Update** with [Renovate](https://renovatebot.com/)
 - 🏎️ **Turbo** setup
 - 🧪 **Playwright** E2E Test
-- 🗒️ mdx Blog
-  - Automatic Open Graph Cover
-  - Author
-  - Reading Time
+- 🗒️ **MDX Blog** with enhanced features
+  - 📊 **Table Support** - Beautiful, responsive tables with Chakra UI v3 styling
+    - GitHub Flavored Markdown table syntax support via `remark-gfm`
+    - Automatic column alignment (left, right, center)
+    - Responsive design with horizontal scrolling on mobile
+    - Dark/light mode support with hover effects
+    - Enhanced table component for JSON data
+  - 🖼️ Automatic Open Graph Cover generation
+  - 👤 Author information and avatars
+  - ⏱️ Reading time calculation
 
 [![CodeFactor](https://www.codefactor.io/repository/github/kingchun1991/nextjs-chakra-starter-blog/badge)](https://www.codefactor.io/repository/github/kingchun1991/nextjs-chakra-starter-blog)
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=kingchun1991_nextjs-chakra-starter-blog&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=kingchun1991_nextjs-chakra-starter-blog)[![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=kingchun1991_nextjs-chakra-starter-blog&metric=sqale_rating)](https://sonarcloud.io/dashboard?id=kingchun1991_nextjs-chakra-starter-blog) [![Bugs](https://sonarcloud.io/api/project_badges/measure?project=kingchun1991_nextjs-chakra-starter-blog&metric=bugs)](https://sonarcloud.io/dashboard?id=kingchun1991_nextjs-chakra-starter-blog) [![Code Smells](https://sonarcloud.io/api/project_badges/measure?project=kingchun1991_nextjs-chakra-starter-blog&metric=code_smells)](https://sonarcloud.io/dashboard?id=kingchun1991_nextjs-chakra-starter-blog) [![Duplicated Lines (%)](https://sonarcloud.io/api/project_badges/measure?project=kingchun1991_nextjs-chakra-starter-blog&metric=duplicated_lines_density)](https://sonarcloud.io/dashboard?id=sozonome_nextarter-chakra)

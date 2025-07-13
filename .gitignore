@@ -55,3 +55,4 @@ sitemap*.xml
 .json/search.json
 public/rss.xml
 .vscode/doc/*
+.vscode/promotion/*
