@@ -1,4 +1,4 @@
-import { Box, Table, Text } from '@chakra-ui/react';
+import { Table, Text } from '@chakra-ui/react';
 
 interface EnhancedTableProps {
   data: Array<Record<string, string | number | React.ReactNode>>;
@@ -21,7 +21,7 @@ const EnhancedTable = ({
   compact = false,
 }: EnhancedTableProps) => {
   return (
-    <Box overflowX="auto" my={6}>
+    <Table.ScrollArea borderWidth="1px" maxW="l">
       <Table.Root
         variant="outline"
         size={compact ? 'sm' : 'md'}
@@ -90,7 +90,7 @@ const EnhancedTable = ({
           ))}
         </Table.Body>
       </Table.Root>
-    </Box>
+    </Table.ScrollArea>
   );
 };
 

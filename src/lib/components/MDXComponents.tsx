@@ -123,7 +123,7 @@ const Hr = () => {
 };
 
 const MDXTable = (props: any) => (
-  <Box overflowX="auto" my={6}>
+  <Table.ScrollArea borderWidth="1px" maxW="l">
     <Table.Root
       variant="outline"
       size="md"
@@ -135,7 +135,7 @@ const MDXTable = (props: any) => (
       width="100%"
       {...props}
     />
-  </Box>
+  </Table.ScrollArea>
 );
 
 const TableHead = (props: any) => (
