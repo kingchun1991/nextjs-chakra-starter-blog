@@ -58,7 +58,7 @@ export default function BlogPostListLayout({
         : 0
     );
 
-  const postsPerPage = 2;
+  const postsPerPage = 5;
   // const totalPages = Math.ceil(filteredBlogPosts.length / postsPerPage);
   const [currentPage, setCurrentPage] = useState(1);
 
