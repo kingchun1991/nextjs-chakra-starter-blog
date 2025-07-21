@@ -1,12 +1,15 @@
-import { createSystem, defaultConfig } from '@chakra-ui/react';
+import { createSystem, defaultConfig, defineTokens } from '@chakra-ui/react';
 
-import { fonts } from './fonts';
+const tokens = defineTokens({
+  fonts: {
+    heading: { value: 'var(--font-body)' },
+    body: { value: 'var(--font-body)' },
+  },
+});
 
 const customTheme = createSystem(defaultConfig, {
   theme: {
-    tokens: {
-      fonts,
-    },
+    tokens,
   },
 });
 

@@ -1,7 +1,13 @@
 import type { Metadata, Viewport } from 'next';
+import { Figtree as FontBody } from 'next/font/google';
 
 import { Provider } from '@/components/ui/provider';
 import { Layout } from '@/lib/layout';
+
+const fontBody = FontBody({
+  subsets: ['latin'],
+  variable: '--font-body',
+});
 
 type RootLayoutProps = {
   children: React.ReactNode;
@@ -44,7 +50,7 @@ export const viewport: Viewport = {
 
 const RootLayout = ({ children }: RootLayoutProps) => {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="en" suppressHydrationWarning className={fontBody.className}>
       <body>
         <Provider>
           <Layout>{children}</Layout>
