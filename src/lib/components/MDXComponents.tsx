@@ -20,6 +20,7 @@ import NextLink from 'next/link';
 
 import { Alert } from '@/components/ui/alert';
 import ProductSimple from './MDXComponents/Card';
+import RepoCard from '@/components/repo/repo-card';
 import { CodeBlock } from './MDXComponents/CodeBlock';
 import { TableOfContents } from './MDXComponents/TableOfContents';
 import { Mermaid } from './MDXComponents/Mermaid';
@@ -31,6 +32,11 @@ const ProductCard = (props: any) => {
   return (
     <ProductSimple imgsrc={imgsrc} title={title} price={price} url={url} />
   );
+};
+
+const RepoCardWrapper = (props: any) => {
+  const { repo, readme, error } = props;
+  return <RepoCard repo={repo} readme={readme} error={error} />;
 };
 
 const CustomImage = (props: any) => {
@@ -233,6 +239,7 @@ const MDXComponents = {
   td: TableData,
   Alert,
   ProductCard: (props: any) => ProductCard(props),
+  RepoCard: (props: any) => RepoCardWrapper(props),
   TableOfContents,
   Timeline,
   TimelineItem,
