@@ -55,7 +55,7 @@ export async function fetchReadme(
       .replace(/\*\*(.*?)\*\*/g, '$1') // Remove bold
       .replace(/\*(.*?)\*/g, '$1') // Remove italic
       .replace(/`(.*?)`/g, '$1') // Remove inline code
-      .replace(/\[([^\]]+)\]$$[^)]+$$/g, '$1') // Convert links to text
+      .replace(/\[([^\]]+)\]\([^)]+\)/g, '$1') // Convert links to text (safe regex)
       .replace(/\n{3,}/g, '\n\n') // Normalize line breaks
       .trim();
   } catch (error) {
