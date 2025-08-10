@@ -15,15 +15,15 @@ import {
 import { parseISO, format } from 'date-fns';
 import { MDXRemote } from 'next-mdx-remote';
 import type { MDXRemoteSerializeResult } from 'next-mdx-remote';
-import { LuFolder, LuClock } from 'react-icons/lu';
+import { LuClock } from 'react-icons/lu';
 import readingDuration from 'reading-duration';
 import { useEffect, useState } from 'react';
 
 import { Avatar } from '@/components/ui/avatar';
-import { Tag } from '@/components/ui/tag';
 import MDXComponents from '@/lib/components/MDXComponents';
 import Share from '@/lib/components/Share';
 import Tags from '@/lib/components/Tags';
+import Categories from '@/lib/components/Categories';
 import type { IPosts } from '@/lib/types/custom-types';
 import { giscusConfig } from '@/site.config';
 
@@ -106,16 +106,7 @@ export default function BlogLayout({
               _dark={{ color: 'gray.400' }}
               alignItems="center"
             >
-              <Icon>
-                <LuFolder />
-              </Icon>
-              <Box ml={1}>
-                {post.categories.map((category) => (
-                  <Tag key={category} colorPalette="teal" variant="solid">
-                    {category}
-                  </Tag>
-                ))}
-              </Box>
+              <Categories categories={post.categories ?? []} />
             </Flex>
             <Flex
               align="flex-start"
