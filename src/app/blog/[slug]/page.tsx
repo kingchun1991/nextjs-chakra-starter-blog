@@ -74,10 +74,18 @@ export default async function Page({ params }: Props) {
   const {
     metaInformation,
     mdxSource,
+    content,
   }: {
     metaInformation: IPosts;
     mdxSource: MDXRemoteSerializeResult;
+    content: string;
   } = await getPost(slug);
 
-  return <BlogLayout post={metaInformation} mdxSource={mdxSource} />;
+  return (
+    <BlogLayout
+      post={metaInformation}
+      mdxSource={mdxSource}
+      content={content}
+    />
+  );
 }

@@ -74,5 +74,6 @@ export async function getFileBySlug(type: string, slug: string) {
   return {
     mdxSource,
     metaInformation: newPost,
+    content, // Add the raw content for reading duration calculation
   };
 }

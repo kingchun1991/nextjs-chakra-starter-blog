@@ -32,9 +32,11 @@ import { giscusConfig } from '@/site.config';
 export default function BlogLayout({
   mdxSource,
   post,
+  content,
 }: {
   mdxSource: MDXRemoteSerializeResult;
   post: IPosts;
+  content: string;
 }) {
   const [mounted, setMounted] = useState(false);
 
@@ -142,7 +144,7 @@ export default function BlogLayout({
               alignItems="center"
             >
               <Text fontSize="sm" color="gray.500" minWidth="100px" mt={[2, 0]}>
-                {readingDuration(String(mdxSource.frontmatter.content), {
+                {readingDuration(content, {
                   wordsPerMinute: 200,
                   emoji: false,
                 }) ?? ''}
