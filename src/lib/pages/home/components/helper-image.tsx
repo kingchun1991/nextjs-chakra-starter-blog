@@ -1,5 +1,6 @@
-import { Tooltip } from '@/components/ui/tooltip';
 import { Image } from '@chakra-ui/react';
+
+import { Tooltip } from '@/components/ui/tooltip';
 
 type HelperImageProps = {
   label?: string;

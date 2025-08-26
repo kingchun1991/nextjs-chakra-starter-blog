@@ -43,6 +43,7 @@ export const CTASection = () => {
           <a
             href="https://github.com/agustinusnathaniel/nextarter-chakra/generate"
             target="_blank"
+            rel="noopener"
           >
             Use This Template
           </a>

@@ -7,10 +7,8 @@ const tokens = defineTokens({
   },
 });
 
-const customTheme = createSystem(defaultConfig, {
+export const customTheme = createSystem(defaultConfig, {
   theme: {
     tokens,
   },
 });
-
-export default customTheme;

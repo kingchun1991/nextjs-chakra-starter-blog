@@ -1,13 +1,14 @@
-import { Button } from '@/components/ui/button';
 import {
   Box,
+  Link as ChakraLink,
+  Flex,
   Heading,
   Image,
   Text,
-  Link as ChakraLink,
-  Flex,
 } from '@chakra-ui/react';
 import Link from 'next/link';
+
+import { Button } from '@/components/ui/button';
 
 export const Page404 = () => {
   return (
