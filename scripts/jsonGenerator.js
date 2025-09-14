@@ -14,7 +14,7 @@ const RSS_FOLDER = './public';
 const site_url = 'https://nextjs-chakra-starter-blog.vercel.app/';
 const feedOptions = {
   title: 'NextJS ChakraUI Starter Blog',
-  description: 'feedId:75864871994540032+userId:57276625819860992',
+  description: 'feedId:75864871994540032+userId:126272323145079808',
   site_url: site_url,
   feed_url: `${site_url}rss.xml`,
   image_url: `${site_url}next-app-chakra-ts.png`,
