@@ -6,14 +6,14 @@
   "engines": {
     "node": ">=22.16.x"
   },
-  "packageManager": "pnpm@10.7.1",
+  "packageManager": "pnpm@10.16.1",
   "pnpm": {
     "neverBuiltDependencies": []
   },
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "turbo": "pnpm dlx turbo@2.5.0",
+    "turbo": "pnpm dlx turbo@2.5.6",
     "build:turbo": "pnpm turbo run build",
     "postbuild": "next-sitemap --config next-sitemap.config.js",
     "biome:check": "biome check --no-errors-on-unmatched --error-on-warnings",
@@ -30,28 +30,28 @@
     "prepare": "husky"
   },
   "dependencies": {
-    "@chakra-ui/react": "^3.25.0",
+    "@chakra-ui/react": "^3.27.0",
     "@emotion/react": "^11.14.0",
-    "commit-and-tag-version": "^12.5.2",
-    "knip": "^5.63.0",
-    "next": "^15.5.0",
+    "commit-and-tag-version": "^12.6.0",
+    "knip": "^5.63.1",
+    "next": "^15.5.3",
     "next-themes": "^0.4.6",
     "react": "^19.1.1",
     "react-dom": "^19.1.1",
     "react-icons": "^5.5.0"
   },
   "devDependencies": {
-    "@biomejs/biome": "2.2.2",
-    "@chakra-ui/cli": "^3.25.0",
+    "@biomejs/biome": "2.2.4",
+    "@chakra-ui/cli": "^3.27.0",
     "@commitlint/cli": "^19.8.1",
     "@commitlint/config-conventional": "19.8.1",
     "@commitlint/cz-commitlint": "19.8.1",
     "@playwright/test": "^1.55.0",
-    "@types/react": "^19.1.11",
+    "@types/react": "^19.1.13",
     "commitizen": "^4.3.1",
     "cross-env": "^10.0.0",
     "husky": "^9.1.7",
-    "lint-staged": "^16.1.5",
+    "lint-staged": "^16.1.6",
     "next-sitemap": "^4.2.3",
     "typescript": "^5.9.2"
   }
