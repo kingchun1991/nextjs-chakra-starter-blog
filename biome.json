@@ -10,11 +10,11 @@
     "includes": [
       "src/**/*",
       "*.config.ts",
-      "!src/*.gen.ts",
+      "*.{js,ts,json,md}",
       "!turbo",
       "!src/components/ui/**/*",
-      "!**/*.css",
-      "!.react-router",
+      "!src/**/*/utils.ts",
+      "!src/**/*.css",
       "!*.d.ts"
     ]
   },
@@ -24,6 +24,9 @@
   },
   "linter": {
     "enabled": true,
+    "domains": {
+      "next": "recommended"
+    },
     "rules": {
       "recommended": true,
       "a11y": {
