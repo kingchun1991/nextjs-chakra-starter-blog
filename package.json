@@ -31,7 +31,7 @@
     "generate-json": "node scripts/jsonGenerator.js"
   },
   "dependencies": {
-    "@chakra-ui/react": "^3.26.0",
+    "@chakra-ui/react": "^3.29.0",
     "@emotion/react": "^11.14.0",
     "@mdx-js/loader": "3.1.0",
     "@next/mdx": "^15.5.2",
@@ -42,9 +42,9 @@
     "fs": "0.0.2",
     "github-slugger": "^2.0.0",
     "gray-matter": "^4.0.3",
-    "knip": "^5.63.1",
+    "knip": "^5.68.0",
     "marked": "^14.1.1",
-    "mermaid": "^11.11.0",
+    "mermaid": "^11.12.1",
     "next": "^15.5.2",
     "next-mdx-remote": "^4.4.1",
     "next-pwa": "^5.6.0",
@@ -60,21 +60,21 @@
     "turbo": "2.3.0"
   },
   "devDependencies": {
-    "@chakra-ui/cli": "^3.26.0",
+    "@chakra-ui/cli": "^3.29.0",
     "@commitlint/cli": "^19.8.1",
     "@commitlint/config-conventional": "19.8.1",
     "@commitlint/cz-commitlint": "19.8.1",
-    "@playwright/test": "^1.55.0",
+    "@playwright/test": "^1.56.1",
     "@types/react": "^18.3.12",
     "commitizen": "^4.3.1",
     "cross-env": "^7.0.3",
     "eslint": "^8.57.1",
     "eslint-config-next": "^15.5.2",
     "husky": "^9.1.7",
-    "lint-staged": "^16.1.6",
+    "lint-staged": "^16.2.6",
     "next-sitemap": "^4.2.3",
     "prettier": "^3.6.2",
     "standard-version": "^9.5.0",
-    "typescript": "^5.9.2"
+    "typescript": "^5.9.3"
   }
 }
