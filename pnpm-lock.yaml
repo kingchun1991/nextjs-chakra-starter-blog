@@ -21,7 +21,7 @@ importers:
         specifier: ^5.70.1
         version: 5.70.1(@types/node@24.7.0)(typescript@5.9.3)
       next:
-        specifier: ^16.0.3
+        specifier: ^16.0.7
         version: 16.0.7(@playwright/test@1.56.1)(react-dom@19.2.0(react@19.2.0))(react@19.2.0)
       next-themes:
         specifier: ^0.4.6
