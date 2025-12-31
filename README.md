@@ -1,3 +1,5 @@
+# nextarter-chakra
+
 <img src="https://og.sznm.dev/api/generate?heading=nextarter-chakra&text=Next.js+template+with+Chakra-UI+and+TypeScript+setup.&template=color&center=true&height=330" />
 
 <div align="center">
@@ -9,49 +11,99 @@
 
 </div>
 
-## 🔋 ⚡ Battery Packed template
+This is a **Next.js + Chakra UI + TypeScript** starter template packed with modern tooling setup.
 
-- 🚀 **Next.js 15** - **React 19**
-- ⛓️ **TypeScript**
-- **Chakra-UI** v3
-- ✔️ **toolings** for linting, formatting, and conventions configured
-  - `eslint`, `prettier`, `husky`, `lint-staged`, `commitlint`, `commitizen`, and `standard-version`
-  - `pre-commit`, `pre-push`, `commit-msg`, `prepare-commit-msg` hook configured
-- 🔎 SEO optimization configured - with `next-sitemap`.
-  - you'll need to reconfigure or tinker with it to get it right according to your needs, but it's there if you need it.
-- 🎨 basic responsive layout configured - don't need it? just remove it 😃
-- 🤖 **Automatic Dependency Update** with [Renovate](https://renovatebot.com/)
-- 🏎️ **Turbo** setup
-- 🧪 **Playwright** E2E Test
+## 🚀 Features
 
-[![CodeFactor](https://www.codefactor.io/repository/github/agustinusnathaniel/nextarter-chakra/badge)](https://www.codefactor.io/repository/github/agustinusnathaniel/nextarter-chakra)
-[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=sozonome_nextarter-chakra&metric=alert_status)](https://sonarcloud.io/dashboard?id=sozonome_nextarter-chakra) [![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=sozonome_nextarter-chakra&metric=sqale_rating)](https://sonarcloud.io/dashboard?id=sozonome_nextarter-chakra) [![Bugs](https://sonarcloud.io/api/project_badges/measure?project=sozonome_nextarter-chakra&metric=bugs)](https://sonarcloud.io/dashboard?id=sozonome_nextarter-chakra) [![Code Smells](https://sonarcloud.io/api/project_badges/measure?project=sozonome_nextarter-chakra&metric=code_smells)](https://sonarcloud.io/dashboard?id=sozonome_nextarter-chakra) [![Duplicated Lines (%)](https://sonarcloud.io/api/project_badges/measure?project=sozonome_nextarter-chakra&metric=duplicated_lines_density)](https://sonarcloud.io/dashboard?id=sozonome_nextarter-chakra)
+-   **Framework**: [Next.js 16](https://nextjs.org/) (App Router)
+-   **UI Library**: [Chakra UI v3](https://chakra-ui.com/)
+-   **Styling Engine**: Emotion (via Chakra UI) + [next-themes](https://github.com/pacocoursey/next-themes)
+-   **Language**: [TypeScript 5](https://www.typescriptlang.org/)
+-   **Linting & Formatting**: [Biome](https://biomejs.dev/)
+-   **E2E Testing**: [Playwright](https://playwright.dev/)
+-   **Build System**: [Turborepo](https://turbo.build/repo)
+-   **Icons**: [React Icons](https://react-icons.github.io/react-icons/)
 
-[![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg)](http://commitizen.github.io/cz-cli/)
+## 🏗 System Architecture
 
-## Pre-requisites
+This project uses a **Split-Layer** architecture to separate Next.js routing concerns from React UI logic.
 
-1. [Node.js](https://nodejs.org/en/) or nvm installed.
-2. `pnpm` installed.
+```mermaid
+graph TD
+    subgraph "Routing Layer (src/app)"
+        L[layout.tsx] --> Providers
+        P[page.ts] --> Logic
+    end
 
-## Getting Started
+    subgraph "Logic Layer (src/lib)"
+        Providers --> Layout[Layout Component]
+        Layout --> Header
+        Layout --> Footer
+        Logic --> HomePage[Page Component]
+    end
 
-1. You can either click `Use this template` button on this repository and clone the repo or directly from your terminal:
-
-```bash
-npx degit agustinusnathaniel/nextarter-chakra <YOUR_APP_NAME>
+    subgraph "UI Layer (src/components)"
+        HomePage --> Components
+        Header --> Components
+        Footer --> Components
+    end
 ```
 
-2. After cloning the project, run this command: `pnpm` or `pnpm install`
+## 📂 Repository Structure
 
-3. Then, run the development server:
+The code is organized to keep business logic and routing separate:
+
+```bash
+src/
+├── app/            # Next.js App Router (Entry points)
+│   ├── layout.tsx  # Global RootLayout & Providers
+│   └── page.ts     # Re-exports Home from lib/pages
+├── components/     # Shared UI components
+│   └── ui/         # Primitives (Buttons, Inputs, etc.)
+└── lib/            # Application Business Logic
+    ├── layout/     # Shell components (Header, Footer)
+    ├── pages/      # Page implementations (Home, etc.)
+    └── styles/     # Theme configuration
+```
+
+## 🛠 Getting Started
+
+### 1. Install Dependencies
+
+This project uses [pnpm](https://pnpm.io/).
+
+```bash
+pnpm install
+```
+
+### 2. Run Development Server
 
 ```bash
 pnpm dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
-You can start editing the page by modifying `src/lib/pages/index.tsx`. The page auto-updates as you edit the file.
+### 3. Build for Production
 
-- [References](/references.md)
+```bash
+pnpm build
+```
+
+### 4. Run Tests
+
+```bash
+pnpm test:e2e
+```
+
+## 🧹 Code Quality
+
+We use **Biome** for fast formatter and linter.
+
+```bash
+# Check code issues
+pnpm biome:check
+
+# Fix issues automatically
+pnpm biome:fix
+```
