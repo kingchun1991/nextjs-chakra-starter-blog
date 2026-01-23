@@ -14,9 +14,6 @@ const nextConfig: NextConfig = {
   },
   reactStrictMode: true,
   pageExtensions: ['ts', 'tsx', 'js', 'jsx', 'md', 'mdx'],
-  eslint: {
-    dirs: ['src'],
-  },
   typescript: {
     // Ignore type checking during build for dependency compatibility
     ignoreBuildErrors: true,

@@ -19,6 +19,7 @@ import Image from 'next/image';
 import RepoCard from '@/components/repo/repo-card';
 import { Alert } from '@/components/ui/alert';
 import { Link } from '@/components/ui/link';
+import type { GitHubRepo } from '@/lib/types/github';
 
 import ProductSimple from './MDXComponents/Card';
 import { CodeBlock } from './MDXComponents/CodeBlock';
@@ -42,7 +43,7 @@ const ProductCard = (props: ProductCardProps) => {
 };
 
 interface RepoCardWrapperProps {
-  repo: unknown;
+  repo: GitHubRepo;
   readme: string;
   error?: string;
 }
