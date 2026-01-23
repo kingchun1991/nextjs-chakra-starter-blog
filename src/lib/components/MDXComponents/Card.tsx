@@ -3,15 +3,22 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import {
   Box,
+  Button,
   Center,
   Heading,
-  Text,
-  Stack,
   Image,
-  Button,
+  Stack,
+  Text,
 } from '@chakra-ui/react';
 
-export default function ProductSimple(props: any) {
+interface ProductSimpleProps {
+  imgsrc: string;
+  title: string;
+  price: string;
+  url: string;
+}
+
+export default function ProductSimple(props: ProductSimpleProps) {
   const data = props;
 
   return (

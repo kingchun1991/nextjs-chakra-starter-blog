@@ -3,11 +3,11 @@ import type { IPosts } from '@/lib/types/custom-types';
 import { getAllFilesFrontMatter } from '@/lib/utils/mdx';
 
 async function getData() {
-  const posts: IPosts[] = await getAllFilesFrontMatter('blog');
+  const posts: Array<IPosts> = await getAllFilesFrontMatter('blog');
   return posts;
 }
 
 export default async function index() {
-  const posts = (await getData()) as IPosts[];
+  const posts = (await getData()) as Array<IPosts>;
   return <Home posts={posts} />;
 }

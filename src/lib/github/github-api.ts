@@ -1,10 +1,10 @@
-import type { GitHubRepo, GitHubReadme } from '../types/github';
+import type { GitHubReadme, GitHubRepo } from '../types/github';
 
 const GITHUB_API_BASE = 'https://api.github.com';
 
 export async function fetchRepositories(
-  username: string
-): Promise<GitHubRepo[]> {
+  username: string,
+): Promise<Array<GitHubRepo>> {
   try {
     const response = await fetch(
       `${GITHUB_API_BASE}/users/${username}/repos?sort=stars&per_page=6`,
@@ -13,7 +13,7 @@ export async function fetchRepositories(
           Accept: 'application/vnd.github.v3+json',
         },
         next: { revalidate: 3600 }, // Cache for 1 hour
-      }
+      },
     );
 
     if (!response.ok) {
@@ -29,7 +29,7 @@ export async function fetchRepositories(
 
 export async function fetchReadme(
   owner: string,
-  repo: string
+  repo: string,
 ): Promise<string | null> {
   try {
     const response = await fetch(
@@ -39,7 +39,7 @@ export async function fetchReadme(
           Accept: 'application/vnd.github.v3+json',
         },
         next: { revalidate: 3600 },
-      }
+      },
     );
 
     if (!response.ok) {

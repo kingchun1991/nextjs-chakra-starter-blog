@@ -1,20 +1,21 @@
 'use client';
 
-import { useEffect, useState } from 'react';
 import {
   Box,
+  Heading,
+  Icon,
   SimpleGrid,
   Skeleton,
   SkeletonText,
   Stack,
-  Icon,
   Text,
-  Heading,
 } from '@chakra-ui/react';
+import { useEffect, useState } from 'react';
 import { FiAlertCircle } from 'react-icons/fi';
-import { fetchRepositories, fetchReadme } from '../../lib/github/github-api';
-import RepoCard from './repo-card';
+
+import { fetchReadme, fetchRepositories } from '../../lib/github/github-api';
 import type { GitHubRepo } from '../../lib/types/github';
+import RepoCard from './repo-card';
 
 interface RepoGridProps {
   username: string;
@@ -59,7 +60,7 @@ function RepoCardSkeleton() {
 }
 
 export default function RepoGrid({ username }: RepoGridProps) {
-  const [repos, setRepos] = useState<RepoWithContent[]>([]);
+  const [repos, setRepos] = useState<Array<RepoWithContent>>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -72,7 +73,9 @@ export default function RepoGrid({ username }: RepoGridProps) {
         setError(null);
         const repositories = await fetchRepositories(username);
 
-        if (!isMounted) return;
+        if (!isMounted) {
+          return;
+        }
 
         // Fetch README for each repository
         const reposWithReadme = await Promise.all(
@@ -91,7 +94,7 @@ export default function RepoGrid({ username }: RepoGridProps) {
                 error: 'Failed to load README',
               };
             }
-          })
+          }),
         );
 
         if (isMounted) {

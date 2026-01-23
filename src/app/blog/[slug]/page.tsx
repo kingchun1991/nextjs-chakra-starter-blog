@@ -4,7 +4,7 @@ import type { MDXRemoteSerializeResult } from 'next-mdx-remote';
 
 import BlogLayout from '@/lib/layout/BlogLayout';
 import type { IPosts } from '@/lib/types/custom-types';
-import { getFiles, getFileBySlug } from '@/lib/utils/mdx';
+import { getFileBySlug, getFiles } from '@/lib/utils/mdx';
 import { siteConfig } from '@/site.config';
 
 type Props = {
@@ -19,7 +19,7 @@ export async function generateStaticParams() {
   }));
 }
 
-async function getPost(slug: any) {
+function getPost(slug: string) {
   return getFileBySlug('blog', slug);
 }
 
@@ -46,9 +46,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       images: [
         {
           url: `${siteConfig.url}/api/og/cover?heading=${encodeURIComponent(
-            metaInformation.title
+            metaInformation.title,
           )}&text=${encodeURIComponent(
-            metaInformation.summary
+            metaInformation.summary,
           )}&template=plain&center=true`,
           alt: `${metaInformation.title} og-image`,
         },
@@ -60,9 +60,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       description: metaInformation.summary,
       images: [
         `${siteConfig.url}/api/og/cover?heading=${encodeURIComponent(
-          metaInformation.title
+          metaInformation.title,
         )}&text=${encodeURIComponent(
-          metaInformation.summary
+          metaInformation.summary,
         )}&template=plain&center=true`,
       ],
     },

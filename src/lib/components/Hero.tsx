@@ -1,6 +1,6 @@
 'use client';
 
-import { Heading, Text, Flex } from '@chakra-ui/react';
+import { Flex, Heading, Text } from '@chakra-ui/react';
 
 import {
   BreadcrumbCurrentLink,

@@ -11,19 +11,19 @@ type Props = {
 };
 
 async function getData() {
-  const posts: IPosts[] = await getAllFilesFrontMatter('blog');
+  const posts: Array<IPosts> = await getAllFilesFrontMatter('blog');
   return posts;
 }
 
 export async function generateStaticParams() {
-  const posts = (await getData()) as IPosts[];
+  const posts = (await getData()) as Array<IPosts>;
 
   const filteredBlogPosts = posts
     .filter((post: IPosts) => !post.draft)
     .sort((a: IPosts, b: IPosts) =>
       a.modifiedAt && b.modifiedAt
         ? Number(new Date(b.modifiedAt)) - Number(new Date(a.modifiedAt))
-        : 0
+        : 0,
     );
 
   const tagCounts: { [key: string]: number } = {};
@@ -58,7 +58,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       images: [
         {
           url: `${siteConfig.url}/api/og/cover?heading=${encodeURIComponent(
-            slug
+            slug,
           )}&text=${encodeURIComponent(slug)}&template=plain&center=true`,
           alt: 'nextjs-chakra-starter-blog og-image',
         },
@@ -70,7 +70,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       description: 'blog',
       images: [
         `${siteConfig.url}/api/og/cover?heading=${encodeURIComponent(
-          slug
+          slug,
         )}&text=${encodeURIComponent('blog')}&template=plain&center=true`,
       ],
     },
@@ -79,7 +79,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function Page({ params }: Props) {
   const { slug } = await params;
-  const posts = (await getData()) as IPosts[];
+  const posts = (await getData()) as Array<IPosts>;
 
   return <BlogList posts={posts} tagSelected={slug} />;
 }

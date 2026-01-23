@@ -35,7 +35,7 @@ const ColorTemplate = ({
       <div
         tw={clsx(
           'p-32 flex flex-col',
-          center && 'w-screen items-center text-center'
+          center && 'w-screen items-center text-center',
         )}
       >
         {heading && (

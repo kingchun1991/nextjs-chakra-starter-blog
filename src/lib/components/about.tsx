@@ -1,9 +1,9 @@
 'use client';
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Heading, Flex, Stack, Avatar, Separator, Box } from '@chakra-ui/react';
-import { MDXRemote } from 'next-mdx-remote';
+import { Avatar, Box, Flex, Heading, Separator, Stack } from '@chakra-ui/react';
 import type { MDXRemoteSerializeResult } from 'next-mdx-remote';
+import { MDXRemote } from 'next-mdx-remote';
 import { useEffect, useState } from 'react';
 
 import MDXComponents from '@/lib/components/MDXComponents';

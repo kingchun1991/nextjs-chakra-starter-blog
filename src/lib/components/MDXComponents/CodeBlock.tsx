@@ -3,6 +3,7 @@
 import { Box } from '@chakra-ui/react';
 import { Highlight, themes } from 'prism-react-renderer';
 import type React from 'react';
+
 // import { FiCopy } from 'react-icons/fi';
 
 // import { Tooltip } from '@/components/ui/tooltip';

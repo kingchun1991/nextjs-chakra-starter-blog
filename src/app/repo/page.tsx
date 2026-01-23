@@ -1,21 +1,21 @@
 'use client';
 
-import type React from 'react';
-
 import {
   Box,
+  Button,
   Container,
   Flex,
   Heading,
-  Text,
-  Input,
-  Button,
   HStack,
   Icon,
+  Input,
+  Text,
 } from '@chakra-ui/react';
-import { FiGithub, FiSearch } from 'react-icons/fi';
-import RepoGrid from '../../components/repo/repo-grid';
+import type React from 'react';
 import { useState } from 'react';
+import { FiGithub, FiSearch } from 'react-icons/fi';
+
+import RepoGrid from '../../components/repo/repo-grid';
 
 export default function Page() {
   const [username, setUsername] = useState('shadcn');

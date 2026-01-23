@@ -10,7 +10,7 @@ export const slugify = (content: string) => {
 
 // // markdownify
 export const markdownify = (content: string, div?: boolean) => {
-  const markdownContent: any = div
+  const markdownContent: string | Promise<string> = div
     ? marked.parse(content)
     : marked.parseInline(content);
   return { __html: markdownContent };
@@ -21,9 +21,7 @@ export const humanize = (content: string) => {
   return content
     .replace(/^[\s_]+|[\s_]+$/g, '')
     .replace(/[_\s]+/g, ' ')
-    .replace(/^[a-z]/, function (m) {
-      return m.toUpperCase();
-    });
+    .replace(/^[a-z]/, (m) => m.toUpperCase());
 };
 
 // titleify
@@ -49,15 +47,17 @@ const htmlEntityDecoder = (htmlWithEntities: string): string => {
     /(&amp;|&lt;|&gt;|&quot;|&#39;)/g,
     (entity: string): string => {
       return entityList[entity];
-    }
+    },
   );
   return htmlWithoutEntities;
 };
 
 // plainify
 export const plainify = (content: string) => {
-  const parseMarkdown: any = marked.parse(content);
-  const filterBrackets = parseMarkdown.replace(/<\/?[^>]+(>|$)/gm, '');
+  const parseMarkdown: string | Promise<string> = marked.parse(content);
+  const filterBrackets = parseMarkdown
+    .toString()
+    .replace(/<\/?[^>]+(>|$)/gm, '');
   const filterSpaces = filterBrackets.replace(/[\r\n]\s*[\r\n]/gm, '');
   return htmlEntityDecoder(filterSpaces);
 };

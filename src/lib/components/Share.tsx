@@ -25,7 +25,7 @@ const Share = ({
           onClick={() =>
             window.open(
               `https://facebook.com/sharer/sharer.php?u=${siteConfig.url}/blog/${slug}`,
-              '_blank'
+              '_blank',
             )
           }
           variant="plain"
@@ -39,7 +39,7 @@ const Share = ({
           onClick={() =>
             window.open(
               `https://x.com/share?url=${siteConfig.url}/blog/${slug}&text=${title}`,
-              '_blank'
+              '_blank',
             )
           }
           variant="plain"
@@ -53,7 +53,7 @@ const Share = ({
           onClick={() =>
             window.open(
               `https://www.linkedin.com/shareArticle?mini=true&url=${siteConfig.url}/blog/${slug}&title=${title}&summary=${description}&source=${siteConfig.url}`,
-              '_blank'
+              '_blank',
             )
           }
           variant="plain"
@@ -67,7 +67,7 @@ const Share = ({
           onClick={() =>
             window.open(
               `https://pinterest.com/pin/create/button/?url=${siteConfig.url}/blog/${slug}&media=&description=${description}`,
-              '_blank'
+              '_blank',
             )
           }
           variant="plain"

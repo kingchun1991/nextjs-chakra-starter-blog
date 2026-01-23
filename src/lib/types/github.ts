@@ -8,7 +8,7 @@ export interface GitHubRepo {
   forks_count: number;
   language: string | null;
   updated_at: string;
-  topics: string[];
+  topics: Array<string>;
   owner: {
     login: string;
     avatar_url: string;

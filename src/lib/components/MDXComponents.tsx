@@ -9,49 +9,74 @@ import {
   Box,
   Code,
   Heading,
-  Link,
-  Text,
+  List,
   Separator,
   Table,
-  List,
+  Text,
 } from '@chakra-ui/react';
 import Image from 'next/image';
-import NextLink from 'next/link';
 
-import { Alert } from '@/components/ui/alert';
-import ProductSimple from './MDXComponents/Card';
 import RepoCard from '@/components/repo/repo-card';
-import { CodeBlock } from './MDXComponents/CodeBlock';
-import { TableOfContents } from './MDXComponents/TableOfContents';
-import { Mermaid } from './MDXComponents/Mermaid';
-import { Timeline, TimelineItem } from './MDXComponents/Timeline';
-import EnhancedTable from './MDXComponents/EnhancedTable'; // Add EnhancedTable import
+import { Alert } from '@/components/ui/alert';
+import { Link } from '@/components/ui/link';
 
-const ProductCard = (props: any) => {
+import ProductSimple from './MDXComponents/Card';
+import { CodeBlock } from './MDXComponents/CodeBlock';
+import EnhancedTable from './MDXComponents/EnhancedTable'; // Add EnhancedTable import
+import { Mermaid } from './MDXComponents/Mermaid';
+import { TableOfContents } from './MDXComponents/TableOfContents';
+import { Timeline, TimelineItem } from './MDXComponents/Timeline';
+
+interface ProductCardProps {
+  imgsrc: string;
+  title: string;
+  price: string;
+  url: string;
+}
+
+const ProductCard = (props: ProductCardProps) => {
   const { imgsrc, title, price, url } = props;
   return (
     <ProductSimple imgsrc={imgsrc} title={title} price={price} url={url} />
   );
 };
 
-const RepoCardWrapper = (props: any) => {
+interface RepoCardWrapperProps {
+  repo: unknown;
+  readme: string;
+  error?: string;
+}
+
+const RepoCardWrapper = (props: RepoCardWrapperProps) => {
   const { repo, readme, error } = props;
   return <RepoCard repo={repo} readme={readme} error={error} />;
 };
 
-const CustomImage = (props: any) => {
+interface CustomImageProps {
+  width: number;
+  height: number;
+  src: string;
+  alt: string;
+}
+
+const CustomImage = (props: CustomImageProps) => {
   const { width, height, src, alt } = props;
   return <Image width={width} height={height} src={src} alt={alt} />;
 };
 
-const CustomLink = (props: any) => {
+interface CustomLinkProps {
+  href: string;
+  children?: React.ReactNode;
+  [key: string]: unknown;
+}
+
+const CustomLink = (props: CustomLinkProps) => {
   const { href, ...rest } = props;
   const isInternalLink = href && (href.startsWith('/') || href.startsWith('#'));
 
   if (isInternalLink) {
     return (
       <Link
-        as={NextLink}
         href={href}
         color="blue.500"
         _dark={{ color: 'blue.500' }}
@@ -221,12 +246,7 @@ const MDXComponents = {
   pre: (props: any) => {
     const { children } = props;
     // Check if this is a mermaid code block
-    if (
-      children &&
-      children.props &&
-      children.props.className &&
-      children.props.className.includes('language-mermaid')
-    ) {
+    if (children?.props?.className?.includes('language-mermaid')) {
       return <Mermaid code={children.props.children.trim()} />;
     }
     return <CodeBlock {...props} />;

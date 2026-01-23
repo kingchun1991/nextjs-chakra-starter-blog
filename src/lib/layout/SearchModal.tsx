@@ -4,7 +4,6 @@ import { Box, Flex, IconButton, Input, Kbd, Spacer } from '@chakra-ui/react';
 import { useState } from 'react';
 import { LuSearch } from 'react-icons/lu';
 
-import searchData from '../../../.json/search.json' assert { type: 'json' };
 import {
   DialogBody,
   DialogCloseTrigger,
@@ -17,6 +16,7 @@ import {
 } from '@/components/ui/dialog';
 import { InputGroup } from '@/components/ui/input-group';
 
+import searchData from '../../../.json/search.json';
 import SearchResult, { type ISearchItem } from './SearchResult';
 
 const SearchModal = () => {
@@ -26,7 +26,7 @@ const SearchModal = () => {
     setSearchString(e.currentTarget.value.replace('\\', '').toLowerCase());
   };
 
-  const doSearch = (searchData: ISearchItem[]) => {
+  const doSearch = (searchData: Array<ISearchItem>) => {
     const regex = new RegExp(`${searchString}`, 'gi');
     if (searchString === '') {
       return [];

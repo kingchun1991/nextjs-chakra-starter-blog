@@ -1,11 +1,12 @@
-import { Link, Icon, HStack, Flex } from '@chakra-ui/react';
-import NextLink from 'next/link';
+import { Flex, HStack, Icon } from '@chakra-ui/react';
 import { LuFolder } from 'react-icons/lu';
 
-import { slugify } from '../utils/textConverter';
+import { Link } from '@/components/ui/link';
 import { Tag } from '@/components/ui/tag';
 
-const Categories = ({ categories }: { categories: string[] }) => {
+import { slugify } from '../utils/textConverter';
+
+const Categories = ({ categories }: { categories: Array<string> }) => {
   return (
     <HStack
       wrap="wrap"
@@ -19,7 +20,7 @@ const Categories = ({ categories }: { categories: string[] }) => {
       </Flex>
       {categories?.map((category) => (
         <Flex align="flex-start" key={category} alignItems="center">
-          <Link as={NextLink} href={`/categories/${slugify(category)}`}>
+          <Link href={`/categories/${slugify(category)}`}>
             <Tag m={1} variant="solid" colorPalette="teal" p="1">
               {category}
             </Tag>

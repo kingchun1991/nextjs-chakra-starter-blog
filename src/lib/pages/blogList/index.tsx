@@ -5,7 +5,7 @@ const BlogList = ({
   posts,
   tagSelected,
 }: {
-  posts: IPosts[];
+  posts: Array<IPosts>;
   tagSelected: string;
 }) => {
   return <BlogPostListLayout posts={posts} tagSelected={tagSelected} />;

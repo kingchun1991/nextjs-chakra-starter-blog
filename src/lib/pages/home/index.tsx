@@ -1,11 +1,11 @@
-import { Box, Separator, Flex, Heading, Link, Text } from '@chakra-ui/react';
-import NextLink from 'next/link';
+import { Box, Flex, Heading, Separator, Text } from '@chakra-ui/react';
 
+import { Link } from '@/components/ui/link';
 import SomeImage from '@/lib/components/samples/SomeImage';
 import LatestBlogPostListLayout from '@/lib/layout/LatestBlogPostListLayout';
 import type { IPosts } from '@/lib/types/custom-types';
 
-const Home = ({ posts }: { posts: IPosts[] }) => {
+const Home = ({ posts }: { posts: Array<IPosts> }) => {
   return (
     <Box>
       <Heading letterSpacing="tight" mb={4} as="h1" size="3xl">
@@ -24,7 +24,7 @@ const Home = ({ posts }: { posts: IPosts[] }) => {
         w="full"
       >
         <LatestBlogPostListLayout posts={posts} />
-        <Link as={NextLink} href="/blog" ml="auto">
+        <Link href="/blog" ml="auto">
           <Text color="teal.500" fontSize="sm" p="2">
             All Posts &rarr;
           </Text>

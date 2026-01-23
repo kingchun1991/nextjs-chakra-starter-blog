@@ -5,11 +5,12 @@
       "outputs": [".next/**", "!.next/cache/**", "public/**"],
       "env": []
     },
-    "lint": {
+    "biome:check": {
       "outputs": [],
-      "inputs": [".eslintrc.*", "src/**"]
+      "inputs": ["biome.json", "src/**"]
     },
-    "type-check": {
+    "type:check": {
+      "inputs": ["tsconfig.json", "src/**"],
       "outputs": ["*.tsbuildinfo"]
     }
   }

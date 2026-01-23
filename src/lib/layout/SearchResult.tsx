@@ -3,13 +3,13 @@
 /* eslint-disable @typescript-eslint/no-shadow */
 import {
   Box,
-  Text,
-  Link,
-  HStack,
-  Icon,
-  Highlight,
   Flex,
   Heading,
+  Highlight,
+  HStack,
+  Icon,
+  Link,
+  Text,
 } from '@chakra-ui/react';
 import { LuFileText, LuTags } from 'react-icons/lu';
 
@@ -23,52 +23,55 @@ export interface ISearchItem {
     summary: string;
     image?: string;
     description?: string;
-    categories?: string[];
-    tags?: string[];
+    categories?: Array<string>;
+    tags?: Array<string>;
   };
   content: string;
 }
 
 export interface ISearchGroup {
   group: string;
-  groupItems: {
+  groupItems: Array<{
     slug: string;
     frontmatter: {
       title: string;
       summary: string;
       image?: string;
       description?: string;
-      categories?: string[];
-      tags?: string[];
+      categories?: Array<string>;
+      tags?: Array<string>;
     };
     content: string;
-  }[];
+  }>;
 }
 
 const SearchResult = ({
   searchResult,
   searchString,
 }: {
-  searchResult: ISearchItem[];
+  searchResult: Array<ISearchItem>;
   searchString: string;
 }) => {
   // const router = useRouter();
 
-  const generateSearchGroup = (searchResult: ISearchItem[]) => {
-    return searchResult.reduce((groups, item) => {
-      const groupIndex = groups.findIndex(
-        (group) => group.group === item.group
-      );
-      if (groupIndex === -1) {
-        groups.push({
-          group: item.group,
-          groupItems: [item],
-        });
-      } else {
-        groups[groupIndex].groupItems.push(item);
-      }
-      return groups;
-    }, [] as ISearchGroup[]);
+  const generateSearchGroup = (searchResult: Array<ISearchItem>) => {
+    return searchResult.reduce(
+      (groups, item) => {
+        const groupIndex = groups.findIndex(
+          (group) => group.group === item.group,
+        );
+        if (groupIndex === -1) {
+          groups.push({
+            group: item.group,
+            groupItems: [item],
+          });
+        } else {
+          groups[groupIndex].groupItems.push(item);
+        }
+        return groups;
+      },
+      [] as Array<ISearchGroup>,
+    );
   };
 
   const finalResult = generateSearchGroup(searchResult);
@@ -115,11 +118,11 @@ const SearchResult = ({
 
     const matches = plainContent.substring(
       wordStart,
-      substring.length + position
+      substring.length + position,
     );
     const matchesAfter = plainContent.substring(
       substring.length + position,
-      substring.length + position + 80
+      substring.length + position + 80,
     );
     return (
       <>
@@ -189,7 +192,7 @@ const SearchResult = ({
                         <Text className="search-result-item-description">
                           {matchUnderline(
                             item.frontmatter.description,
-                            searchString
+                            searchString,
                           )}
                         </Text>
                       )}
@@ -213,7 +216,7 @@ const SearchResult = ({
                                       item.frontmatter.categories.length -
                                         1 && <>, </>}
                                 </Text>
-                              )
+                              ),
                             )}
                           </HStack>
                         )}

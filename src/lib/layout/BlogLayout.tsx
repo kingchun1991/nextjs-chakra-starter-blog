@@ -3,27 +3,27 @@
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import {
-  Heading,
-  Flex,
-  Stack,
   Box,
-  Text,
-  Icon,
+  Flex,
+  Heading,
   HStack,
+  Icon,
   Spacer,
+  Stack,
+  Text,
 } from '@chakra-ui/react';
-import { parseISO, format } from 'date-fns';
-import { MDXRemote } from 'next-mdx-remote';
+import { format, parseISO } from 'date-fns';
 import type { MDXRemoteSerializeResult } from 'next-mdx-remote';
+import { MDXRemote } from 'next-mdx-remote';
+import { useEffect, useState } from 'react';
 import { LuClock } from 'react-icons/lu';
 import readingDuration from 'reading-duration';
-import { useEffect, useState } from 'react';
 
 import { Avatar } from '@/components/ui/avatar';
+import Categories from '@/lib/components/Categories';
 import MDXComponents from '@/lib/components/MDXComponents';
 import Share from '@/lib/components/Share';
 import Tags from '@/lib/components/Tags';
-import Categories from '@/lib/components/Categories';
 import type { IPosts } from '@/lib/types/custom-types';
 import { giscusConfig } from '@/site.config';
 
@@ -48,7 +48,7 @@ export default function BlogLayout({
   const parseDate = (dateString: string) => {
     try {
       return format(parseISO(dateString), dateFormat);
-    } catch (error) {
+    } catch (_error) {
       return '';
     }
   };

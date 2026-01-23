@@ -1,29 +1,29 @@
 'use client';
 
-import type React from 'react';
-import { useState, useEffect, useCallback } from 'react';
 import {
-  Box,
   Badge,
+  Box,
   Button,
   Flex,
   Heading,
-  Stack,
   Icon,
   IconButton,
   Image,
+  Stack,
   Text,
 } from '@chakra-ui/react';
+import type React from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import {
+  FiAlertCircle,
   FiBook,
+  FiCheck,
   FiChevronDown,
   FiChevronUp,
   FiCopy,
   FiExternalLink,
-  FiStar,
-  FiAlertCircle,
-  FiCheck,
   FiMaximize2,
+  FiStar,
   FiX,
 } from 'react-icons/fi';
 import { LuGitFork } from 'react-icons/lu';
@@ -37,6 +37,7 @@ import {
   DialogRoot,
   DialogTitle,
 } from '@/components/ui/dialog';
+
 import type { RepoCardProps } from '../../lib/types/github';
 
 const languageColors: Record<string, string> = {
@@ -65,15 +66,23 @@ export default function RepoCard({ repo, readme, error }: RepoCardProps) {
     const diffTime = Math.abs(now.getTime() - date.getTime());
     const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
 
-    if (diffDays === 1) return '1 day ago';
-    if (diffDays < 30) return `${diffDays} days ago`;
-    if (diffDays < 365) return `${Math.floor(diffDays / 30)} months ago`;
+    if (diffDays === 1) {
+      return '1 day ago';
+    }
+    if (diffDays < 30) {
+      return `${diffDays} days ago`;
+    }
+    if (diffDays < 365) {
+      return `${Math.floor(diffDays / 30)} months ago`;
+    }
     return `${Math.floor(diffDays / 365)} years ago`;
   };
 
   const truncateText = (text: string, maxLength: number) => {
-    if (text.length <= maxLength) return text;
-    return text.slice(0, maxLength) + '...';
+    if (text.length <= maxLength) {
+      return text;
+    }
+    return `${text.slice(0, maxLength)}...`;
   };
 
   // Enhanced markdown-like formatting for modal content
@@ -403,7 +412,7 @@ export default function RepoCard({ repo, readme, error }: RepoCardProps) {
               </Box>
             )}
 
-            {!readmePreview && !error && (
+            {!(readmePreview || error) && (
               <Text fontSize="sm" color="gray.500" fontStyle="italic">
                 Loading README...
               </Text>

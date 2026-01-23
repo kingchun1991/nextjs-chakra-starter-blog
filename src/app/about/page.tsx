@@ -22,7 +22,7 @@ export const metadata: Metadata = {
   },
 };
 
-async function getAbout() {
+function getAbout() {
   return getFileBySlug('about', '_index');
 }
 

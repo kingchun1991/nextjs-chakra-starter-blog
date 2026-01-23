@@ -42,7 +42,7 @@ interface SitesConfig {
   url: string;
   repoUrl: string;
   donationUrl: string;
-  navigation: NavItem[];
+  navigation: Array<NavItem>;
   repoBranch: string;
 }
 
@@ -51,5 +51,5 @@ export interface NavItem {
   url?: string;
   external?: boolean;
   status?: string;
-  children?: NavItem[];
+  children?: Array<NavItem>;
 }

@@ -1,4 +1,4 @@
-import { Flex, Link, Text, Stack, Box } from '@chakra-ui/react';
+import { Box, Flex, Link, Stack, Text } from '@chakra-ui/react';
 import { LuGithub, LuHeart } from 'react-icons/lu';
 
 import { siteConfig } from '@/site.config';

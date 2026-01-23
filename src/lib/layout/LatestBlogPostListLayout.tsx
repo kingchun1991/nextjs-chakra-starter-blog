@@ -4,13 +4,17 @@
 
 import { Box, Flex, Grid, GridItem } from '@chakra-ui/react';
 import dynamic from 'next/dynamic';
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 import type { IPosts } from '@/lib/types/custom-types';
 
 const BlogPostCard = dynamic(() => import('@/lib/layout/BlogPostCard'));
 
-export default function BlogPostListLayout({ posts }: { posts: IPosts[] }) {
+export default function BlogPostListLayout({
+  posts,
+}: {
+  posts: Array<IPosts>;
+}) {
   const [isClient, setIsClient] = useState(false);
 
   useEffect(() => {
@@ -22,7 +26,7 @@ export default function BlogPostListLayout({ posts }: { posts: IPosts[] }) {
     .sort((a: IPosts, b: IPosts) =>
       a.modifiedAt && b.modifiedAt
         ? Number(new Date(b.modifiedAt)) - Number(new Date(a.modifiedAt))
-        : 0
+        : 0,
     )
     .slice(0, 5);
 

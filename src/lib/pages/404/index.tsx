@@ -1,15 +1,16 @@
 import {
   Box,
-  Button,
+  Link as ChakraLink,
+  Flex,
   Heading,
   Image,
   Text,
-  Link as ChakraLink,
-  Flex,
 } from '@chakra-ui/react';
 import Link from 'next/link';
 
-const Page404 = () => {
+import { Button } from '@/components/ui/button';
+
+export const Page404 = () => {
   return (
     <Flex minHeight="70vh" direction="column" justifyContent="center">
       <Image

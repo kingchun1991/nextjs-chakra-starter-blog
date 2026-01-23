@@ -2,15 +2,15 @@
 
 'use client';
 
-import { Box, Separator, Flex, Heading, Stack, Link } from '@chakra-ui/react';
-import NextLink from 'next/link';
-import { useState, useEffect } from 'react';
+import { Box, Flex, Heading, Separator, Stack } from '@chakra-ui/react';
+import { useEffect, useState } from 'react';
 
+import { Link } from '@/components/ui/link';
 // import Hero from '../components/Hero';
 import type { IPosts } from '@/lib/types/custom-types';
 import { slugify } from '@/lib/utils/textConverter';
 
-export default function TagsLayout({ posts }: { posts: IPosts[] }) {
+export default function TagsLayout({ posts }: { posts: Array<IPosts> }) {
   const [isClient, setIsClient] = useState(false);
 
   useEffect(() => {
@@ -22,7 +22,7 @@ export default function TagsLayout({ posts }: { posts: IPosts[] }) {
     .sort((a: IPosts, b: IPosts) =>
       a.publishedAt && b.publishedAt
         ? Number(new Date(b.publishedAt)) - Number(new Date(a.publishedAt))
-        : 0
+        : 0,
     );
 
   const tagCounts: { [key: string]: number } = {};
@@ -72,7 +72,7 @@ export default function TagsLayout({ posts }: { posts: IPosts[] }) {
             px={4}
           >
             {Object.entries(tagCounts).map(([tag, count]) => (
-              <Link as={NextLink} key={tag} href={`/tags/${slugify(tag)}`}>
+              <Link key={tag} href={`/tags/${slugify(tag)}`}>
                 {tag} ({count})
               </Link>
             ))}

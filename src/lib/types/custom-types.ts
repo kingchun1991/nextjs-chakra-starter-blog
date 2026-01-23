@@ -16,10 +16,10 @@ export interface IPosts {
   summary: string;
   title: string;
   image: string;
-  categories: string[];
+  categories: Array<string>;
   draft?: boolean;
   author: string;
-  tags?: string[];
+  tags?: Array<string>;
 }
 
 export interface IAbout {
@@ -35,9 +35,9 @@ export type Post = {
     meta_title?: string;
     description?: string;
     image?: string;
-    categories: string[];
+    categories: Array<string>;
     author: string;
-    tags: string[];
+    tags: Array<string>;
     date?: string;
     draft?: boolean;
   };

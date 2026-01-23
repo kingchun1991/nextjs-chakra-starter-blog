@@ -1,6 +1,6 @@
-import { Text, Timeline as ChakraTimeline, Avatar } from '@chakra-ui/react';
+import { Avatar, Timeline as ChakraTimeline, Text } from '@chakra-ui/react';
+import type { ReactNode } from 'react';
 import { LuCheck } from 'react-icons/lu';
-import { ReactNode } from 'react';
 
 export const Timeline = ({ children, ...props }: { children: ReactNode }) => {
   return (

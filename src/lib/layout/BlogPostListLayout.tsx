@@ -4,19 +4,18 @@
 
 import {
   Box,
-  Separator,
+  Center,
   Flex,
-  Heading,
   Grid,
   GridItem,
-  Link,
-  Center,
+  Heading,
   HStack,
+  Separator,
 } from '@chakra-ui/react';
 import dynamic from 'next/dynamic';
-import NextLink from 'next/link';
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
+import { Link } from '@/components/ui/link';
 import {
   PaginationItems,
   PaginationNextTrigger,
@@ -32,7 +31,7 @@ export default function BlogPostListLayout({
   posts,
   tagSelected,
 }: {
-  posts: IPosts[];
+  posts: Array<IPosts>;
   tagSelected: string;
 }) {
   const [isClient, setIsClient] = useState(false);
@@ -49,13 +48,13 @@ export default function BlogPostListLayout({
         post.tags?.some((tag: string) =>
           tag
             .toLowerCase()
-            .includes(tagSelected.replace(/-/g, ' ').toLowerCase())
-        )
+            .includes(tagSelected.replace(/-/g, ' ').toLowerCase()),
+        ),
     )
     .sort((a: IPosts, b: IPosts) =>
       a.modifiedAt && b.modifiedAt
         ? Number(new Date(b.modifiedAt)) - Number(new Date(a.modifiedAt))
-        : 0
+        : 0,
     );
 
   const postsPerPage = 5;
@@ -78,7 +77,7 @@ export default function BlogPostListLayout({
   });
   const matchedTag =
     Object.keys(tagCounts).find(
-      (tag: string) => tagSelected === slugify(tag)
+      (tag: string) => tagSelected === slugify(tag),
     ) || tagSelected;
 
   if (!isClient) {
@@ -110,7 +109,6 @@ export default function BlogPostListLayout({
               color={tagSelected === 'All' ? 'orange' : 'inherit'}
             >
               <Link
-                as={NextLink}
                 key="blog"
                 href="/blog"
                 pointerEvents={tagSelected === 'All' ? 'none' : 'auto'}
@@ -126,7 +124,6 @@ export default function BlogPostListLayout({
                   color={tagSelected === slugify(tag) ? 'orange' : 'inherit'}
                 >
                   <Link
-                    as={NextLink}
                     key={tag}
                     href={`/tags/${slugify(tag)}`}
                     pointerEvents={

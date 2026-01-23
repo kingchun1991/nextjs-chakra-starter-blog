@@ -1,11 +1,12 @@
-import { Link, Icon, HStack, Flex } from '@chakra-ui/react';
-import NextLink from 'next/link';
+import { Flex, HStack, Icon } from '@chakra-ui/react';
 import { LuTags } from 'react-icons/lu';
 
-import { slugify } from '../utils/textConverter';
+import { Link } from '@/components/ui/link';
 import { Tag } from '@/components/ui/tag';
 
-const Tags = ({ tags }: { tags: string[] }) => {
+import { slugify } from '../utils/textConverter';
+
+const Tags = ({ tags }: { tags: Array<string> }) => {
   return (
     <HStack
       wrap="wrap"
@@ -19,7 +20,7 @@ const Tags = ({ tags }: { tags: string[] }) => {
       </Flex>
       {tags?.map((tag) => (
         <Flex align="flex-start" key={tag} alignItems="center">
-          <Link as={NextLink} href={`/tags/${slugify(tag)}`}>
+          <Link href={`/tags/${slugify(tag)}`}>
             <Tag m={1} variant="solid" colorPalette="teal" p="1">
               {tag}
             </Tag>

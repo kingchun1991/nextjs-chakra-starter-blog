@@ -1,22 +1,20 @@
 /* eslint-disable react/no-unused-prop-types */
 import {
   Box,
+  Collapsible,
   Flex,
-  Text,
+  Icon,
   IconButton,
   Stack,
-  Collapsible,
-  Icon,
-  Link,
+  Text,
   useDisclosure,
 } from '@chakra-ui/react';
-import NextLink from 'next/link';
 import {
+  LuChevronDown,
+  LuChevronRight,
   LuGithub,
   LuMenu,
   LuX,
-  LuChevronDown,
-  LuChevronRight,
 } from 'react-icons/lu';
 
 import { ColorModeButton } from '@/components/ui/color-mode';
@@ -26,6 +24,7 @@ import {
   HoverCardRoot,
   HoverCardTrigger,
 } from '@/components/ui/hover-card';
+import { Link } from '@/components/ui/link';
 import type { NavItem } from '@/site.config';
 import { siteConfig } from '@/site.config';
 
@@ -34,7 +33,6 @@ import SearchModal from './SearchModal';
 const DesktopSubNav = ({ title, url }: NavItem) => {
   return (
     <Link
-      as={NextLink}
       href={url}
       role="group"
       display="block"
@@ -78,7 +76,6 @@ const DesktopNav = () => {
           <HoverCardRoot>
             <HoverCardTrigger asChild>
               <Link
-                as={NextLink}
                 p={2}
                 href={navItem.url ?? '#'}
                 fontSize="sm"
@@ -154,12 +151,11 @@ const MobileNavItem = ({ title, url, children }: NavItem) => {
             _dark={{ borderColor: 'gray.700' }}
             align="start"
           >
-            {children &&
-              children.map((child) => (
-                <Link as={NextLink} key={child.title} py={2} href={child.url}>
-                  {child.title}
-                </Link>
-              ))}
+            {children?.map((child) => (
+              <Link key={child.title} py={2} href={child.url}>
+                {child.title}
+              </Link>
+            ))}
           </Stack>
         </Collapsible.Content>
       </Collapsible.Root>
@@ -193,7 +189,7 @@ const Header = () => {
           justify={{ base: 'left', md: 'start' }}
           align="center"
         >
-          <Link as={NextLink} href="/" _hover={{ textDecoration: 'none' }}>
+          <Link href="/" _hover={{ textDecoration: 'none' }}>
             <Flex align="center" gap={2}>
               <Box>
                 <Text

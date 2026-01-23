@@ -21,11 +21,11 @@ export const metadata: Metadata = {
 };
 
 async function getData() {
-  const posts: IPosts[] = await getAllFilesFrontMatter('blog');
+  const posts: Array<IPosts> = await getAllFilesFrontMatter('blog');
   return posts;
 }
 
 export default async function index() {
-  const posts = (await getData()) as IPosts[];
+  const posts = (await getData()) as Array<IPosts>;
   return <BlogList posts={posts} tagSelected="All" />;
 }

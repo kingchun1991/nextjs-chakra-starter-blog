@@ -4,11 +4,11 @@ import type { Post } from '@/lib/types/custom-types';
 // similer products
 const similerItems = (
   currentItem: Post,
-  allItems: Post[],
-  slug: string
-): Post[] => {
-  let categories: string[] = [];
-  let tags: string[] = [];
+  allItems: Array<Post>,
+  slug: string,
+): Array<Post> => {
+  let categories: Array<string> = [];
+  let tags: Array<string> = [];
 
   // set categories
   if (currentItem.frontmatter.categories.length > 0) {
@@ -21,15 +21,15 @@ const similerItems = (
   }
 
   // filter by categories
-  const filterByCategories = allItems.filter((item: any) =>
+  const filterByCategories = allItems.filter((item: Post) =>
     categories.find((category) =>
-      item.frontmatter.categories.includes(category)
-    )
+      item.frontmatter.categories.includes(category),
+    ),
   );
 
   // filter by tags
-  const filterByTags = allItems.filter((item: any) =>
-    tags.find((tag) => item.frontmatter.tags.includes(tag))
+  const filterByTags = allItems.filter((item: Post) =>
+    tags.find((tag) => item.frontmatter.tags.includes(tag)),
   );
 
   // merged after filter

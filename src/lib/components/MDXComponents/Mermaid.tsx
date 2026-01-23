@@ -1,8 +1,9 @@
 'use client';
 
-import { useColorMode } from '@/components/ui/color-mode';
-import { useEffect, useRef } from 'react';
 import mermaid from 'mermaid';
+import { useEffect, useRef } from 'react';
+
+import { useColorMode } from '@/components/ui/color-mode';
 
 export const Mermaid = ({
   code,

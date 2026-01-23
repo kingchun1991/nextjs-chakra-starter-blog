@@ -2,18 +2,10 @@
 
 'use client';
 
-import {
-  Heading,
-  Text,
-  Flex,
-  Box,
-  Link,
-  Image,
-  Avatar,
-} from '@chakra-ui/react';
-import { parseISO, format } from 'date-fns';
-import NextLink from 'next/link';
+import { Avatar, Box, Flex, Heading, Image, Text } from '@chakra-ui/react';
+import { format, parseISO } from 'date-fns';
 
+import { Link } from '@/components/ui/link';
 import Tags from '@/lib/components/Tags';
 import type { IPosts } from '@/lib/types/custom-types';
 
@@ -24,7 +16,6 @@ const BlogPostCard = ({
   summary,
   slug,
   image,
-  categories,
   draft,
   author,
   tags,
@@ -32,10 +23,10 @@ const BlogPostCard = ({
   const imgPath = image
     ? `${image}`
     : `/api/og/cover?heading=${encodeURIComponent(
-        title
+        title,
       )}&text=${encodeURIComponent(summary)}&template=plain&center=true`;
 
-  if (!summary || !title) {
+  if (!(summary && title)) {
     return <div>Loading...</div>;
   }
 
@@ -43,16 +34,11 @@ const BlogPostCard = ({
     return null;
   }
 
-  const textColor = {
-    light: 'gray.700',
-    dark: 'gray.400',
-  };
-
   const dateFormat = 'MMMM dd, yyyy';
   const parseDate = (dateString: string) => {
     try {
       return format(parseISO(dateString), dateFormat);
-    } catch (error) {
+    } catch (_error) {
       return '';
     }
   };
@@ -75,7 +61,7 @@ const BlogPostCard = ({
           <Box maxWidth={1000}>
             <Image src={imgPath} width="100%" height="auto" alt={title} />
           </Box>
-          <Link as={NextLink} href={`/blog/${slug}`}>
+          <Link href={`/blog/${slug}`}>
             <Heading size="md" as="h3" m={1} fontWeight="medium">
               {title}
             </Heading>
@@ -103,7 +89,7 @@ const BlogPostCard = ({
       </Flex>
 
       <Tags tags={tags ?? []} />
-      <Link as={NextLink} href={`/blog/${slug}`} ml="auto">
+      <Link href={`/blog/${slug}`} ml="auto">
         <Text color="teal.500" fontSize="sm" p="2">
           Read more &rarr;
         </Text>
