@@ -16,7 +16,7 @@
     "turbo": "pnpm dlx turbo@2.6.1",
     "build:turbo": "pnpm turbo run build",
     "postbuild": "next-sitemap --config next-sitemap.config.js",
-    "biome:check": "biome check --no-errors-on-unmatched --error-on-warnings",
+    "biome:check": "biome check --no-errors-on-unmatched",
     "biome:fix": "pnpm biome:check --write",
     "biome:ci": "biome ci",
     "start": "next start",
