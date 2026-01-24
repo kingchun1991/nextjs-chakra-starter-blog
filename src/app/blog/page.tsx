@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 
-import BlogList from '@/lib/pages/blogList';
+import { BlogList } from '@/lib/pages/blogList';
 import type { IPosts } from '@/lib/types/custom-types';
 import { getAllFilesFrontMatter } from '@/lib/utils/mdx';
 

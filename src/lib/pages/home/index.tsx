@@ -1,18 +1,16 @@
 import { Box, Flex, Heading, Separator, Text } from '@chakra-ui/react';
 
 import { Link } from '@/components/ui/link';
-import SomeImage from '@/lib/components/samples/SomeImage';
-import LatestBlogPostListLayout from '@/lib/layout/LatestBlogPostListLayout';
+import { LatestBlogPostListLayout } from '@/lib/layout/latest-blog-post-list-layout';
 import type { IPosts } from '@/lib/types/custom-types';
 
-const Home = ({ posts }: { posts: Array<IPosts> }) => {
+export function Home({ posts }: { posts: Array<IPosts> }) {
   return (
     <Box>
       <Heading letterSpacing="tight" mb={4} as="h1" size="3xl">
         Latest
       </Heading>
       <Text fontSize="l">A blog created with Next.js and Chakra UI</Text>
-      <SomeImage />
       <Separator />
       <Flex
         direction="column"
@@ -32,6 +30,4 @@ const Home = ({ posts }: { posts: Array<IPosts> }) => {
       </Flex>
     </Box>
   );
-};
-
-export default Home;
+}

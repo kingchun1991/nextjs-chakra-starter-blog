@@ -6,11 +6,10 @@ import { Box, Flex, Heading, Separator, Stack } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
 
 import { Link } from '@/components/ui/link';
-// import Hero from '../components/Hero';
 import type { IPosts } from '@/lib/types/custom-types';
 import { slugify } from '@/lib/utils/textConverter';
 
-export default function TagsLayout({ posts }: { posts: Array<IPosts> }) {
+export function TagsLayout({ posts }: { posts: Array<IPosts> }) {
   const [isClient, setIsClient] = useState(false);
 
   useEffect(() => {

@@ -15,7 +15,7 @@
     "build": "pnpm generate-json && next build",
     "turbo": "pnpm dlx turbo@2.6.1",
     "build:turbo": "pnpm turbo run build",
-    "postbuild": "next-sitemap --config next-sitemap.config.js",
+    "postbuild": "pnpm validate-content && node scripts/build-directory-graph.mjs && next-sitemap --config next-sitemap.config.js",
     "biome:check": "biome check --no-errors-on-unmatched",
     "biome:fix": "pnpm biome:check --write",
     "biome:ci": "biome ci",
@@ -28,7 +28,9 @@
     "release": "cross-env HUSKY=0 commit-and-tag-version",
     "push-release": "git push --follow-tags origin main",
     "prepare": "husky",
-    "generate-json": "node scripts/jsonGenerator.js"
+    "generate-json": "node scripts/jsonGenerator.js",
+    "validate-content": "node scripts/validate-content.mjs",
+    "build-graph": "node scripts/build-directory-graph.mjs"
   },
   "dependencies": {
     "@chakra-ui/react": "^3.31.0",
@@ -57,7 +59,8 @@
     "rehype-slug": "^6.0.0",
     "remark-gfm": "^3.0.1",
     "rss": "^1.2.2",
-    "turbo": "2.3.0"
+    "turbo": "2.3.0",
+    "zod": "^4.3.6"
   },
   "devDependencies": {
     "@biomejs/biome": "2.3.8",
@@ -69,6 +72,7 @@
     "@types/react": "^19.2.7",
     "commitizen": "^4.3.1",
     "cross-env": "^10.1.0",
+    "glob": "^13.0.0",
     "husky": "^9.1.7",
     "lint-staged": "^16.2.7",
     "next-sitemap": "^4.2.3",

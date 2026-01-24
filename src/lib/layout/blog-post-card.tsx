@@ -1,17 +1,14 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-
 'use client';
 
 import { Avatar, Box, Flex, Heading, Image, Text } from '@chakra-ui/react';
 import { format, parseISO } from 'date-fns';
 
 import { Link } from '@/components/ui/link';
-import Tags from '@/lib/components/Tags';
+import { Tags } from '@/lib/components/tags';
 import type { IPosts } from '@/lib/types/custom-types';
 
-const BlogPostCard = ({
+export function BlogPostCard({
   title,
-  // publishedAt,
   modifiedAt,
   summary,
   slug,
@@ -19,15 +16,15 @@ const BlogPostCard = ({
   draft,
   author,
   tags,
-}: IPosts) => {
+}: IPosts) {
   const imgPath = image
     ? `${image}`
     : `/api/og/cover?heading=${encodeURIComponent(
-        title,
-      )}&text=${encodeURIComponent(summary)}&template=plain&center=true`;
+        title || '',
+      )}&text=${encodeURIComponent(summary || '')}&template=plain&center=true`;
 
   if (!(summary && title)) {
-    return <div>Loading...</div>;
+    return null;
   }
 
   if (draft) {
@@ -96,6 +93,4 @@ const BlogPostCard = ({
       </Link>
     </Box>
   );
-};
-
-export default BlogPostCard;
+}

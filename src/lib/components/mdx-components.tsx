@@ -4,7 +4,6 @@
 
 'use client';
 
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import {
   Box,
   Code,
@@ -21,12 +20,12 @@ import { Alert } from '@/components/ui/alert';
 import { Link } from '@/components/ui/link';
 import type { GitHubRepo } from '@/lib/types/github';
 
-import ProductSimple from './MDXComponents/Card';
-import { CodeBlock } from './MDXComponents/CodeBlock';
-import EnhancedTable from './MDXComponents/EnhancedTable'; // Add EnhancedTable import
-import { Mermaid } from './MDXComponents/Mermaid';
-import { TableOfContents } from './MDXComponents/TableOfContents';
-import { Timeline, TimelineItem } from './MDXComponents/Timeline';
+import { ProductSimple } from './mdx-components/card';
+import { CodeBlock } from './mdx-components/code-block';
+import { EnhancedTable } from './mdx-components/enhanced-table';
+import { Mermaid } from './mdx-components/mermaid';
+import { TableOfContents } from './mdx-components/table-of-contents';
+import { Timeline, TimelineItem } from './mdx-components/timeline';
 
 interface ProductCardProps {
   imgsrc: string;
@@ -98,7 +97,7 @@ const CustomLink = (props: CustomLinkProps) => {
   );
 };
 
-const Quote = (props: any) => {
+const Quote = (props: React.ComponentPropsWithoutRef<typeof Box>) => {
   return (
     <Box
       as="blockquote"
@@ -115,10 +114,9 @@ const Quote = (props: any) => {
   );
 };
 // Define a type for the props
-type CustomHeadingProps = {
+type CustomHeadingProps = React.ComponentPropsWithoutRef<typeof Heading> & {
   as: React.ElementType;
   id?: string; // Make id optional since it's not always required
-  [key: string]: any; // This allows for any other props
 };
 
 const CustomHeading: React.FC<CustomHeadingProps> = ({ as, id, ...props }) => {
@@ -154,7 +152,7 @@ const Hr = () => {
   );
 };
 
-const MDXTable = (props: any) => (
+const MDXTable = (props: React.ComponentPropsWithoutRef<typeof Table.Root>) => (
   <Table.ScrollArea borderWidth="1px" maxW="l">
     <Table.Root
       variant="outline"
@@ -227,7 +225,7 @@ const TableHeader = (props: any) => {
 
 const TableBody = (props: any) => <Table.Body {...props} />;
 
-const MDXComponents = {
+export const MDXComponents = {
   h1: (props: any) => <CustomHeading as="h1" {...props} />,
   h2: (props: any) => <CustomHeading as="h2" {...props} />,
   h3: (props: any) => <CustomHeading as="h3" {...props} />,
@@ -246,7 +244,6 @@ const MDXComponents = {
   a: CustomLink,
   pre: (props: any) => {
     const { children } = props;
-    // Check if this is a mermaid code block
     if (children?.props?.className?.includes('language-mermaid')) {
       return <Mermaid code={children.props.children.trim()} />;
     }
@@ -264,9 +261,7 @@ const MDXComponents = {
   TableOfContents,
   Timeline,
   TimelineItem,
-  EnhancedTable, // Add EnhancedTable to the mapping
+  EnhancedTable,
 };
 
 export { CustomLink };
-
-export default MDXComponents;

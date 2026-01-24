@@ -12,7 +12,6 @@ import {
   HStack,
   Separator,
 } from '@chakra-ui/react';
-import dynamic from 'next/dynamic';
 import { useEffect, useState } from 'react';
 
 import { Link } from '@/components/ui/link';
@@ -25,9 +24,9 @@ import {
 import type { IPosts } from '@/lib/types/custom-types';
 import { slugify } from '@/lib/utils/textConverter';
 
-const BlogPostCard = dynamic(() => import('@/lib/layout/BlogPostCard'));
+import { BlogPostCard } from './blog-post-card';
 
-export default function BlogPostListLayout({
+export function BlogPostListLayout({
   posts,
   tagSelected,
 }: {

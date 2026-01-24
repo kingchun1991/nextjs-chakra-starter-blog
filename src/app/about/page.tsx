@@ -2,7 +2,7 @@
 import type { Metadata } from 'next';
 import type { MDXRemoteSerializeResult } from 'next-mdx-remote';
 
-import AboutLayout from '@/lib/components/about';
+import { AboutLayout } from '@/lib/components/about';
 import type { IPosts } from '@/lib/types/custom-types';
 import { getFileBySlug } from '@/lib/utils/mdx';
 

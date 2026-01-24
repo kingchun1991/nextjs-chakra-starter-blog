@@ -13,13 +13,13 @@ interface EnhancedTableProps {
   compact?: boolean;
 }
 
-const EnhancedTable = ({
+export function EnhancedTable({
   data,
   columns,
   striped = false,
   hoverable = true,
   compact = false,
-}: EnhancedTableProps) => {
+}: EnhancedTableProps) {
   return (
     <Table.ScrollArea borderWidth="1px" maxW="l">
       <Table.Root
@@ -92,6 +92,4 @@ const EnhancedTable = ({
       </Table.Root>
     </Table.ScrollArea>
   );
-};
-
-export default EnhancedTable;
+}

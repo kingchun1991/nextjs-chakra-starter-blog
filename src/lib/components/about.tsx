@@ -1,15 +1,14 @@
 'use client';
 
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Avatar, Box, Flex, Heading, Separator, Stack } from '@chakra-ui/react';
 import type { MDXRemoteSerializeResult } from 'next-mdx-remote';
 import { MDXRemote } from 'next-mdx-remote';
 import { useEffect, useState } from 'react';
 
-import MDXComponents from '@/lib/components/MDXComponents';
+import { MDXComponents } from '@/lib/components/mdx-components';
 import type { IPosts } from '@/lib/types/custom-types';
 
-export default function AboutLayout({
+export function AboutLayout({
   mdxSource,
   post,
 }: {
@@ -54,9 +53,7 @@ export default function AboutLayout({
           <Heading letterSpacing="tight" mb={2} as="h1" size="2xl">
             {post.title}
           </Heading>
-          {mounted && (
-            <MDXRemote {...mdxSource} components={MDXComponents as any} />
-          )}
+          {mounted && <MDXRemote {...mdxSource} components={MDXComponents} />}
           {!mounted && (
             <Box p={4} color="gray.500">
               Loading content...

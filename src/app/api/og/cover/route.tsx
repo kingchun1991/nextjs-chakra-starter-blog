@@ -2,7 +2,7 @@
 import { ImageResponse } from '@vercel/og';
 import type { NextRequest } from 'next/server';
 
-import TemplateSwitcher from '@/lib/components/image-templates/TemplateWrapper';
+import { TemplateWrapper } from '@/lib/components/image-templates/template-wrapper';
 import { outfitBold, outfitMedium } from '@/lib/utils/font/outfit';
 
 export const runtime = 'edge';
@@ -20,7 +20,7 @@ export const GET = async (request: NextRequest) => {
   const height = Number(searchParams.get('height') ?? 630);
   const templateProps = { heading, text, template, center, width, height };
 
-  return new ImageResponse(<TemplateSwitcher {...templateProps} />, {
+  return new ImageResponse(<TemplateWrapper {...templateProps} />, {
     width,
     height,
     fonts: [

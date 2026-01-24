@@ -2,7 +2,7 @@
 import type { Metadata } from 'next';
 import type { MDXRemoteSerializeResult } from 'next-mdx-remote';
 
-import BlogLayout from '@/lib/layout/BlogLayout';
+import { BlogLayout } from '@/lib/layout/blog-layout';
 import type { IPosts } from '@/lib/types/custom-types';
 import { getFileBySlug, getFiles } from '@/lib/utils/mdx';
 import { siteConfig } from '@/site.config';
@@ -11,11 +11,13 @@ type Props = {
   params: Promise<{ slug: string }>;
 };
 
+const MDX_EXTENSION_REGEX = /\.mdx/;
+
 export async function generateStaticParams() {
   const posts = await getFiles('blog');
 
   return posts.map((post) => ({
-    slug: post.replace(/\.mdx/, ''),
+    slug: post.replace(MDX_EXTENSION_REGEX, ''),
   }));
 }
 

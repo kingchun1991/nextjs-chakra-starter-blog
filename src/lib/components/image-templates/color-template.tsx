@@ -6,13 +6,13 @@ import type { OgImageOption } from '@/lib/types/ogImageOption';
 
 type ColorTemplateProps = Omit<OgImageOption, 'template'>;
 
-const ColorTemplate = ({
+export function ColorTemplate({
   heading,
   text,
   center,
   width,
   height,
-}: ColorTemplateProps) => {
+}: ColorTemplateProps) {
   const aHeight = height ?? 0;
   const aWidth = width ?? 0;
   const blurSize = (aWidth < aHeight ? aWidth : aHeight) / 3.2;
@@ -45,6 +45,4 @@ const ColorTemplate = ({
       </div>
     </div>
   );
-};
-
-export default ColorTemplate;
+}

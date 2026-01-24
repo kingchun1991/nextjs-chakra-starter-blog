@@ -1,7 +1,5 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 'use client';
 
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import {
   Box,
   Flex,
@@ -20,16 +18,14 @@ import { LuClock } from 'react-icons/lu';
 import readingDuration from 'reading-duration';
 
 import { Avatar } from '@/components/ui/avatar';
-import Categories from '@/lib/components/Categories';
-import MDXComponents from '@/lib/components/MDXComponents';
-import Share from '@/lib/components/Share';
-import Tags from '@/lib/components/Tags';
+import { Categories } from '@/lib/components/categories';
+import { MDXComponents } from '@/lib/components/mdx-components';
+import { Share } from '@/lib/components/share';
+import { Tags } from '@/lib/components/tags';
 import type { IPosts } from '@/lib/types/custom-types';
 import { giscusConfig } from '@/site.config';
 
-// import similerItems from '../utils/similarItems';
-
-export default function BlogLayout({
+export function BlogLayout({
   mdxSource,
   post,
   content,
@@ -144,7 +140,14 @@ export default function BlogLayout({
           </HStack>
         </Flex>
         {mounted && (
-          <MDXRemote {...mdxSource} components={MDXComponents as any} />
+          <MDXRemote
+            {...mdxSource}
+            components={
+              MDXComponents as unknown as React.ComponentProps<
+                typeof MDXRemote
+              >['components']
+            }
+          />
         )}
         {!mounted && (
           <Box p={4} color="gray.500">
@@ -161,7 +164,7 @@ export default function BlogLayout({
             <Share
               title={post.title}
               description={post.summary}
-              slug={post.slug!}
+              slug={post.slug || ''}
             />
           </HStack>
         </Box>

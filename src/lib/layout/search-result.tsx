@@ -45,13 +45,13 @@ export interface ISearchGroup {
   }>;
 }
 
-const SearchResult = ({
+export function SearchResult({
   searchResult,
   searchString,
 }: {
   searchResult: Array<ISearchItem>;
   searchString: string;
-}) => {
+}) {
   // const router = useRouter();
 
   const generateSearchGroup = (searchResult: Array<ISearchItem>) => {
@@ -255,6 +255,6 @@ const SearchResult = ({
       )}
     </Box>
   );
-};
+}
 
-export default SearchResult;
+// export default SearchResult;

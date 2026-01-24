@@ -17,9 +17,9 @@ import {
 import { InputGroup } from '@/components/ui/input-group';
 
 import searchData from '../../../.json/search.json';
-import SearchResult, { type ISearchItem } from './SearchResult';
+import { type ISearchItem, SearchResult } from './search-result';
 
-const SearchModal = () => {
+export function SearchModal() {
   const [searchString, setSearchString] = useState('');
 
   const handleSearch = (e: React.FormEvent<HTMLInputElement>) => {
@@ -98,6 +98,6 @@ const SearchModal = () => {
       </DialogContent>
     </DialogRoot>
   );
-};
+}
 
-export default SearchModal;
+// export default SearchModal;

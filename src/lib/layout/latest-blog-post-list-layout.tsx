@@ -3,18 +3,13 @@
 'use client';
 
 import { Box, Flex, Grid, GridItem } from '@chakra-ui/react';
-import dynamic from 'next/dynamic';
 import { useEffect, useState } from 'react';
 
 import type { IPosts } from '@/lib/types/custom-types';
 
-const BlogPostCard = dynamic(() => import('@/lib/layout/BlogPostCard'));
+import { BlogPostCard } from './blog-post-card';
 
-export default function BlogPostListLayout({
-  posts,
-}: {
-  posts: Array<IPosts>;
-}) {
+export function LatestBlogPostListLayout({ posts }: { posts: Array<IPosts> }) {
   const [isClient, setIsClient] = useState(false);
 
   useEffect(() => {

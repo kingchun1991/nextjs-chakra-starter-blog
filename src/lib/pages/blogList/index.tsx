@@ -1,14 +1,12 @@
-import BlogPostListLayout from '@/lib/layout/BlogPostListLayout';
+import { BlogPostListLayout } from '@/lib/layout/blog-post-list-layout';
 import type { IPosts } from '@/lib/types/custom-types';
 
-const BlogList = ({
+export function BlogList({
   posts,
   tagSelected,
 }: {
   posts: Array<IPosts>;
   tagSelected: string;
-}) => {
+}) {
   return <BlogPostListLayout posts={posts} tagSelected={tagSelected} />;
-};
-
-export default BlogList;
+}

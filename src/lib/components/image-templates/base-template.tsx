@@ -6,7 +6,7 @@ import type { OgImageOption } from '@/lib/types/ogImageOption';
 
 type BaseTemplateProps = Omit<OgImageOption, 'template'>;
 
-const BaseTemplate = ({ heading, text, center }: BaseTemplateProps) => {
+export function BaseTemplate({ heading, text, center }: BaseTemplateProps) {
   return (
     <div
       tw="w-screen h-screen p-32 flex flex-col justify-center bg-[#121212]"
@@ -22,6 +22,4 @@ const BaseTemplate = ({ heading, text, center }: BaseTemplateProps) => {
       </div>
     </div>
   );
-};
-
-export default BaseTemplate;
+}

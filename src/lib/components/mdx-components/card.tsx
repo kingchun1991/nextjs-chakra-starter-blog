@@ -1,6 +1,5 @@
 'use client';
 
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import {
   Box,
   Button,
@@ -18,7 +17,7 @@ interface ProductSimpleProps {
   url: string;
 }
 
-export default function ProductSimple(props: ProductSimpleProps) {
+export function ProductSimple(props: ProductSimpleProps) {
   const data = props;
 
   return (
