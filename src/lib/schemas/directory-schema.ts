@@ -47,7 +47,7 @@ export function buildDirectoryItemSchema() {
     }
 
     if (fieldConfig.validation) {
-      fieldSchema = fieldConfig.validation;
+      fieldSchema = fieldConfig.validation as z.ZodTypeAny;
     }
 
     if (!fieldConfig.required) {

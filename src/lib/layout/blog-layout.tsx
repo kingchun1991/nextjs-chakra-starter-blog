@@ -162,7 +162,7 @@ export function BlogLayout({
           <HStack gap={4} align="stretch" alignItems="center">
             <Text mr={3}>Share :</Text>
             <Share
-              title={post.title}
+              title={post.title || ''}
               description={post.summary}
               slug={post.slug || ''}
             />
