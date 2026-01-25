@@ -6,7 +6,7 @@ import { Tag } from '@/components/ui/tag';
 
 import { slugify } from '../utils/textConverter';
 
-const Tags = ({ tags }: { tags: Array<string> }) => {
+export function Tags({ tags }: { tags: Array<string> }) {
   return (
     <HStack
       wrap="wrap"
@@ -29,6 +29,4 @@ const Tags = ({ tags }: { tags: Array<string> }) => {
       ))}
     </HStack>
   );
-};
-
-export default Tags;
+}

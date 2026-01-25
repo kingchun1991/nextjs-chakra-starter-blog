@@ -8,7 +8,7 @@ import {
 
 import { siteConfig } from '@/site.config';
 
-const Share = ({
+export function Share({
   title,
   description,
   slug,
@@ -16,7 +16,7 @@ const Share = ({
   title: string;
   description?: string;
   slug: string;
-}) => {
+}) {
   return (
     <HStack gap="6" wrap="wrap">
       <Box display="inline-block">
@@ -77,6 +77,4 @@ const Share = ({
       </Box>
     </HStack>
   );
-};
-
-export default Share;
+}

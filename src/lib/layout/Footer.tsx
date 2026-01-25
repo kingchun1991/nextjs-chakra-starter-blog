@@ -3,7 +3,7 @@ import { LuGithub, LuHeart } from 'react-icons/lu';
 
 import { siteConfig } from '@/site.config';
 
-const Footer = () => {
+export function Footer() {
   return (
     <Box as="footer" py={8} px={4}>
       <Stack gap={4} align="center">
@@ -66,6 +66,6 @@ const Footer = () => {
       </Stack>
     </Box>
   );
-};
+}
 
-export default Footer;
+// export default Footer;

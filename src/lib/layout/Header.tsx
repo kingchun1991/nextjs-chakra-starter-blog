@@ -28,9 +28,9 @@ import { Link } from '@/components/ui/link';
 import type { NavItem } from '@/site.config';
 import { siteConfig } from '@/site.config';
 
-import SearchModal from './SearchModal';
+import { SearchModal } from './search-modal';
 
-const DesktopSubNav = ({ title, url }: NavItem) => {
+export function DesktopSubNav({ title, url }: NavItem) {
   return (
     <Link
       href={url}
@@ -66,9 +66,9 @@ const DesktopSubNav = ({ title, url }: NavItem) => {
       </Stack>
     </Link>
   );
-};
+}
 
-const DesktopNav = () => {
+export function DesktopNav() {
   return (
     <Stack direction="row" gap={4}>
       {siteConfig.navigation.map((navItem) => (
@@ -106,9 +106,9 @@ const DesktopNav = () => {
       ))}
     </Stack>
   );
-};
+}
 
-const MobileNavItem = ({ title, url, children }: NavItem) => {
+export function MobileNavItem({ title, url, children }: NavItem) {
   const { open, onToggle } = useDisclosure();
 
   return (
@@ -161,9 +161,9 @@ const MobileNavItem = ({ title, url, children }: NavItem) => {
       </Collapsible.Root>
     </Stack>
   );
-};
+}
 
-const MobileNav = () => {
+export function MobileNav() {
   return (
     <Stack bg="white" _dark={{ bg: 'gray.800' }} p={4} display={{ md: 'none' }}>
       {siteConfig.navigation.map((navItem) => (
@@ -171,9 +171,9 @@ const MobileNav = () => {
       ))}
     </Stack>
   );
-};
+}
 
-const Header = () => {
+export function Header() {
   const { open, onToggle } = useDisclosure();
   return (
     <Box>
@@ -212,8 +212,7 @@ const Header = () => {
                   {siteConfig.title
                     .split('-')
                     .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-                    .join(' ')
-                    .replace(/^./, (match) => match.toUpperCase())}
+                    .join(' ')}
                 </Text>
               </Box>
             </Flex>
@@ -283,6 +282,6 @@ const Header = () => {
       </Collapsible.Root>
     </Box>
   );
-};
+}
 
-export default Header;
+// export default Header;

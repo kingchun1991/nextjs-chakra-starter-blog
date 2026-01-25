@@ -8,7 +8,7 @@ import {
   BreadcrumbRoot,
 } from '@/components/ui/breadcrumb';
 
-export default function Hero({ title }: { title: string }) {
+export function Hero({ title }: { title: string }) {
   return (
     <Flex
       direction="column"
