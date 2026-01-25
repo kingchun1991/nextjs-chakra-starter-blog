@@ -1,5 +1,7 @@
 import type { MetadataRoute } from 'next';
 
+export const dynamic = 'force-static';
+
 const manifest = (): MetadataRoute.Manifest => ({
   short_name: 'nextjs-chakra-starter-blog',
   name: 'Next.js App Template',

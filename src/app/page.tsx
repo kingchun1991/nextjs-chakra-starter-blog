@@ -1,4 +1,4 @@
-import Home from '@/lib/pages/home';
+import { Home } from '@/lib/pages/home';
 import type { IPosts } from '@/lib/types/custom-types';
 import { getAllFilesFrontMatter } from '@/lib/utils/mdx';
 

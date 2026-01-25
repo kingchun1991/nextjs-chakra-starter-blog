@@ -1,0 +1,10 @@
+site: out
+source: out
+bundle_dir: _pagefind
+glob: "**/*.html"
+exclude_selectors:
+  - nav
+  - footer
+  - script
+  - style
+force_language: en

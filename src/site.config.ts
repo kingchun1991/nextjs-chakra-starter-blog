@@ -11,17 +11,30 @@ export const siteConfig: SitesConfig = {
     {
       title: 'Blog',
       url: '/blog',
-      // children: [
-      //   { title: 'Blog2', url: '/blog/blog2' },
-      //   {
-      //     title: 'Blog3',
-      //     url: '/antiepidemiczone/rat',
-      //   },
-      // ],
     },
     { title: 'Tags', url: '/tags' },
     { title: 'About', url: '/about' },
   ],
+  search: {
+    provider: 'pagefind',
+    excerptLength: 30,
+    filters: ['blog', 'directory'],
+    debounceMs: 300,
+    maxResults: 50,
+  },
+  directory: {
+    enabled: false,
+    type: 'generic',
+    singular: 'Item',
+    plural: 'Items',
+    fields: {},
+    graph: {
+      maxNodes: 1000,
+      itemDepth: 2,
+      globalDepth: 3,
+      minEdgeWeight: 1,
+    },
+  },
 };
 
 export const giscusConfig: GiscusConfig = {
@@ -44,6 +57,34 @@ interface SitesConfig {
   donationUrl: string;
   navigation: Array<NavItem>;
   repoBranch: string;
+  search?: {
+    provider: 'pagefind';
+    excerptLength: number;
+    filters: Array<string>;
+    debounceMs: number;
+    maxResults: number;
+  };
+  directory?: {
+    enabled: boolean;
+    type: string;
+    singular: string;
+    plural: string;
+    fields: Record<
+      string,
+      {
+        type: 'string' | 'number' | 'boolean' | 'date' | 'array';
+        required: boolean;
+        label: string;
+        validation?: any;
+      }
+    >;
+    graph: {
+      maxNodes: number;
+      itemDepth: number;
+      globalDepth: number;
+      minEdgeWeight: number;
+    };
+  };
 }
 
 export interface NavItem {

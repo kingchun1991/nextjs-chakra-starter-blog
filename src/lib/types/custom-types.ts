@@ -13,13 +13,14 @@ export interface IPosts {
   publishedAt?: string;
   modifiedAt?: string;
   slug?: string;
-  summary: string;
-  title: string;
-  image: string;
-  categories: Array<string>;
+  summary?: string;
+  title?: string;
+  image?: string;
+  categories?: Array<string>;
   draft?: boolean;
-  author: string;
+  author?: string;
   tags?: Array<string>;
+  description?: string;
 }
 
 export interface IAbout {

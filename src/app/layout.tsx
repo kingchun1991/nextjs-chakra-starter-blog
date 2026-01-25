@@ -1,7 +1,7 @@
 import type { Metadata, Viewport } from 'next';
 
 import { Provider } from '@/components/ui/provider';
-import Layout from '@/lib/layout';
+import { Layout } from '@/lib/layout';
 import { siteConfig } from '@/site.config';
 
 type RootLayoutProps = {

@@ -1,0 +1,470 @@
+---
+title: "Using This Template"
+slug: "using-this-template"
+summary: "Complete guide to using the Next.js Chakra Starter Blog with Directory System"
+publishedAt: "2024-01-24"
+modifiedAt: "2024-01-24"
+featured: true
+author: "Template Team"
+tags: ["guide", "documentation", "getting-started"]
+draft: false
+---
+
+# Using This Template
+
+Welcome! This guide will help you get started with this powerful blog and directory template.
+
+## 1. Initial Setup
+
+### Clone the Repository
+
+```bash
+git clone https://github.com/your-repo/nextjs-chakra-starter-blog.git
+cd nextjs-chakra-starter-blog
+```
+
+### Install Dependencies
+
+```bash
+pnpm install
+```
+
+### Start Development Server
+
+```bash
+pnpm dev
+```
+
+Visit http://localhost:3000 to see your site!
+
+## 2. Content Structure
+
+### Blog Posts
+
+Blog posts live in `content/blog/`:
+
+```markdown
+---
+title: "My First Post"
+slug: "my-first-post"
+summary: "A brief summary"
+publishedAt: "2024-01-24"
+tags: ["tutorial", "next.js"]
+author: "Your Name"
+---
+
+# My First Post
+
+Your content here...
+```
+
+### Directory Items
+
+Directory items live in `content/directory/`:
+
+```markdown
+---
+title: "Example Item"
+slug: "example-item"
+description: "Short description"
+tags: ["example"]
+publishedAt: "2024-01-24"
+---
+
+# Example Item
+
+Link to other items using: [[another-item]]
+```
+
+### Asset Organization
+
+- Images: `public/images/`
+- Static files: `public/`
+
+## 3. Wiki-Links Syntax
+
+Wiki-links create connections between directory items:
+
+### Basic Syntax
+
+```markdown
+[[item-slug]]
+```
+
+Links to `/directory/item-slug` and displays "item-slug"
+
+### Custom Display Text
+
+```markdown
+[[item-slug|Custom Text]]
+```
+
+Links to `/directory/item-slug` but displays "Custom Text"
+
+### How Fuzzy Matching Works
+
+The system normalizes slugs to be case-insensitive and handles various formats:
+
+- `[[Example-Item]]` → matches `example-item`
+- `[[EXAMPLE_ITEM]]` → matches `example-item` (underscores become hyphens)
+- `[[example item]]` → matches `example-item` (spaces become hyphens)
+
+### Broken Links
+
+If a wiki-link target doesn't exist:
+- Shows red wavy underline
+- Tooltip shows "Broken link: slug-name"
+- Build process warns you about broken links
+
+## 4. Graph Visualization
+
+### Understanding Depth Limits
+
+The graph system has depth controls to manage performance:
+
+- **Item View**: Shows item + 2 levels of connections
+- **Global View**: Configurable in `site.config.ts`
+- **Max Nodes**: Limits total nodes shown (default: 1000)
+
+### Navigating the Graph
+
+Currently, graphs are generated at build time. Future versions will include:
+- Interactive graph visualization
+- Filter nodes by tags
+- Search to highlight specific nodes
+- Click nodes to navigate
+
+### How It Works
+
+1. Build process extracts all wiki-links
+2. Fuzzy matching resolves targets
+3. Graph data saved to `.json/directory-graph.json`
+4. Components load graph data client-side
+
+## 5. Configuration
+
+### Site Config (`src/site.config.ts`)
+
+```typescript
+export const siteConfig = {
+  title: 'Your Site Name',
+  url: 'https://yoursite.com',
+  
+  // Search settings
+  search: {
+    provider: 'pagefind',
+    maxResults: 50,
+    debounceMs: 300,
+  },
+  
+  // Directory settings
+  directory: {
+    enabled: true,
+    type: 'food',  // or 'doctor', 'github', 'generic'
+    singular: 'Restaurant',
+    plural: 'Restaurants',
+    fields: {
+      address: {
+        type: 'string',
+        required: false,
+        label: 'Address',
+      },
+      rating: {
+        type: 'number',
+        required: false,
+        label: 'Rating (1-5)',
+      },
+    },
+    graph: {
+      maxNodes: 1000,
+      itemDepth: 2,
+      globalDepth: 3,
+      minEdgeWeight: 1,
+    },
+  },
+};
+```
+
+### Directory Types
+
+#### Food Directory
+
+```typescript
+directory: {
+  type: 'food',
+  singular: 'Restaurant',
+  plural: 'Restaurants',
+  fields: {
+    address: { type: 'string', required: false, label: 'Address' },
+    cuisine: { type: 'string', required: false, label: 'Cuisine Type' },
+    rating: { type: 'number', required: false, label: 'Rating' },
+    priceRange: { type: 'string', required: false, label: 'Price Range' },
+  },
+}
+```
+
+#### Doctor Directory
+
+```typescript
+directory: {
+  type: 'doctor',
+  singular: 'Doctor',
+  plural: 'Doctors',
+  fields: {
+    specialty: { type: 'string', required: true, label: 'Specialty' },
+    hospital: { type: 'string', required: false, label: 'Hospital' },
+    yearsExperience: { type: 'number', required: false, label: 'Years of Experience' },
+  },
+}
+```
+
+#### GitHub Repository Directory
+
+```typescript
+directory: {
+  type: 'github',
+  singular: 'Repository',
+  plural: 'Repositories',
+  fields: {
+    stars: { type: 'number', required: false, label: 'GitHub Stars' },
+    language: { type: 'string', required: false, label: 'Primary Language' },
+    license: { type: 'string', required: false, label: 'License' },
+  },
+}
+```
+
+## 6. Validation & Build Checks
+
+### Running Validation
+
+```bash
+pnpm validate-content
+```
+
+Checks all directory items for:
+- Required fields (title, slug)
+- Valid frontmatter format
+- Custom field validation
+
+### Fixing Frontmatter Errors
+
+If validation fails:
+
+```
+❌ Content validation failed:
+
+  example-item.mdx (title): Title is required
+  another-item.mdx (slug): Slug is required
+```
+
+Add missing fields to fix.
+
+### Checking Broken Wiki-Links
+
+```bash
+pnpm build-graph
+```
+
+Shows warnings for broken links:
+
+```
+⚠️  Broken wiki-links found:
+  example-item.mdx: [[non-existent]]
+```
+
+### Build Process Overview
+
+```bash
+pnpm build
+```
+
+Steps:
+1. Generate search JSON
+2. Next.js build
+3. Validate directory content
+4. Build wiki-link graph
+5. Generate sitemap
+6. Index with Pagefind
+
+## 7. Search Customization
+
+### Pagefind Configuration
+
+Edit `pagefind.yml`:
+
+```yaml
+site: out
+source: out
+bundle_dir: _pagefind
+glob: "**/*.html"
+exclude_selectors:
+  - nav
+  - footer
+  - script
+force_language: en
+```
+
+### Custom Search Filters
+
+In `site.config.ts`:
+
+```typescript
+search: {
+  provider: 'pagefind',
+  filters: ['blog', 'directory', 'docs'],  // Add custom filters
+  maxResults: 50,
+}
+```
+
+### Styling Search UI
+
+The search component uses Chakra UI. Customize in:
+`src/lib/components/pagefind-search.tsx`
+
+## 8. Deployment
+
+### Vercel
+
+1. Push to GitHub
+2. Import project in Vercel
+3. Deploy! (No config needed)
+
+### Netlify
+
+Add `netlify.toml`:
+
+```toml
+[build]
+  command = "pnpm build"
+  publish = "out"
+```
+
+### Cloudflare Pages
+
+1. Connect GitHub repo
+2. Build command: `pnpm build`
+3. Output directory: `out`
+
+### Environment Variables
+
+None required for basic setup!
+
+### Build Performance Tips
+
+For large sites (1000+ items):
+
+1. **Increase Node memory**:
+   ```json
+   "build": "NODE_OPTIONS='--max-old-space-size=4096' next build"
+   ```
+
+2. **Limit graph depth**:
+   ```typescript
+   graph: {
+     maxNodes: 500,
+     itemDepth: 1,
+   }
+   ```
+
+3. **Use incremental static regeneration** (ISR)
+
+## 9. Advanced Features
+
+### Custom Fields with Validation
+
+```typescript
+import { z } from 'zod';
+
+directory: {
+  fields: {
+    email: {
+      type: 'string',
+      required: true,
+      label: 'Email',
+      validation: z.string().email(),
+    },
+    phone: {
+      type: 'string',
+      required: false,
+      label: 'Phone',
+      validation: z.string().regex(/^\d{3}-\d{3}-\d{4}$/),
+    },
+  },
+}
+```
+
+### Programmatic Content
+
+Generate directory items programmatically:
+
+```javascript
+// scripts/generate-directory.mjs
+import fs from 'fs';
+
+const items = [
+  { title: 'Item 1', slug: 'item-1' },
+  { title: 'Item 2', slug: 'item-2' },
+];
+
+items.forEach(item => {
+  const content = `---
+title: "${item.title}"
+slug: "${item.slug}"
+---
+
+# ${item.title}
+
+Generated content...
+`;
+
+  fs.writeFileSync(`content/directory/${item.slug}.mdx`, content);
+});
+```
+
+### API Integration
+
+Fetch data and generate content:
+
+```javascript
+// Example: Fetch from API and create directory items
+const response = await fetch('https://api.example.com/items');
+const data = await response.json();
+
+// Generate MDX files from API data
+```
+
+## 10. Troubleshooting
+
+### Search Not Working
+
+1. Check Pagefind installed: `pnpm list pagefind`
+2. Verify build ran: `ls out/_pagefind`
+3. Check browser console for errors
+
+### Wiki-Links Not Rendering
+
+1. Rebuild: `pnpm build`
+2. Check syntax: `[[slug]]` not `[slug]`
+3. Verify slug exists in `content/directory/`
+
+### Graph Data Not Loading
+
+1. Check file exists: `ls .json/directory-graph.json`
+2. Run: `pnpm build-graph`
+3. Verify public access to `/.json/` in deployment
+
+### Type Errors
+
+1. Run: `pnpm type:check`
+2. Ensure all required fields present
+3. Check custom field types match config
+
+## Next Steps
+
+1. ⭐ Star the repository
+2. 📝 Create your first directory item
+3. 🔗 Add wiki-links between items
+4. 🚀 Deploy your site
+5. 📊 Monitor your graph connections
+
+Happy building! 🎉

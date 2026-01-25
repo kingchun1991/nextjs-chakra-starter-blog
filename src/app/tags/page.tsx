@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 
-import TagsLayout from '@/lib/layout/TagsLayout';
+import { TagsLayout } from '@/lib/layout/tags-layout';
 import type { IPosts } from '@/lib/types/custom-types';
 import { getAllFilesFrontMatter } from '@/lib/utils/mdx';
 

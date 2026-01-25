@@ -80,3 +80,89 @@ export async function getFileBySlug(type: string, slug: string) {
     content, // Add the raw content for reading duration calculation
   };
 }
+
+// Directory content utilities
+export async function getDirectoryItems() {
+  const contentPath = path.join(process.cwd(), 'content', 'directory');
+
+  if (!fs.existsSync(contentPath)) {
+    return [];
+  }
+
+  const files = fs
+    .readdirSync(contentPath)
+    .filter((file) => file.endsWith('.mdx'));
+
+  const items = await Promise.all(
+    files.map(async (file) => {
+      const slug = file.replace(/\.mdx$/, '');
+      const item = await getDirectoryItemBySlug(slug);
+      return item.metaInformation;
+    }),
+  );
+
+  return items.filter((item) => !item?.draft);
+}
+
+export async function getDirectoryItemBySlug(slug: string) {
+  const contentPath = path.join(process.cwd(), 'content', 'directory');
+  const filePath = path.join(contentPath, `${slug}.mdx`);
+
+  if (!fs.existsSync(filePath)) {
+    throw new Error(`Directory item not found: ${slug}`);
+  }
+
+  const source = fs.readFileSync(filePath, 'utf-8');
+  const { data, content } = matter(source);
+
+  // Process wiki-links in content
+  const processedContent = content.replace(
+    /\[\[([^\]|]+)(?:\|([^\]]+))?\]\]/g,
+    (_match, target, displayText) => {
+      const normalized = target
+        .trim()
+        .toLowerCase()
+        .replace(/[_\s]+/g, '-');
+      const display = displayText ? displayText.trim() : target.trim();
+      return `<WikiLink slug="${normalized}">${display}</WikiLink>`;
+    },
+  );
+
+  const mdxSource = await serialize(processedContent, {
+    scope: data,
+    mdxOptions: {
+      remarkPlugins: [remarkGfm],
+      rehypePlugins: [rehypeSlug],
+      development: false,
+    },
+  });
+
+  const metaInformation: IPosts = {
+    ...data,
+    slug,
+    title: data.title,
+    description: data.description,
+    tags: data.tags,
+    publishedAt: data.publishedAt,
+    draft: data.draft,
+  };
+
+  return {
+    metaInformation,
+    mdxSource,
+    content: processedContent,
+  };
+}
+
+export function getDirectoryItemSlugs() {
+  const contentPath = path.join(process.cwd(), 'content', 'directory');
+
+  if (!fs.existsSync(contentPath)) {
+    return [];
+  }
+
+  const files = fs
+    .readdirSync(contentPath)
+    .filter((file) => file.endsWith('.mdx'));
+  return files.map((file) => file.replace(/\.mdx$/, ''));
+}
