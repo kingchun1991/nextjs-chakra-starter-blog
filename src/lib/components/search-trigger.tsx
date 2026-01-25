@@ -4,7 +4,7 @@ import { IconButton } from '@chakra-ui/react';
 import { useState } from 'react';
 import { LuSearch } from 'react-icons/lu';
 
-import { PagefindSearch } from './pagefind-search';
+import { HybridSearch } from './hybrid-search';
 
 export function SearchTrigger() {
   const [isOpen, setIsOpen] = useState(false);
@@ -20,7 +20,7 @@ export function SearchTrigger() {
       >
         <LuSearch />
       </IconButton>
-      <PagefindSearch isOpen={isOpen} onClose={() => setIsOpen(false)} />
+      <HybridSearch isOpen={isOpen} onClose={() => setIsOpen(false)} />
     </>
   );
 }
