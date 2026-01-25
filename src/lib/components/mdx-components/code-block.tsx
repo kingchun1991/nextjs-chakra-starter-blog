@@ -13,11 +13,14 @@ interface CodeBlockProps {
   className?: string;
 }
 
+const LANGUAGE_PREFIX_REGEX = /language-/;
+
 export const CodeBlock: React.FC<CodeBlockProps> = ({
   children,
   className,
 }) => {
-  const language = className?.replace(/language-/, '') || 'typescript';
+  const language =
+    className?.replace(LANGUAGE_PREFIX_REGEX, '') || 'typescript';
   const codeString = (children.props as { children: string }).children
     .toString()
     .trim();

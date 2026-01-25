@@ -97,7 +97,7 @@ const CustomLink = (props: CustomLinkProps) => {
   );
 };
 
-const Quote = (props: any) => {
+const Quote = (props: React.ComponentPropsWithoutRef<typeof Box>) => {
   return (
     <Box
       as="blockquote"
@@ -114,10 +114,9 @@ const Quote = (props: any) => {
   );
 };
 // Define a type for the props
-type CustomHeadingProps = {
+type CustomHeadingProps = React.ComponentPropsWithoutRef<typeof Heading> & {
   as: React.ElementType;
   id?: string; // Make id optional since it's not always required
-  [key: string]: any; // This allows for any other props
 };
 
 const CustomHeading: React.FC<CustomHeadingProps> = ({ as, id, ...props }) => {
@@ -153,7 +152,7 @@ const Hr = () => {
   );
 };
 
-const MDXTable = (props: any) => (
+const MDXTable = (props: React.ComponentPropsWithoutRef<typeof Table.Root>) => (
   <Table.ScrollArea borderWidth="1px" maxW="l">
     <Table.Root
       variant="outline"

@@ -29,6 +29,11 @@ import { SearchTrigger } from '@/lib/components/search-trigger';
 import type { NavItem } from '@/site.config';
 import { siteConfig } from '@/site.config';
 
+<<<<<<<< HEAD:src/lib/layout/header.tsx
+========
+import { SearchModal } from './search-modal';
+
+>>>>>>>> origin/main:src/lib/layout/Header.tsx
 export function DesktopSubNav({ title, url }: NavItem) {
   return (
     <Link
@@ -211,8 +216,7 @@ export function Header() {
                   {siteConfig.title
                     .split('-')
                     .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-                    .join(' ')
-                    .replace(/^./, (match) => match.toUpperCase())}
+                    .join(' ')}
                 </Text>
               </Box>
             </Flex>

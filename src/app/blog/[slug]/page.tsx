@@ -11,11 +11,13 @@ type Props = {
   params: Promise<{ slug: string }>;
 };
 
+const MDX_EXTENSION_REGEX = /\.mdx/;
+
 export async function generateStaticParams() {
   const posts = await getFiles('blog');
 
   return posts.map((post) => ({
-    slug: post.replace(/\.mdx/, ''),
+    slug: post.replace(MDX_EXTENSION_REGEX, ''),
   }));
 }
 
@@ -46,9 +48,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       images: [
         {
           url: `${siteConfig.url}/api/og/cover?heading=${encodeURIComponent(
-            metaInformation.title,
+            metaInformation.title || '',
           )}&text=${encodeURIComponent(
-            metaInformation.summary,
+            metaInformation.summary || '',
           )}&template=plain&center=true`,
           alt: `${metaInformation.title} og-image`,
         },
@@ -60,9 +62,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       description: metaInformation.summary,
       images: [
         `${siteConfig.url}/api/og/cover?heading=${encodeURIComponent(
-          metaInformation.title,
+          metaInformation.title || '',
         )}&text=${encodeURIComponent(
-          metaInformation.summary,
+          metaInformation.summary || '',
         )}&template=plain&center=true`,
       ],
     },

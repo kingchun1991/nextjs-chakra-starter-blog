@@ -38,7 +38,8 @@ export function getAllFilesFrontMatter(type: string) {
         tags: data.tags,
       };
 
-      return [...allPosts, newPost];
+      allPosts.push(newPost);
+      return allPosts;
     },
     [] as Array<IPosts>,
   );
@@ -93,9 +94,10 @@ export async function getDirectoryItems() {
     .readdirSync(contentPath)
     .filter((file) => file.endsWith('.mdx'));
 
+  const MDX_EXT_REGEX = /\.mdx$/;
   const items = await Promise.all(
     files.map(async (file) => {
-      const slug = file.replace(/\.mdx$/, '');
+      const slug = file.replace(MDX_EXT_REGEX, '');
       const item = await getDirectoryItemBySlug(slug);
       return item.metaInformation;
     }),
@@ -116,13 +118,15 @@ export async function getDirectoryItemBySlug(slug: string) {
   const { data, content } = matter(source);
 
   // Process wiki-links in content
+  const WIKI_LINK_REGEX = /\[\[([^\]|]+)(?:\|([^\]]+))?\]\]/g;
+  const NORMALIZE_REGEX = /[_\s]+/g;
   const processedContent = content.replace(
-    /\[\[([^\]|]+)(?:\|([^\]]+))?\]\]/g,
+    WIKI_LINK_REGEX,
     (_match, target, displayText) => {
       const normalized = target
         .trim()
         .toLowerCase()
-        .replace(/[_\s]+/g, '-');
+        .replace(NORMALIZE_REGEX, '-');
       const display = displayText ? displayText.trim() : target.trim();
       return `<WikiLink slug="${normalized}">${display}</WikiLink>`;
     },
@@ -154,6 +158,8 @@ export async function getDirectoryItemBySlug(slug: string) {
   };
 }
 
+const MDX_FILE_REGEX = /\.mdx$/;
+
 export function getDirectoryItemSlugs() {
   const contentPath = path.join(process.cwd(), 'content', 'directory');
 
@@ -164,5 +170,5 @@ export function getDirectoryItemSlugs() {
   const files = fs
     .readdirSync(contentPath)
     .filter((file) => file.endsWith('.mdx'));
-  return files.map((file) => file.replace(/\.mdx$/, ''));
+  return files.map((file) => file.replace(MDX_FILE_REGEX, ''));
 }

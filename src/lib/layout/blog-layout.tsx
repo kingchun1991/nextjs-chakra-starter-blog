@@ -140,7 +140,14 @@ export function BlogLayout({
           </HStack>
         </Flex>
         {mounted && (
-          <MDXRemote {...mdxSource} components={MDXComponents as any} />
+          <MDXRemote
+            {...mdxSource}
+            components={
+              MDXComponents as unknown as React.ComponentProps<
+                typeof MDXRemote
+              >['components']
+            }
+          />
         )}
         {!mounted && (
           <Box p={4} color="gray.500">
@@ -155,9 +162,9 @@ export function BlogLayout({
           <HStack gap={4} align="stretch" alignItems="center">
             <Text mr={3}>Share :</Text>
             <Share
-              title={post.title}
+              title={post.title || ''}
               description={post.summary}
-              slug={post.slug!}
+              slug={post.slug || ''}
             />
           </HStack>
         </Box>
