@@ -154,14 +154,7 @@ export function HybridSearch({ isOpen, onClose }: HybridSearchProps) {
       <DialogBackdrop />
       <DialogContent maxW="2xl">
         <DialogHeader>
-          <DialogTitle>
-            Search
-            {searchMethod === 'fallback' && (
-              <Text as="span" fontSize="xs" color="gray.500" ml={2}>
-                (JSON fallback)
-              </Text>
-            )}
-          </DialogTitle>
+          <DialogTitle>Search</DialogTitle>
         </DialogHeader>
         <DialogCloseTrigger />
         <DialogBody>
