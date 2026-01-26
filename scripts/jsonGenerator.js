@@ -4,7 +4,7 @@ const matter = require('gray-matter');
 const RSS = require('rss');
 
 const CONTENT_DEPTH = 2;
-const JSON_FOLDER = './.json';
+const JSON_FOLDER = './public/.json';
 const BLOG_FOLDER = 'content/blog';
 const RSS_FOLDER = './public';
 // const site_url =

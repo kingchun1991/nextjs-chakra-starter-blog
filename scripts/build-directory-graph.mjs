@@ -11,7 +11,7 @@ const __dirname = path.dirname(__filename);
 const rootDir = path.join(__dirname, '..');
 
 const CONTENT_DIR = path.join(rootDir, 'content', 'directory');
-const OUTPUT_DIR = path.join(rootDir, '.json');
+const OUTPUT_DIR = path.join(rootDir, 'public', '.json');
 const OUTPUT_FILE = path.join(OUTPUT_DIR, 'directory-graph.json');
 
 // Levenshtein distance for fuzzy matching
