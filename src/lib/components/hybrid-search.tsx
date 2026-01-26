@@ -99,16 +99,18 @@ export function HybridSearch({ isOpen, onClose }: HybridSearchProps) {
           const regex = new RegExp(query.replace(/\\/g, ''), 'gi');
           const filtered = (
             searchData as Array<{
-              title: string;
-              description?: string;
-              content?: Array<{ content: string }>;
               slug: string;
+              frontmatter: {
+                title: string;
+                summary?: string;
+              };
+              content: string;
             }>
           ).filter((item) => {
             return (
-              regex.test(item.title) ||
-              regex.test(item.description || '') ||
-              regex.test(item.content?.join(' ') || '')
+              regex.test(item.frontmatter.title) ||
+              regex.test(item.frontmatter.summary || '') ||
+              regex.test(item.content || '')
             );
           });
 
@@ -117,11 +119,11 @@ export function HybridSearch({ isOpen, onClose }: HybridSearchProps) {
               .slice(0, siteConfig.search?.maxResults || 50)
               .map((item) => ({
                 id: item.slug,
-                url: `/blog/${item.slug}`,
-                title: item.title,
+                url: `/${item.slug}`,
+                title: item.frontmatter.title,
                 excerpt:
-                  item.description ||
-                  item.content?.[0]?.content?.substring(0, 150) ||
+                  item.frontmatter.summary ||
+                  item.content?.substring(0, 150) ||
                   '',
               })),
           );
