@@ -12,10 +12,11 @@ const nextConfig: NextConfig = {
   experimental: {
     optimizePackageImports: ['@chakra-ui/react'],
   },
-  output: 'export',
-  images: {
-    unoptimized: true,
-  },
+  // Commented out for OG image API compatibility
+  // output: 'export',
+  // images: {
+  //   unoptimized: true,
+  // },
   reactStrictMode: true,
   pageExtensions: ['ts', 'tsx', 'js', 'jsx', 'md', 'mdx'],
   typescript: {
