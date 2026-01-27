@@ -149,6 +149,14 @@ export function HybridSearch({ isOpen, onClose }: HybridSearchProps) {
     onClose();
   };
 
+  // Highlight matching text
+  const highlightText = (text: string, query: string) => {
+    if (!query.trim()) return text;
+    
+    const regex = new RegExp(`(${query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'gi');
+    return text.replace(regex, '<mark>$1</mark>');
+  };
+
   return (
     <DialogRoot open={isOpen} onOpenChange={({ open }) => !open && onClose()}>
       <DialogBackdrop />
@@ -190,14 +198,36 @@ export function HybridSearch({ isOpen, onClose }: HybridSearchProps) {
                       onClick={handleLinkClick}
                       _hover={{ textDecoration: 'none' }}
                     >
-                      <Text fontWeight="bold" mb={1}>
-                        {result.title}
-                      </Text>
+                      <Text
+                        fontWeight="bold"
+                        mb={1}
+                        dangerouslySetInnerHTML={{
+                          __html: highlightText(result.title, query),
+                        }}
+                        css={{
+                          mark: {
+                            backgroundColor: 'var(--chakra-colors-yellow-200)',
+                            color: 'var(--chakra-colors-gray-900)',
+                            padding: '0 2px',
+                            borderRadius: '2px',
+                          },
+                        }}
+                      />
                       <Text
                         fontSize="sm"
                         color="gray.600"
                         _dark={{ color: 'gray.400' }}
-                        dangerouslySetInnerHTML={{ __html: result.excerpt }}
+                        dangerouslySetInnerHTML={{
+                          __html: highlightText(result.excerpt, query),
+                        }}
+                        css={{
+                          mark: {
+                            backgroundColor: 'var(--chakra-colors-yellow-200)',
+                            color: 'var(--chakra-colors-gray-900)',
+                            padding: '0 2px',
+                            borderRadius: '2px',
+                          },
+                        }}
                       />
                     </Link>
                   </Box>
