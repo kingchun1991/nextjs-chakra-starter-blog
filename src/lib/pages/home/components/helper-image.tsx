@@ -11,8 +11,8 @@ const size = 5;
 
 export const HelperImage = ({ label = '', src }: HelperImageProps) => {
   return (
-    <Tooltip showArrow aria-label={label} content={label}>
-      <Image src={src} alt={label} title={label} height={size} width={size} />
+    <Tooltip aria-label={label} content={label} showArrow>
+      <Image alt={label} height={size} src={src} title={label} width={size} />
     </Tooltip>
   );
 };

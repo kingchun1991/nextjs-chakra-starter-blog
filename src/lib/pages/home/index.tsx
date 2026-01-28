@@ -7,12 +7,12 @@ import { SomeText } from './components/some-text';
 export const Home = () => {
   return (
     <Flex
-      direction="column"
       alignItems="center"
-      justifyContent="center"
-      minHeight="70vh"
+      direction="column"
       gap={4}
+      justifyContent="center"
       mb={8}
+      minHeight="70vh"
       w="full"
     >
       <SomeText />

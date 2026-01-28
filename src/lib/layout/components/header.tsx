@@ -4,7 +4,7 @@ import { ColorModeButton } from '@/components/ui/color-mode';
 
 export const Header = () => {
   return (
-    <Flex as="header" width="full" align="center">
+    <Flex align="center" as="header" width="full">
       <Box marginLeft="auto">
         <ColorModeButton />
       </Box>

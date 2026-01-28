@@ -50,7 +50,7 @@ export const viewport: Viewport = {
 
 const RootLayout = ({ children }: RootLayoutProps) => {
   return (
-    <html lang="en" suppressHydrationWarning className={fontBody.className}>
+    <html className={fontBody.className} lang="en" suppressHydrationWarning>
       <body>
         <Provider>
           <Layout>{children}</Layout>

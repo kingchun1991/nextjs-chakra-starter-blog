@@ -7,43 +7,43 @@ export const CTASection = () => {
   return (
     <Box textAlign="center">
       <Box transform="scale(0.85)">
-        <Flex marginY={4} justifyContent="center" gap={2}>
+        <Flex gap={2} justifyContent="center" marginY={4}>
           <Link
             aria-label="Deploy to Vercel"
-            target="_blank"
-            rel="noopener noreferrer"
             href="https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fagustinusnathaniel%2Fnextarter-chakra"
+            rel="noopener noreferrer"
+            target="_blank"
           >
             <Image
-              src="https://vercel.com/button"
               alt="Vercel deploy button"
-              height={10}
               fit="contain"
+              height={10}
+              src="https://vercel.com/button"
             />
           </Link>
 
           <Link
             aria-label="Deploy to Netlify"
-            target="_blank"
-            rel="noopener noreferrer"
             href="https://app.netlify.com/start/deploy?repository=https://github.com/agustinusnathaniel/nextarter-chakra"
+            rel="noopener noreferrer"
+            target="_blank"
           >
             <Image
-              src="https://www.netlify.com/img/deploy/button.svg"
               alt="Netlify deploy button"
-              height={10}
               fit="contain"
+              height={10}
+              src="https://www.netlify.com/img/deploy/button.svg"
             />
           </Link>
         </Flex>
       </Box>
 
-      <Flex justifyContent="center" alignItems="center" gap={2}>
+      <Flex alignItems="center" gap={2} justifyContent="center">
         <Button asChild size="sm">
           <a
             href="https://github.com/agustinusnathaniel/nextarter-chakra/generate"
-            target="_blank"
             rel="noopener"
+            target="_blank"
           >
             Use This Template
           </a>

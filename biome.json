@@ -1,10 +1,15 @@
 {
-  "$schema": "https://biomejs.dev/schemas/2.3.8/schema.json",
+  "$schema": "./node_modules/@biomejs/biome/configuration_schema.json",
   "vcs": {
     "enabled": false,
     "clientKind": "git",
     "useIgnoreFile": false
   },
+  "extends": [
+    "ultracite/biome/core",
+    "ultracite/biome/react",
+    "ultracite/biome/next"
+  ],
   "files": {
     "ignoreUnknown": false,
     "includes": [
@@ -15,7 +20,8 @@
       "!src/components/ui/**/*",
       "!src/**/*/utils.ts",
       "!src/**/*.css",
-      "!*.d.ts"
+      "!*.d.ts",
+      "!public"
     ]
   },
   "formatter": {
@@ -29,31 +35,11 @@
     },
     "rules": {
       "recommended": true,
-      "a11y": {
-        "useSemanticElements": "error"
-      },
-      "complexity": {
-        "noExcessiveCognitiveComplexity": "error",
-        "noUselessStringConcat": "error",
-        "noUselessUndefinedInitialization": "error",
-        "useSimplifiedLogicExpression": "error",
-        "noVoid": "warn"
-      },
-      "correctness": {
-        "noUnusedImports": "error",
-        "noUnusedVariables": "error",
-        "noUnusedFunctionParameters": "error",
-        "useHookAtTopLevel": "error"
-      },
       "performance": {
-        "noBarrelFile": "error",
-        "useTopLevelRegex": "error"
+        "noBarrelFile": "off"
       },
       "style": {
-        "noDefaultExport": "error",
-        "useBlockStatements": "error",
-        "useCollapsedElseIf": "error",
-        "useDefaultSwitchClause": "error",
+        "useConsistentTypeDefinitions": "off",
         "useConsistentArrayType": {
           "level": "error",
           "options": {
@@ -66,17 +52,6 @@
             "filenameCases": ["kebab-case"]
           }
         }
-      },
-      "suspicious": {
-        "noDuplicateElseIf": "error",
-        "noConsole": {
-          "level": "error",
-          "options": {
-            "allow": ["error", "info"]
-          }
-        },
-        "noEmptyBlockStatements": "error",
-        "useAwait": "error"
       }
     }
   },

@@ -6,9 +6,9 @@ import { HelperImage } from './helper-image';
 
 export const SomeImage = () => {
   return (
-    <Flex gap={2} justifyContent="center" alignItems="center">
-      <HelperImage src="/chakra-ui-logomark-colored.svg" label="Chakra UI" />
-      <HelperImage src="/ts-logo-512.svg" label="TypeScript" />
+    <Flex alignItems="center" gap={2} justifyContent="center">
+      <HelperImage label="Chakra UI" src="/chakra-ui-logomark-colored.svg" />
+      <HelperImage label="TypeScript" src="/ts-logo-512.svg" />
     </Flex>
   );
 };
