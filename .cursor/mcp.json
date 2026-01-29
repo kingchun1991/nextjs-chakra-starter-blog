@@ -7,6 +7,10 @@
     "chakra-ui": {
       "command": "npx",
       "args": ["-y", "@chakra-ui/react-mcp"]
+    },
+    "ultracite": {
+      "command": "npx",
+      "args": ["-y", "mcp-remote", "https://docs.ultracite.ai/mcp"]
     }
   }
 }
