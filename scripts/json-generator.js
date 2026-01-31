@@ -1,7 +1,9 @@
 const fs = require('fs');
-const path = require('path');
+const path = require('node:path');
 const matter = require('gray-matter');
 const RSS = require('rss');
+
+const FILE_EXTENSION_REGEX = /\.[^/.]+$/;
 
 const CONTENT_DEPTH = 2;
 const JSON_FOLDER = './.json';
@@ -15,7 +17,7 @@ const site_url = 'https://nextjs-chakra-starter-blog.vercel.app/';
 const feedOptions = {
   title: 'NextJS ChakraUI Starter Blog',
   description: 'feedId:75864871994540032+userId:126272323145079808',
-  site_url: site_url,
+  site_url,
   feed_url: `${site_url}rss.xml`,
   image_url: `${site_url}next-app-chakra-ts.png`,
   pubDate: new Date(),
@@ -35,7 +37,8 @@ const getData = (folder, groupDepth) => {
 
     if (isFolder) {
       return getData(filepath, groupDepth);
-    } else if (filename.endsWith('.md') || filename.endsWith('.mdx')) {
+    }
+    if (filename.endsWith('.md') || filename.endsWith('.mdx')) {
       const file = fs.readFileSync(filepath, 'utf-8');
       const { data, content } = matter(file);
       const pathParts = filepath.split(path.sep);
@@ -44,7 +47,7 @@ const getData = (folder, groupDepth) => {
         pathParts
           .slice(CONTENT_DEPTH)
           .join('/')
-          .replace(/\.[^/.]+$/, '');
+          .replace(FILE_EXTENSION_REGEX, '');
       const group = pathParts[groupDepth];
 
       feed.item({
@@ -55,14 +58,13 @@ const getData = (folder, groupDepth) => {
       });
 
       return {
-        group: group,
-        slug: slug,
+        group,
+        slug,
         frontmatter: data,
-        content: content,
+        content,
       };
-    } else {
-      return [];
     }
+    return [];
   });
 
   const publishedPages = getPaths.filter(

@@ -20,7 +20,7 @@ import {
   PaginationRoot,
 } from '@/components/ui/pagination';
 import type { IPosts } from '@/lib/types/custom-types';
-import { slugify } from '@/lib/utils/textConverter';
+import { slugify } from '@/lib/utils/text-converter';
 
 interface ContentGridProps {
   items: Array<IPosts>;
@@ -52,13 +52,13 @@ export function ContentGrid({
         item.tags?.some((tag: string) =>
           tag
             .toLowerCase()
-            .includes(tagSelected.replace(/-/g, ' ').toLowerCase()),
-        ),
+            .includes(tagSelected.replace(/-/g, ' ').toLowerCase())
+        )
     )
     .sort((a: IPosts, b: IPosts) =>
       a.modifiedAt && b.modifiedAt
         ? Number(new Date(b.modifiedAt)) - Number(new Date(a.modifiedAt))
-        : 0,
+        : 0
     );
 
   const startIndex = (currentPage - 1) * pageSize;
@@ -68,36 +68,38 @@ export function ContentGrid({
     : filteredItems;
 
   const tagCounts: { [key: string]: number } = {};
-  filteredItems.forEach((item: IPosts) => {
-    item?.tags?.forEach((tag: string) => {
-      if (tagCounts[tag]) {
-        tagCounts[tag] += 1;
-      } else {
-        tagCounts[tag] = 1;
+  for (const item of filteredItems) {
+    if (item?.tags) {
+      for (const tag of item.tags) {
+        if (tagCounts[tag]) {
+          tagCounts[tag] += 1;
+        } else {
+          tagCounts[tag] = 1;
+        }
       }
-    });
-  });
+    }
+  }
 
   const matchedTag =
     Object.keys(tagCounts).find(
-      (tag: string) => tagSelected === slugify(tag),
+      (tag: string) => tagSelected === slugify(tag)
     ) || tagSelected;
 
   return (
     <Box>
       {tagSelected !== 'All' && (
-        <Heading letterSpacing="tight" mb={4} as="h1" size="2xl">
+        <Heading as="h1" letterSpacing="tight" mb={4} size="2xl">
           {matchedTag} ({filteredItems.length} posts)
         </Heading>
       )}
       <Box>
         {showSidebar && <Separator />}
         <Grid
-          templateAreas={`"nav main"`}
-          templateRows="repeat(2, 1fr)"
-          templateColumns="repeat(5, 1fr)"
-          p="2"
           m="0 auto 4rem auto"
+          p="2"
+          templateAreas={`"nav main"`}
+          templateColumns="repeat(5, 1fr)"
+          templateRows="repeat(2, 1fr)"
         >
           {showSidebar && (
             <GridItem
@@ -106,13 +108,13 @@ export function ContentGrid({
               display={{ base: 'none', md: 'block' }}
             >
               <Box
-                key="All"
-                flexDirection="row"
                 color={tagSelected === 'All' ? 'orange' : 'inherit'}
+                flexDirection="row"
+                key="All"
               >
                 <Link
-                  key="blog"
                   href="/blog"
+                  key="blog"
                   pointerEvents={tagSelected === 'All' ? 'none' : 'auto'}
                 >
                   All
@@ -121,13 +123,13 @@ export function ContentGrid({
               <Box>
                 {Object.keys(tagCounts).map((tag: string) => (
                   <Box
-                    key={tag}
-                    flexDirection="row"
                     color={tagSelected === slugify(tag) ? 'orange' : 'inherit'}
+                    flexDirection="row"
+                    key={tag}
                   >
                     <Link
-                      key={tag}
                       href={`/tags/${slugify(tag)}`}
+                      key={tag}
                       pointerEvents={
                         tagSelected === slugify(tag) ? 'none' : 'auto'
                       }
@@ -150,9 +152,9 @@ export function ContentGrid({
               <Center>
                 <PaginationRoot
                   count={filteredItems.length}
+                  defaultPage={1}
                   onPageChange={(e) => setCurrentPage(e.page)}
                   pageSize={pageSize}
-                  defaultPage={1}
                   variant="solid"
                 >
                   <HStack>

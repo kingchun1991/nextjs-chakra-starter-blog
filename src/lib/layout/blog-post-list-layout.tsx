@@ -22,7 +22,7 @@ import {
   PaginationRoot,
 } from '@/components/ui/pagination';
 import type { IPosts } from '@/lib/types/custom-types';
-import { slugify } from '@/lib/utils/textConverter';
+import { slugify } from '@/lib/utils/text-converter';
 
 import { BlogPostCard } from './blog-post-card';
 
@@ -47,13 +47,13 @@ export function BlogPostListLayout({
         post.tags?.some((tag: string) =>
           tag
             .toLowerCase()
-            .includes(tagSelected.replace(/-/g, ' ').toLowerCase()),
-        ),
+            .includes(tagSelected.replace(/-/g, ' ').toLowerCase())
+        )
     )
     .sort((a: IPosts, b: IPosts) =>
       a.modifiedAt && b.modifiedAt
         ? Number(new Date(b.modifiedAt)) - Number(new Date(a.modifiedAt))
-        : 0,
+        : 0
     );
 
   const postsPerPage = 5;
@@ -65,18 +65,20 @@ export function BlogPostListLayout({
   const currentPosts = filteredBlogPosts.slice(startIndex, endIndex);
 
   const tagCounts: { [key: string]: number } = {};
-  filteredBlogPosts.forEach((post: IPosts) => {
-    post?.tags?.forEach((tag: string) => {
-      if (tagCounts[tag]) {
-        tagCounts[tag] += 1;
-      } else {
-        tagCounts[tag] = 1;
+  for (const post of filteredBlogPosts) {
+    if (post?.tags) {
+      for (const tag of post.tags) {
+        if (tagCounts[tag]) {
+          tagCounts[tag] += 1;
+        } else {
+          tagCounts[tag] = 1;
+        }
       }
-    });
-  });
+    }
+  }
   const matchedTag =
     Object.keys(tagCounts).find(
-      (tag: string) => tagSelected === slugify(tag),
+      (tag: string) => tagSelected === slugify(tag)
     ) || tagSelected;
 
   if (!isClient) {
@@ -85,17 +87,17 @@ export function BlogPostListLayout({
 
   return (
     <Box>
-      <Heading letterSpacing="tight" mb={4} as="h1" size="2xl">
+      <Heading as="h1" letterSpacing="tight" mb={4} size="2xl">
         {matchedTag} ({filteredBlogPosts.length} posts)
       </Heading>
       <Box>
         <Separator />
         <Grid
-          templateAreas={`"nav main"`}
-          templateRows="repeat(2, 1fr)"
-          templateColumns="repeat(5, 1fr)"
-          p="2"
           m="0 auto 4rem auto"
+          p="2"
+          templateAreas={`"nav main"`}
+          templateColumns="repeat(5, 1fr)"
+          templateRows="repeat(2, 1fr)"
         >
           <GridItem
             area="nav"
@@ -103,13 +105,13 @@ export function BlogPostListLayout({
             display={{ base: 'none', md: 'block' }}
           >
             <Box
-              key="All"
-              flexDirection="row"
               color={tagSelected === 'All' ? 'orange' : 'inherit'}
+              flexDirection="row"
+              key="All"
             >
               <Link
-                key="blog"
                 href="/blog"
+                key="blog"
                 pointerEvents={tagSelected === 'All' ? 'none' : 'auto'}
               >
                 All
@@ -118,13 +120,13 @@ export function BlogPostListLayout({
             <Box>
               {Object.keys(tagCounts).map((tag: string) => (
                 <Box
-                  key={tag}
-                  flexDirection="row"
                   color={tagSelected === slugify(tag) ? 'orange' : 'inherit'}
+                  flexDirection="row"
+                  key={tag}
                 >
                   <Link
-                    key={tag}
                     href={`/tags/${slugify(tag)}`}
+                    key={tag}
                     pointerEvents={
                       tagSelected === slugify(tag) ? 'none' : 'auto'
                     }
@@ -150,9 +152,9 @@ export function BlogPostListLayout({
               /> */}
               <PaginationRoot
                 count={filteredBlogPosts.length}
+                defaultPage={1}
                 onPageChange={(e) => setCurrentPage(e.page)}
                 pageSize={postsPerPage}
-                defaultPage={1}
                 variant="solid"
               >
                 <HStack>

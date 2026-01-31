@@ -42,16 +42,16 @@ export const CodeBlock: React.FC<CodeBlockProps> = ({
       </Tooltip> */}
       <Highlight
         // theme={colorMode === 'light' ? themes.nightOwlLight : themes.nightOwl}
-        theme={themes.nightOwl}
         code={codeString}
         language={language}
+        theme={themes.nightOwl}
       >
         {({ className, style, tokens, getLineProps, getTokenProps }) => (
           <pre className={className} style={{ ...style, overflowX: 'auto' }}>
             {tokens.map((line, i) => (
-              <Box {...getLineProps({ line, key: i })}>
+              <Box key={i} {...getLineProps({ line })}>
                 {line.map((token, key) => (
-                  <span {...getTokenProps({ token, key })} />
+                  <span key={key} {...getTokenProps({ token })} />
                 ))}
               </Box>
             ))}

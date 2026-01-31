@@ -7,6 +7,7 @@ import remarkGfm from 'remark-gfm';
 
 import type { IPosts } from '@/lib/types/custom-types';
 
+const MDX_EXT_REGEX = /\.mdx$/;
 const root = process.cwd();
 
 export function getFiles(type: string) {
@@ -20,7 +21,7 @@ export function getAllFilesFrontMatter(type: string) {
     (allPosts: Array<IPosts>, postSlug: string) => {
       const source = fs.readFileSync(
         path.join(root, 'content', type, postSlug),
-        'utf8',
+        'utf8'
       );
 
       const { data } = matter(source);
@@ -41,7 +42,7 @@ export function getAllFilesFrontMatter(type: string) {
       allPosts.push(newPost);
       return allPosts;
     },
-    [] as Array<IPosts>,
+    [] as Array<IPosts>
   );
 }
 
@@ -94,13 +95,12 @@ export async function getDirectoryItems() {
     .readdirSync(contentPath)
     .filter((file) => file.endsWith('.mdx'));
 
-  const MDX_EXT_REGEX = /\.mdx$/;
   const items = await Promise.all(
     files.map(async (file) => {
       const slug = file.replace(MDX_EXT_REGEX, '');
       const item = await getDirectoryItemBySlug(slug);
       return item.metaInformation;
-    }),
+    })
   );
 
   return items.filter((item) => !item?.draft);
@@ -129,7 +129,7 @@ export async function getDirectoryItemBySlug(slug: string) {
         .replace(NORMALIZE_REGEX, '-');
       const display = displayText ? displayText.trim() : target.trim();
       return `<WikiLink slug="${normalized}">${display}</WikiLink>`;
-    },
+    }
   );
 
   const mdxSource = await serialize(processedContent, {

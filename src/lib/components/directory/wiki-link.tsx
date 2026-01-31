@@ -33,9 +33,9 @@ export function WikiLink({ slug, broken = false, children }: WikiLinkProps) {
         <Box
           as="span"
           color="red.500"
+          cursor="help"
           textDecoration="underline"
           textDecorationStyle="wavy"
-          cursor="help"
         >
           {children || slug}
         </Box>
@@ -45,14 +45,14 @@ export function WikiLink({ slug, broken = false, children }: WikiLinkProps) {
 
   return (
     <Link
-      href={`/directory/${slug}`}
-      color="blue.500"
       _dark={{ color: 'blue.400' }}
-      textDecoration="underline"
       _hover={{
         color: 'blue.600',
         _dark: { color: 'blue.300' },
       }}
+      color="blue.500"
+      href={`/directory/${slug}`}
+      textDecoration="underline"
     >
       {children || slug}
     </Link>

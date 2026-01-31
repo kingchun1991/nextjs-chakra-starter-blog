@@ -55,7 +55,7 @@ export function SearchModal() {
   return (
     <DialogRoot placement="center">
       <DialogTrigger asChild>
-        <IconButton variant="ghost" aria-label="Toggle Search">
+        <IconButton aria-label="Toggle Search" variant="ghost">
           <LuSearch />
         </IconButton>
       </DialogTrigger>
@@ -66,11 +66,11 @@ export function SearchModal() {
         <DialogBody>
           <InputGroup flex="1" startElement={<LuSearch />} width="100%">
             <Input
+              autoComplete="off"
+              autoFocus
+              onChange={handleSearch}
               placeholder="Search..."
               value={searchString}
-              onChange={handleSearch}
-              autoFocus
-              autoComplete="off"
               width="100%"
             />
           </InputGroup>

@@ -23,22 +23,18 @@ export function ProductSimple(props: ProductSimpleProps) {
   return (
     <Center py={12}>
       <Box
-        role="group"
-        p={6}
-        maxW="330px"
-        w="full"
-        bg="white"
         _dark={{ bg: 'gray.800' }}
+        bg="white"
         boxShadow="2xl"
-        rounded="lg"
+        maxW="330px"
+        p={6}
         pos="relative"
+        role="group"
+        rounded="lg"
+        w="full"
         zIndex={1}
       >
         <Box
-          rounded="lg"
-          mt={-12}
-          pos="relative"
-          height="230px"
           _after={{
             transition: 'all .3s ease',
             content: '""',
@@ -56,27 +52,31 @@ export function ProductSimple(props: ProductSimpleProps) {
               filter: 'blur(20px)',
             },
           }}
+          height="230px"
+          mt={-12}
+          pos="relative"
+          rounded="lg"
         >
           <Image
-            rounded="lg"
             height={230}
-            width={282}
             objectFit="cover"
+            rounded="lg"
             src={data.imgsrc}
+            width={282}
           />
         </Box>
-        <Stack pt={10} align="center">
-          <Heading fontSize="2xl" fontFamily="body" fontWeight={500}>
+        <Stack align="center" pt={10}>
+          <Heading fontFamily="body" fontSize="2xl" fontWeight={500}>
             {data.title}
           </Heading>
-          <Stack direction="row" align="center">
+          <Stack align="center" direction="row">
             <Button
-              size="md"
               border="2px"
               borderColor="dark.500"
               onClick={() => window.open(data.url, '_blank')}
+              size="md"
             >
-              <Text fontWeight={800} fontSize="xl">
+              <Text fontSize="xl" fontWeight={800}>
                 {data.price} from Amazon
               </Text>
             </Button>

@@ -27,9 +27,9 @@ export default function Page() {
   };
 
   return (
-    <Box minH="100vh" bg="gray.50" _dark={{ bg: 'gray.900' }}>
-      <Container maxW="container.xl" py={8} px={4}>
-        <Flex direction="column" align="center" mb={8}>
+    <Box _dark={{ bg: 'gray.900' }} bg="gray.50" minH="100vh">
+      <Container maxW="container.xl" px={4} py={8}>
+        <Flex align="center" direction="column" mb={8}>
           <HStack gap={2} mb={4}>
             <Icon as={FiGithub} boxSize={8} />
             <Heading size="xl">GitHub Repository Explorer</Heading>
@@ -41,33 +41,33 @@ export default function Page() {
         </Flex>
 
         <Box
-          maxW="md"
-          mx="auto"
-          mb={8}
+          _dark={{ bg: 'gray.800', borderColor: 'gray.600' }}
           bg="white"
-          borderWidth="1px"
           borderColor="gray.200"
           borderRadius="lg"
+          borderWidth="1px"
+          maxW="md"
+          mb={8}
+          mx="auto"
           p={6}
-          _dark={{ bg: 'gray.800', borderColor: 'gray.600' }}
         >
           <Box mb={4}>
-            <Heading size="md" mb={1}>
+            <Heading mb={1} size="md">
               Search Repositories
             </Heading>
-            <Text fontSize="sm" color="gray.500">
+            <Text color="gray.500" fontSize="sm">
               Enter a GitHub username to view their repositories
             </Text>
           </Box>
           <form onSubmit={handleSubmit}>
             <HStack gap={2}>
               <Input
+                flex="1"
+                onChange={(e) => setSearchInput(e.target.value)}
                 placeholder="Enter GitHub username..."
                 value={searchInput}
-                onChange={(e) => setSearchInput(e.target.value)}
-                flex="1"
               />
-              <Button type="submit" aria-label="Search">
+              <Button aria-label="Search" type="submit">
                 <Icon as={FiSearch} />
               </Button>
             </HStack>

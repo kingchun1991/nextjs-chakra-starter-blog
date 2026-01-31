@@ -11,18 +11,18 @@ import {
 export function Hero({ title }: { title: string }) {
   return (
     <Flex
-      direction="column"
-      textAlign="center"
       alignItems="center"
+      bg="black"
+      direction="column"
+      justifyContent="center"
       margin={4}
       minHeight={150}
       minWidth="auto"
-      justifyContent="center"
-      bg="black"
+      textAlign="center"
       width="100%"
     >
       <Flex direction="column" gap={4}>
-        <Heading size="3xl" fontWeight="extrabold" color="white">
+        <Heading color="white" fontWeight="extrabold" size="3xl">
           <Text>{title}</Text>
         </Heading>
 
@@ -31,8 +31,8 @@ export function Hero({ title }: { title: string }) {
           <BreadcrumbCurrentLink>
             <Text
               as="span"
-              bgGradient="linear(to-br, blue.300, blue.700)"
               bgClip="text"
+              bgGradient="linear(to-br, blue.300, blue.700)"
             >
               {title}
             </Text>

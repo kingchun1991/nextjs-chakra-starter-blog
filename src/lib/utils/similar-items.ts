@@ -5,7 +5,7 @@ import type { Post } from '@/lib/types/custom-types';
 const similerItems = (
   currentItem: Post,
   allItems: Array<Post>,
-  slug: string,
+  slug: string
 ): Array<Post> => {
   let categories: Array<string> = [];
   let tags: Array<string> = [];
@@ -23,13 +23,13 @@ const similerItems = (
   // filter by categories
   const filterByCategories = allItems.filter((item: Post) =>
     categories.find((category) =>
-      item.frontmatter.categories.includes(category),
-    ),
+      item.frontmatter.categories.includes(category)
+    )
   );
 
   // filter by tags
   const filterByTags = allItems.filter((item: Post) =>
-    tags.find((tag) => item.frontmatter.tags.includes(tag)),
+    tags.find((tag) => item.frontmatter.tags.includes(tag))
   );
 
   // merged after filter

@@ -30,12 +30,12 @@ interface RepoWithContent {
 function RepoCardSkeleton() {
   return (
     <Box
-      h="full"
+      _dark={{ bg: 'gray.800', borderColor: 'gray.600' }}
       bg="white"
-      borderWidth="1px"
       borderColor="gray.200"
       borderRadius="lg"
-      _dark={{ bg: 'gray.800', borderColor: 'gray.600' }}
+      borderWidth="1px"
+      h="full"
     >
       <Box p={6}>
         <Stack gap={4}>
@@ -94,7 +94,7 @@ export default function RepoGrid({ username }: RepoGridProps) {
                 error: 'Failed to load README',
               };
             }
-          }),
+          })
         );
 
         if (isMounted) {
@@ -123,7 +123,7 @@ export default function RepoGrid({ username }: RepoGridProps) {
     return (
       <SimpleGrid columns={{ base: 1, md: 2, lg: 3 }} gap={6}>
         {Array.from({ length: 6 }).map((_, i) => (
-          <RepoCardSkeleton key={i} />
+          <RepoCardSkeleton key={`skeleton-${i}`} />
         ))}
       </SimpleGrid>
     );
@@ -132,9 +132,9 @@ export default function RepoGrid({ username }: RepoGridProps) {
   if (error) {
     return (
       <SimpleGrid columns={{ base: 1, md: 2, lg: 3 }} gap={6}>
-        <Box width="full" textAlign="center" py={12} gridColumn="1 / -1">
+        <Box gridColumn="1 / -1" py={12} textAlign="center" width="full">
           <Icon as={FiAlertCircle} boxSize={12} color="red.500" mb={4} />
-          <Heading size="md" mb={2}>
+          <Heading mb={2} size="md">
             Failed to load repositories
           </Heading>
           <Text color="gray.500">
@@ -149,9 +149,9 @@ export default function RepoGrid({ username }: RepoGridProps) {
   if (repos.length === 0) {
     return (
       <SimpleGrid columns={{ base: 1, md: 2, lg: 3 }} gap={6}>
-        <Box width="full" textAlign="center" py={12} gridColumn="1 / -1">
+        <Box gridColumn="1 / -1" py={12} textAlign="center" width="full">
           <Icon as={FiAlertCircle} boxSize={12} color="gray.400" mb={4} />
-          <Heading size="md" mb={2}>
+          <Heading mb={2} size="md">
             No repositories found
           </Heading>
           <Text color="gray.500">
@@ -166,10 +166,10 @@ export default function RepoGrid({ username }: RepoGridProps) {
     <SimpleGrid columns={{ base: 1, md: 2, lg: 3 }} gap={6}>
       {repos.map(({ repo, readme, error }) => (
         <RepoCard
-          key={repo.id}
-          repo={repo}
-          readme={readme || undefined}
           error={error}
+          key={repo.id}
+          readme={readme || undefined}
+          repo={repo}
         />
       ))}
     </SimpleGrid>

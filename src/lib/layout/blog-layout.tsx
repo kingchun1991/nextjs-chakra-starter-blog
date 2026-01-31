@@ -57,59 +57,59 @@ export function BlogLayout({
   return (
     <Box>
       <Stack
+        alignItems="flex-start"
         as="article"
         gap={8}
         justifyContent="center"
-        alignItems="flex-start"
         m="0 auto 4rem auto"
         maxWidth="900px"
-        w="100%"
         px={2}
+        w="100%"
       >
         <Flex
+          alignItems="flex-start"
           flexDirection="column"
           justifyContent="flex-start"
-          alignItems="flex-start"
           maxWidth="900px"
           w="100%"
         >
-          <Heading letterSpacing="tight" mb={2} as="h1" size="2xl">
+          <Heading as="h1" letterSpacing="tight" mb={2} size="2xl">
             {post.title}
           </Heading>
           <HStack
-            wrap="wrap"
-            justifyContent="flex-start"
             align={['initial', 'center']}
+            justifyContent="flex-start"
+            mb={4}
             mt={2}
             w="100%"
-            mb={4}
+            wrap="wrap"
           >
             <Flex
-              align="flex-start"
-              fontSize="sm"
-              color="gray.700"
               _dark={{ color: 'gray.400' }}
+              align="flex-start"
               alignItems="center"
+              color="gray.700"
+              fontSize="sm"
             >
-              <Avatar size="xs" name={post.author} mr={2} />
+              <Avatar mr={2} name={post.author} size="xs" />
               <Box ml={1}>{post.author}</Box>
             </Flex>
 
             <Flex
-              align="flex-start"
-              fontSize="sm"
-              color="gray.700"
               _dark={{ color: 'gray.400' }}
+              align="flex-start"
               alignItems="center"
+              color="gray.700"
+              fontSize="sm"
             >
               <Categories categories={post.categories ?? []} />
             </Flex>
             <Flex
-              align="flex-start"
-              fontSize="sm"
-              color="gray.700"
               _dark={{ color: 'gray.400' }}
+              align="flex-start"
               alignItems="center"
+              color="gray.700"
+              fontSize="sm"
             >
               <Icon>
                 <LuClock />
@@ -124,13 +124,13 @@ export function BlogLayout({
             </Flex>
             <Spacer />
             <Flex
-              align="flex-start"
-              fontSize="sm"
-              color="gray.700"
               _dark={{ color: 'gray.400' }}
+              align="flex-start"
               alignItems="center"
+              color="gray.700"
+              fontSize="sm"
             >
-              <Text fontSize="sm" color="gray.500" minWidth="100px" mt={[2, 0]}>
+              <Text color="gray.500" fontSize="sm" minWidth="100px" mt={[2, 0]}>
                 {readingDuration(content, {
                   wordsPerMinute: 200,
                   emoji: false,
@@ -150,41 +150,41 @@ export function BlogLayout({
           />
         )}
         {!mounted && (
-          <Box p={4} color="gray.500">
+          <Box color="gray.500" p={4}>
             Loading content...
           </Box>
         )}
 
-        <Box color="gray.700" _dark={{ color: 'gray.400' }}>
+        <Box _dark={{ color: 'gray.400' }} color="gray.700">
           <Tags tags={post.tags ?? []} />
         </Box>
-        <Box color="gray.700" _dark={{ color: 'gray.400' }}>
-          <HStack gap={4} align="stretch" alignItems="center">
+        <Box _dark={{ color: 'gray.400' }} color="gray.700">
+          <HStack align="stretch" alignItems="center" gap={4}>
             <Text mr={3}>Share :</Text>
             <Share
-              title={post.title || ''}
               description={post.summary}
               slug={post.slug || ''}
+              title={post.title || ''}
             />
           </HStack>
         </Box>
 
         <Box className="giscus" />
         <script
-          src="https://giscus.app/client.js"
-          data-repo={giscusConfig.repo}
-          data-repo-id={giscusConfig.repo_id}
+          async
+          crossOrigin="anonymous"
           data-category="General"
           data-category-id="DIC_kwDOJ2sHH84CfEZU"
-          data-mapping="title"
-          data-strict="0"
-          data-reactions-enabled="1"
           data-emit-metadata="0"
           data-input-position="bottom"
-          data-theme="preferred_color_scheme"
           data-lang="en"
-          crossOrigin="anonymous"
-          async
+          data-mapping="title"
+          data-reactions-enabled="1"
+          data-repo={giscusConfig.repo}
+          data-repo-id={giscusConfig.repo_id}
+          data-strict="0"
+          data-theme="preferred_color_scheme"
+          src="https://giscus.app/client.js"
         />
       </Stack>
     </Box>

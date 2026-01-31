@@ -21,7 +21,7 @@ export function LatestBlogPostListLayout({ posts }: { posts: Array<IPosts> }) {
     .sort((a: IPosts, b: IPosts) =>
       a.modifiedAt && b.modifiedAt
         ? Number(new Date(b.modifiedAt)) - Number(new Date(a.modifiedAt))
-        : 0,
+        : 0
     )
     .slice(0, 5);
 
@@ -31,7 +31,7 @@ export function LatestBlogPostListLayout({ posts }: { posts: Array<IPosts> }) {
 
   return (
     <Box>
-      <Grid templateAreas={`"nav main"`} p="2" m="0 auto 4rem auto">
+      <Grid m="0 auto 4rem auto" p="2" templateAreas={`"nav main"`}>
         <GridItem area="main" colSpan={5}>
           <Flex flexDirection="column" height="100%" px={4}>
             {!filteredBlogPosts.length && 'No posts found :('}

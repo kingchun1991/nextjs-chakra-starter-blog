@@ -35,5 +35,5 @@ export default async function index() {
     mdxSource: MDXRemoteSerializeResult;
   } = await getAbout();
 
-  return <AboutLayout post={metaInformation} mdxSource={mdxSource} />;
+  return <AboutLayout mdxSource={mdxSource} post={metaInformation} />;
 }

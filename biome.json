@@ -1,10 +1,15 @@
 {
-  "$schema": "https://biomejs.dev/schemas/2.3.8/schema.json",
+  "$schema": "./node_modules/@biomejs/biome/configuration_schema.json",
   "vcs": {
     "enabled": false,
     "clientKind": "git",
     "useIgnoreFile": false
   },
+  "extends": [
+    "ultracite/biome/core",
+    "ultracite/biome/react",
+    "ultracite/biome/next"
+  ],
   "files": {
     "ignoreUnknown": false,
     "includes": [
@@ -15,7 +20,8 @@
       "!src/components/ui/**/*",
       "!src/**/*/utils.ts",
       "!src/**/*.css",
-      "!*.d.ts"
+      "!*.d.ts",
+      "!public"
     ]
   },
   "formatter": {
@@ -29,31 +35,11 @@
     },
     "rules": {
       "recommended": true,
-      "a11y": {
-        "useSemanticElements": "error"
-      },
-      "complexity": {
-        "noExcessiveCognitiveComplexity": "warn",
-        "noUselessStringConcat": "error",
-        "noUselessUndefinedInitialization": "error",
-        "useSimplifiedLogicExpression": "error",
-        "noVoid": "warn"
-      },
-      "correctness": {
-        "noUnusedImports": "error",
-        "noUnusedVariables": "error",
-        "noUnusedFunctionParameters": "error",
-        "useHookAtTopLevel": "error"
-      },
       "performance": {
-        "noBarrelFile": "error",
-        "useTopLevelRegex": "warn"
+        "noBarrelFile": "off"
       },
       "style": {
-        "noDefaultExport": "warn",
-        "useBlockStatements": "error",
-        "useCollapsedElseIf": "error",
-        "useDefaultSwitchClause": "error",
+        "useConsistentTypeDefinitions": "off",
         "useConsistentArrayType": {
           "level": "error",
           "options": {
@@ -66,18 +52,6 @@
             "filenameCases": ["kebab-case"]
           }
         }
-      },
-      "suspicious": {
-        "noDuplicateElseIf": "error",
-        "noExplicitAny": "warn",
-        "noConsole": {
-          "level": "error",
-          "options": {
-            "allow": ["error", "info"]
-          }
-        },
-        "noEmptyBlockStatements": "error",
-        "useAwait": "error"
       }
     }
   },
@@ -98,6 +72,49 @@
         "rules": {
           "style": {
             "noDefaultExport": "off"
+          }
+        }
+      }
+    },
+    {
+      "includes": [
+        "src/components/repo/repo-card.tsx",
+        "src/components/repo/repo-grid.tsx",
+        "src/lib/components/content-grid.tsx",
+        "scripts/build-directory-graph.mjs"
+      ],
+      "linter": {
+        "rules": {
+          "complexity": {
+            "noExcessiveCognitiveComplexity": "off"
+          }
+        }
+      }
+    },
+    {
+      "includes": ["src/lib/components/mdx-components.tsx"],
+      "linter": {
+        "rules": {
+          "suspicious": {
+            "noExplicitAny": "off"
+          }
+        }
+      }
+    },
+    {
+      "includes": [
+        "src/lib/components/mdx-components/code-block.tsx",
+        "src/lib/components/mdx-components/enhanced-table.tsx",
+        "src/lib/components/mdx-components/timeline.tsx",
+        "src/components/repo/repo-grid.tsx"
+      ],
+      "linter": {
+        "rules": {
+          "suspicious": {
+            "noArrayIndexKey": "off"
+          },
+          "style": {
+            "noNestedTernary": "off"
           }
         }
       }

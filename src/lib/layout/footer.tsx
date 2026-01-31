@@ -5,60 +5,60 @@ import { siteConfig } from '@/site.config';
 
 export function Footer() {
   return (
-    <Box as="footer" py={8} px={4}>
-      <Stack gap={4} align="center">
+    <Box as="footer" px={4} py={8}>
+      <Stack align="center" gap={4}>
         <Flex
-          direction={{ base: 'column', md: 'row' }}
           align="center"
-          justify="center"
+          direction={{ base: 'column', md: 'row' }}
           gap={4}
+          justify="center"
           wrap="wrap"
         >
-          <Text fontSize="sm" color="gray.600" _dark={{ color: 'gray.400' }}>
+          <Text _dark={{ color: 'gray.400' }} color="gray.600" fontSize="sm">
             © 2022 - {new Date().getFullYear()}{' '}
             <Link
-              href={siteConfig.url}
-              target="_blank"
-              rel="noopener noreferrer"
-              color="teal.500"
               _dark={{ color: 'teal.300' }}
               _hover={{ textDecoration: 'underline' }}
+              color="teal.500"
+              href={siteConfig.url}
+              rel="noopener noreferrer"
+              target="_blank"
             >
               {siteConfig.title}
             </Link>
           </Text>
 
-          <Text fontSize="sm" color="gray.600" _dark={{ color: 'gray.400' }}>
+          <Text _dark={{ color: 'gray.400' }} color="gray.600" fontSize="sm">
             •
           </Text>
 
           <Flex align="center" gap={2}>
             <Link
-              href={siteConfig.repoUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              color="gray.600"
               _dark={{ color: 'gray.400' }}
               _hover={{ color: 'teal.500' }}
-              display="flex"
               alignItems="center"
+              color="gray.600"
+              display="flex"
               gap={1}
+              href={siteConfig.repoUrl}
+              rel="noopener noreferrer"
+              target="_blank"
             >
               <LuGithub size={16} />
               <Text fontSize="sm">Source</Text>
             </Link>
           </Flex>
 
-          <Text fontSize="sm" color="gray.600" _dark={{ color: 'gray.400' }}>
+          <Text _dark={{ color: 'gray.400' }} color="gray.600" fontSize="sm">
             •
           </Text>
 
           <Flex align="center" gap={1}>
-            <Text fontSize="sm" color="gray.600" _dark={{ color: 'gray.400' }}>
+            <Text _dark={{ color: 'gray.400' }} color="gray.600" fontSize="sm">
               Made with
             </Text>
-            <LuHeart size={14} color="red" />
-            <Text fontSize="sm" color="gray.600" _dark={{ color: 'gray.400' }}>
+            <LuHeart color="red" size={14} />
+            <Text _dark={{ color: 'gray.400' }} color="gray.600" fontSize="sm">
               using Next.js & Chakra UI
             </Text>
           </Flex>

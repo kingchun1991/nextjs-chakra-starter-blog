@@ -88,16 +88,19 @@ export default function RepoCard({ repo, readme, error }: RepoCardProps) {
   // Enhanced markdown-like formatting for modal content
   const formatReadmeContent = (content: string) => {
     return content.split('\n').map((line, index) => {
+      // Use a combination of index and line content for a more stable key
+      const lineKey = `${index}-${line.slice(0, 20).replace(/\s/g, '-')}`;
+
       // Headers
       if (line.startsWith('# ')) {
         return (
           <Heading
-            key={index}
-            as="h1"
-            size="xl"
-            mt={6}
-            mb={4}
             _first={{ mt: 0 }}
+            as="h1"
+            key={lineKey}
+            mb={4}
+            mt={6}
+            size="xl"
           >
             {line.slice(2)}
           </Heading>
@@ -105,14 +108,14 @@ export default function RepoCard({ repo, readme, error }: RepoCardProps) {
       }
       if (line.startsWith('## ')) {
         return (
-          <Heading key={index} as="h2" size="lg" mt={5} mb={3}>
+          <Heading as="h2" key={lineKey} mb={3} mt={5} size="lg">
             {line.slice(3)}
           </Heading>
         );
       }
       if (line.startsWith('### ')) {
         return (
-          <Heading key={index} as="h3" size="md" mt={4} mb={2}>
+          <Heading as="h3" key={lineKey} mb={2} mt={4} size="md">
             {line.slice(4)}
           </Heading>
         );
@@ -122,14 +125,14 @@ export default function RepoCard({ repo, readme, error }: RepoCardProps) {
       if (line.startsWith('```')) {
         return (
           <Box
-            key={index}
-            bg="gray.100"
             _dark={{ bg: 'gray.700' }}
-            p={3}
+            bg="gray.100"
             borderRadius="md"
             fontFamily="mono"
             fontSize="sm"
+            key={lineKey}
             my={2}
+            p={3}
           >
             {line}
           </Box>
@@ -139,7 +142,7 @@ export default function RepoCard({ repo, readme, error }: RepoCardProps) {
       // Lists
       if (line.startsWith('- ') || line.startsWith('* ')) {
         return (
-          <Text key={index} as="li" ml={4} mb={1}>
+          <Text as="li" key={lineKey} mb={1} ml={4}>
             {line.slice(2)}
           </Text>
         );
@@ -147,12 +150,12 @@ export default function RepoCard({ repo, readme, error }: RepoCardProps) {
 
       // Empty lines create spacing
       if (line.trim() === '') {
-        return <Box key={index} h={2} />;
+        return <Box h={2} key={lineKey} />;
       }
 
       // Regular text
       return (
-        <Text key={index} mb={2} lineHeight="tall">
+        <Text key={lineKey} lineHeight="tall" mb={2}>
           {line}
         </Text>
       );
@@ -172,11 +175,9 @@ export default function RepoCard({ repo, readme, error }: RepoCardProps) {
   // Handle keyboard shortcuts in modal
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
-      if (modalOpen) {
-        if (event.key === 'c' && (event.ctrlKey || event.metaKey)) {
-          event.preventDefault();
-          handleCopy();
-        }
+      if (modalOpen && event.key === 'c' && (event.ctrlKey || event.metaKey)) {
+        event.preventDefault();
+        handleCopy();
       }
     };
 
@@ -201,17 +202,6 @@ export default function RepoCard({ repo, readme, error }: RepoCardProps) {
   return (
     <>
       <Box
-        bg="white"
-        borderWidth="1px"
-        borderColor="gray.200"
-        borderRadius="lg"
-        overflow="hidden"
-        transition="all 0.2s"
-        _hover={{
-          boxShadow: 'lg',
-          bg: 'gray.50',
-          transform: readme && !error ? 'scale(1.02)' : 'none',
-        }}
         _dark={{
           bg: 'gray.800',
           borderColor: 'gray.700',
@@ -219,15 +209,26 @@ export default function RepoCard({ repo, readme, error }: RepoCardProps) {
             bg: 'gray.700',
           },
         }}
-        h="full"
+        _hover={{
+          boxShadow: 'lg',
+          bg: 'gray.50',
+          transform: readme && !error ? 'scale(1.02)' : 'none',
+        }}
+        bg="white"
+        borderColor="gray.200"
+        borderRadius="lg"
+        borderWidth="1px"
         cursor={readme && !error ? 'pointer' : 'default'}
+        h="full"
         onClick={handleCardClick}
+        overflow="hidden"
+        transition="all 0.2s"
       >
         {/* Card Header */}
         <Box p={4} pb={3}>
-          <Flex justifyContent="space-between" alignItems="flex-start" gap={2}>
+          <Flex alignItems="flex-start" gap={2} justifyContent="space-between">
             <Box flex="1" minW="0">
-              <Heading size="md" mb={1}>
+              <Heading mb={1} size="md">
                 <Text as="span" color="blue.500">
                   {repo.owner.login}
                 </Text>
@@ -238,8 +239,8 @@ export default function RepoCard({ repo, readme, error }: RepoCardProps) {
               </Heading>
               {repo.description && (
                 <Text
-                  color="gray.600"
                   _dark={{ color: 'gray.400' }}
+                  color="gray.600"
                   fontSize="sm"
                   mt={1}
                   style={{
@@ -255,22 +256,22 @@ export default function RepoCard({ repo, readme, error }: RepoCardProps) {
             </Box>
             <Flex alignItems="center" gap={2}>
               <Badge
-                bg="gray.100"
-                color="gray.800"
                 _dark={{ bg: 'gray.700', color: 'gray.200' }}
+                bg="gray.100"
+                borderRadius="full"
+                color="gray.800"
+                fontSize="xs"
                 px={2}
                 py={1}
-                borderRadius="full"
-                fontSize="xs"
               >
                 Public
               </Badge>
               {readme && !error && (
                 <Text
-                  fontSize="xs"
+                  alignItems="center"
                   color="gray.500"
                   display="flex"
-                  alignItems="center"
+                  fontSize="xs"
                   gap={1}
                 >
                   <Icon as={FiMaximize2} boxSize={3} />
@@ -282,32 +283,32 @@ export default function RepoCard({ repo, readme, error }: RepoCardProps) {
 
           {/* Repository Stats */}
           <Stack
-            direction="row"
-            mt={3}
-            gap={3}
-            color="gray.600"
             _dark={{ color: 'gray.400' }}
-            fontSize="sm"
+            color="gray.600"
+            direction="row"
             flexWrap="wrap"
+            fontSize="sm"
+            gap={3}
+            mt={3}
           >
             {repo.language && (
-              <Stack direction="row" align="center" gap={1}>
+              <Stack align="center" direction="row" gap={1}>
                 <Box
-                  w={3}
-                  h={3}
-                  borderRadius="full"
                   bg={languageColors[repo.language] || 'gray.500'}
+                  borderRadius="full"
+                  h={3}
+                  w={3}
                 />
                 <Text>{repo.language}</Text>
               </Stack>
             )}
-            <Stack direction="row" align="center" gap={1}>
+            <Stack align="center" direction="row" gap={1}>
               <Icon as={FiStar} boxSize={4} />
               <Text fontWeight="medium">
                 {repo.stargazers_count.toLocaleString()}
               </Text>
             </Stack>
-            <Stack direction="row" align="center" gap={1}>
+            <Stack align="center" direction="row" gap={1}>
               <Icon as={LuGitFork} boxSize={4} />
               <Text>{repo.forks_count.toLocaleString()}</Text>
             </Stack>
@@ -318,20 +319,20 @@ export default function RepoCard({ repo, readme, error }: RepoCardProps) {
 
           {/* Topics */}
           {repo.topics.length > 0 && (
-            <Stack direction="row" mt={2} gap={1} flexWrap="wrap">
+            <Stack direction="row" flexWrap="wrap" gap={1} mt={2}>
               {repo.topics.slice(0, 3).map((topic) => (
                 <Badge
-                  key={topic}
-                  variant="outline"
                   fontSize="xs"
+                  key={topic}
                   px={2}
                   py={0.5}
+                  variant="outline"
                 >
                   {topic}
                 </Badge>
               ))}
               {repo.topics.length > 3 && (
-                <Badge variant="outline" fontSize="xs" px={2} py={0.5}>
+                <Badge fontSize="xs" px={2} py={0.5} variant="outline">
                   +{repo.topics.length - 3}
                 </Badge>
               )}
@@ -340,28 +341,28 @@ export default function RepoCard({ repo, readme, error }: RepoCardProps) {
         </Box>
 
         {/* Divider */}
-        <Box h="1px" bg="gray.200" _dark={{ bg: 'gray.700' }} />
+        <Box _dark={{ bg: 'gray.700' }} bg="gray.200" h="1px" />
 
         {/* Card Body - README Section */}
         <Box p={4}>
           <Stack gap={3}>
-            <Stack direction="row" align="center" gap={2}>
+            <Stack align="center" direction="row" gap={2}>
               <Icon as={FiBook} boxSize={4} />
-              <Text fontWeight="medium" fontSize="sm">
+              <Text fontSize="sm" fontWeight="medium">
                 README.md
               </Text>
             </Stack>
 
             {error && (
               <Stack
-                direction="row"
-                gap={2}
-                fontSize="sm"
-                color="gray.600"
-                bg="gray.50"
-                p={3}
-                borderRadius="md"
                 _dark={{ color: 'gray.400', bg: 'gray.700' }}
+                bg="gray.50"
+                borderRadius="md"
+                color="gray.600"
+                direction="row"
+                fontSize="sm"
+                gap={2}
+                p={3}
               >
                 <Icon as={FiAlertCircle} boxSize={4} color="yellow.500" />
                 <Text>README not available</Text>
@@ -371,36 +372,36 @@ export default function RepoCard({ repo, readme, error }: RepoCardProps) {
             {readmePreview && (
               <Box>
                 <Text
-                  fontSize="sm"
-                  color="gray.600"
                   _dark={{ color: 'gray.400' }}
+                  color="gray.600"
+                  fontSize="sm"
                   lineHeight="tall"
-                  transition="all 0.2s"
                   style={
-                    !isExpanded
-                      ? {
+                    isExpanded
+                      ? {}
+                      : {
                           display: '-webkit-box',
                           WebkitLineClamp: 4,
                           WebkitBoxOrient: 'vertical',
                           overflow: 'hidden',
                         }
-                      : {}
                   }
+                  transition="all 0.2s"
                 >
                   {isExpanded ? readme : readmePreview}
                 </Text>
 
                 {hasMoreContent && (
                   <Button
-                    variant="ghost"
-                    size="sm"
+                    fontSize="xs"
+                    height="8"
+                    mt={2}
                     onClick={(e) => {
                       e.stopPropagation();
                       setIsExpanded(!isExpanded);
                     }}
-                    mt={2}
-                    fontSize="xs"
-                    height="8"
+                    size="sm"
+                    variant="ghost"
                   >
                     <Icon
                       as={isExpanded ? FiChevronUp : FiChevronDown}
@@ -413,7 +414,7 @@ export default function RepoCard({ repo, readme, error }: RepoCardProps) {
             )}
 
             {!(readmePreview || error) && (
-              <Text fontSize="sm" color="gray.500" fontStyle="italic">
+              <Text color="gray.500" fontSize="sm" fontStyle="italic">
                 Loading README...
               </Text>
             )}
@@ -421,17 +422,17 @@ export default function RepoCard({ repo, readme, error }: RepoCardProps) {
         </Box>
 
         {/* Divider */}
-        <Box h="1px" bg="gray.200" _dark={{ bg: 'gray.700' }} />
+        <Box _dark={{ bg: 'gray.700' }} bg="gray.200" h="1px" />
 
         {/* Card Footer */}
         <Box p={4}>
           <Stack direction="row" gap={2} width="full">
-            <Button asChild flex="1" size="sm" colorScheme="blue">
+            <Button asChild colorScheme="blue" flex="1" size="sm">
               <a
                 href={repo.html_url}
-                target="_blank"
-                rel="noopener noreferrer"
                 onClick={(e) => e.stopPropagation()}
+                rel="noopener noreferrer"
+                target="_blank"
               >
                 <Icon as={FiStar} mr={1} />
                 Star
@@ -440,25 +441,25 @@ export default function RepoCard({ repo, readme, error }: RepoCardProps) {
             <Button asChild flex="1" size="sm" variant="outline">
               <a
                 href={`${repo.html_url}/fork`}
-                target="_blank"
-                rel="noopener noreferrer"
                 onClick={(e) => e.stopPropagation()}
+                rel="noopener noreferrer"
+                target="_blank"
               >
                 <Icon as={LuGitFork} mr={1} />
                 Fork
               </a>
             </Button>
             <IconButton
-              asChild
               aria-label="View on GitHub"
+              asChild
               size="sm"
               variant="outline"
             >
               <a
                 href={repo.html_url}
-                target="_blank"
-                rel="noopener noreferrer"
                 onClick={(e) => e.stopPropagation()}
+                rel="noopener noreferrer"
+                target="_blank"
               >
                 <Icon as={FiExternalLink} />
               </a>
@@ -469,62 +470,62 @@ export default function RepoCard({ repo, readme, error }: RepoCardProps) {
 
       {/* Full README Modal */}
       <DialogRoot
-        open={modalOpen}
         onOpenChange={({ open }) => setModalOpen(open)}
+        open={modalOpen}
         size="xl"
       >
         <DialogContent maxH="90vh">
           <DialogHeader
+            _dark={{ bg: 'gray.900', borderColor: 'gray.700' }}
             bg="gray.50"
             borderBottomWidth="1px"
             borderColor="gray.200"
-            _dark={{ bg: 'gray.900', borderColor: 'gray.700' }}
             py={4}
           >
-            <Flex justifyContent="space-between" alignItems="center">
-              <Stack direction="row" gap={3} align="center">
-                <Stack direction="row" gap={2} align="center">
+            <Flex alignItems="center" justifyContent="space-between">
+              <Stack align="center" direction="row" gap={3}>
+                <Stack align="center" direction="row" gap={2}>
                   <Image
-                    src={repo.owner.avatar_url}
                     alt={repo.owner.login}
-                    boxSize="6"
                     borderRadius="full"
+                    boxSize="6"
+                    src={repo.owner.avatar_url}
                   />
                   <DialogTitle>
                     {repo.owner.login}/{repo.name}
                   </DialogTitle>
                 </Stack>
-                <Badge variant="outline" fontSize="xs">
+                <Badge fontSize="xs" variant="outline">
                   README.md
                 </Badge>
               </Stack>
 
-              <Stack direction="row" gap={2} align="center">
-                <Button variant="ghost" size="sm" onClick={handleCopy}>
+              <Stack align="center" direction="row" gap={2}>
+                <Button onClick={handleCopy} size="sm" variant="ghost">
                   <Icon as={copied ? FiCheck : FiCopy} mr={1} />
                   {copied ? 'Copied' : 'Copy'}
                 </Button>
                 <DialogCloseTrigger>
-                  <IconButton variant="ghost" size="sm" aria-label="Close">
+                  <IconButton aria-label="Close" size="sm" variant="ghost">
                     <Icon as={FiX} />
                   </IconButton>
                 </DialogCloseTrigger>
               </Stack>
             </Flex>
-            <Text fontSize="sm" color="gray.500" mt={2}>
+            <Text color="gray.500" fontSize="sm" mt={2}>
               Press <kbd>Esc</kbd> to close • <kbd>Ctrl+C</kbd> to copy content
             </Text>
           </DialogHeader>
 
-          <DialogBody p={6} overflowY="auto">
+          <DialogBody overflowY="auto" p={6}>
             {readme ? (
               <Box>{formatReadmeContent(readme)}</Box>
             ) : (
               <Flex
                 alignItems="center"
+                color="gray.500"
                 justifyContent="center"
                 py={12}
-                color="gray.500"
               >
                 <Icon as={FiAlertCircle} boxSize={8} mr={3} />
                 <Text>README content not available</Text>
@@ -533,44 +534,44 @@ export default function RepoCard({ repo, readme, error }: RepoCardProps) {
           </DialogBody>
 
           <DialogFooter
-            bg="gray.50"
-            borderTopWidth="1px"
-            borderColor="gray.200"
             _dark={{ bg: 'gray.900', borderColor: 'gray.700' }}
+            bg="gray.50"
+            borderColor="gray.200"
+            borderTopWidth="1px"
             py={4}
           >
             <Flex
+              alignItems="center"
               justifyContent="space-between"
               width="full"
-              alignItems="center"
             >
-              <Stack direction="row" gap={4} color="gray.500" fontSize="sm">
-                <Stack direction="row" align="center" gap={1}>
+              <Stack color="gray.500" direction="row" fontSize="sm" gap={4}>
+                <Stack align="center" direction="row" gap={1}>
                   <Icon as={FiStar} boxSize={4} />
                   <Text>{repo.stargazers_count.toLocaleString()} stars</Text>
                 </Stack>
-                <Stack direction="row" align="center" gap={1}>
+                <Stack align="center" direction="row" gap={1}>
                   <Icon as={LuGitFork} boxSize={4} />
                   <Text>{repo.forks_count.toLocaleString()} forks</Text>
                 </Stack>
                 {repo.language && (
-                  <Stack direction="row" align="center" gap={1}>
+                  <Stack align="center" direction="row" gap={1}>
                     <Box
-                      w={3}
-                      h={3}
-                      borderRadius="full"
                       bg={languageColors[repo.language] || 'gray.500'}
+                      borderRadius="full"
+                      h={3}
+                      w={3}
                     />
                     <Text>{repo.language}</Text>
                   </Stack>
                 )}
               </Stack>
 
-              <Button asChild variant="outline" size="sm">
+              <Button asChild size="sm" variant="outline">
                 <a
                   href={repo.html_url}
-                  target="_blank"
                   rel="noopener noreferrer"
+                  target="_blank"
                 >
                   View on GitHub
                   <Icon as={FiExternalLink} ml={1} />

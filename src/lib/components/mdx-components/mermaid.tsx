@@ -33,9 +33,9 @@ export const Mermaid = ({
 
   return (
     <div
+      className="mermaid"
       id={containerId}
       ref={ref}
-      className="mermaid"
       style={{
         fontSize: '18px',
         width: '100%',

@@ -29,20 +29,20 @@ export function AboutLayout({
   // const similarPosts = similerItems(post, posts, post.slug!);
   return (
     <Box>
-      <Heading letterSpacing="tight" mb={4} as="h1" size="2xl">
+      <Heading as="h1" letterSpacing="tight" mb={4} size="2xl">
         About
       </Heading>
       <Separator />
 
       <Box>
         <Stack
+          alignItems="left"
           as="article"
           gap={8}
           justifyContent="center"
-          alignItems="left"
           m="0 auto 4rem auto"
-          w="100%"
           px={2}
+          w="100%"
         >
           <Flex align="center" justifyContent="center">
             <Avatar.Root size="2xl">
@@ -50,12 +50,12 @@ export function AboutLayout({
               <Avatar.Fallback>{post.author}</Avatar.Fallback>
             </Avatar.Root>
           </Flex>
-          <Heading letterSpacing="tight" mb={2} as="h1" size="2xl">
+          <Heading as="h1" letterSpacing="tight" mb={2} size="2xl">
             {post.title}
           </Heading>
           {mounted && <MDXRemote {...mdxSource} components={MDXComponents} />}
           {!mounted && (
-            <Box p={4} color="gray.500">
+            <Box color="gray.500" p={4}>
               Loading content...
             </Box>
           )}

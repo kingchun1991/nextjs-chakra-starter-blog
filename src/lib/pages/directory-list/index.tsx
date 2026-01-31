@@ -46,25 +46,25 @@ export function DirectoryList({ items }: DirectoryListProps) {
 
   const renderCard = (item: IPosts) => (
     <Box
-      p={4}
-      mb={4}
-      borderWidth="1px"
-      borderRadius="md"
       _hover={{ shadow: 'md' }}
+      borderRadius="md"
+      borderWidth="1px"
+      mb={4}
+      p={4}
       transition="all 0.2s"
     >
       <Link href={`/directory/${item.slug}`}>
-        <Heading size="md" mb={2}>
+        <Heading mb={2} size="md">
           {item.title}
         </Heading>
       </Link>
       {item.description && (
-        <Box color="gray.600" _dark={{ color: 'gray.400' }} mb={2}>
+        <Box _dark={{ color: 'gray.400' }} color="gray.600" mb={2}>
           {item.description}
         </Box>
       )}
       {item.tags && item.tags.length > 0 && (
-        <Box fontSize="sm" color="gray.500">
+        <Box color="gray.500" fontSize="sm">
           Tags: {item.tags.join(', ')}
         </Box>
       )}
@@ -73,20 +73,19 @@ export function DirectoryList({ items }: DirectoryListProps) {
 
   return (
     <Box>
-      <Heading letterSpacing="tight" mb={4} as="h1" size="2xl">
+      <Heading as="h1" letterSpacing="tight" mb={4} size="2xl">
         {title}
       </Heading>
       <Separator mb={4} />
 
-      <Grid templateColumns={{ base: '1fr', md: '1fr 200px' }} gap={4} mb={6}>
+      <Grid gap={4} mb={6} templateColumns={{ base: '1fr', md: '1fr 200px' }}>
         <Input
+          onChange={(e) => setSearchQuery(e.currentTarget.value)}
           placeholder="Search items..."
           value={searchQuery}
-          onChange={(e) => setSearchQuery(e.currentTarget.value)}
         />
         <Box>
           <select
-            value={sortBy}
             onChange={(e) => setSortBy(e.target.value)}
             style={{
               width: '100%',
@@ -94,6 +93,7 @@ export function DirectoryList({ items }: DirectoryListProps) {
               borderRadius: '4px',
               border: '1px solid #ccc',
             }}
+            value={sortBy}
           >
             <option value="title">Title</option>
             <option value="date">Date</option>
@@ -104,9 +104,9 @@ export function DirectoryList({ items }: DirectoryListProps) {
       <ContentGrid
         items={filteredItems}
         itemType="directory"
+        pageSize={10}
         renderCard={renderCard}
         showPagination={true}
-        pageSize={10}
       />
     </Box>
   );

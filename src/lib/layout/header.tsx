@@ -33,33 +33,33 @@ import { SearchModal } from './search-modal';
 export function DesktopSubNav({ title, url }: NavItem) {
   return (
     <Link
-      href={url}
-      role="group"
-      display="block"
-      p={2}
-      rounded="md"
       _hover={{ bg: { base: 'pink.50', _dark: 'gray.900' } }}
+      display="block"
+      href={url}
+      p={2}
+      role="group"
+      rounded="md"
     >
-      <Stack direction="row" align="center">
+      <Stack align="center" direction="row">
         <Box>
           <Text
-            transition="all .3s ease"
             _groupHover={{ color: 'pink.400' }}
             fontWeight={500}
+            transition="all .3s ease"
           >
             {title}
           </Text>
         </Box>
         <Flex
-          transition="all .3s ease"
-          transform="translateX(-10px)"
-          opacity={0}
           _groupHover={{ opacity: '100%', transform: 'translateX(0)' }}
-          justify="flex-end"
           align="center"
           flex={1}
+          justify="flex-end"
+          opacity={0}
+          transform="translateX(-10px)"
+          transition="all .3s ease"
         >
-          <Icon color="pink.400" w={5} h={5}>
+          <Icon color="pink.400" h={5} w={5}>
             <LuChevronRight />
           </Icon>
         </Flex>
@@ -76,16 +76,16 @@ export function DesktopNav() {
           <HoverCardRoot>
             <HoverCardTrigger asChild>
               <Link
-                p={2}
-                href={navItem.url ?? '#'}
-                fontSize="sm"
-                fontWeight={500}
-                color="gray.600"
                 _dark={{ color: 'gray.200' }}
                 _hover={{
                   textDecoration: 'none',
                   color: { base: 'gray.800', _dark: 'white' },
                 }}
+                color="gray.600"
+                fontSize="sm"
+                fontWeight={500}
+                href={navItem.url ?? '#'}
+                p={2}
               >
                 {navItem.title}
               </Link>
@@ -115,24 +115,24 @@ export function MobileNavItem({ title, url, children }: NavItem) {
     <Stack gap={4} onClick={children && onToggle}>
       <Link href={url ?? '#'}>
         <Flex
-          py={2}
-          as={Link}
-          // href={href ?? '#'}
-          justify="space-between"
-          align="center"
           _hover={{
             textDecoration: 'none',
           }}
+          align="center"
+          // href={href ?? '#'}
+          as={Link}
+          justify="space-between"
+          py={2}
         >
-          <Text fontWeight={600} color="gray.600" _dark={{ color: 'gray.200' }}>
+          <Text _dark={{ color: 'gray.200' }} color="gray.600" fontWeight={600}>
             {title}
           </Text>
           {children && (
             <Icon
-              transition="all .25s ease-in-out"
-              transform={open ? 'rotate(180deg)' : ''}
-              w={6}
               h={6}
+              transform={open ? 'rotate(180deg)' : ''}
+              transition="all .25s ease-in-out"
+              w={6}
             >
               <LuChevronDown />
             </Icon>
@@ -143,16 +143,16 @@ export function MobileNavItem({ title, url, children }: NavItem) {
       <Collapsible.Root open={open} style={{ marginTop: '0!important' }}>
         <Collapsible.Content>
           <Stack
-            mt={2}
-            pl={4}
-            borderLeft={1}
-            borderStyle="solid"
-            borderColor="gray.200"
             _dark={{ borderColor: 'gray.700' }}
             align="start"
+            borderColor="gray.200"
+            borderLeft={1}
+            borderStyle="solid"
+            mt={2}
+            pl={4}
           >
             {children?.map((child) => (
-              <Link key={child.title} py={2} href={child.url}>
+              <Link href={child.url} key={child.title} py={2}>
                 {child.title}
               </Link>
             ))}
@@ -165,7 +165,7 @@ export function MobileNavItem({ title, url, children }: NavItem) {
 
 export function MobileNav() {
   return (
-    <Stack bg="white" _dark={{ bg: 'gray.800' }} p={4} display={{ md: 'none' }}>
+    <Stack _dark={{ bg: 'gray.800' }} bg="white" display={{ md: 'none' }} p={4}>
       {siteConfig.navigation.map((navItem) => (
         <MobileNavItem key={navItem.title} {...navItem} />
       ))}
@@ -178,24 +178,24 @@ export function Header() {
   return (
     <Box>
       <Flex
-        minH="60px"
-        py={{ base: 2 }}
-        px={{ base: 4 }}
-        borderStyle="solid"
         align="center"
+        borderStyle="solid"
+        minH="60px"
+        px={{ base: 4 }}
+        py={{ base: 2 }}
       >
         <Flex
+          align="center"
           flex={{ base: 1 }}
           justify={{ base: 'left', md: 'start' }}
-          align="center"
         >
-          <Link href="/" _hover={{ textDecoration: 'none' }}>
+          <Link _hover={{ textDecoration: 'none' }} href="/">
             <Flex align="center" gap={2}>
               <Box>
                 <Text
-                  fontSize="2xl"
-                  color="teal.500"
                   _dark={{ color: 'teal.300' }}
+                  color="teal.500"
+                  fontSize="2xl"
                   fontWeight="bold"
                   lineHeight={1}
                 >
@@ -204,10 +204,10 @@ export function Header() {
               </Box>
               <Box display={{ base: 'none', md: 'block' }}>
                 <Text
+                  _dark={{ color: 'white' }}
+                  color="gray.800"
                   fontSize="lg"
                   fontWeight="semibold"
-                  color="gray.800"
-                  _dark={{ color: 'white' }}
                 >
                   {siteConfig.title
                     .split('-')
@@ -224,49 +224,49 @@ export function Header() {
         </Flex>
 
         <Stack
-          flex={{ base: 1, md: 0 }}
-          justify="flex-end"
-          direction="row"
-          gap={3}
           align="center"
+          direction="row"
+          flex={{ base: 1, md: 0 }}
+          gap={3}
+          justify="flex-end"
         >
           <SearchModal />
           <ColorModeButton />
           <Link
-            href={siteConfig.repoUrl}
-            target="_blank"
-            rel="noopener noreferrer"
             aria-label="GitHub Repository"
+            href={siteConfig.repoUrl}
+            rel="noopener noreferrer"
+            target="_blank"
           >
             <IconButton
-              aria-label="GitHub Repository"
-              bg="transparent"
-              color="gray.600"
               _dark={{ color: 'gray.400' }}
               _hover={{
                 color: 'gray.800',
                 _dark: { color: 'white' },
               }}
+              aria-label="GitHub Repository"
+              bg="transparent"
+              color="gray.600"
               size="sm"
             >
               <LuGithub />
             </IconButton>
           </Link>
           <Flex
+            display={{ base: 'flex', md: 'none' }}
             flex={{ base: 1, md: 'auto' }}
             ml={{ base: -2 }}
-            display={{ base: 'flex', md: 'none' }}
           >
             <IconButton
-              aria-label="Toggle Navigation"
-              onClick={onToggle}
-              bg="transparent"
-              color="gray.600"
               _dark={{ color: 'gray.400' }}
               _hover={{
                 color: 'gray.800',
                 _dark: { color: 'white' },
               }}
+              aria-label="Toggle Navigation"
+              bg="transparent"
+              color="gray.600"
+              onClick={onToggle}
               size="sm"
             >
               {open ? <LuX /> : <LuMenu />}

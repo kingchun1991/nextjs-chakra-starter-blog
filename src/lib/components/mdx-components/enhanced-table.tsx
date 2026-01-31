@@ -23,27 +23,27 @@ export function EnhancedTable({
   return (
     <Table.ScrollArea borderWidth="1px" maxW="l">
       <Table.Root
-        variant="outline"
-        size={compact ? 'sm' : 'md'}
-        colorScheme="gray"
-        bg="white"
         _dark={{ bg: 'gray.800' }}
+        bg="white"
         borderRadius="md"
+        colorScheme="gray"
         shadow="sm"
+        size={compact ? 'sm' : 'md'}
+        variant="outline"
       >
-        <Table.Header bg="gray.50" _dark={{ bg: 'gray.700' }}>
+        <Table.Header _dark={{ bg: 'gray.700' }} bg="gray.50">
           <Table.Row>
             {columns.map((column) => (
               <Table.ColumnHeader
+                _dark={{ color: 'gray.200' }}
+                color="gray.700"
+                fontSize="sm"
+                fontWeight="semibold"
                 key={column.key}
-                textAlign={column.align || 'left'}
-                width={column.width}
                 px={4}
                 py={3}
-                fontWeight="semibold"
-                fontSize="sm"
-                color="gray.700"
-                _dark={{ color: 'gray.200' }}
+                textAlign={column.align || 'left'}
+                width={column.width}
               >
                 {column.header}
               </Table.ColumnHeader>
@@ -53,8 +53,6 @@ export function EnhancedTable({
         <Table.Body>
           {data.map((row, index) => (
             <Table.Row
-              key={index}
-              bg={striped && index % 2 === 1 ? 'gray.50' : 'transparent'}
               _dark={{
                 bg: striped && index % 2 === 1 ? 'gray.700' : 'transparent',
               }}
@@ -66,18 +64,20 @@ export function EnhancedTable({
                     }
                   : {}
               }
+              bg={striped && index % 2 === 1 ? 'gray.50' : 'transparent'}
+              key={index}
               transition="background-color 0.2s"
             >
               {columns.map((column) => (
                 <Table.Cell
+                  _dark={{ borderColor: 'gray.600' }}
+                  borderColor="gray.200"
+                  fontSize="sm"
                   key={column.key}
                   px={4}
                   py={3}
                   textAlign={column.align || 'left'}
-                  fontSize="sm"
                   verticalAlign="top"
-                  borderColor="gray.200"
-                  _dark={{ borderColor: 'gray.600' }}
                 >
                   {typeof row[column.key] === 'string' ? (
                     <Text>{row[column.key]}</Text>

@@ -35,9 +35,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       images: [
         {
           url: `${siteConfig.url}/api/og/cover?heading=${encodeURIComponent(
-            metaInformation.title || slug,
+            metaInformation.title || slug
           )}&text=${encodeURIComponent(
-            metaInformation.description || '',
+            metaInformation.description || ''
           )}&template=plain&center=true`,
           alt: `${metaInformation.title} og-image`,
         },

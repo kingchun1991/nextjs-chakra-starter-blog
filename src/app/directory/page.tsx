@@ -14,7 +14,7 @@ export const metadata: Metadata = {
     description: `Browse ${siteConfig.directory?.plural || 'directory items'}`,
     images: {
       url: `${siteConfig.url}/api/og/cover?heading=${encodeURIComponent(
-        siteConfig.directory?.plural || 'Directory',
+        siteConfig.directory?.plural || 'Directory'
       )}&template=plain&center=true`,
       alt: `${siteConfig.directory?.plural || 'Directory'} og-image`,
     },

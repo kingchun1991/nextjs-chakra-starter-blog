@@ -40,15 +40,15 @@ export function DirectoryItem({ item, mdxSource }: DirectoryItemProps) {
 
   return (
     <Box>
-      <Heading letterSpacing="tight" mb={2} as="h1" size="2xl">
+      <Heading as="h1" letterSpacing="tight" mb={2} size="2xl">
         {item.title}
       </Heading>
 
       {item.publishedAt && (
         <Text
-          fontSize="sm"
-          color="gray.600"
           _dark={{ color: 'gray.400' }}
+          color="gray.600"
+          fontSize="sm"
           mb={2}
         >
           Published: {parseDate(item.publishedAt)}
@@ -58,7 +58,7 @@ export function DirectoryItem({ item, mdxSource }: DirectoryItemProps) {
       {item.tags && item.tags.length > 0 && (
         <HStack mb={4} wrap="wrap">
           {item.tags.map((tag) => (
-            <Tag key={tag} variant="solid" colorPalette="teal">
+            <Tag colorPalette="teal" key={tag} variant="solid">
               {tag}
             </Tag>
           ))}
@@ -72,7 +72,7 @@ export function DirectoryItem({ item, mdxSource }: DirectoryItemProps) {
           <MDXRemote {...mdxSource} components={enhancedComponents} />
         )}
         {!mounted && (
-          <Box p={4} color="gray.500">
+          <Box color="gray.500" p={4}>
             Loading content...
           </Box>
         )}

@@ -1,10 +1,10 @@
 #!/usr/bin/env node
 
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
 import fs from 'fs';
-import path from 'path';
-import { fileURLToPath } from 'url';
-import matter from 'gray-matter';
 import { glob } from 'glob';
+import matter from 'gray-matter';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -53,13 +53,14 @@ function normalizeSlug(text) {
 function extractWikiLinks(content) {
   const wikiLinkRegex = /\[\[([^\]|]+)(?:\|([^\]]+))?\]\]/g;
   const links = [];
-  let match;
+  let match = wikiLinkRegex.exec(content);
 
-  while ((match = wikiLinkRegex.exec(content)) !== null) {
+  while (match !== null) {
     links.push({
       target: match[1].trim(),
       displayText: match[2] ? match[2].trim() : match[1].trim(),
     });
+    match = wikiLinkRegex.exec(content);
   }
 
   return links;
@@ -84,20 +85,7 @@ function fuzzyMatch(linkTarget, slugMap) {
   return null;
 }
 
-async function buildGraph() {
-  if (!fs.existsSync(CONTENT_DIR)) {
-    console.log('✓ No directory content to process');
-    return;
-  }
-
-  const files = await glob('**/*.mdx', { cwd: CONTENT_DIR });
-
-  if (files.length === 0) {
-    console.log('✓ No directory content files found');
-    return;
-  }
-
-  // Build slug map
+function buildSlugMaps(files) {
   const slugMap = {};
   const fileMap = {};
 
@@ -117,7 +105,10 @@ async function buildGraph() {
     }
   }
 
-  // Extract wiki links and build graph
+  return { slugMap, fileMap };
+}
+
+function processWikiLinks(files, slugMap) {
   const nodes = [];
   const edges = [];
   const backlinks = {};
@@ -129,7 +120,9 @@ async function buildGraph() {
     const fileContent = fs.readFileSync(filePath, 'utf-8');
     const { data: frontmatter, content } = matter(fileContent);
 
-    if (!frontmatter.slug) continue;
+    if (!frontmatter.slug) {
+      continue;
+    }
 
     const sourceSlug = frontmatter.slug;
 
@@ -149,7 +142,7 @@ async function buildGraph() {
 
       if (targetSlug) {
         const edgeKey = `${sourceSlug}->${targetSlug}`;
-        
+
         if (!edgeWeights[edgeKey]) {
           edgeWeights[edgeKey] = 0;
           edges.push({
@@ -158,7 +151,7 @@ async function buildGraph() {
             weight: 1,
           });
         }
-        
+
         edgeWeights[edgeKey]++;
 
         // Track backlinks
@@ -177,11 +170,34 @@ async function buildGraph() {
     }
   }
 
+  return { nodes, edges, backlinks, brokenLinks, edgeWeights };
+}
+
+async function buildGraph() {
+  if (!fs.existsSync(CONTENT_DIR)) {
+    console.log('✓ No directory content to process');
+    return;
+  }
+
+  const files = await glob('**/*.mdx', { cwd: CONTENT_DIR });
+
+  if (files.length === 0) {
+    console.log('✓ No directory content files found');
+    return;
+  }
+
+  // Build slug and file maps
+  const { slugMap, fileMap: _fileMap } = buildSlugMaps(files);
+
+  // Process wiki links and build graph structures
+  const { nodes, edges, backlinks, brokenLinks, edgeWeights } =
+    processWikiLinks(files, slugMap);
+
   // Update edge weights
-  edges.forEach((edge) => {
+  for (const edge of edges) {
     const edgeKey = `${edge.source}->${edge.target}`;
     edge.weight = edgeWeights[edgeKey];
-  });
+  }
 
   // Create output directory
   if (!fs.existsSync(OUTPUT_DIR)) {
@@ -203,16 +219,16 @@ async function buildGraph() {
 
   fs.writeFileSync(OUTPUT_FILE, JSON.stringify(graphData, null, 2));
 
-  console.log(`✓ Built directory graph:`);
+  console.log('✓ Built directory graph:');
   console.log(`  - ${nodes.length} nodes`);
   console.log(`  - ${edges.length} edges`);
   console.log(`  - ${brokenLinks.length} broken links`);
 
   if (brokenLinks.length > 0) {
     console.warn('\n⚠️  Broken wiki-links found:');
-    brokenLinks.forEach(({ file, link }) => {
+    for (const { file, link } of brokenLinks) {
       console.warn(`  ${file}: [[${link}]]`);
-    });
+    }
     console.warn('');
   }
 }

@@ -7,18 +7,18 @@ import type { IPosts } from '@/lib/types/custom-types';
 export function Home({ posts }: { posts: Array<IPosts> }) {
   return (
     <Box>
-      <Heading letterSpacing="tight" mb={4} as="h1" size="3xl">
+      <Heading as="h1" letterSpacing="tight" mb={4} size="3xl">
         Latest
       </Heading>
       <Text fontSize="l">A blog created with Next.js and Chakra UI</Text>
       <Separator />
       <Flex
-        direction="column"
         alignItems="center"
-        justifyContent="center"
-        minHeight="70vh"
+        direction="column"
         gap={4}
+        justifyContent="center"
         mb={8}
+        minHeight="70vh"
         w="full"
       >
         <LatestBlogPostListLayout posts={posts} />

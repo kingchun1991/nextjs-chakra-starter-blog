@@ -16,12 +16,14 @@ export const markdownify = (content: string, div?: boolean) => {
   return { __html: markdownContent };
 };
 
+const FIRST_LETTER_REGEX = /^[a-z]/;
+
 // humanize
 export const humanize = (content: string) => {
   return content
     .replace(/^[\s_]+|[\s_]+$/g, '')
     .replace(/[_\s]+/g, ' ')
-    .replace(/^[a-z]/, (m) => m.toUpperCase());
+    .replace(FIRST_LETTER_REGEX, (m) => m.toUpperCase());
 };
 
 // titleify
@@ -47,7 +49,7 @@ const htmlEntityDecoder = (htmlWithEntities: string): string => {
     /(&amp;|&lt;|&gt;|&quot;|&#39;)/g,
     (entity: string): string => {
       return entityList[entity];
-    },
+    }
   );
   return htmlWithoutEntities;
 };

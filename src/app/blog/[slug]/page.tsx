@@ -48,9 +48,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       images: [
         {
           url: `${siteConfig.url}/api/og/cover?heading=${encodeURIComponent(
-            metaInformation.title || '',
+            metaInformation.title || ''
           )}&text=${encodeURIComponent(
-            metaInformation.summary || '',
+            metaInformation.summary || ''
           )}&template=plain&center=true`,
           alt: `${metaInformation.title} og-image`,
         },
@@ -62,9 +62,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       description: metaInformation.summary,
       images: [
         `${siteConfig.url}/api/og/cover?heading=${encodeURIComponent(
-          metaInformation.title || '',
+          metaInformation.title || ''
         )}&text=${encodeURIComponent(
-          metaInformation.summary || '',
+          metaInformation.summary || ''
         )}&template=plain&center=true`,
       ],
     },
@@ -85,9 +85,9 @@ export default async function Page({ params }: Props) {
 
   return (
     <BlogLayout
-      post={metaInformation}
-      mdxSource={mdxSource}
       content={content}
+      mdxSource={mdxSource}
+      post={metaInformation}
     />
   );
 }

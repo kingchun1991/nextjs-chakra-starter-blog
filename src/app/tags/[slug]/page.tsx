@@ -23,19 +23,21 @@ export async function generateStaticParams() {
     .sort((a: IPosts, b: IPosts) =>
       a.modifiedAt && b.modifiedAt
         ? Number(new Date(b.modifiedAt)) - Number(new Date(a.modifiedAt))
-        : 0,
+        : 0
     );
 
   const tagCounts: { [key: string]: number } = {};
-  filteredBlogPosts.forEach((post: IPosts) => {
-    post?.tags?.forEach((tag: string) => {
-      if (tagCounts[tag]) {
-        tagCounts[tag] += 1;
-      } else {
-        tagCounts[tag] = 1;
+  for (const post of filteredBlogPosts) {
+    if (post?.tags) {
+      for (const tag of post.tags) {
+        if (tagCounts[tag]) {
+          tagCounts[tag] += 1;
+        } else {
+          tagCounts[tag] = 1;
+        }
       }
-    });
-  });
+    }
+  }
 
   return Object.entries(tagCounts).map(([tag]) => ({
     slug: tag,
@@ -58,7 +60,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       images: [
         {
           url: `${siteConfig.url}/api/og/cover?heading=${encodeURIComponent(
-            slug,
+            slug
           )}&text=${encodeURIComponent(slug)}&template=plain&center=true`,
           alt: 'nextjs-chakra-starter-blog og-image',
         },
@@ -70,7 +72,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       description: 'blog',
       images: [
         `${siteConfig.url}/api/og/cover?heading=${encodeURIComponent(
-          slug,
+          slug
         )}&text=${encodeURIComponent('blog')}&template=plain&center=true`,
       ],
     },

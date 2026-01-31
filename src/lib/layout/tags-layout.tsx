@@ -7,7 +7,7 @@ import { useEffect, useState } from 'react';
 
 import { Link } from '@/components/ui/link';
 import type { IPosts } from '@/lib/types/custom-types';
-import { slugify } from '@/lib/utils/textConverter';
+import { slugify } from '@/lib/utils/text-converter';
 
 export function TagsLayout({ posts }: { posts: Array<IPosts> }) {
   const [isClient, setIsClient] = useState(false);
@@ -21,19 +21,21 @@ export function TagsLayout({ posts }: { posts: Array<IPosts> }) {
     .sort((a: IPosts, b: IPosts) =>
       a.publishedAt && b.publishedAt
         ? Number(new Date(b.publishedAt)) - Number(new Date(a.publishedAt))
-        : 0,
+        : 0
     );
 
   const tagCounts: { [key: string]: number } = {};
-  filteredBlogPosts.forEach((post: IPosts) => {
-    post?.tags?.forEach((tag: string) => {
-      if (tagCounts[tag]) {
-        tagCounts[tag] += 1;
-      } else {
-        tagCounts[tag] = 1;
+  for (const post of filteredBlogPosts) {
+    if (post?.tags) {
+      for (const tag of post.tags) {
+        if (tagCounts[tag]) {
+          tagCounts[tag] += 1;
+        } else {
+          tagCounts[tag] = 1;
+        }
       }
-    });
-  });
+    }
+  }
 
   if (!isClient) {
     return <div>Loading..</div>;
@@ -42,36 +44,36 @@ export function TagsLayout({ posts }: { posts: Array<IPosts> }) {
   return (
     <Box>
       {/* <Hero title="Blog" /> */}
-      <Heading letterSpacing="tight" mb={4} as="h1" size="2xl">
+      <Heading as="h1" letterSpacing="tight" mb={4} size="2xl">
         Tags
       </Heading>
 
       <Separator />
       <Flex
+        alignItems="center"
         as="main"
         flexDirection="column"
         justifyContent="center"
-        alignItems="center"
-        p="2"
         m="0 auto 4rem auto"
         maxWidth="auto"
+        p="2"
       >
         <Stack
+          alignItems="flex-start"
           gap={8}
           justifyContent="center"
-          alignItems="flex-start"
           maxWidth="auto"
         >
           <Flex
-            flexDirection="column"
-            justifyContent="flex-start"
             alignItems="flex-start"
-            maxWidth="auto"
+            flexDirection="column"
             height="100%"
+            justifyContent="flex-start"
+            maxWidth="auto"
             px={4}
           >
             {Object.entries(tagCounts).map(([tag, count]) => (
-              <Link key={tag} href={`/tags/${slugify(tag)}`}>
+              <Link href={`/tags/${slugify(tag)}`} key={tag}>
                 {tag} ({count})
               </Link>
             ))}

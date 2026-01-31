@@ -13,19 +13,19 @@ export const TableOfContents: React.FC<TableOfContentsProps> = ({
   const { open, onToggle } = useDisclosure();
 
   return (
-    <Box mt={8} w="full" rounded="md" bg="slate.300">
+    <Box bg="slate.300" mt={8} rounded="md" w="full">
       <Button
-        display="flex"
+        _dark={{ bg: 'slate.600', color: 'slate.200' }}
         alignItems="center"
-        justifyContent="space-between"
-        p={5}
-        fontWeight="bold"
-        rounded="md"
+        aria-label="Toggle Table of Contents"
         bg="slate.300"
         color="slate.700"
-        _dark={{ bg: 'slate.600', color: 'slate.200' }}
+        display="flex"
+        fontWeight="bold"
+        justifyContent="space-between"
         onClick={onToggle}
-        aria-label="Toggle Table of Contents"
+        p={5}
+        rounded="md"
         variant="plain"
       >
         <LuBookmark />

@@ -1,9 +1,7 @@
 import type { Metadata } from 'next';
 
-import Page404 from '@/lib/pages/404';
-
 export const metadata: Metadata = {
   title: '404 Not Found',
 };
 
-export default Page404;
+export { Page404 as default } from '@/lib/pages/404';

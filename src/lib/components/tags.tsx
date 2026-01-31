@@ -4,14 +4,14 @@ import { LuTags } from 'react-icons/lu';
 import { Link } from '@/components/ui/link';
 import { Tag } from '@/components/ui/tag';
 
-import { slugify } from '../utils/textConverter';
+import { slugify } from '../utils/text-converter';
 
 export function Tags({ tags }: { tags: Array<string> }) {
   return (
     <HStack
-      wrap="wrap"
-      justifyContent="flex-start"
       align={['initial', 'center']}
+      justifyContent="flex-start"
+      wrap="wrap"
     >
       <Flex align="flex-start" alignItems="center">
         <Icon m={1}>
@@ -19,9 +19,9 @@ export function Tags({ tags }: { tags: Array<string> }) {
         </Icon>
       </Flex>
       {tags?.map((tag) => (
-        <Flex align="flex-start" key={tag} alignItems="center">
+        <Flex align="flex-start" alignItems="center" key={tag}>
           <Link href={`/tags/${slugify(tag)}`}>
-            <Tag m={1} variant="solid" colorPalette="teal" p="1">
+            <Tag colorPalette="teal" m={1} p="1" variant="solid">
               {tag}
             </Tag>
           </Link>

@@ -13,7 +13,7 @@ import {
 } from '@chakra-ui/react';
 import { LuFileText, LuTags } from 'react-icons/lu';
 
-import { plainify, titleify } from '@/lib/utils/textConverter';
+import { plainify, titleify } from '@/lib/utils/text-converter';
 
 export interface ISearchItem {
   group: string;
@@ -58,7 +58,7 @@ export function SearchResult({
     return searchResult.reduce(
       (groups, item) => {
         const groupIndex = groups.findIndex(
-          (group) => group.group === item.group,
+          (group) => group.group === item.group
         );
         if (groupIndex === -1) {
           groups.push({
@@ -70,7 +70,7 @@ export function SearchResult({
         }
         return groups;
       },
-      [] as Array<ISearchGroup>,
+      [] as Array<ISearchGroup>
     );
   };
 
@@ -118,11 +118,11 @@ export function SearchResult({
 
     const matches = plainContent.substring(
       wordStart,
-      substring.length + position,
+      substring.length + position
     );
     const matchesAfter = plainContent.substring(
       substring.length + position,
-      substring.length + position + 80,
+      substring.length + position + 80
     );
     return (
       <>
@@ -140,10 +140,10 @@ export function SearchResult({
             finalResult.map((result) => (
               <Box className="search-result-group" key={result.group}>
                 <Heading
-                  className="search-result-group-title"
-                  // letterSpacing="tight"
-                  mb={2}
                   as="h1"
+                  // letterSpacing="tight"
+                  className="search-result-group-title"
+                  mb={2}
                   size="lg"
                 >
                   {titleify(result.group)}
@@ -151,16 +151,16 @@ export function SearchResult({
 
                 {result.groupItems.map((item) => (
                   <Flex
-                    key={item.slug}
-                    id="searchItem"
-                    className="search-result-item"
                     align="center"
                     border="1px solid"
                     borderColor="gray.200"
                     borderRadius="md"
-                    p={4}
-                    m={2}
+                    className="search-result-item"
                     gap="2"
+                    id="searchItem"
+                    key={item.slug}
+                    m={2}
+                    p={4}
                   >
                     {/* <Box className="search-result-item-image" flex="1">
                       <Image
@@ -181,10 +181,10 @@ export function SearchResult({
 
                     <Box className="search-result-item-body" flex="3">
                       <Link
-                        href={`/${item.slug}`}
                         className="search-result-item-title search-result-item-link"
+                        href={`/${item.slug}`}
                       >
-                        <Heading size="md" as="h3" mb={1} fontWeight="medium">
+                        <Heading as="h3" fontWeight="medium" mb={1} size="md">
                           {matchContent(item.frontmatter.title, searchString)}
                         </Heading>
                       </Link>
@@ -192,7 +192,7 @@ export function SearchResult({
                         <Text className="search-result-item-description">
                           {matchUnderline(
                             item.frontmatter.description,
-                            searchString,
+                            searchString
                           )}
                         </Text>
                       )}
@@ -216,7 +216,7 @@ export function SearchResult({
                                       item.frontmatter.categories.length -
                                         1 && <>, </>}
                                 </Text>
-                              ),
+                              )
                             )}
                           </HStack>
                         )}
@@ -242,7 +242,7 @@ export function SearchResult({
               </Box>
             ))
           ) : (
-            <Box className="search-result-empty" textAlign="center" p={8}>
+            <Box className="search-result-empty" p={8} textAlign="center">
               <Icon as={LuFileText} boxSize="42px" />
               <Text className="mt-4">
                 No results for &quot;<strong>{searchString}</strong>&quot;

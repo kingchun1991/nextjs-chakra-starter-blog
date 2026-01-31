@@ -37,7 +37,7 @@ interface ProductCardProps {
 const ProductCard = (props: ProductCardProps) => {
   const { imgsrc, title, price, url } = props;
   return (
-    <ProductSimple imgsrc={imgsrc} title={title} price={price} url={url} />
+    <ProductSimple imgsrc={imgsrc} price={price} title={title} url={url} />
   );
 };
 
@@ -49,7 +49,7 @@ interface RepoCardWrapperProps {
 
 const RepoCardWrapper = (props: RepoCardWrapperProps) => {
   const { repo, readme, error } = props;
-  return <RepoCard repo={repo} readme={readme} error={error} />;
+  return <RepoCard error={error} readme={readme} repo={repo} />;
 };
 
 interface CustomImageProps {
@@ -61,7 +61,7 @@ interface CustomImageProps {
 
 const CustomImage = (props: CustomImageProps) => {
   const { width, height, src, alt } = props;
-  return <Image width={width} height={height} src={src} alt={alt} />;
+  return <Image alt={alt} height={height} src={src} width={width} />;
 };
 
 interface CustomLinkProps {
@@ -77,9 +77,9 @@ const CustomLink = (props: CustomLinkProps) => {
   if (isInternalLink) {
     return (
       <Link
-        href={href}
-        color="blue.500"
         _dark={{ color: 'blue.500' }}
+        color="blue.500"
+        href={href}
         {...rest}
       />
     );
@@ -87,11 +87,11 @@ const CustomLink = (props: CustomLinkProps) => {
 
   return (
     <Link
-      href={href}
-      color="blue.500"
       _dark={{ color: 'blue.500' }}
-      target="_blank"
+      color="blue.500"
+      href={href}
       rel="noopener noreferrer"
+      target="_blank"
       {...rest}
     />
   );
@@ -101,14 +101,14 @@ const Quote = (props: React.ComponentPropsWithoutRef<typeof Box>) => {
   return (
     <Box
       as="blockquote"
-      pl={4}
-      py={2}
-      borderLeft="4px solid"
       borderColor="blue.500"
+      borderLeft="4px solid"
       color="gray.600"
       fontStyle="italic"
-      mt={4}
       mb={4}
+      mt={4}
+      pl={4}
+      py={2}
       {...props}
     />
   );
@@ -144,8 +144,8 @@ const CustomHeading: React.FC<CustomHeadingProps> = ({ as, id, ...props }) => {
 const Hr = () => {
   return (
     <Separator
-      borderColor="gray.200"
       _dark={{ borderColor: 'gray.600' }}
+      borderColor="gray.200"
       my={4}
       w="100%"
     />
@@ -155,13 +155,13 @@ const Hr = () => {
 const MDXTable = (props: React.ComponentPropsWithoutRef<typeof Table.Root>) => (
   <Table.ScrollArea borderWidth="1px" maxW="l">
     <Table.Root
-      variant="outline"
-      size="md"
-      colorScheme="gray"
-      bg="white"
       _dark={{ bg: 'gray.800' }}
+      bg="white"
       borderRadius="md"
+      colorScheme="gray"
       shadow="sm"
+      size="md"
+      variant="outline"
       width="100%"
       {...props}
     />
@@ -169,7 +169,7 @@ const MDXTable = (props: React.ComponentPropsWithoutRef<typeof Table.Root>) => (
 );
 
 const TableHead = (props: any) => (
-  <Table.Header bg="gray.50" _dark={{ bg: 'gray.700' }} {...props} />
+  <Table.Header _dark={{ bg: 'gray.700' }} bg="gray.50" {...props} />
 );
 
 const TableRow = (props: any) => (
@@ -189,13 +189,13 @@ const TableData = (props: any) => {
 
   return (
     <Table.Cell
+      _dark={{ borderColor: 'gray.600' }}
+      borderColor="gray.200"
+      fontSize="sm"
       px={4}
       py={3}
-      borderColor="gray.200"
-      _dark={{ borderColor: 'gray.600' }}
-      fontSize="sm"
-      verticalAlign="top"
       textAlign={textAlign}
+      verticalAlign="top"
       {...rest}
     />
   );
@@ -207,17 +207,17 @@ const TableHeader = (props: any) => {
 
   return (
     <Table.ColumnHeader
-      px={4}
-      py={3}
-      fontWeight="semibold"
-      fontSize="sm"
-      color="gray.700"
-      borderColor="gray.200"
-      textAlign={textAlign}
       _dark={{
         color: 'gray.200',
         borderColor: 'gray.600',
       }}
+      borderColor="gray.200"
+      color="gray.700"
+      fontSize="sm"
+      fontWeight="semibold"
+      px={4}
+      py={3}
+      textAlign={textAlign}
       {...rest}
     />
   );
@@ -234,9 +234,9 @@ export const MDXComponents = {
   h6: (props: any) => <CustomHeading as="h6" {...props} />,
   inlineCode: (props: any) => <Code {...props} />,
   br: (props: any) => <Box height="24px" {...props} />,
-  p: (props: any) => <Text as="p" mt={0} lineHeight="tall" {...props} />,
-  ul: (props: any) => <List.Root as="ul" pt={2} pl={4} ml={2} {...props} />,
-  ol: (props: any) => <List.Root as="ol" pt={2} pl={4} ml={2} {...props} />,
+  p: (props: any) => <Text as="p" lineHeight="tall" mt={0} {...props} />,
+  ul: (props: any) => <List.Root as="ul" ml={2} pl={4} pt={2} {...props} />,
+  ol: (props: any) => <List.Root as="ol" ml={2} pl={4} pt={2} {...props} />,
   li: (props: any) => <Box as="li" pb={1} {...props} />,
   blockquote: Quote,
   image: CustomImage,
