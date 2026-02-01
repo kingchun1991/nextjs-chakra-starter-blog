@@ -18,10 +18,10 @@ import { LuClock } from 'react-icons/lu';
 import readingDuration from 'reading-duration';
 
 import { Avatar } from '@/components/ui/avatar';
-import { Categories } from '@/lib/components/categories';
+import { Categories } from '@/lib/components/Categories';
 import { MDXComponents } from '@/lib/components/mdx-components';
-import { Share } from '@/lib/components/share';
-import { Tags } from '@/lib/components/tags';
+import { Share } from '@/lib/components/Share';
+import { Tags } from '@/lib/components/Tags';
 import type { IPosts } from '@/lib/types/custom-types';
 import { giscusConfig } from '@/site.config';
 

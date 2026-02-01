@@ -1,4 +1,4 @@
-const fs = require('fs');
+const fs = require('node:fs');
 const path = require('node:path');
 const matter = require('gray-matter');
 const RSS = require('rss');

@@ -4,7 +4,7 @@ import { Avatar, Box, Flex, Heading, Image, Text } from '@chakra-ui/react';
 import { format, parseISO } from 'date-fns';
 
 import { Link } from '@/components/ui/link';
-import { Tags } from '@/lib/components/tags';
+import { Tags } from '@/lib/components/Tags';
 import type { IPosts } from '@/lib/types/custom-types';
 
 export function BlogPostCard({

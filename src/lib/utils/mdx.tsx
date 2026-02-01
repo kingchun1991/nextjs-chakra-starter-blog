@@ -1,5 +1,5 @@
+import fs from 'node:fs';
 import path from 'node:path';
-import fs from 'fs';
 import matter from 'gray-matter';
 import { serialize } from 'next-mdx-remote/serialize';
 import rehypeSlug from 'rehype-slug';
