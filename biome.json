@@ -14,6 +14,7 @@
     "ignoreUnknown": false,
     "includes": [
       "src/**/*",
+      "e2e/**/*",
       "*.config.ts",
       "*.{js,ts,json,md}",
       "!turbo",
