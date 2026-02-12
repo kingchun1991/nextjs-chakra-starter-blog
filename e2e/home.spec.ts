@@ -31,9 +31,7 @@ test('click use this template should redirect to github generate project', async
   await page.goto(LOCAL_HOST_URL);
   const [newPage] = await Promise.all([
     context.waitForEvent('page'),
-    page
-      .locator('a', { hasText: USE_THIS_TEMPLATE_TEXT })
-      .click(), // Opens a new tab
+    page.locator('a', { hasText: USE_THIS_TEMPLATE_TEXT }).click(), // Opens a new tab
   ]);
 
   await newPage.waitForLoadState();
@@ -49,9 +47,7 @@ test('click use this template should redirect to github repo', async ({
   await page.goto(LOCAL_HOST_URL);
   const [newPage] = await Promise.all([
     context.waitForEvent('page'),
-    page
-      .locator('a', { hasText: OPEN_IN_GITHUB_TEXT })
-      .click(), // Opens a new tab
+    page.locator('a', { hasText: OPEN_IN_GITHUB_TEXT }).click(), // Opens a new tab
   ]);
 
   await newPage.waitForLoadState();
