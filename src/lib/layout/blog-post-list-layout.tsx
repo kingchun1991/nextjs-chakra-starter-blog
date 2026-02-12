@@ -44,11 +44,7 @@ export function BlogPostListLayout({
     .filter(
       (post: IPosts) =>
         tagSelected === 'All' ||
-        post.tags?.some((tag: string) =>
-          tag
-            .toLowerCase()
-            .includes(tagSelected.replace(/-/g, ' ').toLowerCase())
-        )
+        post.tags?.some((tag: string) => slugify(tag) === tagSelected)
     )
     .sort((a: IPosts, b: IPosts) =>
       a.modifiedAt && b.modifiedAt

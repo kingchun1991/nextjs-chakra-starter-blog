@@ -4,6 +4,7 @@ import type { Metadata } from 'next';
 import { BlogList } from '@/lib/pages/blogList';
 import type { IPosts } from '@/lib/types/custom-types';
 import { getAllFilesFrontMatter } from '@/lib/utils/mdx';
+import { slugify } from '@/lib/utils/text-converter';
 import { siteConfig } from '@/site.config';
 
 type Props = {
@@ -40,7 +41,7 @@ export async function generateStaticParams() {
   }
 
   return Object.entries(tagCounts).map(([tag]) => ({
-    slug: tag,
+    slug: slugify(tag),
   }));
 }
 
