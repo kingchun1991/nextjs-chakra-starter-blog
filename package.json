@@ -57,7 +57,7 @@
     "react-icons": "^5.5.0",
     "reading-duration": "^1.1.2",
     "rehype-slug": "^6.0.0",
-    "remark-gfm": "^3.0.1",
+    "remark-gfm": "^4.0.0",
     "rss": "^1.2.2",
     "turbo": "2.3.0",
     "zod": "^4.3.6"
