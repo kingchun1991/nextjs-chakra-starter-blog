@@ -1,8 +1,8 @@
 'use client';
 
 import { IconButton } from '@chakra-ui/react';
-import { useLocale } from 'next-intl';
 import { usePathname, useRouter } from 'next/navigation';
+import { useLocale } from 'next-intl';
 import { LuLanguages } from 'react-icons/lu';
 
 export function LanguageSwitcher() {

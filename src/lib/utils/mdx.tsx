@@ -29,10 +29,7 @@ export function getAllFilesFrontMatter(type: string, locale = 'en') {
 
   return files.reduce(
     (allPosts: Array<IPosts>, postSlug: string) => {
-      const source = fs.readFileSync(
-        path.join(contentPath, postSlug),
-        'utf8'
-      );
+      const source = fs.readFileSync(path.join(contentPath, postSlug), 'utf8');
 
       const { data } = matter(source);
 
@@ -56,11 +53,7 @@ export function getAllFilesFrontMatter(type: string, locale = 'en') {
   );
 }
 
-export async function getFileBySlug(
-  type: string,
-  slug: string,
-  locale = 'en'
-) {
+export async function getFileBySlug(type: string, slug: string, locale = 'en') {
   const localePath = path.join(root, 'content', type, locale);
   const contentPath = fs.existsSync(localePath)
     ? localePath

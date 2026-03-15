@@ -1,7 +1,7 @@
 import type { Metadata, Viewport } from 'next';
+import { notFound } from 'next/navigation';
 import { NextIntlClientProvider } from 'next-intl';
 import { getMessages } from 'next-intl/server';
-import { notFound } from 'next/navigation';
 
 import { Provider } from '@/components/ui/provider';
 import { routing } from '@/i18n/routing';
