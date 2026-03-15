@@ -1,0 +1,39 @@
+{
+  "header": {
+    "blog": "部落格",
+    "tags": "標籤",
+    "about": "關於",
+    "search": "搜尋",
+    "toggleTheme": "切換主題",
+    "toggleLanguage": "切換語言"
+  },
+  "home": {
+    "latestPosts": "最新文章",
+    "readMore": "閱讀更多",
+    "viewAllPosts": "查看所有文章"
+  },
+  "blog": {
+    "allPosts": "所有文章",
+    "publishedOn": "發布於",
+    "modifiedOn": "修改於",
+    "readingTime": "分鐘閱讀",
+    "categories": "分類",
+    "tags": "標籤",
+    "author": "作者",
+    "backToBlog": "返回部落格"
+  },
+  "tags": {
+    "allTags": "所有標籤",
+    "postsTaggedWith": "標籤為"
+  },
+  "footer": {
+    "builtWith": "使用",
+    "and": "和",
+    "by": "建立，作者"
+  },
+  "search": {
+    "placeholder": "搜尋文章...",
+    "noResults": "找不到結果",
+    "searchResults": "搜尋結果"
+  }
+}

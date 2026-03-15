@@ -1,0 +1,160 @@
+---
+title: 'Complete Table Support Guide'
+description: 'Learn how to use beautiful, responsive tables with Chakra UI v3 styling in your MDX blog posts'
+date: '2025-07-11'
+tags: ['guide', 'tables', 'chakra-ui', 'remark-gfm', 'features']
+author: 'Blog Template'
+publishedAt: '2025-07-11'
+summary: 'Complete guide to using enhanced table support with Chakra UI v3 styling and remark-gfm in your blog posts'
+modifiedAt: '2025-07-11'
+image: ''
+slug: 'blog/table-support-guide'
+categories: ['documentation', 'features']
+draft: false
+---
+
+# Complete Table Support Guide
+
+This guide demonstrates how to create beautiful, responsive tables with Chakra UI v3 styling in your MDX blog posts. Learn about different table features and alignment options available in this template.
+
+## Basic Table Example
+
+Here's a simple table demonstrating the built-in Chakra UI v3 styling:
+
+| Feature           | Status    | Description                                    |
+| ----------------- | --------- | ---------------------------------------------- |
+| Responsive Design | ✅ Active | Tables automatically scroll on mobile devices  |
+| Dark Mode Support | ✅ Active | Automatically adapts to light/dark theme       |
+| Hover Effects     | ✅ Active | Rows highlight on hover for better UX          |
+| Styled Headers    | ✅ Active | Clear visual separation with background colors |
+
+## Column Alignment Examples
+
+### Left Aligned Columns (Default)
+
+| Product Name      | Category  | Description                           |
+| ----------------- | --------- | ------------------------------------- |
+| Organic Green Tea | Beverages | Premium organic green tea leaves      |
+| Whole Grain Bread | Bakery    | Freshly baked whole grain bread       |
+| Greek Yogurt      | Dairy     | Creamy Greek-style yogurt             |
+| Almond Butter     | Spreads   | Natural almond butter, no added sugar |
+
+### Right Aligned Columns
+
+Use `:---` for right alignment in markdown tables:
+
+| Product   | Quantity |   Price |         Total |
+| --------- | -------- | ------: | ------------: |
+| Laptop    | 1        | $999.99 |       $999.99 |
+| Mouse     | 2        |  $29.99 |        $59.98 |
+| Keyboard  | 1        |  $79.99 |        $79.99 |
+| Monitor   | 1        | $299.99 |       $299.99 |
+| **Total** | **5**    |         | **$1,439.95** |
+
+### Mixed Column Alignment
+
+Combine different alignments for optimal readability:
+
+| Product     |   Type   |     Price |   Rating   |  Available   |
+| ----------- | :------: | --------: | :--------: | :----------: |
+| MacBook Pro |  Laptop  | $1,299.00 | ⭐⭐⭐⭐⭐ |   In Stock   |
+| iPad Air    |  Tablet  |   $599.00 |  ⭐⭐⭐⭐  |   In Stock   |
+| AirPods Pro |  Audio   |   $249.00 | ⭐⭐⭐⭐⭐ |   Limited    |
+| Apple Watch | Wearable |   $399.00 |  ⭐⭐⭐⭐  | Out of Stock |
+
+## Table Features
+
+Our enhanced tables include these powerful features:
+
+- **🎨 Responsive Design**: Tables scroll horizontally on smaller screens
+- **🌙 Dark Mode Support**: Automatically adapts to light/dark theme
+- **✨ Hover Effects**: Rows highlight on hover for better UX
+- **🎯 Styled Headers**: Clear visual separation with background colors
+- **📱 Mobile Friendly**: Optimized for all device sizes
+- **🔧 Customizable**: Support for different alignments and styling
+
+## How to Use Tables
+
+### Standard Markdown Tables
+
+Simply use standard markdown table syntax:
+
+```markdown
+| Column 1 | Column 2 | Column 3 |
+| -------- | -------- | -------- |
+| Data 1   | Data 2   | Data 3   |
+```
+
+### Column Alignment
+
+- **Left align**: `|-----------|` (default)
+- **Center align**: `|:---------:|`
+- **Right align**: `|----------:|`
+
+### Example with all alignments:
+
+```markdown
+| Left | Center | Right |
+| ---- | :----: | ----: |
+| Text |  Text  |  $100 |
+```
+
+## Technical Implementation
+
+The table styling is powered by:
+
+- **Chakra UI v3**: Modern React component library
+- **remark-gfm**: GitHub Flavored Markdown support
+- **Responsive Design**: Automatic mobile optimization
+- **Theme Integration**: Seamless light/dark mode switching
+- **Accessibility**: Built-in screen reader support
+
+All tables in your blog posts will automatically inherit these beautiful styles!
+
+## Enhanced Table Component
+
+For advanced use cases, you can also use the `EnhancedTable` component with additional features:
+
+<EnhancedTable
+  data={[
+    {
+      framework: 'Next.js',
+      version: 'v15',
+      performance: 'Excellent',
+      rating: '⭐⭐⭐⭐⭐',
+      description: 'React framework with App Router',
+    },
+    {
+      framework: 'Chakra UI',
+      version: 'v3',
+      performance: 'Excellent',
+      rating: '⭐⭐⭐⭐⭐',
+      description: 'Modern component library',
+    },
+    {
+      framework: 'TypeScript',
+      version: 'v5.8+',
+      performance: 'Excellent',
+      rating: '⭐⭐⭐⭐⭐',
+      description: 'Type-safe JavaScript',
+    },
+    {
+      framework: 'MDX',
+      version: 'Latest',
+      performance: 'Great',
+      rating: '⭐⭐⭐⭐',
+      description: 'Markdown with React components',
+    },
+  ]}
+  columns={[
+    { key: 'framework', header: 'Framework', align: 'left' },
+    { key: 'version', header: 'Version', align: 'center' },
+    { key: 'performance', header: 'Performance', align: 'center' },
+    { key: 'rating', header: 'Rating', align: 'center' },
+    { key: 'description', header: 'Description', align: 'left' },
+  ]}
+  striped={true}
+  hoverable={true}
+/>
+
+This enhanced component provides additional features like striped rows, custom alignment, and hover effects - perfect for showcasing complex data in your blog posts!

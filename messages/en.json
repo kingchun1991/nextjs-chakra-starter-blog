@@ -1,0 +1,39 @@
+{
+  "header": {
+    "blog": "Blog",
+    "tags": "Tags",
+    "about": "About",
+    "search": "Search",
+    "toggleTheme": "Toggle theme",
+    "toggleLanguage": "Switch Language"
+  },
+  "home": {
+    "latestPosts": "Latest Posts",
+    "readMore": "Read More",
+    "viewAllPosts": "View All Posts"
+  },
+  "blog": {
+    "allPosts": "All Posts",
+    "publishedOn": "Published on",
+    "modifiedOn": "Modified on",
+    "readingTime": "min read",
+    "categories": "Categories",
+    "tags": "Tags",
+    "author": "Author",
+    "backToBlog": "Back to Blog"
+  },
+  "tags": {
+    "allTags": "All Tags",
+    "postsTaggedWith": "Posts tagged with"
+  },
+  "footer": {
+    "builtWith": "Built with",
+    "and": "and",
+    "by": "by"
+  },
+  "search": {
+    "placeholder": "Search posts...",
+    "noResults": "No results found",
+    "searchResults": "Search Results"
+  }
+}

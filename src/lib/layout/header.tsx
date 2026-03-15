@@ -1,4 +1,6 @@
 /* eslint-disable react/no-unused-prop-types */
+'use client';
+
 import {
   Box,
   Collapsible,
@@ -9,6 +11,7 @@ import {
   Text,
   useDisclosure,
 } from '@chakra-ui/react';
+import { useTranslations } from 'next-intl';
 import {
   LuChevronDown,
   LuChevronRight,
@@ -28,6 +31,7 @@ import { Link } from '@/components/ui/link';
 import type { NavItem } from '@/site.config';
 import { siteConfig } from '@/site.config';
 
+import { LanguageSwitcher } from './language-switcher';
 import { SearchModal } from './search-modal';
 
 export function DesktopSubNav({ title, url }: NavItem) {
@@ -69,6 +73,13 @@ export function DesktopSubNav({ title, url }: NavItem) {
 }
 
 export function DesktopNav() {
+  const t = useTranslations('header');
+
+  const getTranslatedTitle = (navItem: NavItem) => {
+    const key = navItem.title.toLowerCase();
+    return t(key);
+  };
+
   return (
     <Stack direction="row" gap={4}>
       {siteConfig.navigation.map((navItem) => (
@@ -87,7 +98,7 @@ export function DesktopNav() {
                 href={navItem.url ?? '#'}
                 p={2}
               >
-                {navItem.title}
+                {getTranslatedTitle(navItem)}
               </Link>
             </HoverCardTrigger>
 
@@ -110,6 +121,12 @@ export function DesktopNav() {
 
 export function MobileNavItem({ title, url, children }: NavItem) {
   const { open, onToggle } = useDisclosure();
+  const t = useTranslations('header');
+
+  const getTranslatedTitle = () => {
+    const key = title.toLowerCase();
+    return t(key);
+  };
 
   return (
     <Stack gap={4} onClick={children && onToggle}>
@@ -125,7 +142,7 @@ export function MobileNavItem({ title, url, children }: NavItem) {
           py={2}
         >
           <Text _dark={{ color: 'gray.200' }} color="gray.600" fontWeight={600}>
-            {title}
+            {getTranslatedTitle()}
           </Text>
           {children && (
             <Icon
@@ -231,6 +248,7 @@ export function Header() {
           justify="flex-end"
         >
           <SearchModal />
+          <LanguageSwitcher />
           <ColorModeButton />
           <Link
             aria-label="GitHub Repository"
