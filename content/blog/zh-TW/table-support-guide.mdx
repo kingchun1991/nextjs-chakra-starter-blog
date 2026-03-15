@@ -1,11 +1,11 @@
 ---
-title: 'Complete Table Support Guide'
-description: 'Learn how to use beautiful, responsive tables with Chakra UI v3 styling in your MDX blog posts'
+title: '完整表格支援指南'
+description: '學習如何在您的 MDX 部落格文章中使用美觀、響應式的表格與 Chakra UI v3 樣式'
 date: '2025-07-11'
 tags: ['guide', 'tables', 'chakra-ui', 'remark-gfm', 'features']
 author: 'Blog Template'
 publishedAt: '2025-07-11'
-summary: 'Complete guide to using enhanced table support with Chakra UI v3 styling and remark-gfm in your blog posts'
+summary: '完整指南：在部落格文章中使用 Chakra UI v3 樣式和 remark-gfm 的增強表格支援'
 modifiedAt: '2025-07-11'
 image: ''
 slug: 'blog/table-support-guide'
@@ -13,148 +13,149 @@ categories: ['documentation', 'features']
 draft: false
 ---
 
-# Complete Table Support Guide
+# 完整表格支援指南
 
-This guide demonstrates how to create beautiful, responsive tables with Chakra UI v3 styling in your MDX blog posts. Learn about different table features and alignment options available in this template.
+本指南展示如何在您的 MDX 部落格文章中建立美觀、響應式的表格，並使用 Chakra UI v3 樣式。了解本模板中可用的不同表格功能和對齊選項。
 
-## Basic Table Example
+## 基本表格範例
 
-Here's a simple table demonstrating the built-in Chakra UI v3 styling:
+這是一個簡單的表格，展示內建的 Chakra UI v3 樣式：
 
-| Feature           | Status    | Description                                    |
-| ----------------- | --------- | ---------------------------------------------- |
-| Responsive Design | ✅ Active | Tables automatically scroll on mobile devices  |
-| Dark Mode Support | ✅ Active | Automatically adapts to light/dark theme       |
-| Hover Effects     | ✅ Active | Rows highlight on hover for better UX          |
-| Styled Headers    | ✅ Active | Clear visual separation with background colors |
+| 功能       | 狀態      | 描述                         |
+| ---------- | --------- | ---------------------------- |
+| 響應式設計 | ✅ 啟用中 | 表格在行動裝置上自動滾動     |
+| 深色模式   | ✅ 啟用中 | 自動適應明亮/深色主題        |
+| 滑鼠懸停   | ✅ 啟用中 | 滑鼠懸停時列會高亮以提升體驗 |
+| 樣式標題   | ✅ 啟用中 | 使用背景色清楚區分標題       |
 
-## Column Alignment Examples
+## 欄位對齊範例
 
-### Left Aligned Columns (Default)
+### 左對齊欄位（預設）
 
-| Product Name      | Category  | Description                           |
-| ----------------- | --------- | ------------------------------------- |
-| Organic Green Tea | Beverages | Premium organic green tea leaves      |
-| Whole Grain Bread | Bakery    | Freshly baked whole grain bread       |
-| Greek Yogurt      | Dairy     | Creamy Greek-style yogurt             |
-| Almond Butter     | Spreads   | Natural almond butter, no added sugar |
+| 產品名稱   | 類別 | 描述                 |
+| ---------- | ---- | -------------------- |
+| 有機綠茶   | 飲料 | 優質有機綠茶葉       |
+| 全麥麵包   | 烘焙 | 新鮮烘焙的全麥麵包   |
+| 希臘優格   | 乳製品 | 濃郁的希臘式優格     |
+| 杏仁醬     | 抹醬 | 天然杏仁醬，無添加糖 |
 
-### Right Aligned Columns
+### 右對齊欄位
 
-Use `:---` for right alignment in markdown tables:
+在 Markdown 表格中使用 `:---` 來進行右對齊：
 
-| Product   | Quantity |   Price |         Total |
-| --------- | -------- | ------: | ------------: |
-| Laptop    | 1        | $999.99 |       $999.99 |
-| Mouse     | 2        |  $29.99 |        $59.98 |
-| Keyboard  | 1        |  $79.99 |        $79.99 |
-| Monitor   | 1        | $299.99 |       $299.99 |
-| **Total** | **5**    |         | **$1,439.95** |
+| 產品       | 數量 |   價格 |       總計 |
+| ---------- | ---- | ------: | ----------: |
+| 筆記型電腦 | 1    | $999.99 |    $999.99 |
+| 滑鼠       | 2    |  $29.99 |     $59.98 |
+| 鍵盤       | 1    |  $79.99 |     $79.99 |
+| 螢幕       | 1    | $299.99 |    $299.99 |
+| **總計**   | **5**    |         | **$1,439.95** |
 
-### Mixed Column Alignment
+### 混合欄位對齊
 
-Combine different alignments for optimal readability:
+結合不同的對齊方式以獲得最佳可讀性：
 
-| Product     |   Type   |     Price |   Rating   |  Available   |
+| 產品        |   類型   |     價格 |   評分   |  庫存狀態  |
 | ----------- | :------: | --------: | :--------: | :----------: |
-| MacBook Pro |  Laptop  | $1,299.00 | ⭐⭐⭐⭐⭐ |   In Stock   |
-| iPad Air    |  Tablet  |   $599.00 |  ⭐⭐⭐⭐  |   In Stock   |
-| AirPods Pro |  Audio   |   $249.00 | ⭐⭐⭐⭐⭐ |   Limited    |
-| Apple Watch | Wearable |   $399.00 |  ⭐⭐⭐⭐  | Out of Stock |
+| MacBook Pro |  筆電  | $1,299.00 | ⭐⭐⭐⭐⭐ |   有貨   |
+| iPad Air    |  平板  |   $599.00 |  ⭐⭐⭐⭐  |   有貨   |
+| AirPods Pro |  音訊  |   $249.00 | ⭐⭐⭐⭐⭐ |   數量有限    |
+| Apple Watch | 穿戴裝置 |   $399.00 |  ⭐⭐⭐⭐  | 缺貨 |
 
-## Table Features
+## 表格功能
 
-Our enhanced tables include these powerful features:
+我們的增強表格包含這些強大的功能：
 
-- **🎨 Responsive Design**: Tables scroll horizontally on smaller screens
-- **🌙 Dark Mode Support**: Automatically adapts to light/dark theme
-- **✨ Hover Effects**: Rows highlight on hover for better UX
-- **🎯 Styled Headers**: Clear visual separation with background colors
-- **📱 Mobile Friendly**: Optimized for all device sizes
-- **🔧 Customizable**: Support for different alignments and styling
+- **🎨 響應式設計**：表格在較小螢幕上會水平滾動
+- **🌙 深色模式支援**：自動適應明亮/深色主題
+- **✨ 滑鼠懸停效果**：滑鼠懸停時列會高亮以提升使用者體驗
+- **🎯 樣式化標題**：使用背景色清楚區分標題
+- **📱 行動裝置友善**：針對所有裝置大小最佳化
+- **🔧 可自訂**：支援不同的對齊方式和樣式
 
-## How to Use Tables
+## 如何使用表格
 
-### Standard Markdown Tables
+### 標準 Markdown 表格
 
-Simply use standard markdown table syntax:
+只需使用標準的 Markdown 表格語法：
 
 ```markdown
-| Column 1 | Column 2 | Column 3 |
+| 欄位 1 | 欄位 2 | 欄位 3 |
 | -------- | -------- | -------- |
-| Data 1   | Data 2   | Data 3   |
+| 資料 1   | 資料 2   | 資料 3   |
 ```
 
-### Column Alignment
+### 欄位對齊
 
-- **Left align**: `|-----------|` (default)
-- **Center align**: `|:---------:|`
-- **Right align**: `|----------:|`
+- **左對齊**：`|-----------|`（預設）
+- **置中對齊**：`|:---------:|`
+- **右對齊**：`|----------:|`
 
-### Example with all alignments:
+### 所有對齊方式的範例：
 
 ```markdown
-| Left | Center | Right |
+| 左對齊 | 置中 | 右對齊 |
 | ---- | :----: | ----: |
-| Text |  Text  |  $100 |
+| 文字 |  文字  |  $100 |
 ```
 
-## Technical Implementation
+## 技術實作
 
-The table styling is powered by:
+表格樣式由以下技術提供支援：
 
-- **Chakra UI v3**: Modern React component library
-- **remark-gfm**: GitHub Flavored Markdown support
-- **Responsive Design**: Automatic mobile optimization
-- **Theme Integration**: Seamless light/dark mode switching
-- **Accessibility**: Built-in screen reader support
+- **Chakra UI v3**：現代的 React 元件庫
+- **remark-gfm**：GitHub 風格的 Markdown 支援
+- **響應式設計**：自動行動裝置最佳化
+- **主題整合**：無縫的明亮/深色模式切換
+- **無障礙功能**：內建螢幕閱讀器支援
 
-All tables in your blog posts will automatically inherit these beautiful styles!
+您部落格文章中的所有表格都將自動繼承這些美觀的樣式！
 
-## Enhanced Table Component
+## 增強表格元件
 
-For advanced use cases, you can also use the `EnhancedTable` component with additional features:
+對於進階使用情境，您也可以使用具有額外功能的 `EnhancedTable` 元件：
 
 <EnhancedTable
   data={[
     {
       framework: 'Next.js',
       version: 'v15',
-      performance: 'Excellent',
+      performance: '優秀',
       rating: '⭐⭐⭐⭐⭐',
-      description: 'React framework with App Router',
+      description: '具有 App Router 的 React 框架',
     },
     {
       framework: 'Chakra UI',
       version: 'v3',
-      performance: 'Excellent',
+      performance: '優秀',
       rating: '⭐⭐⭐⭐⭐',
-      description: 'Modern component library',
+      description: '現代元件庫',
     },
     {
       framework: 'TypeScript',
       version: 'v5.8+',
-      performance: 'Excellent',
+      performance: '優秀',
       rating: '⭐⭐⭐⭐⭐',
-      description: 'Type-safe JavaScript',
+      description: '型別安全的 JavaScript',
     },
     {
       framework: 'MDX',
       version: 'Latest',
-      performance: 'Great',
+      performance: '很好',
       rating: '⭐⭐⭐⭐',
-      description: 'Markdown with React components',
+      description: '支援 React 元件的 Markdown',
     },
   ]}
   columns={[
-    { key: 'framework', header: 'Framework', align: 'left' },
-    { key: 'version', header: 'Version', align: 'center' },
-    { key: 'performance', header: 'Performance', align: 'center' },
-    { key: 'rating', header: 'Rating', align: 'center' },
-    { key: 'description', header: 'Description', align: 'left' },
+    { key: 'framework', header: '框架', align: 'left' },
+    { key: 'version', header: '版本', align: 'center' },
+    { key: 'performance', header: '效能', align: 'center' },
+    { key: 'rating', header: '評分', align: 'center' },
+    { key: 'description', header: '描述', align: 'left' },
   ]}
   striped={true}
   hoverable={true}
 />
 
-This enhanced component provides additional features like striped rows, custom alignment, and hover effects - perfect for showcasing complex data in your blog posts!
+此增強元件提供額外功能，如條紋列、自訂對齊和滑鼠懸停效果——非常適合在您的部落格文章中展示複雜的資料！
+
