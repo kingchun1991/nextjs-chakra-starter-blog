@@ -1,3 +1,5 @@
+'use client';
+
 import { Table, Text } from '@chakra-ui/react';
 
 interface EnhancedTableProps {
