@@ -59,15 +59,7 @@ graph TD
         Layout --> Footer
         Logic --> HomePage[Page Component]
     end
-```
 
-1. You can either click `Use this template` button on this repository and clone the repo or directly from your terminal:
-
-```bash
-npx degit kingchun1991/nextarter-chakra <YOUR_APP_NAME>
-```
-
-```mermaid
     subgraph "UI Layer (src/components)"
         HomePage --> Components
         Header --> Components
@@ -94,15 +86,32 @@ src/
 
 ## 🛠 Getting Started
 
-### 1. Install Dependencies
+### 1. Get the Code
 
-This project uses [pnpm](https://pnpm.io/).
+Click the **Use this template** button on this repository, or clone it directly:
+
+```bash
+git clone https://github.com/kingchun1991/nextjs-chakra-starter-blog.git <YOUR_APP_NAME>
+cd <YOUR_APP_NAME>
+```
+
+Alternatively, use `degit` to clone without git history:
+
+```bash
+npx degit kingchun1991/nextjs-chakra-starter-blog <YOUR_APP_NAME>
+cd <YOUR_APP_NAME>
+```
+
+> **Prerequisites**: Node.js v24+ and [pnpm](https://pnpm.io/) are required.
+> Install pnpm with: `npm install -g pnpm`
+
+### 2. Install Dependencies
 
 ```bash
 pnpm install
 ```
 
-### 2. Run Development Server
+### 3. Run Development Server
 
 ```bash
 pnpm dev
@@ -110,13 +119,13 @@ pnpm dev
 
 Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
-### 3. Build for Production
+### 4. Build for Production
 
 ```bash
 pnpm build
 ```
 
-### 4. Run Tests
+### 5. Run Tests
 
 ```bash
 pnpm test:e2e

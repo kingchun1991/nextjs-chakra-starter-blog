@@ -8,40 +8,49 @@ import { getFileBySlug, getFiles } from '@/lib/utils/mdx';
 import { siteConfig } from '@/site.config';
 
 type Props = {
-  params: Promise<{ slug: string }>;
+  params: Promise<{ slug: string; locale: string }>;
 };
 
 const MDX_EXTENSION_REGEX = /\.mdx/;
 
 export async function generateStaticParams() {
-  const posts = await getFiles('blog');
+  const locales = ['en', 'zh-TW'];
+  const params: Array<{ locale: string; slug: string }> = [];
 
-  return posts.map((post) => ({
-    slug: post.replace(MDX_EXTENSION_REGEX, ''),
-  }));
+  for (const locale of locales) {
+    const posts = await getFiles('blog', locale);
+    for (const post of posts) {
+      params.push({
+        locale,
+        slug: post.replace(MDX_EXTENSION_REGEX, ''),
+      });
+    }
+  }
+
+  return params;
 }
 
-function getPost(slug: string) {
-  return getFileBySlug('blog', slug);
+function getPost(slug: string, locale: string) {
+  return getFileBySlug('blog', slug, locale);
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   // read route params
-  const { slug } = await params;
+  const { slug, locale } = await params;
 
   // fetch data
   const {
     metaInformation,
   }: {
     metaInformation: IPosts;
-  } = await getPost(slug);
+  } = await getPost(slug, locale);
 
   return {
     title: metaInformation.title,
     description: `${metaInformation.summary} for Dynamic Metadata: https://nextjs.org/docs/app/building-your-application/optimizing/metadata#dynamic-metadata`,
     openGraph: {
       type: 'article',
-      locale: 'en',
+      locale,
       url: `${siteConfig.url}/${metaInformation.slug}`,
       title: `${metaInformation.title}`,
       description: `${metaInformation.summary}`,
@@ -72,7 +81,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 
 export default async function Page({ params }: Props) {
-  const { slug } = await params;
+  const { slug, locale } = await params;
   const {
     metaInformation,
     mdxSource,
@@ -81,7 +90,7 @@ export default async function Page({ params }: Props) {
     metaInformation: IPosts;
     mdxSource: MDXRemoteSerializeResult;
     content: string;
-  } = await getPost(slug);
+  } = await getPost(slug, locale);
 
   return (
     <BlogLayout

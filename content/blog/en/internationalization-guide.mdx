@@ -1,0 +1,235 @@
+---
+title: 'Internationalization (i18n) Guide'
+publishedAt: '2025-07-12'
+modifiedAt: '2025-07-12'
+summary: 'Learn how to use the built-in internationalization features in this blog template. Support multiple languages with ease!'
+image: ''
+slug: 'blog/internationalization-guide'
+categories: ['Guide', 'Features']
+author: 'Blog Template'
+tags: ['i18n', 'next-intl', 'internationalization', 'multilingual']
+draft: false
+---
+
+# Internationalization (i18n) Guide
+
+This blog template comes with built-in internationalization (i18n) support using [next-intl](https://next-intl-docs.vercel.app/), making it easy to create a multilingual blog. You can support as many languages as you need, or keep it simple with just one language.
+
+<TableOfContents>
+
+- [Quick Overview](#quick-overview)
+- [How It Works](#how-it-works)
+- [Supported Languages](#supported-languages)
+- [Adding New Languages](#adding-new-languages)
+- [Using Single Language](#using-single-language)
+- [Translating Content](#translating-content)
+- [Language Switcher](#language-switcher)
+
+</TableOfContents>
+
+## Quick Overview
+
+**Key Features:**
+- 🌍 Multi-language support out of the box
+- 🔄 Easy language switching with a header button
+- 📝 Locale-based content organization
+- 🎯 SEO-friendly locale routing
+- ⚡ Optional: Use single language if you prefer
+
+## How It Works
+
+This template uses **next-intl** for internationalization with the Next.js App Router. Here's the architecture:
+
+1. **Locale-based Routing**: All routes are prefixed with a locale (e.g., `/en/blog` or `/zh-TW/blog`)
+2. **Content Organization**: Blog posts are organized by locale in `content/blog/[locale]/`
+3. **UI Translations**: Interface text is stored in `messages/[locale].json`
+4. **Automatic Detection**: The middleware handles locale detection and routing
+
+## Supported Languages
+
+By default, this template supports:
+
+- **English (en)** - Default language
+- **Traditional Chinese (zh-TW)**
+
+You can easily add more languages by following the steps below.
+
+## Adding New Languages
+
+To add a new language (e.g., Spanish):
+
+### 1. Update Routing Configuration
+
+Edit `src/i18n/routing.ts`:
+
+```typescript
+export const routing = defineRouting({
+  locales: ['en', 'zh-TW', 'es'], // Add 'es' for Spanish
+  defaultLocale: 'en',
+  localePrefix: 'as-needed',
+});
+```
+
+### 2. Create Translation Files
+
+Create a new message file `messages/es.json`:
+
+```json
+{
+  "header": {
+    "home": "Inicio",
+    "blog": "Blog",
+    "tags": "Etiquetas",
+    "about": "Acerca de"
+  },
+  "blog": {
+    "readMore": "Leer más",
+    "backToBlog": "Volver al blog"
+  }
+}
+```
+
+### 3. Create Content Directory
+
+Create a new directory for Spanish blog content:
+
+```bash
+mkdir -p content/blog/es
+```
+
+### 4. Add Translated Content
+
+Copy your blog posts to the new directory and translate them:
+
+```bash
+cp content/blog/en/get-started.mdx content/blog/es/get-started.mdx
+# Then translate the content in the Spanish version
+```
+
+### 5. Update Language Switcher (Optional)
+
+If you want to customize the language switcher labels, edit `src/lib/layout/language-switcher.tsx`.
+
+## Using Single Language
+
+**Don't need multiple languages?** No problem! The template works perfectly with just one language.
+
+### Option 1: Keep English Only
+
+Simply delete the `zh-TW` directories and references:
+
+1. Remove `content/blog/zh-TW/` directory
+2. Update `src/i18n/routing.ts` to only include `en`:
+
+```typescript
+export const routing = defineRouting({
+  locales: ['en'],
+  defaultLocale: 'en',
+  localePrefix: 'as-needed',
+});
+```
+
+3. Optionally hide the language switcher in `src/lib/layout/header.tsx`
+
+### Option 2: Use a Different Single Language
+
+To use only Traditional Chinese (or any other language):
+
+1. Set it as the only locale in `src/i18n/routing.ts`:
+
+```typescript
+export const routing = defineRouting({
+  locales: ['zh-TW'],
+  defaultLocale: 'zh-TW',
+  localePrefix: 'as-needed',
+});
+```
+
+2. Keep only the content in `content/blog/zh-TW/`
+3. Update `messages/zh-TW.json` with your translations
+
+## Translating Content
+
+### Blog Posts
+
+Each blog post should have a version in each supported language:
+
+```
+content/
+└── blog/
+    ├── en/
+    │   ├── my-post.mdx
+    │   └── another-post.mdx
+    └── zh-TW/
+        ├── my-post.mdx
+        └── another-post.mdx
+```
+
+**Important:** The filename should be the same across languages (e.g., `my-post.mdx`), but the content inside can be fully translated.
+
+### UI Elements
+
+Translate interface text in the message files:
+
+**messages/en.json:**
+```json
+{
+  "header": {
+    "home": "Home",
+    "blog": "Blog"
+  }
+}
+```
+
+**messages/zh-TW.json:**
+```json
+{
+  "header": {
+    "home": "首頁",
+    "blog": "部落格"
+  }
+}
+```
+
+Then use them in components:
+
+```tsx
+import { useTranslations } from 'next-intl';
+
+export function MyComponent() {
+  const t = useTranslations('header');
+
+  return <h1>{t('home')}</h1>;
+}
+```
+
+## Language Switcher
+
+The language switcher is located in the header and allows users to toggle between available languages. It:
+
+- 🌐 Shows a globe icon
+- 🔄 Preserves the current page when switching languages
+- 📍 Updates the URL with the new locale prefix
+- ✨ Has a smooth transition with Chakra UI styling
+
+You can customize its appearance in `src/lib/layout/language-switcher.tsx`.
+
+## Best Practices
+
+1. **Start Simple**: Begin with one language and add more as needed
+2. **Consistent Structure**: Keep the same file structure across all locales
+3. **SEO**: Each language gets its own URL, which is great for SEO
+4. **Fallback**: The template falls back to English if content in a locale is missing
+5. **Testing**: Always test language switching to ensure content is properly translated
+
+## Technical Details
+
+- **Library**: next-intl v4.8.3
+- **Routing**: App Router with dynamic `[locale]` segment
+- **Middleware**: Custom locale detection and routing
+- **Content Loading**: Locale-aware MDX file loading
+- **Default Behavior**: Falls back to English if locale content is missing
+
+---
+
+**That's it!** You now have a fully internationalized blog. Whether you choose to support multiple languages or stick with one, this template has you covered. 🚀

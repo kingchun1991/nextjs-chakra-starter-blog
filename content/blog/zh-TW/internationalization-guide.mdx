@@ -1,0 +1,235 @@
+---
+title: '國際化 (i18n) 指南'
+publishedAt: '2025-07-12'
+modifiedAt: '2025-07-12'
+summary: '學習如何使用此部落格模板內建的國際化功能。輕鬆支援多種語言！'
+image: ''
+slug: 'blog/internationalization-guide'
+categories: ['Guide', 'Features']
+author: 'Blog Template'
+tags: ['i18n', 'next-intl', 'internationalization', 'multilingual']
+draft: false
+---
+
+# 國際化 (i18n) 指南
+
+此部落格模板使用 [next-intl](https://next-intl-docs.vercel.app/) 內建國際化 (i18n) 支援，讓建立多語言部落格變得簡單。您可以支援任意數量的語言，或者只使用單一語言保持簡潔。
+
+<TableOfContents>
+
+- [快速概覽](#快速概覽)
+- [運作原理](#運作原理)
+- [支援的語言](#支援的語言)
+- [新增語言](#新增語言)
+- [使用單一語言](#使用單一語言)
+- [翻譯內容](#翻譯內容)
+- [語言切換器](#語言切換器)
+
+</TableOfContents>
+
+## 快速概覽
+
+**主要功能：**
+- 🌍 開箱即用的多語言支援
+- 🔄 使用標題按鈕輕鬆切換語言
+- 📝 基於語言環境的內容組織
+- 🎯 SEO 友善的語言環境路由
+- ⚡ 可選：如果您偏好，可使用單一語言
+
+## 運作原理
+
+此模板使用 **next-intl** 搭配 Next.js App Router 實現國際化。架構如下：
+
+1. **基於語言環境的路由**：所有路由都帶有語言環境前綴（例如 `/en/blog` 或 `/zh-TW/blog`）
+2. **內容組織**：部落格文章依語言環境組織在 `content/blog/[locale]/`
+3. **UI 翻譯**：介面文字儲存在 `messages/[locale].json`
+4. **自動偵測**：中介軟體處理語言環境偵測和路由
+
+## 支援的語言
+
+預設情況下，此模板支援：
+
+- **英文 (en)** - 預設語言
+- **繁體中文 (zh-TW)**
+
+您可以按照以下步驟輕鬆新增更多語言。
+
+## 新增語言
+
+要新增新語言（例如西班牙文）：
+
+### 1. 更新路由配置
+
+編輯 `src/i18n/routing.ts`：
+
+```typescript
+export const routing = defineRouting({
+  locales: ['en', 'zh-TW', 'es'], // 新增 'es' 表示西班牙文
+  defaultLocale: 'en',
+  localePrefix: 'as-needed',
+});
+```
+
+### 2. 建立翻譯檔案
+
+建立新的訊息檔案 `messages/es.json`：
+
+```json
+{
+  "header": {
+    "home": "Inicio",
+    "blog": "Blog",
+    "tags": "Etiquetas",
+    "about": "Acerca de"
+  },
+  "blog": {
+    "readMore": "Leer más",
+    "backToBlog": "Volver al blog"
+  }
+}
+```
+
+### 3. 建立內容目錄
+
+為西班牙文部落格內容建立新目錄：
+
+```bash
+mkdir -p content/blog/es
+```
+
+### 4. 新增翻譯內容
+
+將您的部落格文章複製到新目錄並翻譯它們：
+
+```bash
+cp content/blog/en/get-started.mdx content/blog/es/get-started.mdx
+# 然後翻譯西班牙文版本的內容
+```
+
+### 5. 更新語言切換器（可選）
+
+如果您想自訂語言切換器標籤，請編輯 `src/lib/layout/language-switcher.tsx`。
+
+## 使用單一語言
+
+**不需要多種語言？** 沒問題！模板在只使用一種語言時也能完美運作。
+
+### 選項 1：只保留英文
+
+只需刪除 `zh-TW` 目錄和參照：
+
+1. 移除 `content/blog/zh-TW/` 目錄
+2. 更新 `src/i18n/routing.ts` 只包含 `en`：
+
+```typescript
+export const routing = defineRouting({
+  locales: ['en'],
+  defaultLocale: 'en',
+  localePrefix: 'as-needed',
+});
+```
+
+3. 可選擇在 `src/lib/layout/header.tsx` 中隱藏語言切換器
+
+### 選項 2：使用不同的單一語言
+
+要只使用繁體中文（或任何其他語言）：
+
+1. 在 `src/i18n/routing.ts` 中將其設定為唯一的語言環境：
+
+```typescript
+export const routing = defineRouting({
+  locales: ['zh-TW'],
+  defaultLocale: 'zh-TW',
+  localePrefix: 'as-needed',
+});
+```
+
+2. 只保留 `content/blog/zh-TW/` 中的內容
+3. 使用您的翻譯更新 `messages/zh-TW.json`
+
+## 翻譯內容
+
+### 部落格文章
+
+每篇部落格文章都應該有每種支援語言的版本：
+
+```
+content/
+└── blog/
+    ├── en/
+    │   ├── my-post.mdx
+    │   └── another-post.mdx
+    └── zh-TW/
+        ├── my-post.mdx
+        └── another-post.mdx
+```
+
+**重要：** 檔案名稱在各語言中應該相同（例如 `my-post.mdx`），但內部內容可以完全翻譯。
+
+### UI 元素
+
+在訊息檔案中翻譯介面文字：
+
+**messages/en.json:**
+```json
+{
+  "header": {
+    "home": "Home",
+    "blog": "Blog"
+  }
+}
+```
+
+**messages/zh-TW.json:**
+```json
+{
+  "header": {
+    "home": "首頁",
+    "blog": "部落格"
+  }
+}
+```
+
+然後在元件中使用它們：
+
+```tsx
+import { useTranslations } from 'next-intl';
+
+export function MyComponent() {
+  const t = useTranslations('header');
+
+  return <h1>{t('home')}</h1>;
+}
+```
+
+## 語言切換器
+
+語言切換器位於標題中，允許使用者在可用語言之間切換。它：
+
+- 🌐 顯示地球圖示
+- 🔄 切換語言時保留目前頁面
+- 📍 使用新的語言環境前綴更新 URL
+- ✨ 具有 Chakra UI 樣式的平滑過渡
+
+您可以在 `src/lib/layout/language-switcher.tsx` 中自訂其外觀。
+
+## 最佳實踐
+
+1. **從簡單開始**：從一種語言開始，根據需要新增更多
+2. **一致的結構**：在所有語言環境中保持相同的檔案結構
+3. **SEO**：每種語言都有自己的 URL，對 SEO 很有幫助
+4. **備援**：如果語言環境中缺少內容，模板會回退到英文
+5. **測試**：始終測試語言切換以確保內容已正確翻譯
+
+## 技術細節
+
+- **函式庫**：next-intl v4.8.3
+- **路由**：使用動態 `[locale]` 區段的 App Router
+- **中介軟體**：自訂語言環境偵測和路由
+- **內容載入**：語言環境感知的 MDX 檔案載入
+- **預設行為**：如果缺少語言環境內容，則回退到英文
+
+---
+
+**就是這樣！** 您現在擁有一個完全國際化的部落格。無論您選擇支援多種語言還是堅持使用一種語言，此模板都能滿足您的需求。🚀

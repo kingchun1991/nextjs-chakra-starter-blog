@@ -10,19 +10,26 @@ import type { IPosts } from '@/lib/types/custom-types';
 const MDX_EXT_REGEX = /\.mdx$/;
 const root = process.cwd();
 
-export function getFiles(type: string) {
-  return fs.readdirSync(path.join(root, 'content', type));
+export function getFiles(type: string, locale = 'en') {
+  const localePath = path.join(root, 'content', type, locale);
+  if (fs.existsSync(localePath)) {
+    return fs.readdirSync(localePath);
+  }
+  // Fallback to English if locale doesn't exist
+  return fs.readdirSync(path.join(root, 'content', type, 'en'));
 }
 
-export function getAllFilesFrontMatter(type: string) {
-  const files = fs.readdirSync(path.join(root, 'content', type));
+export function getAllFilesFrontMatter(type: string, locale = 'en') {
+  const localePath = path.join(root, 'content', type, locale);
+  const contentPath = fs.existsSync(localePath)
+    ? localePath
+    : path.join(root, 'content', type, 'en');
+
+  const files = fs.readdirSync(contentPath);
 
   return files.reduce(
     (allPosts: Array<IPosts>, postSlug: string) => {
-      const source = fs.readFileSync(
-        path.join(root, 'content', type, postSlug),
-        'utf8'
-      );
+      const source = fs.readFileSync(path.join(contentPath, postSlug), 'utf8');
 
       const { data } = matter(source);
 
@@ -46,9 +53,14 @@ export function getAllFilesFrontMatter(type: string) {
   );
 }
 
-export async function getFileBySlug(type: string, slug: string) {
+export async function getFileBySlug(type: string, slug: string, locale = 'en') {
+  const localePath = path.join(root, 'content', type, locale);
+  const contentPath = fs.existsSync(localePath)
+    ? localePath
+    : path.join(root, 'content', type, 'en');
+
   const source = slug
-    ? fs.readFileSync(path.join(root, 'content', type, `${slug}.mdx`), 'utf8')
+    ? fs.readFileSync(path.join(contentPath, `${slug}.mdx`), 'utf8')
     : fs.readFileSync(path.join(root, 'content', `${type}.mdx`), 'utf8');
   const { data, content } = matter(source);
 
