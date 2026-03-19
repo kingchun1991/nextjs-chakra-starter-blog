@@ -44,15 +44,17 @@ To enable multi-language support:
 
 ### 1. Create Environment File
 
-Copy the example environment file:
+Create a `.env.local` file in the project root (you can optionally copy from the example):
 
 ```bash
 cp .env.local.example .env.local
 ```
 
+**Note:** The `.env.local` file is **completely optional**. Without it, the template defaults to English-only mode.
+
 ### 2. Enable i18n
 
-Edit `.env.local` and set:
+Add this line to `.env.local`:
 
 ```bash
 NEXT_PUBLIC_ENABLE_I18N=true
@@ -152,13 +154,12 @@ To disable i18n and use only English:
 
 ### Option 1: Using Environment Variable (Recommended)
 
-Set in `.env.local`:
+i18n is **disabled by default** when:
+- No `.env.local` file exists, OR
+- `NEXT_PUBLIC_ENABLE_I18N` is not defined, OR
+- `NEXT_PUBLIC_ENABLE_I18N=false` is set
 
-```bash
-NEXT_PUBLIC_ENABLE_I18N=false
-```
-
-Or simply delete the line. i18n is disabled by default when the variable is not set or set to `false`.
+Simply remove the `.env.local` file or remove/change the variable to disable i18n.
 
 ### Option 2: Remove i18n Completely
 
