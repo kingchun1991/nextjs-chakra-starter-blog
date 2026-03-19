@@ -13,7 +13,6 @@ import {
 import { format, parseISO } from 'date-fns';
 import type { MDXRemoteSerializeResult } from 'next-mdx-remote';
 import { MDXRemote } from 'next-mdx-remote';
-import { useEffect, useState } from 'react';
 import { LuClock } from 'react-icons/lu';
 import readingDuration from 'reading-duration';
 
@@ -34,12 +33,6 @@ export function BlogLayout({
   post: IPosts;
   content: string;
 }) {
-  const [mounted, setMounted] = useState(false);
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
-
   const dateFormat = 'dd MMM, yyyy';
   const parseDate = (dateString: string) => {
     try {
@@ -139,21 +132,14 @@ export function BlogLayout({
             </Flex>
           </HStack>
         </Flex>
-        {mounted && (
-          <MDXRemote
-            {...mdxSource}
-            components={
-              MDXComponents as unknown as React.ComponentProps<
-                typeof MDXRemote
-              >['components']
-            }
-          />
-        )}
-        {!mounted && (
-          <Box color="gray.500" p={4}>
-            Loading content...
-          </Box>
-        )}
+        <MDXRemote
+          {...mdxSource}
+          components={
+            MDXComponents as unknown as React.ComponentProps<
+              typeof MDXRemote
+            >['components']
+          }
+        />
 
         <Box _dark={{ color: 'gray.400' }} color="gray.700">
           <Tags tags={post.tags ?? []} />
