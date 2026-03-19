@@ -5,10 +5,7 @@ import { usePathname, useRouter } from 'next/navigation';
 import { useLocale } from 'next-intl';
 import { LuLanguages } from 'react-icons/lu';
 
-const isI18nEnabled =
-  typeof window !== 'undefined'
-    ? process.env.NEXT_PUBLIC_ENABLE_I18N === 'true'
-    : false;
+const isI18nEnabled = process.env.NEXT_PUBLIC_ENABLE_I18N === 'true';
 
 export function LanguageSwitcher() {
   if (!isI18nEnabled) {
