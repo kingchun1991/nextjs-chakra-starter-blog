@@ -136,8 +136,6 @@ export function MobileNavItem({ title, url, children }: NavItem) {
             textDecoration: 'none',
           }}
           align="center"
-          // href={href ?? '#'}
-          as={Link}
           justify="space-between"
           py={2}
         >
