@@ -14,6 +14,7 @@ type LocaleLayoutProps = {
 };
 
 const APP_NAME = siteConfig.title;
+const i18nEnabled = process.env.NEXT_PUBLIC_ENABLE_I18N === 'true';
 
 export const metadata: Metadata = {
   title: { default: APP_NAME, template: siteConfig.titleTemplate },
@@ -49,26 +50,37 @@ export const viewport: Viewport = {
 };
 
 export function generateStaticParams() {
-  return routing.locales.map((locale) => ({ locale }));
+  return i18nEnabled
+    ? routing.locales.map((locale) => ({ locale }))
+    : [{ locale: 'en' }];
 }
 
 const LocaleLayout = async ({ children, params }: LocaleLayoutProps) => {
   const { locale } = await params;
 
-  if (!routing.locales.includes(locale as 'en' | 'zh-TW')) {
+  if (
+    i18nEnabled &&
+    !routing.locales.includes(locale as 'en' | 'zh-TW')
+  ) {
     notFound();
   }
 
-  const messages = await getMessages();
+  const messages = i18nEnabled ? await getMessages() : {};
 
   return (
     <html lang={locale} suppressHydrationWarning>
       <body>
-        <NextIntlClientProvider messages={messages}>
+        {i18nEnabled ? (
+          <NextIntlClientProvider messages={messages}>
+            <Provider>
+              <Layout>{children}</Layout>
+            </Provider>
+          </NextIntlClientProvider>
+        ) : (
           <Provider>
             <Layout>{children}</Layout>
           </Provider>
-        </NextIntlClientProvider>
+        )}
       </body>
     </html>
   );

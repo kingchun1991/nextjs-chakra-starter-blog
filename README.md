@@ -15,7 +15,7 @@ This is a **Next.js + Chakra UI + TypeScript** starter template packed with mode
 -   **UI Library**: [Chakra UI v3](https://chakra-ui.com/)
 -   **Styling Engine**: Emotion (via Chakra UI) + [next-themes](https://github.com/pacocoursey/next-themes)
 -   **Language**: [TypeScript 5](https://www.typescriptlang.org/)
--   **Internationalization**: [next-intl](https://next-intl-docs.vercel.app/) - Built-in i18n support with English and Traditional Chinese
+-   **Internationalization**: [next-intl](https://next-intl-docs.vercel.app/) - Optional i18n support (disabled by default, enable with `NEXT_PUBLIC_ENABLE_I18N=true`)
 -   **Linting & Formatting**: [Biome](https://biomejs.dev/)
 -   **E2E Testing**: [Playwright](https://playwright.dev/)
 -   **Build System**: [Turborepo](https://turbo.build/repo)

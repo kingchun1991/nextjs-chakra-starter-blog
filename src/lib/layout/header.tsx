@@ -34,6 +34,8 @@ import { siteConfig } from '@/site.config';
 import { LanguageSwitcher } from './language-switcher';
 import { SearchModal } from './search-modal';
 
+const i18nEnabled = process.env.NEXT_PUBLIC_ENABLE_I18N === 'true';
+
 export function DesktopSubNav({ title, url }: NavItem) {
   return (
     <Link
@@ -73,9 +75,12 @@ export function DesktopSubNav({ title, url }: NavItem) {
 }
 
 export function DesktopNav() {
-  const t = useTranslations('header');
+  const t = i18nEnabled ? useTranslations('header') : null;
 
   const getTranslatedTitle = (navItem: NavItem) => {
+    if (!i18nEnabled || !t) {
+      return navItem.title;
+    }
     const key = navItem.title.toLowerCase();
     return t(key);
   };
@@ -121,9 +126,12 @@ export function DesktopNav() {
 
 export function MobileNavItem({ title, url, children }: NavItem) {
   const { open, onToggle } = useDisclosure();
-  const t = useTranslations('header');
+  const t = i18nEnabled ? useTranslations('header') : null;
 
   const getTranslatedTitle = () => {
+    if (!i18nEnabled || !t) {
+      return title;
+    }
     const key = title.toLowerCase();
     return t(key);
   };

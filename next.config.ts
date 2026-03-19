@@ -2,7 +2,11 @@ import createMDX from '@next/mdx';
 import type { NextConfig } from 'next';
 import createNextIntlPlugin from 'next-intl/plugin';
 
-const withNextIntl = createNextIntlPlugin('./src/i18n/request.ts');
+const i18nEnabled = process.env.NEXT_PUBLIC_ENABLE_I18N === 'true';
+
+const withNextIntl = i18nEnabled
+  ? createNextIntlPlugin('./src/i18n/request.ts')
+  : (config: NextConfig) => config;
 
 const withMDX = createMDX({
   options: {
