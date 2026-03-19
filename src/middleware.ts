@@ -12,6 +12,16 @@ export default function middleware(request: NextRequest) {
   if (i18nMiddleware) {
     return i18nMiddleware(request);
   }
+
+  // When i18n is disabled, redirect root to /en since all pages are under [locale]
+  const { pathname } = request.nextUrl;
+
+  if (pathname === '/') {
+    const url = request.nextUrl.clone();
+    url.pathname = '/en';
+    return NextResponse.redirect(url);
+  }
+
   return NextResponse.next();
 }
 
