@@ -22,6 +22,19 @@ export function EnhancedTable({
   hoverable = true,
   compact = false,
 }: EnhancedTableProps) {
+  // Defensive checks for required props
+  if (!(columns && Array.isArray(columns))) {
+    console.error(
+      'EnhancedTable: columns prop is required and must be an array'
+    );
+    return null;
+  }
+
+  if (!(data && Array.isArray(data))) {
+    console.error('EnhancedTable: data prop is required and must be an array');
+    return null;
+  }
+
   return (
     <Table.ScrollArea borderWidth="1px" maxW="l">
       <Table.Root
