@@ -60,28 +60,39 @@ Add this line to `.env.local`:
 NEXT_PUBLIC_ENABLE_I18N=true
 ```
 
-### 3. Restart Development Server
+### 3. Rebuild the Project
+
+**Important:** After enabling or disabling i18n, you must rebuild the project:
 
 ```bash
 pnpm dev
 ```
 
+The build script will automatically restructure the routing based on your i18n setting.
+
 That's it! Your blog now supports English and Traditional Chinese. The language switcher will appear in the header automatically.
 
 ## How It Works
 
-When i18n is enabled, the template uses **next-intl** for internationalization with the Next.js App Router. Here's the architecture:
+The template uses a **build-time routing setup** that restructures your app based on the i18n configuration:
 
-1. **Locale-based Routing**: All routes are prefixed with a locale (e.g., `/en/blog` or `/zh-TW/blog`)
+### When i18n is ENABLED (`NEXT_PUBLIC_ENABLE_I18N=true`)
+
+1. **Locale-based Routing**: All routes use the `[locale]` directory structure (e.g., `/en/blog` or `/zh-TW/blog`)
 2. **Content Organization**: Blog posts are organized by locale in `content/blog/[locale]/`
-3. **UI Translations**: Interface text is stored in `messages/[locale].json`
-4. **Automatic Detection**: The middleware handles locale detection and routing
+3. **UI Translations**: Interface text is loaded from `messages/[locale].json`
+4. **Language Switcher**: Appears in the header for switching between languages
+5. **Middleware**: Handles locale detection and routing with next-intl
 
-When i18n is **disabled** (default):
-- Routes work without locale prefixes (e.g., `/blog` instead of `/en/blog`)
-- Only English content from `content/blog/en/` is used
-- Language switcher is hidden
-- Simpler, faster configuration for single-language blogs
+### When i18n is DISABLED (default)
+
+1. **Clean URLs**: Routes work without locale prefixes (e.g., `/blog` instead of `/en/blog`)
+2. **Build-time Setup**: The `setup-routing` script copies routes from `src/app/[locale]` to `src/app` root
+3. **Single Language**: Only English content from `content/blog/en/` is used
+4. **No Language Switcher**: Language switcher is hidden
+5. **Simpler Configuration**: No locale routing overhead
+
+**Note:** You must rebuild (`pnpm dev` or `pnpm build`) when toggling the i18n flag, as the routing structure is set up at build time.
 
 ## Supported Languages
 
