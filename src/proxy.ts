@@ -13,27 +13,12 @@ export default function middleware(request: NextRequest) {
     return i18nMiddleware(request);
   }
 
-  // When i18n is disabled, redirect paths to /en prefix since all pages are under [locale]
-  const { pathname } = request.nextUrl;
-
-  // Don't redirect if already has locale prefix or is an API/asset route
-  if (
-    pathname.startsWith('/en') ||
-    pathname.startsWith('/zh-TW') ||
-    pathname.startsWith('/api') ||
-    pathname.startsWith('/_next') ||
-    pathname.startsWith('/_vercel') ||
-    /\..+$/.test(pathname)
-  ) {
-    return NextResponse.next();
-  }
-
-  // Redirect to /en prefix
-  const url = request.nextUrl.clone();
-  url.pathname = `/en${pathname}`;
-  return NextResponse.redirect(url);
+  // When i18n is disabled, pages are at root level - no redirect needed
+  return NextResponse.next();
 }
 
 export const config = {
-  matcher: ['/', '/(zh-TW|en)/:path*', '/((?!api|_next|_vercel|.*\\..*).*)'],
+  matcher: i18nEnabled
+    ? ['/', '/(zh-TW|en)/:path*']
+    : ['/((?!api|_next|_vercel|.*\\..*).*)'/* catch-all for enabled middleware only when needed */],
 };

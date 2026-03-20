@@ -48,6 +48,9 @@ sitemap*.xml
 # Turbo
 .turbo
 
+# i18n routing backup
+.locale-backup
+
 # VS Code
 .vscode/settings.json
 .env
