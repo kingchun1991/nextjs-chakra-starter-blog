@@ -11,9 +11,8 @@
     "neverBuiltDependencies": []
   },
   "scripts": {
-    "setup-routing": "node scripts/setup-routing.mjs",
-    "dev": "pnpm setup-routing && pnpm generate-json && next dev",
-    "build": "pnpm setup-routing && pnpm generate-json && next build",
+    "dev": "pnpm generate-json && next dev",
+    "build": "pnpm generate-json && next build",
     "turbo": "pnpm dlx turbo@2.6.1",
     "build:turbo": "pnpm turbo run build",
     "postbuild": "pnpm validate-content && node scripts/build-directory-graph.mjs && next-sitemap --config next-sitemap.config.js",

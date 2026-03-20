@@ -25,6 +25,23 @@ const nextConfig: NextConfig = {
     // Ignore type checking during build for dependency compatibility
     ignoreBuildErrors: true,
   },
+  // When i18n is disabled, rewrite clean URLs to include /en prefix internally
+  async rewrites() {
+    if (i18nEnabled) {
+      return [];
+    }
+
+    return [
+      {
+        source: '/',
+        destination: '/en',
+      },
+      {
+        source: '/:path*',
+        destination: '/en/:path*',
+      },
+    ];
+  },
 };
 
 export default withNextIntl(withMDX(nextConfig));

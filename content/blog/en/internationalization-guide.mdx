@@ -60,21 +60,19 @@ Add this line to `.env.local`:
 NEXT_PUBLIC_ENABLE_I18N=true
 ```
 
-### 3. Rebuild the Project
+### 3. Restart the Development Server
 
-**Important:** After enabling or disabling i18n, you must rebuild the project:
+After enabling or disabling i18n, restart your development server:
 
 ```bash
 pnpm dev
 ```
 
-The build script will automatically restructure the routing based on your i18n setting.
-
 That's it! Your blog now supports English and Traditional Chinese. The language switcher will appear in the header automatically.
 
 ## How It Works
 
-The template uses a **build-time routing setup** that restructures your app based on the i18n configuration:
+The template uses **Next.js rewrites** to provide clean URLs when i18n is disabled:
 
 ### When i18n is ENABLED (`NEXT_PUBLIC_ENABLE_I18N=true`)
 
@@ -87,12 +85,12 @@ The template uses a **build-time routing setup** that restructures your app base
 ### When i18n is DISABLED (default)
 
 1. **Clean URLs**: Routes work without locale prefixes (e.g., `/blog` instead of `/en/blog`)
-2. **Build-time Setup**: The `setup-routing` script copies routes from `src/app/[locale]` to `src/app` root
+2. **URL Rewrites**: Next.js internally rewrites `/blog` to `/en/blog` without exposing it to users
 3. **Single Language**: Only English content from `content/blog/en/` is used
 4. **No Language Switcher**: Language switcher is hidden
 5. **Simpler Configuration**: No locale routing overhead
 
-**Note:** You must rebuild (`pnpm dev` or `pnpm build`) when toggling the i18n flag, as the routing structure is set up at build time.
+**Note:** Simply restart your development server after toggling the i18n flag - no rebuild required!
 
 ## Supported Languages
 
