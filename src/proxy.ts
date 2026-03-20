@@ -18,7 +18,5 @@ export default function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: i18nEnabled
-    ? ['/', '/(zh-TW|en)/:path*']
-    : ['/((?!api|_next|_vercel|.*\\..*).*)'/* catch-all for enabled middleware only when needed */],
+  matcher: ['/', '/(zh-TW|en)/:path*', '/((?!api|_next|_vercel|.*\\..*).*)'],
 };

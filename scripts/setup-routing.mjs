@@ -126,14 +126,23 @@ function transformForSingleLanguage(content, filename) {
       "const locale = 'en';"
     );
 
-    // Fix function signature for pages without params
+    // Fix function signature for pages without params - be more specific to avoid breaking generateMetadata
     content = content.replace(
-      /async function (\w+)\(\{ params \}: Props\)/g,
-      'async function $1(): Props'
-    );
-    content = content.replace(
-      /export default async function (\w+)\(\{ params \}: Props\)/g,
+      /\bexport default async function (\w+)\(\{ params \}: Props\)/g,
       'export default async function $1(): Props'
+    );
+
+    // Fix generateMetadata - must handle both with and without params
+    // First handle the case with params
+    content = content.replace(
+      /export async function generateMetadata\(\{\s*params,?\s*\}: \{\s*params: Promise<\{ [^}]+ \}>;?\s*\}\): Promise<Metadata>/g,
+      (match) => {
+        // Check if it has slug parameter
+        if (match.includes('slug')) {
+          return 'export async function generateMetadata({ params }: { params: Promise<{ slug: string }>; }): Promise<Metadata>';
+        }
+        return 'export async function generateMetadata(): Promise<Metadata>';
+      }
     );
 
     // Update generateStaticParams to only return slug (not locale)
