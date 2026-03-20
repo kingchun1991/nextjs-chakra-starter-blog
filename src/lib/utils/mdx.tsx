@@ -55,13 +55,31 @@ export function getAllFilesFrontMatter(type: string, locale = 'en') {
 
 export async function getFileBySlug(type: string, slug: string, locale = 'en') {
   const localePath = path.join(root, 'content', type, locale);
-  const contentPath = fs.existsSync(localePath)
-    ? localePath
-    : path.join(root, 'content', type, 'en');
+  const fallbackPath = path.join(root, 'content', type, 'en');
+  const basePath = path.join(root, 'content', type);
 
-  const source = slug
-    ? fs.readFileSync(path.join(contentPath, `${slug}.mdx`), 'utf8')
-    : fs.readFileSync(path.join(root, 'content', `${type}.mdx`), 'utf8');
+  let source: string;
+
+  if (slug) {
+    // Try locale-specific path first
+    const localeFilePath = path.join(localePath, `${slug}.mdx`);
+    // Then try fallback locale (en)
+    const fallbackFilePath = path.join(fallbackPath, `${slug}.mdx`);
+    // Finally try base path (for files not in locale subdirectories)
+    const baseFilePath = path.join(basePath, `${slug}.mdx`);
+
+    if (fs.existsSync(localeFilePath)) {
+      source = fs.readFileSync(localeFilePath, 'utf8');
+    } else if (fs.existsSync(fallbackFilePath)) {
+      source = fs.readFileSync(fallbackFilePath, 'utf8');
+    } else if (fs.existsSync(baseFilePath)) {
+      source = fs.readFileSync(baseFilePath, 'utf8');
+    } else {
+      throw new Error(`MDX file not found for type: ${type}, slug: ${slug}, locale: ${locale}`);
+    }
+  } else {
+    source = fs.readFileSync(path.join(root, 'content', `${type}.mdx`), 'utf8');
+  }
   const { data, content } = matter(source);
 
   const newPost: IPosts = {
