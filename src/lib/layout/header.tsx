@@ -78,7 +78,7 @@ export function DesktopNav() {
   const t = i18nEnabled ? useTranslations('header') : null;
 
   const getTranslatedTitle = (navItem: NavItem) => {
-    if (!i18nEnabled || !t) {
+    if (!(i18nEnabled && t)) {
       return navItem.title;
     }
     const key = navItem.title.toLowerCase();
@@ -129,7 +129,7 @@ export function MobileNavItem({ title, url, children }: NavItem) {
   const t = i18nEnabled ? useTranslations('header') : null;
 
   const getTranslatedTitle = () => {
-    if (!i18nEnabled || !t) {
+    if (!(i18nEnabled && t)) {
       return title;
     }
     const key = title.toLowerCase();

@@ -36,10 +36,7 @@ export async function generateMetadata({
 const LocaleLayout = async ({ children, params }: LocaleLayoutProps) => {
   const { locale } = await params;
 
-  if (
-    i18nEnabled &&
-    !routing.locales.includes(locale as 'en' | 'zh-TW')
-  ) {
+  if (i18nEnabled && !routing.locales.includes(locale as 'en' | 'zh-TW')) {
     notFound();
   }
 

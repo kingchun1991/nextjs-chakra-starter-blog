@@ -1,3 +1,5 @@
+'use client';
+
 /* eslint-disable @typescript-eslint/no-shadow */
 /* eslint-disable import/no-extraneous-dependencies */
 import { Box, Flex, IconButton, Input, Kbd, Spacer } from '@chakra-ui/react';

@@ -75,7 +75,9 @@ export async function getFileBySlug(type: string, slug: string, locale = 'en') {
     } else if (fs.existsSync(baseFilePath)) {
       source = fs.readFileSync(baseFilePath, 'utf8');
     } else {
-      throw new Error(`MDX file not found for type: ${type}, slug: ${slug}, locale: ${locale}`);
+      throw new Error(
+        `MDX file not found for type: ${type}, slug: ${slug}, locale: ${locale}`
+      );
     }
   } else {
     source = fs.readFileSync(path.join(root, 'content', `${type}.mdx`), 'utf8');
