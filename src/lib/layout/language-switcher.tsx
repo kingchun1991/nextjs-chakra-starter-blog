@@ -1,25 +1,48 @@
 'use client';
 
 import { IconButton } from '@chakra-ui/react';
-import { usePathname, useRouter } from 'next/navigation';
 import { useLocale } from 'next-intl';
 import { LuLanguages } from 'react-icons/lu';
 
-const isI18nEnabled = process.env.NEXT_PUBLIC_ENABLE_I18N === 'true';
+import { routing, usePathname, useRouter } from '@/i18n/routing';
+
+const shouldShowLanguageSwitcher = routing.locales.length > 1;
+
+const localeLabels: Record<string, string> = {
+  en: 'English',
+  'zh-TW': '繁體中文',
+  es: 'Español',
+};
+
+const getNextLocale = (currentLocale: string): string => {
+  const locales = routing.locales;
+  const currentIndex = locales.indexOf(
+    currentLocale as (typeof locales)[number]
+  );
+  const nextIndex = currentIndex >= 0 ? (currentIndex + 1) % locales.length : 0;
+  return locales[nextIndex] ?? routing.defaultLocale;
+};
 
 export function LanguageSwitcher() {
-  if (!isI18nEnabled) {
+  if (!shouldShowLanguageSwitcher) {
     return null;
   }
 
+  return <LanguageSwitcherButton />;
+}
+
+function LanguageSwitcherButton() {
   const locale = useLocale();
   const router = useRouter();
   const pathname = usePathname();
 
+  const nextLocale = getNextLocale(locale);
+  const nextLocaleLabel = localeLabels[nextLocale] ?? nextLocale;
+
   const switchLocale = () => {
-    const newLocale = locale === 'en' ? 'zh-TW' : 'en';
-    const currentPath = pathname.replace(`/${locale}`, '') || '/';
-    router.push(`/${newLocale}${currentPath}`);
+    router.push(pathname, {
+      locale: nextLocale as (typeof routing.locales)[number],
+    });
   };
 
   return (
@@ -29,12 +52,12 @@ export function LanguageSwitcher() {
         color: 'gray.800',
         _dark: { color: 'white' },
       }}
-      aria-label={locale === 'en' ? 'Switch to 繁體中文' : 'Switch to English'}
+      aria-label={`Switch language to ${nextLocaleLabel}`}
       bg="transparent"
       color="gray.600"
       onClick={switchLocale}
       size="sm"
-      title={locale === 'en' ? '繁體中文' : 'English'}
+      title={nextLocaleLabel}
     >
       <LuLanguages />
     </IconButton>

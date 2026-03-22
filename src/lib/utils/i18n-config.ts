@@ -1,7 +1,9 @@
+import { routing } from '@/i18n/routing';
+
 /**
  * Utility to check if internationalization (i18n) is enabled
- * Controlled by NEXT_PUBLIC_ENABLE_I18N environment variable
+ * Enabled when more than one locale is configured
  */
 export const isI18nEnabled = (): boolean => {
-  return process.env.NEXT_PUBLIC_ENABLE_I18N === 'true';
+  return routing.locales.length > 1;
 };

@@ -28,13 +28,14 @@ import {
   HoverCardTrigger,
 } from '@/components/ui/hover-card';
 import { Link } from '@/components/ui/link';
+import { routing } from '@/i18n/routing';
 import type { NavItem } from '@/site.config';
 import { siteConfig } from '@/site.config';
 
 import { LanguageSwitcher } from './language-switcher';
 import { SearchModal } from './search-modal';
 
-const i18nEnabled = process.env.NEXT_PUBLIC_ENABLE_I18N === 'true';
+const i18nEnabled = routing.locales.length > 1;
 
 export function DesktopSubNav({ title, url }: NavItem) {
   return (
@@ -74,17 +75,11 @@ export function DesktopSubNav({ title, url }: NavItem) {
   );
 }
 
-export function DesktopNav() {
-  const t = i18nEnabled ? useTranslations('header') : null;
+type DesktopNavContentProps = {
+  getTranslatedTitle: (navItem: NavItem) => string;
+};
 
-  const getTranslatedTitle = (navItem: NavItem) => {
-    if (!(i18nEnabled && t)) {
-      return navItem.title;
-    }
-    const key = navItem.title.toLowerCase();
-    return t(key);
-  };
-
+function DesktopNavContent({ getTranslatedTitle }: DesktopNavContentProps) {
   return (
     <Stack direction="row" gap={4}>
       {siteConfig.navigation.map((navItem) => (
@@ -124,17 +119,36 @@ export function DesktopNav() {
   );
 }
 
-export function MobileNavItem({ title, url, children }: NavItem) {
-  const { open, onToggle } = useDisclosure();
-  const t = i18nEnabled ? useTranslations('header') : null;
+function DesktopNavWithTranslations() {
+  const t = useTranslations('header');
 
-  const getTranslatedTitle = () => {
-    if (!(i18nEnabled && t)) {
-      return title;
-    }
-    const key = title.toLowerCase();
-    return t(key);
+  const getTranslatedTitle = (navItem: NavItem) => {
+    return t(navItem.title.toLowerCase());
   };
+
+  return <DesktopNavContent getTranslatedTitle={getTranslatedTitle} />;
+}
+
+export function DesktopNav() {
+  if (!i18nEnabled) {
+    return (
+      <DesktopNavContent getTranslatedTitle={(navItem) => navItem.title} />
+    );
+  }
+
+  return <DesktopNavWithTranslations />;
+}
+
+type MobileNavItemContentProps = NavItem & {
+  getTranslatedTitle: () => string;
+};
+
+function MobileNavItemContent({
+  url,
+  children,
+  getTranslatedTitle,
+}: MobileNavItemContentProps) {
+  const { open, onToggle } = useDisclosure();
 
   return (
     <Stack gap={4} onClick={children && onToggle}>
@@ -184,6 +198,28 @@ export function MobileNavItem({ title, url, children }: NavItem) {
       </Collapsible.Root>
     </Stack>
   );
+}
+
+function MobileNavItemWithTranslations({ title, ...rest }: NavItem) {
+  const t = useTranslations('header');
+
+  return (
+    <MobileNavItemContent
+      {...rest}
+      getTranslatedTitle={() => t(title.toLowerCase())}
+      title={title}
+    />
+  );
+}
+
+export function MobileNavItem(props: NavItem) {
+  if (!i18nEnabled) {
+    return (
+      <MobileNavItemContent {...props} getTranslatedTitle={() => props.title} />
+    );
+  }
+
+  return <MobileNavItemWithTranslations {...props} />;
 }
 
 export function MobileNav() {

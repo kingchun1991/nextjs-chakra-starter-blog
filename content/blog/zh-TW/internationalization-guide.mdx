@@ -1,7 +1,7 @@
 ---
 title: '國際化 (i18n) 指南'
 publishedAt: '2025-07-12'
-modifiedAt: '2025-07-12'
+modifiedAt: '2026-03-22'
 summary: '學習如何使用此部落格模板內建的國際化功能。輕鬆支援多種語言！'
 image: ''
 slug: 'blog/internationalization-guide'
@@ -13,113 +13,112 @@ draft: false
 
 # 國際化 (i18n) 指南
 
-此部落格模板使用 [next-intl](https://next-intl-docs.vercel.app/) 內建可選的國際化 (i18n) 支援。**預設情況下，i18n 已停用**，以提供更簡單的單語言體驗。當您需要多語言支援時，可以輕鬆啟用。
+此部落格模板使用 [next-intl](https://next-intl-docs.vercel.app/) 提供國際化 (i18n) 支援，並採用 **以語言列表為核心的配置方式**。
+
+您不需要再用環境變數切換 i18n，所有設定都集中在 `src/i18n/locales.ts`。
 
 <TableOfContents>
 
 - [快速概覽](#快速概覽)
+- [配置模型](#配置模型)
 - [啟用國際化](#啟用國際化)
-- [運作原理](#運作原理)
+- [單語言模式](#單語言模式)
 - [支援的語言](#支援的語言)
 - [新增語言](#新增語言)
-- [停用國際化](#停用國際化)
 - [翻譯內容](#翻譯內容)
 - [語言切換器](#語言切換器)
+- [最佳實踐](#最佳實踐)
+- [技術細節](#技術細節)
 
 </TableOfContents>
 
 ## 快速概覽
 
 **主要功能：**
-- 🎯 **預設停用** - 開箱即用的簡單單語言設定
-- 🌍 需要時可使用多語言支援
-- 🔄 使用標題按鈕輕鬆切換語言（啟用時）
+- 🧭 以單一檔案集中管理語言：`src/i18n/locales.ts`
+- 🌍 當 `locales` 超過一種語言時，自動啟用多語言模式
+- 🔄 多語言模式下，標題列語言切換器自動顯示
 - 📝 基於語言環境的內容組織
 - 🎯 SEO 友善的語言環境路由
-- ⚡ 純英文部落格無需任何配置
+- ⚡ 只配置一種語言時，自動進入乾淨的單語言模式
+
+## 配置模型
+
+所有語言行為都在 `src/i18n/locales.ts` 配置：
+
+```typescript
+export const locales = ['en', 'zh-TW'] as const;
+
+export const defaultLocale = 'en';
+```
+
+規則如下：
+
+1. `locales.length > 1`：啟用多語言模式。
+2. `locales.length === 1`：啟用單語言模式。
+3. `defaultLocale`：作為路由與內容回退的預設語言。
 
 ## 啟用國際化
 
-要啟用多語言支援：
+要啟用多語言，請把 `locales` 設為至少兩種語言：
 
-### 1. 建立環境檔案
+```typescript
+export const locales = ['en', 'zh-TW'] as const;
 
-在專案根目錄建立 `.env.local` 檔案（您可以選擇從範例複製）：
-
-```bash
-cp .env.local.example .env.local
+export const defaultLocale = 'en';
 ```
 
-**注意：** `.env.local` 檔案是**完全可選的**。沒有它，模板預設為純英文模式。
-
-### 2. 啟用 i18n
-
-在 `.env.local` 中新增此行：
-
-```bash
-NEXT_PUBLIC_ENABLE_I18N=true
-```
-
-### 3. 重新啟動開發伺服器
-
-啟用或停用 i18n 後，重新啟動您的開發伺服器：
+接著重新啟動開發伺服器：
 
 ```bash
 pnpm dev
 ```
 
-就是這樣！您的部落格現在支援英文和繁體中文。語言切換器將自動出現在標題中。
+完成後，語言路由、翻譯載入與語言切換器會自動生效。
 
-## 運作原理
+## 單語言模式
 
-模板使用 **Next.js 重寫（rewrites）** 在 i18n 停用時提供簡潔的 URL：
+若您只想用一種語言（例如繁體中文）：
 
-### 當 i18n 啟用時 (`NEXT_PUBLIC_ENABLE_I18N=true`)
+```typescript
+export const locales = ['zh-TW'] as const;
 
-1. **基於語言環境的路由**：所有路由都使用 `[locale]` 目錄結構（例如 `/en/blog` 或 `/zh-TW/blog`）
-2. **內容組織**：部落格文章依語言環境組織在 `content/blog/[locale]/`
-3. **UI 翻譯**：介面文字從 `messages/[locale].json` 載入
-4. **語言切換器**：出現在標題中用於切換語言
-5. **中介軟體**：使用 next-intl 處理語言環境偵測和路由
+export const defaultLocale = 'zh-TW';
+```
 
-### 當 i18n 停用時（預設）
+此模式下：
 
-1. **簡潔網址**：路由不帶語言環境前綴（例如 `/blog` 而非 `/en/blog`）
-2. **URL 重寫**：Next.js 在內部將 `/blog` 重寫為 `/en/blog`，對使用者不可見
-3. **單一語言**：僅使用 `content/blog/en/` 的英文內容
-4. **無語言切換器**：語言切換器隱藏
-5. **簡化配置**：無語言環境路由開銷
-
-**注意：** 切換 i18n 旗標後只需重新啟動開發伺服器即可，無需重新建置！
+1. 語言切換器會隱藏。
+2. URL 保持乾淨（例如 `/`、`/blog`）。
+3. 內部路由會對應到您設定的 `defaultLocale`。
+4. 內容缺漏時會回退到 `defaultLocale`。
 
 ## 支援的語言
 
-預設情況下，當 i18n 啟用時，此模板支援：
+此模板目前內建：
 
-- **英文 (en)** - 預設語言
-- **繁體中文 (zh-TW)**
+- **英文 (`en`)**
+- **繁體中文 (`zh-TW`)**
 
-您可以按照以下步驟輕鬆新增更多語言。
+您可依需求改成任意語言代碼，只要同步提供對應的訊息檔與內容資料夾。
 
 ## 新增語言
 
-要新增新語言（例如西班牙文）：
+以新增西班牙文為例：
 
-### 1. 更新路由配置
+### 1. 更新語言配置
 
-編輯 `src/i18n/routing.ts`：
+編輯 `src/i18n/locales.ts`：
 
 ```typescript
-export const routing = defineRouting({
-  locales: ['en', 'zh-TW', 'es'], // 新增 'es' 表示西班牙文
-  defaultLocale: 'en',
-  localePrefix: 'as-needed',
-});
+export const locales = ['en', 'zh-TW', 'es'] as const;
+
+export const defaultLocale = 'en';
 ```
 
-### 2. 建立翻譯檔案
+### 2. 建立翻譯訊息檔
 
-建立新的訊息檔案 `messages/es.json`：
+建立 `messages/es.json`：
 
 ```json
 {
@@ -136,61 +135,22 @@ export const routing = defineRouting({
 }
 ```
 
-### 3. 建立內容目錄
-
-為西班牙文部落格內容建立新目錄：
+### 3. 建立語言內容資料夾
 
 ```bash
 mkdir -p content/blog/es
-```
-
-### 4. 新增翻譯內容
-
-將您的部落格文章複製到新目錄並翻譯它們：
-
-```bash
 cp content/blog/en/get-started.mdx content/blog/es/get-started.mdx
-# 然後翻譯西班牙文版本的內容
 ```
 
-### 5. 更新語言切換器（可選）
+### 4. （可選）更新語言切換器標籤
 
-如果您想自訂語言切換器標籤，請編輯 `src/lib/layout/language-switcher.tsx`。
-
-## 停用國際化
-
-要停用 i18n 並只使用英文：
-
-### 選項 1：使用環境變數（建議）
-
-i18n 在以下情況下**預設停用**：
-- 不存在 `.env.local` 檔案，或
-- `NEXT_PUBLIC_ENABLE_I18N` 未定義，或
-- 設定 `NEXT_PUBLIC_ENABLE_I18N=false`
-
-只需移除 `.env.local` 檔案或移除/變更該變數即可停用 i18n。
-
-### 選項 2：完全移除 i18n
-
-如果您從不打算使用 i18n：
-
-1. 解除安裝 next-intl：
-```bash
-pnpm remove next-intl
-```
-
-2. 移除 i18n 目錄：
-```bash
-rm -rf src/i18n messages content/blog/zh-TW
-```
-
-3. 更新程式碼中的匯入以移除 next-intl 參照
+若需要自訂語言名稱，請編輯 `src/lib/layout/language-switcher.tsx`。
 
 ## 翻譯內容
 
 ### 部落格文章
 
-每篇部落格文章都應該有每種支援語言的版本：
+不同語言建議維持相同 slug 檔名：
 
 ```
 content/
@@ -203,33 +163,11 @@ content/
         └── another-post.mdx
 ```
 
-**重要：** 檔案名稱在各語言中應該相同（例如 `my-post.mdx`），但內部內容可以完全翻譯。
+### UI 文字
 
-### UI 元素
+在 `messages/[locale].json` 中維護介面字串。
 
-在訊息檔案中翻譯介面文字：
-
-**messages/en.json:**
-```json
-{
-  "header": {
-    "home": "Home",
-    "blog": "Blog"
-  }
-}
-```
-
-**messages/zh-TW.json:**
-```json
-{
-  "header": {
-    "home": "首頁",
-    "blog": "部落格"
-  }
-}
-```
-
-然後在元件中使用它們：
+範例：
 
 ```tsx
 import { useTranslations } from 'next-intl';
@@ -243,34 +181,30 @@ export function MyComponent() {
 
 ## 語言切換器
 
-當 i18n 啟用時，語言切換器會出現在標題中，允許使用者在可用語言之間切換。它：
+語言切換器的顯示規則現在是依語言數量自動判斷：
 
-- 🌐 顯示地球圖示
-- 🔄 切換語言時保留目前頁面
-- 📍 使用新的語言環境前綴更新 URL
-- ✨ 具有 Chakra UI 樣式的平滑過渡
-- 🎯 停用 i18n 時自動隱藏
+1. `locales.length > 1`：顯示
+2. `locales.length === 1`：隱藏
+3. 切換語言時會保留目前頁面路徑
 
-您可以在 `src/lib/layout/language-switcher.tsx` 中自訂其外觀。
+您可以在 `src/lib/layout/language-switcher.tsx` 自訂外觀與標籤。
 
 ## 最佳實踐
 
-1. **從簡單開始**：從停用 i18n（單語言）開始，需要時再啟用
-2. **一致的結構**：在所有語言環境中保持相同的檔案結構
-3. **SEO**：每種語言都有自己的 URL，對 SEO 很有幫助
-4. **備援**：如果語言環境中缺少內容，模板會回退到英文
-5. **測試**：始終測試語言切換以確保內容已正確翻譯
-6. **輕鬆升級**：模板使用者可以升級到較新版本，而不會破壞 i18n 變更
+1. 確保 `defaultLocale` 的內容最完整。
+2. 各語言保持一致的資料夾與檔名結構。
+3. 每次調整語言配置後，重新啟動 `pnpm dev`。
+4. 對每個 locale 實際點擊與瀏覽路由做驗證。
+5. 內容回退已改為回退到 `defaultLocale`，請依此規劃內容策略。
 
 ## 技術細節
 
-- **函式庫**：next-intl v4.8.3
-- **路由**：使用動態 `[locale]` 區段的 App Router
-- **中介軟體**：基於環境變數的條件式中介軟體
-- **內容載入**：語言環境感知的 MDX 檔案載入
-- **預設行為**：i18n 停用（僅英文）以保持簡單
-- **配置**：單一環境變數（`NEXT_PUBLIC_ENABLE_I18N`）
+1. **函式庫**：`next-intl`
+2. **路由**：App Router + 動態 `[locale]`
+3. **模式切換**：由 `locales.length` 自動決定
+4. **單語言路由**：rewrites 會導向 `defaultLocale`
+5. **內容回退**：回退到您設定的 `defaultLocale`（不是固定英文）
 
 ---
 
-**就是這樣！** 您可以從簡單的純英文部落格開始，並在需要時啟用多語言支援。🚀
+**就是這樣！** 用同一組配置即可從單語言平滑升級到多語言。🚀

@@ -1,7 +1,13 @@
 import type { NextConfig } from 'next';
 import createNextIntlPlugin from 'next-intl/plugin';
 
-const i18nEnabled = process.env.NEXT_PUBLIC_ENABLE_I18N === 'true';
+import { defaultLocale, locales } from './src/i18n/locales';
+
+const i18nEnabled = locales.length > 1;
+const escapedDefaultLocale = defaultLocale.replace(
+  /[.*+?^${}()|[\]\\]/g,
+  '\\$&'
+);
 
 const withNextIntl = i18nEnabled
   ? createNextIntlPlugin('./src/i18n/request.ts')
@@ -17,7 +23,7 @@ const nextConfig: NextConfig = {
     // Ignore type checking during build for dependency compatibility
     ignoreBuildErrors: true,
   },
-  // When i18n is disabled, rewrite clean URLs to include /en prefix internally
+  // When i18n is disabled, rewrite clean URLs to include the configured default locale internally
   async rewrites() {
     if (i18nEnabled) {
       return [];
@@ -26,11 +32,11 @@ const nextConfig: NextConfig = {
     return [
       {
         source: '/',
-        destination: '/en',
+        destination: `/${defaultLocale}`,
       },
       {
-        source: '/:path*',
-        destination: '/en/:path*',
+        source: `/:path((?!${escapedDefaultLocale}(?:/|$)).*)`,
+        destination: `/${defaultLocale}/:path*`,
       },
     ];
   },

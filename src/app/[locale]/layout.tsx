@@ -12,12 +12,12 @@ type LocaleLayoutProps = {
   params: Promise<{ locale: string }>;
 };
 
-const i18nEnabled = process.env.NEXT_PUBLIC_ENABLE_I18N === 'true';
+const i18nEnabled = routing.locales.length > 1;
 
 export function generateStaticParams() {
   return i18nEnabled
     ? routing.locales.map((locale) => ({ locale }))
-    : [{ locale: 'en' }];
+    : [{ locale: routing.defaultLocale }];
 }
 
 export async function generateMetadata({
@@ -36,7 +36,10 @@ export async function generateMetadata({
 const LocaleLayout = async ({ children, params }: LocaleLayoutProps) => {
   const { locale } = await params;
 
-  if (i18nEnabled && !routing.locales.includes(locale as 'en' | 'zh-TW')) {
+  if (
+    i18nEnabled &&
+    !routing.locales.includes(locale as (typeof routing.locales)[number])
+  ) {
     notFound();
   }
 

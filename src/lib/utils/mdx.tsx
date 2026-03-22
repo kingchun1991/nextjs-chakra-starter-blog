@@ -5,25 +5,26 @@ import { serialize } from 'next-mdx-remote/serialize';
 import rehypeSlug from 'rehype-slug';
 import remarkGfm from 'remark-gfm';
 
+import { defaultLocale } from '@/i18n/locales';
 import type { IPosts } from '@/lib/types/custom-types';
 
 const MDX_EXT_REGEX = /\.mdx$/;
 const root = process.cwd();
 
-export function getFiles(type: string, locale = 'en') {
+export function getFiles(type: string, locale = defaultLocale) {
   const localePath = path.join(root, 'content', type, locale);
   if (fs.existsSync(localePath)) {
     return fs.readdirSync(localePath);
   }
-  // Fallback to English if locale doesn't exist
-  return fs.readdirSync(path.join(root, 'content', type, 'en'));
+  // Fallback to configured default locale if locale-specific content doesn't exist
+  return fs.readdirSync(path.join(root, 'content', type, defaultLocale));
 }
 
-export function getAllFilesFrontMatter(type: string, locale = 'en') {
+export function getAllFilesFrontMatter(type: string, locale = defaultLocale) {
   const localePath = path.join(root, 'content', type, locale);
   const contentPath = fs.existsSync(localePath)
     ? localePath
-    : path.join(root, 'content', type, 'en');
+    : path.join(root, 'content', type, defaultLocale);
 
   const files = fs.readdirSync(contentPath);
 
@@ -53,9 +54,13 @@ export function getAllFilesFrontMatter(type: string, locale = 'en') {
   );
 }
 
-export async function getFileBySlug(type: string, slug: string, locale = 'en') {
+export async function getFileBySlug(
+  type: string,
+  slug: string,
+  locale = defaultLocale
+) {
   const localePath = path.join(root, 'content', type, locale);
-  const fallbackPath = path.join(root, 'content', type, 'en');
+  const fallbackPath = path.join(root, 'content', type, defaultLocale);
   const basePath = path.join(root, 'content', type);
 
   let source: string;

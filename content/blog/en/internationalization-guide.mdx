@@ -1,7 +1,7 @@
 ---
 title: 'Internationalization (i18n) Guide'
 publishedAt: '2025-07-12'
-modifiedAt: '2025-07-12'
+modifiedAt: '2026-03-22'
 summary: 'Learn how to use the built-in internationalization features in this blog template. Support multiple languages with ease!'
 image: ''
 slug: 'blog/internationalization-guide'
@@ -13,113 +13,112 @@ draft: false
 
 # Internationalization (i18n) Guide
 
-This blog template comes with optional internationalization (i18n) support using [next-intl](https://next-intl-docs.vercel.app/). **By default, i18n is disabled** for a simpler single-language experience. You can easily enable it when you need multilingual support.
+This blog template includes internationalization (i18n) support with [next-intl](https://next-intl-docs.vercel.app/), powered by a **locale-driven configuration model**.
+
+Instead of using environment flags, everything is controlled by `src/i18n/locales.ts`.
 
 <TableOfContents>
 
 - [Quick Overview](#quick-overview)
+- [Configuration Model](#configuration-model)
 - [Enabling Internationalization](#enabling-internationalization)
-- [How It Works](#how-it-works)
+- [Single-Locale Mode](#single-locale-mode)
 - [Supported Languages](#supported-languages)
 - [Adding New Languages](#adding-new-languages)
-- [Disabling Internationalization](#disabling-internationalization)
 - [Translating Content](#translating-content)
 - [Language Switcher](#language-switcher)
+- [Best Practices](#best-practices)
+- [Technical Details](#technical-details)
 
 </TableOfContents>
 
 ## Quick Overview
 
 **Key Features:**
-- 🎯 **Disabled by default** - Simple single-language setup out of the box
-- 🌍 Optional multi-language support when you need it
-- 🔄 Easy language switching with a header button (when enabled)
+- 🧭 Locale-driven setup in one file: `src/i18n/locales.ts`
+- 🌍 Multi-language mode when you configure more than one locale
+- 🔄 Header language switcher appears automatically when multiple locales are configured
 - 📝 Locale-based content organization
 - 🎯 SEO-friendly locale routing
-- ⚡ Zero configuration required for English-only blogs
+- ⚡ Clean single-language mode when you configure exactly one locale
+
+## Configuration Model
+
+All locale behavior is configured in `src/i18n/locales.ts`:
+
+```typescript
+export const locales = ['en', 'zh-TW'] as const;
+
+export const defaultLocale = 'en';
+```
+
+Rules:
+
+1. If `locales.length > 1`, multilingual mode is enabled.
+2. If `locales.length === 1`, single-locale mode is enabled.
+3. `defaultLocale` is the fallback locale for routing and content.
 
 ## Enabling Internationalization
 
-To enable multi-language support:
+To enable multi-language support, set at least two locales:
 
-### 1. Create Environment File
+```typescript
+export const locales = ['en', 'zh-TW'] as const;
 
-Create a `.env.local` file in the project root (you can optionally copy from the example):
-
-```bash
-cp .env.local.example .env.local
+export const defaultLocale = 'en';
 ```
 
-**Note:** The `.env.local` file is **completely optional**. Without it, the template defaults to English-only mode.
-
-### 2. Enable i18n
-
-Add this line to `.env.local`:
-
-```bash
-NEXT_PUBLIC_ENABLE_I18N=true
-```
-
-### 3. Restart the Development Server
-
-After enabling or disabling i18n, restart your development server:
+Then restart your development server:
 
 ```bash
 pnpm dev
 ```
 
-That's it! Your blog now supports English and Traditional Chinese. The language switcher will appear in the header automatically.
+That's it. Locale routes, translations, and the language switcher are enabled automatically.
 
-## How It Works
+## Single-Locale Mode
 
-The template uses **Next.js rewrites** to provide clean URLs when i18n is disabled:
+To run one language only (for example, Traditional Chinese):
 
-### When i18n is ENABLED (`NEXT_PUBLIC_ENABLE_I18N=true`)
+```typescript
+export const locales = ['zh-TW'] as const;
 
-1. **Locale-based Routing**: All routes use the `[locale]` directory structure (e.g., `/en/blog` or `/zh-TW/blog`)
-2. **Content Organization**: Blog posts are organized by locale in `content/blog/[locale]/`
-3. **UI Translations**: Interface text is loaded from `messages/[locale].json`
-4. **Language Switcher**: Appears in the header for switching between languages
-5. **Middleware**: Handles locale detection and routing with next-intl
+export const defaultLocale = 'zh-TW';
+```
 
-### When i18n is DISABLED (default)
+In this mode:
 
-1. **Clean URLs**: Routes work without locale prefixes (e.g., `/blog` instead of `/en/blog`)
-2. **URL Rewrites**: Next.js internally rewrites `/blog` to `/en/blog` without exposing it to users
-3. **Single Language**: Only English content from `content/blog/en/` is used
-4. **No Language Switcher**: Language switcher is hidden
-5. **Simpler Configuration**: No locale routing overhead
-
-**Note:** Simply restart your development server after toggling the i18n flag - no rebuild required!
+1. The language switcher is hidden.
+2. URLs stay clean (for example `/` and `/blog`).
+3. Internally, routes map to the configured default locale.
+4. Content fallback uses `defaultLocale`.
 
 ## Supported Languages
 
-By default, when i18n is enabled, this template supports:
+The template currently includes:
 
-- **English (en)** - Default language
-- **Traditional Chinese (zh-TW)**
+- **English (`en`)**
+- **Traditional Chinese (`zh-TW`)**
 
-You can easily add more languages by following the steps below.
+Use any locale codes your project needs, as long as you provide matching messages and content.
 
 ## Adding New Languages
 
-To add a new language (e.g., Spanish):
+To add a new language (for example, Spanish):
 
-### 1. Update Routing Configuration
+### 1. Update locale config
 
-Edit `src/i18n/routing.ts`:
+Edit `src/i18n/locales.ts`:
 
 ```typescript
-export const routing = defineRouting({
-  locales: ['en', 'zh-TW', 'es'], // Add 'es' for Spanish
-  defaultLocale: 'en',
-  localePrefix: 'as-needed',
-});
+export const locales = ['en', 'zh-TW', 'es'] as const;
+
+export const defaultLocale = 'en';
 ```
 
-### 2. Create Translation Files
+### 2. Add messages
 
-Create a new message file `messages/es.json`:
+Create `messages/es.json`:
 
 ```json
 {
@@ -136,61 +135,24 @@ Create a new message file `messages/es.json`:
 }
 ```
 
-### 3. Create Content Directory
+### 3. Add content
 
-Create a new directory for Spanish blog content:
+Create locale content folders and translate posts:
 
 ```bash
 mkdir -p content/blog/es
-```
-
-### 4. Add Translated Content
-
-Copy your blog posts to the new directory and translate them:
-
-```bash
 cp content/blog/en/get-started.mdx content/blog/es/get-started.mdx
-# Then translate the content in the Spanish version
 ```
 
-### 5. Update Language Switcher (Optional)
+### 4. (Optional) Add switcher label
 
-If you want to customize the language switcher labels, edit `src/lib/layout/language-switcher.tsx`.
-
-## Disabling Internationalization
-
-To disable i18n and use only English:
-
-### Option 1: Using Environment Variable (Recommended)
-
-i18n is **disabled by default** when:
-- No `.env.local` file exists, OR
-- `NEXT_PUBLIC_ENABLE_I18N` is not defined, OR
-- `NEXT_PUBLIC_ENABLE_I18N=false` is set
-
-Simply remove the `.env.local` file or remove/change the variable to disable i18n.
-
-### Option 2: Remove i18n Completely
-
-If you never plan to use i18n:
-
-1. Uninstall next-intl:
-```bash
-pnpm remove next-intl
-```
-
-2. Remove i18n directories:
-```bash
-rm -rf src/i18n messages content/blog/zh-TW
-```
-
-3. Update imports in your code to remove next-intl references
+If needed, update locale labels in `src/lib/layout/language-switcher.tsx`.
 
 ## Translating Content
 
-### Blog Posts
+### Blog posts
 
-Each blog post should have a version in each supported language:
+Keep the same slug filenames across locales:
 
 ```
 content/
@@ -203,33 +165,11 @@ content/
         └── another-post.mdx
 ```
 
-**Important:** The filename should be the same across languages (e.g., `my-post.mdx`), but the content inside can be fully translated.
+### UI text
 
-### UI Elements
+Translate UI strings in `messages/[locale].json`.
 
-Translate interface text in the message files:
-
-**messages/en.json:**
-```json
-{
-  "header": {
-    "home": "Home",
-    "blog": "Blog"
-  }
-}
-```
-
-**messages/zh-TW.json:**
-```json
-{
-  "header": {
-    "home": "首頁",
-    "blog": "部落格"
-  }
-}
-```
-
-Then use them in components:
+Example usage:
 
 ```tsx
 import { useTranslations } from 'next-intl';
@@ -243,34 +183,30 @@ export function MyComponent() {
 
 ## Language Switcher
 
-When i18n is enabled, the language switcher appears in the header and allows users to toggle between available languages. It:
+The switcher behavior is now locale-count based:
 
-- 🌐 Shows a globe icon
-- 🔄 Preserves the current page when switching languages
-- 📍 Updates the URL with the new locale prefix
-- ✨ Has a smooth transition with Chakra UI styling
-- 🎯 Automatically hides when i18n is disabled
+1. Shown when `locales.length > 1`
+2. Hidden when `locales.length === 1`
+3. Switches between configured locales while preserving the current page path
 
 You can customize its appearance in `src/lib/layout/language-switcher.tsx`.
 
 ## Best Practices
 
-1. **Start Simple**: Begin with i18n disabled (single language) and enable when needed
-2. **Consistent Structure**: Keep the same file structure across all locales
-3. **SEO**: Each language gets its own URL, which is great for SEO
-4. **Fallback**: The template falls back to English if content in a locale is missing
-5. **Testing**: Always test language switching to ensure content is properly translated
-6. **Easy Upgrades**: Template users can upgrade to newer versions without breaking i18n changes
+1. Keep `defaultLocale` content complete and high quality.
+2. Keep locale folder structures consistent.
+3. Keep filenames/slugs consistent across locales.
+4. Test every configured locale route after changes.
+5. Restart `pnpm dev` after editing locale config.
 
 ## Technical Details
 
-- **Library**: next-intl v4.8.3
-- **Routing**: App Router with dynamic `[locale]` segment
-- **Middleware**: Conditional middleware based on environment variable
-- **Content Loading**: Locale-aware MDX file loading
-- **Default Behavior**: i18n disabled (English only) for simplicity
-- **Configuration**: Single environment variable (`NEXT_PUBLIC_ENABLE_I18N`)
+1. **Library**: `next-intl`
+2. **Routing**: App Router with dynamic `[locale]`
+3. **Mode Switching**: Automatically determined from `locales.length`
+4. **Single-Locale Routing**: Rewrites target `defaultLocale`
+5. **Content Fallback**: Falls back to configured `defaultLocale` (not hardcoded English)
 
 ---
 
-**That's it!** You can start with a simple English-only blog and enable multilingual support whenever you need it. 🚀
+**That's it!** Configure locales once, then scale from one language to many whenever you need. 🚀

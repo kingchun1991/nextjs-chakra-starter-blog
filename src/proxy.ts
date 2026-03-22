@@ -4,7 +4,7 @@ import createMiddleware from 'next-intl/middleware';
 
 import { routing } from '@/i18n/routing';
 
-const i18nEnabled = process.env.NEXT_PUBLIC_ENABLE_I18N === 'true';
+const i18nEnabled = routing.locales.length > 1;
 
 const i18nMiddleware = i18nEnabled ? createMiddleware(routing) : null;
 
