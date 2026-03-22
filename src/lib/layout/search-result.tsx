@@ -18,6 +18,7 @@ import { plainify, titleify } from '@/lib/utils/text-converter';
 export interface ISearchItem {
   group: string;
   slug: string;
+  locale: string | null;
   frontmatter: {
     title: string;
     summary: string;
@@ -33,6 +34,7 @@ export interface ISearchGroup {
   group: string;
   groupItems: Array<{
     slug: string;
+    locale: string | null;
     frontmatter: {
       title: string;
       summary: string;

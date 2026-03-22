@@ -25,6 +25,22 @@ const feedOptions = {
 };
 
 const feed = new RSS(feedOptions);
+
+const getLocaleFromFilePath = (filepath) => {
+  const relativePath = path.relative(BLOG_FOLDER, filepath);
+  const firstSegment = relativePath.split(path.sep)[0];
+
+  if (
+    !firstSegment ||
+    firstSegment.endsWith('.mdx') ||
+    firstSegment.endsWith('.md')
+  ) {
+    return null;
+  }
+
+  return firstSegment;
+};
+
 // get data from markdown
 const getData = (folder, groupDepth) => {
   const getPath = fs.readdirSync(folder);
@@ -49,6 +65,7 @@ const getData = (folder, groupDepth) => {
           .join('/')
           .replace(FILE_EXTENSION_REGEX, '');
       const group = pathParts[groupDepth];
+      const locale = getLocaleFromFilePath(filepath);
 
       feed.item({
         title: data.title,
@@ -60,6 +77,7 @@ const getData = (folder, groupDepth) => {
       return {
         group,
         slug,
+        locale,
         frontmatter: data,
         content,
       };
