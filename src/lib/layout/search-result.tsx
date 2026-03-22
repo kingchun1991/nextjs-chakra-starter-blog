@@ -116,11 +116,8 @@ export function SearchResult({
       wordStart--;
     }
 
-    const matches = plainContent.substring(
-      wordStart,
-      substring.length + position
-    );
-    const matchesAfter = plainContent.substring(
+    const matches = plainContent.slice(wordStart, substring.length + position);
+    const matchesAfter = plainContent.slice(
       substring.length + position,
       substring.length + position + 80
     );
