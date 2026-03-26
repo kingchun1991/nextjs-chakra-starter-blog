@@ -24,7 +24,7 @@ import { type ISearchItem, SearchResult } from './search-result';
 
 export function SearchModal() {
   const [searchString, setSearchString] = useState('');
-  const locale = useLocale();
+  const activeLocale = useLocale();
 
   const handleSearch = (e: React.FormEvent<HTMLInputElement>) => {
     setSearchString(e.currentTarget.value.replace('\\', '').toLowerCase());
@@ -52,7 +52,13 @@ export function SearchModal() {
 
   // get search result
   const startTime = performance.now();
-  const localeSearchData = searchData.filter((item) => item.locale === locale);
+
+  // Filter by locale derived from next-intl context.
+  const allSearchData = (searchData as Array<ISearchItem>) || [];
+  const localeSearchData = allSearchData.filter(
+    (item) => item.locale === activeLocale
+  );
+
   const searchResult = doSearch(localeSearchData);
   const endTime = performance.now();
   const totalTime = ((endTime - startTime) / 1000).toFixed(3);

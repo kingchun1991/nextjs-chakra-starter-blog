@@ -1,4 +1,5 @@
 const fs = require('node:fs');
+const { spawnSync } = require('node:child_process');
 const path = require('node:path');
 const matter = require('gray-matter');
 const RSS = require('rss');
@@ -25,6 +26,24 @@ const feedOptions = {
 };
 
 const feed = new RSS(feedOptions);
+
+const writeJsonFile = (filePath, data) => {
+  fs.writeFileSync(filePath, `${JSON.stringify(data, null, 2)}\n`);
+};
+
+const formatJsonFiles = (filePaths) => {
+  const result = spawnSync(
+    'pnpm',
+    ['exec', 'biome', 'format', '--write', ...filePaths],
+    {
+      stdio: 'inherit',
+    }
+  );
+
+  if (result.status !== 0) {
+    throw new Error('Failed to format generated JSON files.');
+  }
+};
 
 const getLocaleFromFilePath = (filepath) => {
   const relativePath = path.relative(BLOG_FOLDER, filepath);
@@ -98,15 +117,13 @@ try {
   }
 
   // create json files
-  fs.writeFileSync(
-    `${JSON_FOLDER}/posts.json`,
-    JSON.stringify(getData(BLOG_FOLDER, 1))
-  );
+  const posts = getData(BLOG_FOLDER, 1);
+  writeJsonFile(`${JSON_FOLDER}/posts.json`, posts);
 
   // merger json files for search
-  const posts = require(`../${JSON_FOLDER}/posts.json`);
   const search = [...posts];
-  fs.writeFileSync(`${JSON_FOLDER}/search.json`, JSON.stringify(search));
+  writeJsonFile(`${JSON_FOLDER}/search.json`, search);
+  formatJsonFiles([`${JSON_FOLDER}/posts.json`, `${JSON_FOLDER}/search.json`]);
   fs.writeFileSync(`${RSS_FOLDER}/rss.xml`, feed.xml({ indent: true }));
 } catch (err) {
   console.error(err);

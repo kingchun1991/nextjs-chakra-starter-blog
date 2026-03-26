@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 
+import { spawnSync } from 'node:child_process';
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -13,6 +14,21 @@ const rootDir = path.join(__dirname, '..');
 const CONTENT_DIR = path.join(rootDir, 'content', 'directory');
 const OUTPUT_DIR = path.join(rootDir, '.json');
 const OUTPUT_FILE = path.join(OUTPUT_DIR, 'directory-graph.json');
+
+function formatGeneratedJsonFile(filePath) {
+  const result = spawnSync(
+    'pnpm',
+    ['exec', 'biome', 'format', '--write', filePath],
+    {
+      cwd: rootDir,
+      stdio: 'inherit',
+    }
+  );
+
+  if (result.status !== 0) {
+    throw new Error(`Failed to format generated JSON file: ${filePath}`);
+  }
+}
 
 // Levenshtein distance for fuzzy matching
 function levenshteinDistance(str1, str2) {
@@ -218,6 +234,7 @@ async function buildGraph() {
   };
 
   fs.writeFileSync(OUTPUT_FILE, JSON.stringify(graphData, null, 2));
+  formatGeneratedJsonFile(OUTPUT_FILE);
 
   console.log('✓ Built directory graph:');
   console.log(`  - ${nodes.length} nodes`);
