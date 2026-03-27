@@ -154,8 +154,8 @@ export async function getDirectoryItemBySlug(slug: string) {
   const source = fs.readFileSync(filePath, 'utf-8');
   const { data, content } = matter(source);
 
-  // Process wiki-links in content
-  const WIKI_LINK_REGEX = /\[\[([^\]|]+)(?:\|([^\]]+))?\]\]/g;
+  // Process wiki-links in content (ReDoS-safe with bounded quantifiers)
+  const WIKI_LINK_REGEX = /\[\[([^\]|]{1,500})(?:\|([^\]]{1,500}))?\]\]/g;
   const NORMALIZE_REGEX = /[_\s]+/g;
   const processedContent = content.replace(
     WIKI_LINK_REGEX,

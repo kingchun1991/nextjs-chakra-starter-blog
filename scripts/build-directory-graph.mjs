@@ -67,7 +67,8 @@ function normalizeSlug(text) {
 }
 
 function extractWikiLinks(content) {
-  const wikiLinkRegex = /\[\[([^\]|]+)(?:\|([^\]]+))?\]\]/g;
+  // ReDoS-safe regex with bounded quantifiers
+  const wikiLinkRegex = /\[\[([^\]|]{1,500})(?:\|([^\]]{1,500}))?\]\]/g;
   const links = [];
   let match = wikiLinkRegex.exec(content);
 
