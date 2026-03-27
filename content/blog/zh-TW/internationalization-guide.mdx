@@ -1,0 +1,210 @@
+---
+title: '國際化 (i18n) 指南'
+publishedAt: '2025-07-12'
+modifiedAt: '2026-03-22'
+summary: '學習如何使用此部落格模板內建的國際化功能。輕鬆支援多種語言！'
+image: ''
+slug: 'blog/internationalization-guide'
+categories: ['Guide', 'Features']
+author: 'Blog Template'
+tags: ['i18n', 'next-intl', 'internationalization', 'multilingual']
+draft: false
+---
+
+# 國際化 (i18n) 指南
+
+此部落格模板使用 [next-intl](https://next-intl-docs.vercel.app/) 提供國際化 (i18n) 支援，並採用 **以語言列表為核心的配置方式**。
+
+您不需要再用環境變數切換 i18n，所有設定都集中在 `src/i18n/locales.ts`。
+
+<TableOfContents>
+
+- [快速概覽](#快速概覽)
+- [配置模型](#配置模型)
+- [啟用國際化](#啟用國際化)
+- [單語言模式](#單語言模式)
+- [支援的語言](#支援的語言)
+- [新增語言](#新增語言)
+- [翻譯內容](#翻譯內容)
+- [語言切換器](#語言切換器)
+- [最佳實踐](#最佳實踐)
+- [技術細節](#技術細節)
+
+</TableOfContents>
+
+## 快速概覽
+
+**主要功能：**
+- 🧭 以單一檔案集中管理語言：`src/i18n/locales.ts`
+- 🌍 當 `locales` 超過一種語言時，自動啟用多語言模式
+- 🔄 多語言模式下，標題列語言切換器自動顯示
+- 📝 基於語言環境的內容組織
+- 🎯 SEO 友善的語言環境路由
+- ⚡ 只配置一種語言時，自動進入乾淨的單語言模式
+
+## 配置模型
+
+所有語言行為都在 `src/i18n/locales.ts` 配置：
+
+```typescript
+export const locales = ['en', 'zh-TW'] as const;
+
+export const defaultLocale = 'en';
+```
+
+規則如下：
+
+1. `locales.length > 1`：啟用多語言模式。
+2. `locales.length === 1`：啟用單語言模式。
+3. `defaultLocale`：作為路由與內容回退的預設語言。
+
+## 啟用國際化
+
+要啟用多語言，請把 `locales` 設為至少兩種語言：
+
+```typescript
+export const locales = ['en', 'zh-TW'] as const;
+
+export const defaultLocale = 'en';
+```
+
+接著重新啟動開發伺服器：
+
+```bash
+pnpm dev
+```
+
+完成後，語言路由、翻譯載入與語言切換器會自動生效。
+
+## 單語言模式
+
+若您只想用一種語言（例如繁體中文）：
+
+```typescript
+export const locales = ['zh-TW'] as const;
+
+export const defaultLocale = 'zh-TW';
+```
+
+此模式下：
+
+1. 語言切換器會隱藏。
+2. URL 保持乾淨（例如 `/`、`/blog`）。
+3. 內部路由會對應到您設定的 `defaultLocale`。
+4. 內容缺漏時會回退到 `defaultLocale`。
+
+## 支援的語言
+
+此模板目前內建：
+
+- **英文 (`en`)**
+- **繁體中文 (`zh-TW`)**
+
+您可依需求改成任意語言代碼，只要同步提供對應的訊息檔與內容資料夾。
+
+## 新增語言
+
+以新增西班牙文為例：
+
+### 1. 更新語言配置
+
+編輯 `src/i18n/locales.ts`：
+
+```typescript
+export const locales = ['en', 'zh-TW', 'es'] as const;
+
+export const defaultLocale = 'en';
+```
+
+### 2. 建立翻譯訊息檔
+
+建立 `messages/es.json`：
+
+```json
+{
+  "header": {
+    "home": "Inicio",
+    "blog": "Blog",
+    "tags": "Etiquetas",
+    "about": "Acerca de"
+  },
+  "blog": {
+    "readMore": "Leer más",
+    "backToBlog": "Volver al blog"
+  }
+}
+```
+
+### 3. 建立語言內容資料夾
+
+```bash
+mkdir -p content/blog/es
+cp content/blog/en/get-started.mdx content/blog/es/get-started.mdx
+```
+
+### 4. （可選）更新語言切換器標籤
+
+若需要自訂語言名稱，請編輯 `src/lib/layout/language-switcher.tsx`。
+
+## 翻譯內容
+
+### 部落格文章
+
+不同語言建議維持相同 slug 檔名：
+
+```
+content/
+└── blog/
+    ├── en/
+    │   ├── my-post.mdx
+    │   └── another-post.mdx
+    └── zh-TW/
+        ├── my-post.mdx
+        └── another-post.mdx
+```
+
+### UI 文字
+
+在 `messages/[locale].json` 中維護介面字串。
+
+範例：
+
+```tsx
+import { useTranslations } from 'next-intl';
+
+export function MyComponent() {
+  const t = useTranslations('header');
+
+  return <h1>{t('home')}</h1>;
+}
+```
+
+## 語言切換器
+
+語言切換器的顯示規則現在是依語言數量自動判斷：
+
+1. `locales.length > 1`：顯示
+2. `locales.length === 1`：隱藏
+3. 切換語言時會保留目前頁面路徑
+
+您可以在 `src/lib/layout/language-switcher.tsx` 自訂外觀與標籤。
+
+## 最佳實踐
+
+1. 確保 `defaultLocale` 的內容最完整。
+2. 各語言保持一致的資料夾與檔名結構。
+3. 每次調整語言配置後，重新啟動 `pnpm dev`。
+4. 對每個 locale 實際點擊與瀏覽路由做驗證。
+5. 內容回退已改為回退到 `defaultLocale`，請依此規劃內容策略。
+
+## 技術細節
+
+1. **函式庫**：`next-intl`
+2. **路由**：App Router + 動態 `[locale]`
+3. **模式切換**：由 `locales.length` 自動決定
+4. **單語言路由**：rewrites 會導向 `defaultLocale`
+5. **內容回退**：回退到您設定的 `defaultLocale`（不是固定英文）
+
+---
+
+**就是這樣！** 用同一組配置即可從單語言平滑升級到多語言。🚀

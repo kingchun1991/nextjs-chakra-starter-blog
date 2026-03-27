@@ -1,4 +1,6 @@
 /* eslint-disable react/no-unused-prop-types */
+'use client';
+
 import {
   Box,
   Collapsible,
@@ -9,6 +11,7 @@ import {
   Text,
   useDisclosure,
 } from '@chakra-ui/react';
+import { useTranslations } from 'next-intl';
 import {
   LuChevronDown,
   LuChevronRight,
@@ -25,10 +28,14 @@ import {
   HoverCardTrigger,
 } from '@/components/ui/hover-card';
 import { Link } from '@/components/ui/link';
+import { routing } from '@/i18n/routing';
 import type { NavItem } from '@/site.config';
 import { siteConfig } from '@/site.config';
 
+import { LanguageSwitcher } from './language-switcher';
 import { SearchModal } from './search-modal';
+
+const i18nEnabled = routing.locales.length > 1;
 
 export function DesktopSubNav({ title, url }: NavItem) {
   return (
@@ -68,7 +75,11 @@ export function DesktopSubNav({ title, url }: NavItem) {
   );
 }
 
-export function DesktopNav() {
+type DesktopNavContentProps = {
+  getTranslatedTitle: (navItem: NavItem) => string;
+};
+
+function DesktopNavContent({ getTranslatedTitle }: DesktopNavContentProps) {
   return (
     <Stack direction="row" gap={4}>
       {siteConfig.navigation.map((navItem) => (
@@ -87,7 +98,7 @@ export function DesktopNav() {
                 href={navItem.url ?? '#'}
                 p={2}
               >
-                {navItem.title}
+                {getTranslatedTitle(navItem)}
               </Link>
             </HoverCardTrigger>
 
@@ -108,7 +119,35 @@ export function DesktopNav() {
   );
 }
 
-export function MobileNavItem({ title, url, children }: NavItem) {
+function DesktopNavWithTranslations() {
+  const t = useTranslations('header');
+
+  const getTranslatedTitle = (navItem: NavItem) => {
+    return t(navItem.title.toLowerCase());
+  };
+
+  return <DesktopNavContent getTranslatedTitle={getTranslatedTitle} />;
+}
+
+export function DesktopNav() {
+  if (!i18nEnabled) {
+    return (
+      <DesktopNavContent getTranslatedTitle={(navItem) => navItem.title} />
+    );
+  }
+
+  return <DesktopNavWithTranslations />;
+}
+
+type MobileNavItemContentProps = NavItem & {
+  getTranslatedTitle: () => string;
+};
+
+function MobileNavItemContent({
+  url,
+  children,
+  getTranslatedTitle,
+}: MobileNavItemContentProps) {
   const { open, onToggle } = useDisclosure();
 
   return (
@@ -119,13 +158,11 @@ export function MobileNavItem({ title, url, children }: NavItem) {
             textDecoration: 'none',
           }}
           align="center"
-          // href={href ?? '#'}
-          as={Link}
           justify="space-between"
           py={2}
         >
           <Text _dark={{ color: 'gray.200' }} color="gray.600" fontWeight={600}>
-            {title}
+            {getTranslatedTitle()}
           </Text>
           {children && (
             <Icon
@@ -161,6 +198,28 @@ export function MobileNavItem({ title, url, children }: NavItem) {
       </Collapsible.Root>
     </Stack>
   );
+}
+
+function MobileNavItemWithTranslations({ title, ...rest }: NavItem) {
+  const t = useTranslations('header');
+
+  return (
+    <MobileNavItemContent
+      {...rest}
+      getTranslatedTitle={() => t(title.toLowerCase())}
+      title={title}
+    />
+  );
+}
+
+export function MobileNavItem(props: NavItem) {
+  if (!i18nEnabled) {
+    return (
+      <MobileNavItemContent {...props} getTranslatedTitle={() => props.title} />
+    );
+  }
+
+  return <MobileNavItemWithTranslations {...props} />;
 }
 
 export function MobileNav() {
@@ -231,6 +290,7 @@ export function Header() {
           justify="flex-end"
         >
           <SearchModal />
+          <LanguageSwitcher />
           <ColorModeButton />
           <Link
             aria-label="GitHub Repository"

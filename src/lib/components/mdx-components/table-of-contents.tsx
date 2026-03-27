@@ -1,6 +1,9 @@
+'use client';
+
 /* eslint-disable react/prop-types */
 
-import { Box, Button, IconButton, useDisclosure } from '@chakra-ui/react';
+import { Box, Button, IconButton } from '@chakra-ui/react';
+import { useState } from 'react';
 import { LuBookmark, LuChevronDown } from 'react-icons/lu';
 
 type TableOfContentsProps = {
@@ -10,7 +13,8 @@ type TableOfContentsProps = {
 export const TableOfContents: React.FC<TableOfContentsProps> = ({
   children,
 }) => {
-  const { open, onToggle } = useDisclosure();
+  const [open, setOpen] = useState(false);
+  const onToggle = () => setOpen(!open);
 
   return (
     <Box bg="slate.300" mt={8} rounded="md" w="full">

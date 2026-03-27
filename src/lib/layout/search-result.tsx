@@ -18,6 +18,7 @@ import { plainify, titleify } from '@/lib/utils/text-converter';
 export interface ISearchItem {
   group: string;
   slug: string;
+  locale: string | null;
   frontmatter: {
     title: string;
     summary: string;
@@ -33,6 +34,7 @@ export interface ISearchGroup {
   group: string;
   groupItems: Array<{
     slug: string;
+    locale: string | null;
     frontmatter: {
       title: string;
       summary: string;
@@ -116,11 +118,8 @@ export function SearchResult({
       wordStart--;
     }
 
-    const matches = plainContent.substring(
-      wordStart,
-      substring.length + position
-    );
-    const matchesAfter = plainContent.substring(
+    const matches = plainContent.slice(wordStart, substring.length + position);
+    const matchesAfter = plainContent.slice(
       substring.length + position,
       substring.length + position + 80
     );

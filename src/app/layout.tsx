@@ -1,7 +1,5 @@
 import type { Metadata, Viewport } from 'next';
 
-import { Provider } from '@/components/ui/provider';
-import { Layout } from '@/lib/layout';
 import { siteConfig } from '@/site.config';
 
 type RootLayoutProps = {
@@ -45,12 +43,8 @@ export const viewport: Viewport = {
 
 const RootLayout = ({ children }: RootLayoutProps) => {
   return (
-    <html lang={siteConfig.language} suppressHydrationWarning>
-      <body>
-        <Provider>
-          <Layout>{children}</Layout>
-        </Provider>
-      </body>
+    <html lang="en" suppressHydrationWarning>
+      <body>{children}</body>
     </html>
   );
 };

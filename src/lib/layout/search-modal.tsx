@@ -1,6 +1,9 @@
+'use client';
+
 /* eslint-disable @typescript-eslint/no-shadow */
 /* eslint-disable import/no-extraneous-dependencies */
 import { Box, Flex, IconButton, Input, Kbd, Spacer } from '@chakra-ui/react';
+import { useLocale } from 'next-intl';
 import { useState } from 'react';
 import { LuSearch } from 'react-icons/lu';
 
@@ -21,6 +24,7 @@ import { type ISearchItem, SearchResult } from './search-result';
 
 export function SearchModal() {
   const [searchString, setSearchString] = useState('');
+  const activeLocale = useLocale();
 
   const handleSearch = (e: React.FormEvent<HTMLInputElement>) => {
     setSearchString(e.currentTarget.value.replace('\\', '').toLowerCase());
@@ -48,7 +52,14 @@ export function SearchModal() {
 
   // get search result
   const startTime = performance.now();
-  const searchResult = doSearch(searchData);
+
+  // Filter by locale derived from next-intl context.
+  const allSearchData = (searchData as Array<ISearchItem>) || [];
+  const localeSearchData = allSearchData.filter(
+    (item) => item.locale === activeLocale
+  );
+
+  const searchResult = doSearch(localeSearchData);
   const endTime = performance.now();
   const totalTime = ((endTime - startTime) / 1000).toFixed(3);
 

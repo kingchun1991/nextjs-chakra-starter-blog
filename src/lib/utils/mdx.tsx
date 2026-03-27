@@ -5,24 +5,32 @@ import { serialize } from 'next-mdx-remote/serialize';
 import rehypeSlug from 'rehype-slug';
 import remarkGfm from 'remark-gfm';
 
+import { defaultLocale } from '@/i18n/locales';
 import type { IPosts } from '@/lib/types/custom-types';
 
 const MDX_EXT_REGEX = /\.mdx$/;
 const root = process.cwd();
 
-export function getFiles(type: string) {
-  return fs.readdirSync(path.join(root, 'content', type));
+export function getFiles(type: string, locale = defaultLocale) {
+  const localePath = path.join(root, 'content', type, locale);
+  if (fs.existsSync(localePath)) {
+    return fs.readdirSync(localePath);
+  }
+  // Fallback to configured default locale if locale-specific content doesn't exist
+  return fs.readdirSync(path.join(root, 'content', type, defaultLocale));
 }
 
-export function getAllFilesFrontMatter(type: string) {
-  const files = fs.readdirSync(path.join(root, 'content', type));
+export function getAllFilesFrontMatter(type: string, locale = defaultLocale) {
+  const localePath = path.join(root, 'content', type, locale);
+  const contentPath = fs.existsSync(localePath)
+    ? localePath
+    : path.join(root, 'content', type, defaultLocale);
+
+  const files = fs.readdirSync(contentPath);
 
   return files.reduce(
     (allPosts: Array<IPosts>, postSlug: string) => {
-      const source = fs.readFileSync(
-        path.join(root, 'content', type, postSlug),
-        'utf8'
-      );
+      const source = fs.readFileSync(path.join(contentPath, postSlug), 'utf8');
 
       const { data } = matter(source);
 
@@ -46,10 +54,39 @@ export function getAllFilesFrontMatter(type: string) {
   );
 }
 
-export async function getFileBySlug(type: string, slug: string) {
-  const source = slug
-    ? fs.readFileSync(path.join(root, 'content', type, `${slug}.mdx`), 'utf8')
-    : fs.readFileSync(path.join(root, 'content', `${type}.mdx`), 'utf8');
+export async function getFileBySlug(
+  type: string,
+  slug: string,
+  locale = defaultLocale
+) {
+  const localePath = path.join(root, 'content', type, locale);
+  const fallbackPath = path.join(root, 'content', type, defaultLocale);
+  const basePath = path.join(root, 'content', type);
+
+  let source: string;
+
+  if (slug) {
+    // Try locale-specific path first
+    const localeFilePath = path.join(localePath, `${slug}.mdx`);
+    // Then try fallback locale (en)
+    const fallbackFilePath = path.join(fallbackPath, `${slug}.mdx`);
+    // Finally try base path (for files not in locale subdirectories)
+    const baseFilePath = path.join(basePath, `${slug}.mdx`);
+
+    if (fs.existsSync(localeFilePath)) {
+      source = fs.readFileSync(localeFilePath, 'utf8');
+    } else if (fs.existsSync(fallbackFilePath)) {
+      source = fs.readFileSync(fallbackFilePath, 'utf8');
+    } else if (fs.existsSync(baseFilePath)) {
+      source = fs.readFileSync(baseFilePath, 'utf8');
+    } else {
+      throw new Error(
+        `MDX file not found for type: ${type}, slug: ${slug}, locale: ${locale}`
+      );
+    }
+  } else {
+    source = fs.readFileSync(path.join(root, 'content', `${type}.mdx`), 'utf8');
+  }
   const { data, content } = matter(source);
 
   const newPost: IPosts = {
@@ -117,8 +154,8 @@ export async function getDirectoryItemBySlug(slug: string) {
   const source = fs.readFileSync(filePath, 'utf-8');
   const { data, content } = matter(source);
 
-  // Process wiki-links in content
-  const WIKI_LINK_REGEX = /\[\[([^\]|]+)(?:\|([^\]]+))?\]\]/g;
+  // Process wiki-links in content (ReDoS-safe with bounded quantifiers)
+  const WIKI_LINK_REGEX = /\[\[([^\]|]{1,500})(?:\|([^\]]{1,500}))?\]\]/g;
   const NORMALIZE_REGEX = /[_\s]+/g;
   const processedContent = content.replace(
     WIKI_LINK_REGEX,

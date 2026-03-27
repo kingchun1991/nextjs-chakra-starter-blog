@@ -3,19 +3,12 @@
 'use client';
 
 import { Box, Flex, Heading, Separator, Stack } from '@chakra-ui/react';
-import { useEffect, useState } from 'react';
 
 import { Link } from '@/components/ui/link';
 import type { IPosts } from '@/lib/types/custom-types';
 import { slugify } from '@/lib/utils/text-converter';
 
 export function TagsLayout({ posts }: { posts: Array<IPosts> }) {
-  const [isClient, setIsClient] = useState(false);
-
-  useEffect(() => {
-    setIsClient(typeof window !== 'undefined');
-  }, []);
-
   const filteredBlogPosts = posts
     .filter((post: IPosts) => !post.draft)
     .sort((a: IPosts, b: IPosts) =>
@@ -35,10 +28,6 @@ export function TagsLayout({ posts }: { posts: Array<IPosts> }) {
         }
       }
     }
-  }
-
-  if (!isClient) {
-    return <div>Loading..</div>;
   }
 
   return (

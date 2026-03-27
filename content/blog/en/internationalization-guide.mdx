@@ -1,0 +1,212 @@
+---
+title: 'Internationalization (i18n) Guide'
+publishedAt: '2025-07-12'
+modifiedAt: '2026-03-22'
+summary: 'Learn how to use the built-in internationalization features in this blog template. Support multiple languages with ease!'
+image: ''
+slug: 'blog/internationalization-guide'
+categories: ['Guide', 'Features']
+author: 'Blog Template'
+tags: ['i18n', 'next-intl', 'internationalization', 'multilingual']
+draft: false
+---
+
+# Internationalization (i18n) Guide
+
+This blog template includes internationalization (i18n) support with [next-intl](https://next-intl-docs.vercel.app/), powered by a **locale-driven configuration model**.
+
+Instead of using environment flags, everything is controlled by `src/i18n/locales.ts`.
+
+<TableOfContents>
+
+- [Quick Overview](#quick-overview)
+- [Configuration Model](#configuration-model)
+- [Enabling Internationalization](#enabling-internationalization)
+- [Single-Locale Mode](#single-locale-mode)
+- [Supported Languages](#supported-languages)
+- [Adding New Languages](#adding-new-languages)
+- [Translating Content](#translating-content)
+- [Language Switcher](#language-switcher)
+- [Best Practices](#best-practices)
+- [Technical Details](#technical-details)
+
+</TableOfContents>
+
+## Quick Overview
+
+**Key Features:**
+- 🧭 Locale-driven setup in one file: `src/i18n/locales.ts`
+- 🌍 Multi-language mode when you configure more than one locale
+- 🔄 Header language switcher appears automatically when multiple locales are configured
+- 📝 Locale-based content organization
+- 🎯 SEO-friendly locale routing
+- ⚡ Clean single-language mode when you configure exactly one locale
+
+## Configuration Model
+
+All locale behavior is configured in `src/i18n/locales.ts`:
+
+```typescript
+export const locales = ['en', 'zh-TW'] as const;
+
+export const defaultLocale = 'en';
+```
+
+Rules:
+
+1. If `locales.length > 1`, multilingual mode is enabled.
+2. If `locales.length === 1`, single-locale mode is enabled.
+3. `defaultLocale` is the fallback locale for routing and content.
+
+## Enabling Internationalization
+
+To enable multi-language support, set at least two locales:
+
+```typescript
+export const locales = ['en', 'zh-TW'] as const;
+
+export const defaultLocale = 'en';
+```
+
+Then restart your development server:
+
+```bash
+pnpm dev
+```
+
+That's it. Locale routes, translations, and the language switcher are enabled automatically.
+
+## Single-Locale Mode
+
+To run one language only (for example, Traditional Chinese):
+
+```typescript
+export const locales = ['zh-TW'] as const;
+
+export const defaultLocale = 'zh-TW';
+```
+
+In this mode:
+
+1. The language switcher is hidden.
+2. URLs stay clean (for example `/` and `/blog`).
+3. Internally, routes map to the configured default locale.
+4. Content fallback uses `defaultLocale`.
+
+## Supported Languages
+
+The template currently includes:
+
+- **English (`en`)**
+- **Traditional Chinese (`zh-TW`)**
+
+Use any locale codes your project needs, as long as you provide matching messages and content.
+
+## Adding New Languages
+
+To add a new language (for example, Spanish):
+
+### 1. Update locale config
+
+Edit `src/i18n/locales.ts`:
+
+```typescript
+export const locales = ['en', 'zh-TW', 'es'] as const;
+
+export const defaultLocale = 'en';
+```
+
+### 2. Add messages
+
+Create `messages/es.json`:
+
+```json
+{
+  "header": {
+    "home": "Inicio",
+    "blog": "Blog",
+    "tags": "Etiquetas",
+    "about": "Acerca de"
+  },
+  "blog": {
+    "readMore": "Leer más",
+    "backToBlog": "Volver al blog"
+  }
+}
+```
+
+### 3. Add content
+
+Create locale content folders and translate posts:
+
+```bash
+mkdir -p content/blog/es
+cp content/blog/en/get-started.mdx content/blog/es/get-started.mdx
+```
+
+### 4. (Optional) Add switcher label
+
+If needed, update locale labels in `src/lib/layout/language-switcher.tsx`.
+
+## Translating Content
+
+### Blog posts
+
+Keep the same slug filenames across locales:
+
+```
+content/
+└── blog/
+    ├── en/
+    │   ├── my-post.mdx
+    │   └── another-post.mdx
+    └── zh-TW/
+        ├── my-post.mdx
+        └── another-post.mdx
+```
+
+### UI text
+
+Translate UI strings in `messages/[locale].json`.
+
+Example usage:
+
+```tsx
+import { useTranslations } from 'next-intl';
+
+export function MyComponent() {
+  const t = useTranslations('header');
+
+  return <h1>{t('home')}</h1>;
+}
+```
+
+## Language Switcher
+
+The switcher behavior is now locale-count based:
+
+1. Shown when `locales.length > 1`
+2. Hidden when `locales.length === 1`
+3. Switches between configured locales while preserving the current page path
+
+You can customize its appearance in `src/lib/layout/language-switcher.tsx`.
+
+## Best Practices
+
+1. Keep `defaultLocale` content complete and high quality.
+2. Keep locale folder structures consistent.
+3. Keep filenames/slugs consistent across locales.
+4. Test every configured locale route after changes.
+5. Restart `pnpm dev` after editing locale config.
+
+## Technical Details
+
+1. **Library**: `next-intl`
+2. **Routing**: App Router with dynamic `[locale]`
+3. **Mode Switching**: Automatically determined from `locales.length`
+4. **Single-Locale Routing**: Rewrites target `defaultLocale`
+5. **Content Fallback**: Falls back to configured `defaultLocale` (not hardcoded English)
+
+---
+
+**That's it!** Configure locales once, then scale from one language to many whenever you need. 🚀

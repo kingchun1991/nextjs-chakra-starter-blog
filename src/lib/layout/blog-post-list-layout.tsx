@@ -12,7 +12,7 @@ import {
   HStack,
   Separator,
 } from '@chakra-ui/react';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 import { Link } from '@/components/ui/link';
 import {
@@ -33,12 +33,6 @@ export function BlogPostListLayout({
   posts: Array<IPosts>;
   tagSelected: string;
 }) {
-  const [isClient, setIsClient] = useState(false);
-
-  useEffect(() => {
-    setIsClient(typeof window !== 'undefined');
-  }, []);
-
   const filteredBlogPosts = posts
     .filter((post: IPosts) => !post.draft)
     .filter(
@@ -76,10 +70,6 @@ export function BlogPostListLayout({
     Object.keys(tagCounts).find(
       (tag: string) => tagSelected === slugify(tag)
     ) || tagSelected;
-
-  if (!isClient) {
-    return <div>Loading..</div>;
-  }
 
   return (
     <Box>
