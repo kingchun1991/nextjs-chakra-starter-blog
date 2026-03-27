@@ -16,14 +16,19 @@ const OUTPUT_DIR = path.join(rootDir, '.json');
 const OUTPUT_FILE = path.join(OUTPUT_DIR, 'directory-graph.json');
 
 function formatGeneratedJsonFile(filePath) {
-  const result = spawnSync(
-    'pnpm',
-    ['exec', 'biome', 'format', '--write', filePath],
-    {
-      cwd: rootDir,
-      stdio: 'inherit',
-    }
-  );
+  // Use locally installed biome binary to avoid PATH injection attacks
+  const biomeBin = path.join(rootDir, 'node_modules', '.bin', 'biome');
+
+  // Check if biome exists in node_modules
+  if (!fs.existsSync(biomeBin)) {
+    console.warn('Biome not found in node_modules, skipping formatting');
+    return;
+  }
+
+  const result = spawnSync(biomeBin, ['format', '--write', filePath], {
+    cwd: rootDir,
+    stdio: 'inherit',
+  });
 
   if (result.status !== 0) {
     throw new Error(`Failed to format generated JSON file: ${filePath}`);
