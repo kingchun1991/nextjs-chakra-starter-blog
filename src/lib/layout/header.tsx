@@ -35,18 +35,13 @@ import { siteConfig } from '@/site.config';
 import { LanguageSwitcher } from './language-switcher';
 import { SearchModal } from './search-modal';
 
-const HEADER_BG = '#0b0c0c';
-const HEADER_ACCENT = '#1d70b8';
-const HEADER_TEXT = '#ffffff';
-const HEADER_TEXT_MUTED = '#d1d5db';
-
 const i18nEnabled = routing.locales.length > 1;
 
 export function DesktopSubNav({ title, url }: NavItem) {
   return (
     <Link
-      _hover={{ bg: 'whiteAlpha.200', textDecoration: 'none' }}
-      color={HEADER_TEXT}
+      _hover={{ bg: 'header.hoverBg', textDecoration: 'none' }}
+      color="header.text"
       display="block"
       href={url}
       px={3}
@@ -65,7 +60,7 @@ export function DesktopSubNav({ title, url }: NavItem) {
           transform="translateX(-10px)"
           transition="all .3s ease"
         >
-          <Icon color={HEADER_ACCENT} h={4} w={4}>
+          <Icon color="header.accent" h={4} w={4}>
             <LuChevronRight />
           </Icon>
         </Flex>
@@ -87,10 +82,10 @@ function DesktopNavContent({ getTranslatedTitle }: DesktopNavContentProps) {
             <HoverCardTrigger asChild>
               <Link
                 _hover={{
-                  color: HEADER_TEXT_MUTED,
+                  color: 'header.textMuted',
                   textDecoration: 'underline',
                 }}
-                color={HEADER_TEXT}
+                color="header.text"
                 fontSize="sm"
                 fontWeight={500}
                 href={navItem.url ?? '#'}
@@ -102,7 +97,7 @@ function DesktopNavContent({ getTranslatedTitle }: DesktopNavContentProps) {
             </HoverCardTrigger>
 
             {navItem.children && (
-              <HoverCardContent bg={HEADER_BG} borderColor={HEADER_ACCENT}>
+              <HoverCardContent bg="header.bg" borderColor="header.accent">
                 <HoverCardArrow />
                 <Stack gap={1}>
                   {navItem.children.map((child) => (
@@ -120,11 +115,8 @@ function DesktopNavContent({ getTranslatedTitle }: DesktopNavContentProps) {
 
 function DesktopNavWithTranslations() {
   const t = useTranslations('header');
-
-  const getTranslatedTitle = (navItem: NavItem) => {
-    return t(navItem.title.toLowerCase());
-  };
-
+  const getTranslatedTitle = (navItem: NavItem) =>
+    t(navItem.title.toLowerCase());
   return <DesktopNavContent getTranslatedTitle={getTranslatedTitle} />;
 }
 
@@ -134,7 +126,6 @@ export function DesktopNav() {
       <DesktopNavContent getTranslatedTitle={(navItem) => navItem.title} />
     );
   }
-
   return <DesktopNavWithTranslations />;
 }
 
@@ -160,12 +151,12 @@ function MobileNavItemContent({
           justify="space-between"
           py={2}
         >
-          <Text color={HEADER_TEXT} fontSize="sm" fontWeight={600}>
+          <Text color="header.text" fontSize="sm" fontWeight={600}>
             {getTranslatedTitle()}
           </Text>
           {children && (
             <Icon
-              color={HEADER_TEXT}
+              color="header.text"
               h={5}
               transform={open ? 'rotate(180deg)' : ''}
               transition="all .25s ease-in-out"
@@ -181,14 +172,14 @@ function MobileNavItemContent({
         <Collapsible.Content>
           <Stack
             align="start"
-            borderColor={HEADER_ACCENT}
+            borderColor="header.accent"
             borderLeft="3px solid"
             mt={1}
             pl={4}
           >
             {children?.map((child) => (
               <Link
-                color={HEADER_TEXT_MUTED}
+                color="header.textMuted"
                 fontSize="sm"
                 href={child.url}
                 key={child.title}
@@ -213,7 +204,6 @@ function MobileNavItemWithTranslations({
   ...rest
 }: MobileNavItemWithTranslationsProps) {
   const t = useTranslations('header');
-
   return (
     <MobileNavItemContent
       {...rest}
@@ -236,19 +226,16 @@ export function MobileNavItem({ onClose, ...props }: MobileNavItemProps) {
       />
     );
   }
-
   return <MobileNavItemWithTranslations onClose={onClose} {...props} />;
 }
 
-type MobileNavProps = {
-  onClose: () => void;
-};
+type MobileNavProps = { onClose: () => void };
 
 export function MobileNav({ onClose }: MobileNavProps) {
   return (
     <Box
-      bg={HEADER_BG}
-      borderColor={HEADER_ACCENT}
+      bg="header.bg"
+      borderColor="header.accent"
       borderTopWidth="1px"
       display={{ md: 'none' }}
       px={4}
@@ -269,7 +256,12 @@ export function Header() {
   const { open, onToggle } = useDisclosure();
   return (
     <Box as="header">
-      <Box bg={HEADER_BG} borderBottomWidth="4px" borderColor={HEADER_ACCENT}>
+      <Box
+        bg="header.bg"
+        borderBottomWidth="4px"
+        borderColor="header.accent"
+        boxShadow="sm"
+      >
         <Flex
           align="center"
           maxWidth="1200px"
@@ -281,7 +273,7 @@ export function Header() {
           <Flex align="center" flex={{ base: 1 }} justify="start">
             <Link _hover={{ textDecoration: 'none' }} href="/">
               <Text
-                color={HEADER_TEXT}
+                color="header.text"
                 fontSize="xl"
                 fontWeight="bold"
                 letterSpacing="tight"
@@ -301,7 +293,7 @@ export function Header() {
           <Stack align="center" direction="row" gap={2} justify="flex-end">
             <SearchModal />
             <LanguageSwitcher />
-            <ColorModeButton color={HEADER_TEXT} />
+            <ColorModeButton />
             <Link
               aria-label="GitHub Repository"
               href={siteConfig.repoUrl}
@@ -309,23 +301,23 @@ export function Header() {
               target="_blank"
             >
               <IconButton
-                _hover={{ color: HEADER_TEXT_MUTED }}
+                _hover={{ bg: 'header.hoverBg' }}
                 aria-label="GitHub Repository"
-                bg="transparent"
-                color={HEADER_TEXT}
+                color="header.text"
                 size="sm"
+                variant="ghost"
               >
                 <LuGithub />
               </IconButton>
             </Link>
             <Flex display={{ base: 'flex', md: 'none' }}>
               <IconButton
-                _hover={{ color: HEADER_TEXT_MUTED }}
+                _hover={{ bg: 'header.hoverBg' }}
                 aria-label="Toggle Navigation"
-                bg="transparent"
-                color={HEADER_TEXT}
+                color="header.text"
                 onClick={onToggle}
                 size="sm"
+                variant="ghost"
               >
                 {open ? <LuX /> : <LuMenu />}
               </IconButton>

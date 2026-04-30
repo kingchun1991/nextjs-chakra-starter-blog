@@ -28,6 +28,14 @@ export const customTheme = createSystem(defaultConfig, {
         'state.error': { value: { base: '#d4351c', _dark: '#f87171' } },
         'state.success': { value: { base: '#00703c', _dark: '#34d399' } },
         'state.focus': { value: '#ffdd00' },
+        // Header / Footer chrome
+        'header.bg': { value: { base: '#ffffff', _dark: '#111827' } },
+        'header.text': { value: { base: '#0b0c0c', _dark: '#f3f2f1' } },
+        'header.textMuted': { value: { base: '#505a5f', _dark: '#9ca3af' } },
+        'header.accent': { value: { base: '#1d70b8', _dark: '#5694ca' } },
+        'header.hoverBg': {
+          value: { base: 'rgba(0,0,0,0.06)', _dark: 'rgba(255,255,255,0.08)' },
+        },
       },
     },
   },
