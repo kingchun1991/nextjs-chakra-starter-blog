@@ -47,14 +47,10 @@ function LanguageSwitcherButton() {
 
   return (
     <IconButton
-      _dark={{ color: 'gray.400' }}
-      _hover={{
-        color: 'gray.800',
-        _dark: { color: 'white' },
-      }}
+      _hover={{ color: 'rgba(255,255,255,0.7)' }}
       aria-label={`Switch language to ${nextLocaleLabel}`}
       bg="transparent"
-      color="gray.600"
+      color="white"
       onClick={switchLocale}
       size="sm"
       title={nextLocaleLabel}

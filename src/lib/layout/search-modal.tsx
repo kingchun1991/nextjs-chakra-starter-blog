@@ -66,7 +66,13 @@ export function SearchModal() {
   return (
     <DialogRoot placement="center">
       <DialogTrigger asChild>
-        <IconButton aria-label="Toggle Search" variant="ghost">
+        <IconButton
+          _hover={{ color: 'rgba(255,255,255,0.7)' }}
+          aria-label="Toggle Search"
+          bg="transparent"
+          color="white"
+          variant="ghost"
+        >
           <LuSearch />
         </IconButton>
       </DialogTrigger>

@@ -12,14 +12,48 @@ type LayoutProps = {
 
 export function Layout({ children }: LayoutProps) {
   return (
-    <Box margin="0 auto" maxWidth={1200} transition="0.5s ease-out">
-      <Box margin="8">
-        <Header />
-        <Box as="main" marginY={22}>
-          {children}
-        </Box>
-        <Footer />
+    <Box display="flex" flexDirection="column" minHeight="100vh">
+      <a
+        href="#main-content"
+        onBlur={(e) => {
+          Object.assign(e.currentTarget.style, {
+            left: '-9999px',
+            width: '1px',
+            height: '1px',
+          });
+        }}
+        onFocus={(e) => {
+          Object.assign(e.currentTarget.style, {
+            left: '0',
+            width: 'auto',
+            height: 'auto',
+          });
+        }}
+        style={{
+          position: 'absolute',
+          left: '-9999px',
+          top: 'auto',
+          width: '1px',
+          height: '1px',
+          overflow: 'hidden',
+        }}
+      >
+        Skip to main content
+      </a>
+      <Header />
+      <Box
+        as="main"
+        flex="1"
+        id="main-content"
+        maxWidth="1200px"
+        mx="auto"
+        px={{ base: 4, md: 8 }}
+        py={8}
+        width="100%"
+      >
+        {children}
       </Box>
+      <Footer />
     </Box>
   );
 }
