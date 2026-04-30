@@ -140,18 +140,20 @@ export function DesktopNav() {
 
 type MobileNavItemContentProps = NavItem & {
   getTranslatedTitle: () => string;
+  onClose: () => void;
 };
 
 function MobileNavItemContent({
   url,
   children,
   getTranslatedTitle,
+  onClose,
 }: MobileNavItemContentProps) {
   const { open, onToggle } = useDisclosure();
 
   return (
     <Stack gap={2} onClick={children && onToggle}>
-      <Link href={url ?? '#'}>
+      <Link href={url ?? '#'} onClick={children ? undefined : onClose}>
         <Flex
           _hover={{ textDecoration: 'underline' }}
           align="center"
@@ -190,6 +192,7 @@ function MobileNavItemContent({
                 fontSize="sm"
                 href={child.url}
                 key={child.title}
+                onClick={onClose}
                 py={1}
               >
                 {child.title}
@@ -202,29 +205,46 @@ function MobileNavItemContent({
   );
 }
 
-function MobileNavItemWithTranslations({ title, ...rest }: NavItem) {
+type MobileNavItemWithTranslationsProps = NavItem & { onClose: () => void };
+
+function MobileNavItemWithTranslations({
+  title,
+  onClose,
+  ...rest
+}: MobileNavItemWithTranslationsProps) {
   const t = useTranslations('header');
 
   return (
     <MobileNavItemContent
       {...rest}
       getTranslatedTitle={() => t(title.toLowerCase())}
+      onClose={onClose}
       title={title}
     />
   );
 }
 
-export function MobileNavItem(props: NavItem) {
+type MobileNavItemProps = NavItem & { onClose: () => void };
+
+export function MobileNavItem({ onClose, ...props }: MobileNavItemProps) {
   if (!i18nEnabled) {
     return (
-      <MobileNavItemContent {...props} getTranslatedTitle={() => props.title} />
+      <MobileNavItemContent
+        {...props}
+        getTranslatedTitle={() => props.title}
+        onClose={onClose}
+      />
     );
   }
 
-  return <MobileNavItemWithTranslations {...props} />;
+  return <MobileNavItemWithTranslations onClose={onClose} {...props} />;
 }
 
-export function MobileNav() {
+type MobileNavProps = {
+  onClose: () => void;
+};
+
+export function MobileNav({ onClose }: MobileNavProps) {
   return (
     <Box
       bg={HEADER_BG}
@@ -237,7 +257,7 @@ export function MobileNav() {
       <Box maxWidth="1200px" mx="auto">
         <Stack gap={1}>
           {siteConfig.navigation.map((navItem) => (
-            <MobileNavItem key={navItem.title} {...navItem} />
+            <MobileNavItem key={navItem.title} onClose={onClose} {...navItem} />
           ))}
         </Stack>
       </Box>
@@ -316,7 +336,7 @@ export function Header() {
 
       <Collapsible.Root open={open}>
         <Collapsible.Content>
-          <MobileNav />
+          <MobileNav onClose={onToggle} />
         </Collapsible.Content>
       </Collapsible.Root>
     </Box>
