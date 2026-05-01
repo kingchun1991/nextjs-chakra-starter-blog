@@ -132,38 +132,6 @@ pnpm build
 pnpm test:e2e
 ```
 
-## 🌐 Internationalization (i18n)
-
-i18n is powered by [next-intl](https://next-intl-docs.vercel.app/) and is **disabled by default**. Enable it by setting the environment variable:
-
-```bash
-NEXT_PUBLIC_ENABLE_I18N=true
-```
-
-### Adding or removing a locale
-
-All locale configuration lives in **`src/i18n/locales.ts`** — this is the single source of truth:
-
-```ts
-// src/i18n/locales.ts
-export const locales = ['en', 'zh-TW'] as const;  // add/remove locale codes here
-
-export const defaultLocale = 'en';
-
-export const localeLabels: Record<string, string> = {
-  en: 'English',
-  'zh-TW': '繁體中文',                             // add/remove display labels here
-};
-```
-
-1. Add the locale code to `locales`.
-2. Add the matching display label to `localeLabels`.
-3. Create a translation file at `src/i18n/messages/<locale>.json`.
-
-The language switcher in the header reads from `localeLabels` automatically — no other changes needed.
-
-See [`docs/internationalization-guide.md`](./docs/internationalization-guide.md) for the full guide.
-
 ## 🧹 Code Quality
 
 We use **Biome** for fast formatter and linter.
