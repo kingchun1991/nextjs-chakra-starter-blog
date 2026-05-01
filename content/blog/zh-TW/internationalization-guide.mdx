@@ -1,7 +1,7 @@
 ---
 title: '國際化 (i18n) 指南'
 publishedAt: '2025-07-12'
-modifiedAt: '2026-03-22'
+modifiedAt: '2026-05-01'
 summary: '學習如何使用此部落格模板內建的國際化功能。輕鬆支援多種語言！'
 image: ''
 slug: 'blog/internationalization-guide'
@@ -50,6 +50,11 @@ draft: false
 export const locales = ['en', 'zh-TW'] as const;
 
 export const defaultLocale = 'en';
+
+export const localeLabels: Record<string, string> = {
+  en: 'English',
+  'zh-TW': '繁體中文',
+};
 ```
 
 規則如下：
@@ -142,9 +147,23 @@ mkdir -p content/blog/es
 cp content/blog/en/get-started.mdx content/blog/es/get-started.mdx
 ```
 
-### 4. （可選）更新語言切換器標籤
+### 4. 新增語言切換器標籤
 
-若需要自訂語言名稱，請編輯 `src/lib/layout/language-switcher.tsx`。
+編輯 `src/i18n/locales.ts`，在 `localeLabels` 加入新語言的顯示名稱：
+
+```typescript
+export const locales = ['en', 'zh-TW', 'es'] as const;
+
+export const defaultLocale = 'en';
+
+export const localeLabels: Record<string, string> = {
+  en: 'English',
+  'zh-TW': '繁體中文',
+  es: 'Español',
+};
+```
+
+語言切換器會自動從 `localeLabels` 讀取，無需修改其他檔案。
 
 ## 翻譯內容
 

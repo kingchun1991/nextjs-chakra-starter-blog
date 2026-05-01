@@ -1,7 +1,7 @@
 ---
 title: 'Internationalization (i18n) Guide'
 publishedAt: '2025-07-12'
-modifiedAt: '2026-03-22'
+modifiedAt: '2026-05-01'
 summary: 'Learn how to use the built-in internationalization features in this blog template. Support multiple languages with ease!'
 image: ''
 slug: 'blog/internationalization-guide'
@@ -50,6 +50,11 @@ All locale behavior is configured in `src/i18n/locales.ts`:
 export const locales = ['en', 'zh-TW'] as const;
 
 export const defaultLocale = 'en';
+
+export const localeLabels: Record<string, string> = {
+  en: 'English',
+  'zh-TW': '繁體中文',
+};
 ```
 
 Rules:
@@ -144,9 +149,23 @@ mkdir -p content/blog/es
 cp content/blog/en/get-started.mdx content/blog/es/get-started.mdx
 ```
 
-### 4. (Optional) Add switcher label
+### 4. Add the switcher label
 
-If needed, update locale labels in `src/lib/layout/language-switcher.tsx`.
+Edit `src/i18n/locales.ts` and add the label to `localeLabels`:
+
+```typescript
+export const locales = ['en', 'zh-TW', 'es'] as const;
+
+export const defaultLocale = 'en';
+
+export const localeLabels: Record<string, string> = {
+  en: 'English',
+  'zh-TW': '繁體中文',
+  es: 'Español',
+};
+```
+
+The language switcher reads from `localeLabels` automatically — no other changes needed.
 
 ## Translating Content
 
