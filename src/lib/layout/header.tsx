@@ -34,27 +34,27 @@ import { siteConfig } from '@/site.config';
 import { LanguageSwitcher } from './language-switcher';
 import { SearchModal } from './search-modal';
 
-const HEADER_BG = '#0b0c0c';
-const HEADER_ACCENT = '#1d70b8';
-const HEADER_TEXT = '#ffffff';
-const HEADER_TEXT_MUTED = '#d1d5db';
-
 const i18nEnabled = routing.locales.length > 1;
 
 export function DesktopSubNav({ title, url }: NavItem) {
   return (
     <Link
-      _hover={{ bg: 'whiteAlpha.200', textDecoration: 'none' }}
-      color={HEADER_TEXT}
+      _hover={{ bg: { base: 'pink.50', _dark: 'gray.900' } }}
       display="block"
       href={url}
       px={3}
       py={2}
       role="group"
-      rounded="sm"
+      rounded="md"
     >
       <Stack align="center" direction="row">
-        <Text fontWeight={500}>{title}</Text>
+        <Text
+          _groupHover={{ color: 'pink.400' }}
+          fontWeight={500}
+          transition="all .3s ease"
+        >
+          {title}
+        </Text>
         <Flex
           _groupHover={{ opacity: '100%', transform: 'translateX(0)' }}
           align="center"
@@ -64,7 +64,7 @@ export function DesktopSubNav({ title, url }: NavItem) {
           transform="translateX(-10px)"
           transition="all .3s ease"
         >
-          <Icon color={HEADER_ACCENT} h={4} w={4}>
+          <Icon color="pink.400" h={5} w={5}>
             <LuChevronRight />
           </Icon>
         </Flex>
@@ -85,11 +85,12 @@ function DesktopNavContent({ getTranslatedTitle }: DesktopNavContentProps) {
           <HoverCardRoot>
             <HoverCardTrigger asChild>
               <Link
+                _dark={{ color: 'gray.200' }}
                 _hover={{
-                  color: HEADER_TEXT_MUTED,
-                  textDecoration: 'underline',
+                  textDecoration: 'none',
+                  color: { base: 'gray.800', _dark: 'white' },
                 }}
-                color={HEADER_TEXT}
+                color="gray.600"
                 fontSize="sm"
                 fontWeight={500}
                 href={navItem.url ?? '#'}
@@ -101,7 +102,7 @@ function DesktopNavContent({ getTranslatedTitle }: DesktopNavContentProps) {
             </HoverCardTrigger>
 
             {navItem.children && (
-              <HoverCardContent bg={HEADER_BG} borderColor={HEADER_ACCENT}>
+              <HoverCardContent>
                 <HoverCardArrow />
                 <Stack gap={1}>
                   {navItem.children.map((child) => (
@@ -161,16 +162,15 @@ function MobileNavItemContent({
           justify="space-between"
           py={2}
         >
-          <Text color={HEADER_TEXT} fontWeight={600}>
+          <Text _dark={{ color: 'gray.200' }} color="gray.600" fontWeight={600}>
             {getTranslatedTitle()}
           </Text>
           {children && (
             <Icon
-              color={HEADER_TEXT}
-              h={5}
+              h={6}
               transform={open ? 'rotate(180deg)' : ''}
               transition="all .25s ease-in-out"
-              w={5}
+              w={6}
             >
               <LuChevronDown />
             </Icon>
@@ -242,20 +242,11 @@ type MobileNavProps = {
 
 export function MobileNav({ onClose }: MobileNavProps) {
   return (
-    <Box
-      bg={HEADER_BG}
-      borderColor={HEADER_ACCENT}
-      borderTopWidth="1px"
-      display={{ md: 'none' }}
-      px={4}
-      py={4}
-    >
-      <Stack gap={1}>
-        {siteConfig.navigation.map((navItem) => (
-          <MobileNavItem key={navItem.title} onClose={onClose} {...navItem} />
-        ))}
-      </Stack>
-    </Box>
+    <Stack _dark={{ bg: 'gray.800' }} bg="white" display={{ md: 'none' }} p={4}>
+      {siteConfig.navigation.map((navItem) => (
+        <MobileNavItem key={navItem.title} onClose={onClose} {...navItem} />
+      ))}
+    </Stack>
   );
 }
 
@@ -263,7 +254,7 @@ export function Header() {
   const { open, onToggle } = useDisclosure();
   return (
     <Box as="header">
-      <Box bg={HEADER_BG} borderBottomWidth="4px" borderColor={HEADER_ACCENT}>
+      <Box>
         <Flex align="center" minH="60px" px={{ base: 4 }} py={{ base: 2 }}>
           <Flex
             align="center"
@@ -274,7 +265,8 @@ export function Header() {
               <Flex align="center" gap={2}>
                 <Box>
                   <Text
-                    color="teal.300"
+                    _dark={{ color: 'teal.300' }}
+                    color="teal.500"
                     fontSize="2xl"
                     fontWeight="bold"
                     lineHeight={1}
@@ -283,7 +275,12 @@ export function Header() {
                   </Text>
                 </Box>
                 <Box display={{ base: 'none', md: 'block' }}>
-                  <Text color={HEADER_TEXT} fontSize="lg" fontWeight="semibold">
+                  <Text
+                    _dark={{ color: 'white' }}
+                    color="gray.800"
+                    fontSize="lg"
+                    fontWeight="semibold"
+                  >
                     {siteConfig.title
                       .split('-')
                       .map(
@@ -316,10 +313,11 @@ export function Header() {
               target="_blank"
             >
               <IconButton
-                _hover={{ color: HEADER_TEXT_MUTED }}
+                _dark={{ color: 'gray.400' }}
+                _hover={{ color: 'gray.800', _dark: { color: 'white' } }}
                 aria-label="GitHub Repository"
                 bg="transparent"
-                color={HEADER_TEXT}
+                color="gray.600"
                 size="sm"
               >
                 <LuGithub />
@@ -331,10 +329,11 @@ export function Header() {
               ml={{ base: -2 }}
             >
               <IconButton
-                _hover={{ color: HEADER_TEXT_MUTED }}
+                _dark={{ color: 'gray.400' }}
+                _hover={{ color: 'gray.800', _dark: { color: 'white' } }}
                 aria-label="Toggle Navigation"
                 bg="transparent"
-                color={HEADER_TEXT}
+                color="gray.600"
                 onClick={onToggle}
                 size="sm"
               >
