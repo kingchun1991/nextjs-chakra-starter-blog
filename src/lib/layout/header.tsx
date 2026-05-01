@@ -35,27 +35,28 @@ import { siteConfig } from '@/site.config';
 import { LanguageSwitcher } from './language-switcher';
 import { SearchModal } from './search-modal';
 
-const HEADER_BG = '#0b0c0c';
-const HEADER_ACCENT = '#1d70b8';
-const HEADER_TEXT = '#ffffff';
-const HEADER_TEXT_MUTED = '#d1d5db';
-
 const i18nEnabled = routing.locales.length > 1;
 
 export function DesktopSubNav({ title, url }: NavItem) {
   return (
     <Link
-      _hover={{ bg: 'whiteAlpha.200', textDecoration: 'none' }}
-      color={HEADER_TEXT}
+      _hover={{ bg: { base: 'pink.50', _dark: 'gray.900' } }}
       display="block"
       href={url}
-      px={3}
-      py={2}
+      p={2}
       role="group"
-      rounded="sm"
+      rounded="md"
     >
       <Stack align="center" direction="row">
-        <Text fontWeight={500}>{title}</Text>
+        <Box>
+          <Text
+            _groupHover={{ color: 'pink.400' }}
+            fontWeight={500}
+            transition="all .3s ease"
+          >
+            {title}
+          </Text>
+        </Box>
         <Flex
           _groupHover={{ opacity: '100%', transform: 'translateX(0)' }}
           align="center"
@@ -65,7 +66,7 @@ export function DesktopSubNav({ title, url }: NavItem) {
           transform="translateX(-10px)"
           transition="all .3s ease"
         >
-          <Icon color={HEADER_ACCENT} h={4} w={4}>
+          <Icon color="pink.400" h={5} w={5}>
             <LuChevronRight />
           </Icon>
         </Flex>
@@ -80,31 +81,31 @@ type DesktopNavContentProps = {
 
 function DesktopNavContent({ getTranslatedTitle }: DesktopNavContentProps) {
   return (
-    <Stack direction="row" gap={1}>
+    <Stack direction="row" gap={4}>
       {siteConfig.navigation.map((navItem) => (
         <Box key={navItem.title}>
           <HoverCardRoot>
             <HoverCardTrigger asChild>
               <Link
+                _dark={{ color: 'gray.200' }}
                 _hover={{
-                  color: HEADER_TEXT_MUTED,
-                  textDecoration: 'underline',
+                  textDecoration: 'none',
+                  color: { base: 'gray.800', _dark: 'white' },
                 }}
-                color={HEADER_TEXT}
+                color="gray.600"
                 fontSize="sm"
                 fontWeight={500}
                 href={navItem.url ?? '#'}
-                px={3}
-                py={2}
+                p={2}
               >
                 {getTranslatedTitle(navItem)}
               </Link>
             </HoverCardTrigger>
 
             {navItem.children && (
-              <HoverCardContent bg={HEADER_BG} borderColor={HEADER_ACCENT}>
+              <HoverCardContent>
                 <HoverCardArrow />
-                <Stack gap={1}>
+                <Stack>
                   {navItem.children.map((child) => (
                     <DesktopSubNav key={child.title} {...child} />
                   ))}
@@ -152,24 +153,25 @@ function MobileNavItemContent({
   const { open, onToggle } = useDisclosure();
 
   return (
-    <Stack gap={2} onClick={children && onToggle}>
+    <Stack gap={4} onClick={children && onToggle}>
       <Link href={url ?? '#'} onClick={children ? undefined : onClose}>
         <Flex
-          _hover={{ textDecoration: 'underline' }}
+          _hover={{
+            textDecoration: 'none',
+          }}
           align="center"
           justify="space-between"
           py={2}
         >
-          <Text color={HEADER_TEXT} fontSize="sm" fontWeight={600}>
+          <Text _dark={{ color: 'gray.200' }} color="gray.600" fontWeight={600}>
             {getTranslatedTitle()}
           </Text>
           {children && (
             <Icon
-              color={HEADER_TEXT}
-              h={5}
+              h={6}
               transform={open ? 'rotate(180deg)' : ''}
               transition="all .25s ease-in-out"
-              w={5}
+              w={6}
             >
               <LuChevronDown />
             </Icon>
@@ -180,21 +182,16 @@ function MobileNavItemContent({
       <Collapsible.Root open={open} style={{ marginTop: '0!important' }}>
         <Collapsible.Content>
           <Stack
+            _dark={{ borderColor: 'gray.700' }}
             align="start"
-            borderColor={HEADER_ACCENT}
-            borderLeft="3px solid"
-            mt={1}
+            borderColor="gray.200"
+            borderLeft={1}
+            borderStyle="solid"
+            mt={2}
             pl={4}
           >
             {children?.map((child) => (
-              <Link
-                color={HEADER_TEXT_MUTED}
-                fontSize="sm"
-                href={child.url}
-                key={child.title}
-                onClick={onClose}
-                py={1}
-              >
+              <Link href={child.url} key={child.title} onClick={onClose} py={2}>
                 {child.title}
               </Link>
             ))}
@@ -246,93 +243,116 @@ type MobileNavProps = {
 
 export function MobileNav({ onClose }: MobileNavProps) {
   return (
-    <Box
-      bg={HEADER_BG}
-      borderColor={HEADER_ACCENT}
-      borderTopWidth="1px"
-      display={{ md: 'none' }}
-      px={4}
-      py={4}
-    >
-      <Box maxWidth="1200px" mx="auto">
-        <Stack gap={1}>
-          {siteConfig.navigation.map((navItem) => (
-            <MobileNavItem key={navItem.title} onClose={onClose} {...navItem} />
-          ))}
-        </Stack>
-      </Box>
-    </Box>
+    <Stack _dark={{ bg: 'gray.800' }} bg="white" display={{ md: 'none' }} p={4}>
+      {siteConfig.navigation.map((navItem) => (
+        <MobileNavItem key={navItem.title} onClose={onClose} {...navItem} />
+      ))}
+    </Stack>
   );
 }
 
 export function Header() {
   const { open, onToggle } = useDisclosure();
   return (
-    <Box as="header">
-      <Box bg={HEADER_BG} borderBottomWidth="4px" borderColor={HEADER_ACCENT}>
+    <Box>
+      <Flex
+        align="center"
+        borderStyle="solid"
+        minH="60px"
+        px={{ base: 4 }}
+        py={{ base: 2 }}
+      >
         <Flex
           align="center"
-          maxWidth="1200px"
-          minH="60px"
-          mx="auto"
-          px={{ base: 4, md: 8 }}
-          py={3}
+          flex={{ base: 1 }}
+          justify={{ base: 'left', md: 'start' }}
         >
-          <Flex align="center" flex={{ base: 1 }} justify="start">
-            <Link _hover={{ textDecoration: 'none' }} href="/">
-              <Text
-                color={HEADER_TEXT}
-                fontSize="xl"
-                fontWeight="bold"
-                letterSpacing="tight"
-              >
-                {siteConfig.title
-                  .split('-')
-                  .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-                  .join(' ')}
-              </Text>
-            </Link>
-          </Flex>
-
-          <Flex display={{ base: 'none', md: 'flex' }} ml={10}>
-            <DesktopNav />
-          </Flex>
-
-          <Stack align="center" direction="row" gap={2} justify="flex-end">
-            <SearchModal />
-            <LanguageSwitcher />
-            <ColorModeButton color={HEADER_TEXT} />
-            <Link
-              aria-label="GitHub Repository"
-              href={siteConfig.repoUrl}
-              rel="noopener noreferrer"
-              target="_blank"
-            >
-              <IconButton
-                _hover={{ color: HEADER_TEXT_MUTED }}
-                aria-label="GitHub Repository"
-                bg="transparent"
-                color={HEADER_TEXT}
-                size="sm"
-              >
-                <LuGithub />
-              </IconButton>
-            </Link>
-            <Flex display={{ base: 'flex', md: 'none' }}>
-              <IconButton
-                _hover={{ color: HEADER_TEXT_MUTED }}
-                aria-label="Toggle Navigation"
-                bg="transparent"
-                color={HEADER_TEXT}
-                onClick={onToggle}
-                size="sm"
-              >
-                {open ? <LuX /> : <LuMenu />}
-              </IconButton>
+          <Link _hover={{ textDecoration: 'none' }} href="/">
+            <Flex align="center" gap={2}>
+              <Box>
+                <Text
+                  _dark={{ color: 'teal.300' }}
+                  color="teal.500"
+                  fontSize="2xl"
+                  fontWeight="bold"
+                  lineHeight={1}
+                >
+                  {siteConfig.title.charAt(0).toUpperCase()}.
+                </Text>
+              </Box>
+              <Box display={{ base: 'none', md: 'block' }}>
+                <Text
+                  _dark={{ color: 'white' }}
+                  color="gray.800"
+                  fontSize="lg"
+                  fontWeight="semibold"
+                >
+                  {siteConfig.title
+                    .split('-')
+                    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+                    .join(' ')}
+                </Text>
+              </Box>
             </Flex>
-          </Stack>
+          </Link>
         </Flex>
-      </Box>
+
+        <Flex display={{ base: 'none', md: 'flex' }} ml={10}>
+          <DesktopNav />
+        </Flex>
+
+        <Stack
+          align="center"
+          direction="row"
+          flex={{ base: 1, md: 0 }}
+          gap={3}
+          justify="flex-end"
+        >
+          <SearchModal />
+          <LanguageSwitcher />
+          <ColorModeButton />
+          <Link
+            aria-label="GitHub Repository"
+            href={siteConfig.repoUrl}
+            rel="noopener noreferrer"
+            target="_blank"
+          >
+            <IconButton
+              _dark={{ color: 'gray.400' }}
+              _hover={{
+                color: 'gray.800',
+                _dark: { color: 'white' },
+              }}
+              aria-label="GitHub Repository"
+              bg="transparent"
+              color="gray.600"
+              size="sm"
+            >
+              <LuGithub />
+            </IconButton>
+          </Link>
+          <Flex
+            display={{ base: 'flex', md: 'none' }}
+            flex={{ base: 1, md: 'auto' }}
+            ml={{ base: -2 }}
+          >
+            <IconButton
+              _dark={{ color: 'gray.400' }}
+              _hover={{
+                color: 'gray.800',
+                _dark: { color: 'white' },
+              }}
+              aria-label="Toggle Navigation"
+              bg="transparent"
+              color="gray.600"
+              onClick={onToggle}
+              size="sm"
+            >
+              {open ? <LuX /> : <LuMenu />}
+            </IconButton>
+          </Flex>
+        </Stack>
+      </Flex>
 
       <Collapsible.Root open={open}>
         <Collapsible.Content>
