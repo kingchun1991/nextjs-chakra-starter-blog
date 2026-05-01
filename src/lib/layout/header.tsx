@@ -298,13 +298,7 @@ export function Header() {
             <DesktopNav />
           </Flex>
 
-          <Stack
-            align="center"
-            direction="row"
-            flex={{ base: 1, md: 0 }}
-            gap={2}
-            justify="flex-end"
-          >
+          <Stack align="center" direction="row" gap={2} justify="flex-end">
             <SearchModal />
             <LanguageSwitcher />
             <ColorModeButton />
@@ -325,11 +319,7 @@ export function Header() {
                 <LuGithub />
               </IconButton>
             </Link>
-            <Flex
-              display={{ base: 'flex', md: 'none' }}
-              flex={{ base: 1, md: 'auto' }}
-              ml={{ base: -2 }}
-            >
+            <Flex display={{ base: 'flex', md: 'none' }}>
               <IconButton
                 _dark={{ color: 'gray.400' }}
                 _hover={{ color: 'gray.800', _dark: { color: 'white' } }}
