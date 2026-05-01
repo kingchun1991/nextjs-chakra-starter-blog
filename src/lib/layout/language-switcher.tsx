@@ -4,15 +4,10 @@ import { IconButton } from '@chakra-ui/react';
 import { useLocale } from 'next-intl';
 import { LuLanguages } from 'react-icons/lu';
 
+import { localeLabels } from '@/i18n/locales';
 import { routing, usePathname, useRouter } from '@/i18n/routing';
 
 const shouldShowLanguageSwitcher = routing.locales.length > 1;
-
-const localeLabels: Record<string, string> = {
-  en: 'English',
-  'zh-TW': '繁體中文',
-  es: 'Español',
-};
 
 const getNextLocale = (currentLocale: string): string => {
   const locales = routing.locales;
