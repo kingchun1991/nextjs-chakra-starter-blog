@@ -20,6 +20,7 @@ import {
   LuX,
 } from 'react-icons/lu';
 
+import { ColorModeButton } from '@/components/ui/color-mode';
 import {
   HoverCardArrow,
   HoverCardContent,
@@ -306,6 +307,7 @@ export function Header() {
           >
             <SearchModal />
             <LanguageSwitcher />
+            <ColorModeButton />
             <Link
               aria-label="GitHub Repository"
               href={siteConfig.repoUrl}
