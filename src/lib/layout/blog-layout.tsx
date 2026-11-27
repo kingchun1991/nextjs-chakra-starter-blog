@@ -17,10 +17,10 @@ import readingDuration from 'reading-duration';
 
 import { Avatar } from '@/components/ui/avatar';
 import { Categories } from '@/lib/components/categories';
+import { GiscusComments } from '@/lib/components/giscus-comments';
 import { Share } from '@/lib/components/share';
 import { Tags } from '@/lib/components/tags';
 import type { IPosts } from '@/lib/types/custom-types';
-import { giscusConfig } from '@/site.config';
 
 export function BlogLayout({
   children,
@@ -146,23 +146,7 @@ export function BlogLayout({
           </HStack>
         </Box>
 
-        <Box className="giscus" />
-        <script
-          async
-          crossOrigin="anonymous"
-          data-category="General"
-          data-category-id="DIC_kwDOJ2sHH84CfEZU"
-          data-emit-metadata="0"
-          data-input-position="bottom"
-          data-lang="en"
-          data-mapping="title"
-          data-reactions-enabled="1"
-          data-repo={giscusConfig.repo}
-          data-repo-id={giscusConfig.repo_id}
-          data-strict="0"
-          data-theme="preferred_color_scheme"
-          src="https://giscus.app/client.js"
-        />
+        <GiscusComments />
       </Stack>
     </Box>
   );
