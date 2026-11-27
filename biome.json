@@ -79,7 +79,6 @@
     },
     {
       "includes": [
-        "src/components/repo/repo-card.tsx",
         "src/components/repo/repo-grid.tsx",
         "src/lib/components/content-grid.tsx",
         "scripts/build-directory-graph.mjs"
