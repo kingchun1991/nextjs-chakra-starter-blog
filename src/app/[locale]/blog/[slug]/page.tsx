@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import type { Metadata } from 'next';
-import type { MDXRemoteSerializeResult } from 'next-mdx-remote';
 
 import { BlogLayout } from '@/lib/layout/blog-layout';
 import type { IPosts } from '@/lib/types/custom-types';
@@ -76,21 +75,11 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function Page({ params }: Props) {
   const { slug, locale } = await params;
-  const {
-    metaInformation,
-    mdxSource,
-    content,
-  }: {
-    metaInformation: IPosts;
-    mdxSource: MDXRemoteSerializeResult;
-    content: string;
-  } = await getPost(slug, locale);
+  const { metaInformation, Content, content } = await getPost(slug, locale);
 
   return (
-    <BlogLayout
-      content={content}
-      mdxSource={mdxSource}
-      post={metaInformation}
-    />
+    <BlogLayout content={content} post={metaInformation}>
+      <Content />
+    </BlogLayout>
   );
 }

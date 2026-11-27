@@ -1,3 +1,5 @@
+'use client';
+
 /* eslint-disable react/jsx-key */
 import { Box } from '@chakra-ui/react';
 import { Highlight, themes } from 'prism-react-renderer';
@@ -8,21 +10,14 @@ import type React from 'react';
 // import { Tooltip } from '@/components/ui/tooltip';
 
 interface CodeBlockProps {
-  children: React.ReactElement;
-  className?: string;
+  code: string;
+  language: string;
 }
 
-const LANGUAGE_PREFIX_REGEX = /language-/u;
-
 export const CodeBlock: React.FC<CodeBlockProps> = ({
-  children,
-  className,
+  code: codeString,
+  language,
 }) => {
-  const language =
-    className?.replace(LANGUAGE_PREFIX_REGEX, '') || 'typescript';
-  const codeString = (children.props as { children: string }).children
-    .toString()
-    .trim();
   // const { hasCopied, onCopy } = useClipboard(codeString);
 
   return (

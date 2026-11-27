@@ -2,28 +2,18 @@
 
 import { Box, Heading, HStack, Separator, Stack, Text } from '@chakra-ui/react';
 import { format, parseISO } from 'date-fns';
-import type { MDXRemoteSerializeResult } from 'next-mdx-remote';
-import { MDXRemote } from 'next-mdx-remote';
-import { useEffect, useState } from 'react';
+import type { ReactNode } from 'react';
 
 import { Tag } from '@/components/ui/tag';
 import { Backlinks } from '@/lib/components/directory/backlinks';
-import { WikiLink } from '@/lib/components/directory/wiki-link';
-import { MDXComponents } from '@/lib/components/mdx-components';
 import type { IPosts } from '@/lib/types/custom-types';
 
 interface DirectoryItemProps {
+  children: ReactNode;
   item: IPosts;
-  mdxSource: MDXRemoteSerializeResult;
 }
 
-export function DirectoryItem({ item, mdxSource }: DirectoryItemProps) {
-  const [mounted, setMounted] = useState(false);
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
-
+export function DirectoryItem({ children, item }: DirectoryItemProps) {
   const dateFormat = 'dd MMM, yyyy';
   const parseDate = (dateString: string) => {
     try {
@@ -31,11 +21,6 @@ export function DirectoryItem({ item, mdxSource }: DirectoryItemProps) {
     } catch {
       return '';
     }
-  };
-
-  const enhancedComponents = {
-    ...MDXComponents,
-    WikiLink,
   };
 
   return (
@@ -67,15 +52,7 @@ export function DirectoryItem({ item, mdxSource }: DirectoryItemProps) {
 
       <Separator mb={6} />
 
-      <Stack gap={4}>
-        {mounted ? (
-          <MDXRemote {...mdxSource} components={enhancedComponents} />
-        ) : (
-          <Box color="gray.500" p={4}>
-            Loading content...
-          </Box>
-        )}
-      </Stack>
+      <Stack gap={4}>{children}</Stack>
 
       {item.slug ? <Backlinks slug={item.slug} /> : null}
     </Box>
