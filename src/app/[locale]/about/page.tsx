@@ -1,9 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import type { Metadata } from 'next';
-import type { MDXRemoteSerializeResult } from 'next-mdx-remote';
 
 import { AboutLayout } from '@/lib/components/about';
-import type { IPosts } from '@/lib/types/custom-types';
 import { getFileBySlug } from '@/lib/utils/mdx';
 
 export const metadata: Metadata = {
@@ -27,13 +25,11 @@ function getAbout() {
 }
 
 export default async function index() {
-  const {
-    metaInformation,
-    mdxSource,
-  }: {
-    metaInformation: IPosts;
-    mdxSource: MDXRemoteSerializeResult;
-  } = await getAbout();
+  const { metaInformation, Content } = await getAbout();
 
-  return <AboutLayout mdxSource={mdxSource} post={metaInformation} />;
+  return (
+    <AboutLayout post={metaInformation}>
+      <Content />
+    </AboutLayout>
+  );
 }

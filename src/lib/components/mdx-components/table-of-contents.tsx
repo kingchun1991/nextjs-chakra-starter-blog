@@ -2,7 +2,7 @@
 
 /* eslint-disable react/prop-types */
 
-import { Box, Button, IconButton } from '@chakra-ui/react';
+import { Box, Button, Icon } from '@chakra-ui/react';
 import { useState } from 'react';
 import { LuBookmark, LuChevronDown } from 'react-icons/lu';
 
@@ -21,6 +21,7 @@ export const TableOfContents: React.FC<TableOfContentsProps> = ({
       <Button
         _dark={{ bg: 'slate.600', color: 'slate.200' }}
         alignItems="center"
+        aria-expanded={open}
         aria-label="Toggle Table of Contents"
         bg="slate.300"
         color="slate.700"
@@ -34,14 +35,12 @@ export const TableOfContents: React.FC<TableOfContentsProps> = ({
       >
         <LuBookmark />
         <span style={{ marginRight: 6 }}>Table of Contents</span>
-        <IconButton
-          aria-label="Toggle"
-          transform={open ? 'rotate(180deg)' : ''}
+        <Icon
+          transform={open ? 'rotate(180deg)' : undefined}
           transition="transform 0.3s ease-in-out"
-          variant="plain"
         >
           <LuChevronDown />
-        </IconButton>
+        </Icon>
       </Button>
       {open ? (
         <Box p={2} pr={6}>

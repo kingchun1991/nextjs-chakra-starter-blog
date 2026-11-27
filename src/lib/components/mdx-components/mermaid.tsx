@@ -21,20 +21,17 @@ export const Mermaid = ({
         startOnLoad: false,
         theme: colorMode === 'dark' ? 'dark' : 'default',
       });
-      try {
-        mermaid.run({ querySelector: `#${ref.current.id}` });
-      } catch (err) {
+      // Pass the node itself: a random id generated during render would differ
+      // between the server HTML and the client and break hydration.
+      mermaid.run({ nodes: [ref.current] }).catch((err: unknown) => {
         console.error(err);
-      }
+      });
     }
   }, [colorMode]);
-
-  const containerId = `mermaid-${crypto.randomUUID()}`;
 
   return (
     <div
       className="mermaid"
-      id={containerId}
       ref={ref}
       style={{
         fontSize: '18px',

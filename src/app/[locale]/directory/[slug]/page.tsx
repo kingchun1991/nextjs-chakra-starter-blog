@@ -1,8 +1,6 @@
 import type { Metadata } from 'next';
-import type { MDXRemoteSerializeResult } from 'next-mdx-remote';
 
 import { DirectoryItem } from '@/lib/pages/directory-item';
-import type { IPosts } from '@/lib/types/custom-types';
 import { getDirectoryItemBySlug, getDirectoryItemSlugs } from '@/lib/utils/mdx';
 import { siteConfig } from '@/site.config';
 
@@ -48,13 +46,11 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function DirectoryItemPage({ params }: Props) {
   const { slug } = await params;
-  const {
-    metaInformation,
-    mdxSource,
-  }: {
-    metaInformation: IPosts;
-    mdxSource: MDXRemoteSerializeResult;
-  } = await getData(slug);
+  const { metaInformation, Content } = await getData(slug);
 
-  return <DirectoryItem item={metaInformation} mdxSource={mdxSource} />;
+  return (
+    <DirectoryItem item={metaInformation}>
+      <Content />
+    </DirectoryItem>
+  );
 }

@@ -1,7 +1,22 @@
+import path from 'node:path';
+import createMDX from '@next/mdx';
 import type { NextConfig } from 'next';
 import createNextIntlPlugin from 'next-intl/plugin';
 
 import { defaultLocale, locales } from './src/i18n/locales';
+
+// Plugins are given by name (or absolute path) so the config stays
+// serializable, which Turbopack requires.
+const withMDX = createMDX({
+  options: {
+    remarkPlugins: [
+      'remark-frontmatter',
+      'remark-gfm',
+      path.join(process.cwd(), 'src/lib/mdx/remark-wiki-link.mjs'),
+    ],
+    rehypePlugins: ['rehype-slug'],
+  },
+});
 
 const i18nEnabled = locales.length > 1;
 const escapedDefaultLocale = defaultLocale.replace(
@@ -42,4 +57,4 @@ const nextConfig: NextConfig = {
   },
 };
 
-export default withNextIntl(nextConfig);
+export default withNextIntl(withMDX(nextConfig));

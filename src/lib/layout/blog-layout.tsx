@@ -11,35 +11,26 @@ import {
   Text,
 } from '@chakra-ui/react';
 import { format, parseISO } from 'date-fns';
-import type { MDXRemoteSerializeResult } from 'next-mdx-remote';
-import { MDXRemote } from 'next-mdx-remote';
-import { useEffect, useState } from 'react';
+import type { ReactNode } from 'react';
 import { LuClock } from 'react-icons/lu';
 import readingDuration from 'reading-duration';
 
 import { Avatar } from '@/components/ui/avatar';
 import { Categories } from '@/lib/components/categories';
-import { MDXComponents } from '@/lib/components/mdx-components';
 import { Share } from '@/lib/components/share';
 import { Tags } from '@/lib/components/tags';
 import type { IPosts } from '@/lib/types/custom-types';
 import { giscusConfig } from '@/site.config';
 
 export function BlogLayout({
-  mdxSource,
+  children,
   post,
   content,
 }: {
-  mdxSource: MDXRemoteSerializeResult;
+  children: ReactNode;
   post: IPosts;
   content: string;
 }) {
-  const [mounted, setMounted] = useState(false);
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
-
   const dateFormat = 'dd MMM, yyyy';
   const parseDate = (dateString: string) => {
     try {
@@ -139,20 +130,7 @@ export function BlogLayout({
             </Flex>
           </HStack>
         </Flex>
-        {mounted ? (
-          <MDXRemote
-            {...mdxSource}
-            components={
-              MDXComponents as unknown as React.ComponentProps<
-                typeof MDXRemote
-              >['components']
-            }
-          />
-        ) : (
-          <Box color="gray.500" p={4}>
-            Loading content...
-          </Box>
-        )}
+        {children}
 
         <Box _dark={{ color: 'gray.400' }} color="gray.700">
           <Tags tags={post.tags ?? []} />

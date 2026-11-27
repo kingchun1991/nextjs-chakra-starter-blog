@@ -1,9 +1,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import matter from 'gray-matter';
-import { serialize } from 'next-mdx-remote/serialize';
-import rehypeSlug from 'rehype-slug';
-import remarkGfm from 'remark-gfm';
+import type { MDXContent } from 'mdx/types';
 
 import { defaultLocale } from '@/i18n/locales';
 import type { IPosts } from '@/lib/types/custom-types';
@@ -54,39 +52,53 @@ export function getAllFilesFrontMatter(type: string, locale = defaultLocale) {
   );
 }
 
+/**
+ * Imports a compiled MDX file from `content/` (path without the extension).
+ * @next/mdx compiles it at build time; markdown elements render through
+ * `src/mdx-components.tsx`.
+ */
+async function importMdx(relativePath: string): Promise<MDXContent> {
+  const mdxModule: { default: MDXContent } = await import(
+    `../../../content/${relativePath}.mdx`
+  );
+  return mdxModule.default;
+}
+
+const contentFileExists = (relativePath: string) =>
+  fs.existsSync(path.join(root, 'content', `${relativePath}.mdx`));
+
+function resolveContentPath(type: string, slug: string, locale: string) {
+  if (!slug) {
+    return type;
+  }
+
+  // Locale-specific file first, then the default locale, then files that
+  // are not in a locale folder.
+  const candidates = [
+    path.posix.join(type, locale, slug),
+    path.posix.join(type, defaultLocale, slug),
+    path.posix.join(type, slug),
+  ];
+  const match = candidates.find(contentFileExists);
+
+  if (!match) {
+    throw new Error(
+      `MDX file not found for type: ${type}, slug: ${slug}, locale: ${locale}`
+    );
+  }
+  return match;
+}
+
 export async function getFileBySlug(
   type: string,
   slug: string,
   locale = defaultLocale
 ) {
-  const localePath = path.join(root, 'content', type, locale);
-  const fallbackPath = path.join(root, 'content', type, defaultLocale);
-  const basePath = path.join(root, 'content', type);
-
-  let source: string;
-
-  if (slug) {
-    // Try locale-specific path first
-    const localeFilePath = path.join(localePath, `${slug}.mdx`);
-    // Then try fallback locale (en)
-    const fallbackFilePath = path.join(fallbackPath, `${slug}.mdx`);
-    // Finally try base path (for files not in locale subdirectories)
-    const baseFilePath = path.join(basePath, `${slug}.mdx`);
-
-    if (fs.existsSync(localeFilePath)) {
-      source = fs.readFileSync(localeFilePath, 'utf8');
-    } else if (fs.existsSync(fallbackFilePath)) {
-      source = fs.readFileSync(fallbackFilePath, 'utf8');
-    } else if (fs.existsSync(baseFilePath)) {
-      source = fs.readFileSync(baseFilePath, 'utf8');
-    } else {
-      throw new Error(
-        `MDX file not found for type: ${type}, slug: ${slug}, locale: ${locale}`
-      );
-    }
-  } else {
-    source = fs.readFileSync(path.join(root, 'content', `${type}.mdx`), 'utf8');
-  }
+  const relativePath = resolveContentPath(type, slug, locale);
+  const source = fs.readFileSync(
+    path.join(root, 'content', `${relativePath}.mdx`),
+    'utf8'
+  );
   const { data, content } = matter(source);
 
   const newPost: IPosts = {
@@ -102,84 +114,43 @@ export async function getFileBySlug(
     tags: data.tags,
   };
 
-  const options = {
-    mdxOptions: {
-      remarkPlugins: [remarkGfm],
-      rehypePlugins: [rehypeSlug],
-      format: 'mdx' as const,
-    },
-    scope: {},
-  };
-
-  const mdxSource = await serialize(content, options);
-
   return {
-    mdxSource,
+    Content: await importMdx(relativePath),
     metaInformation: newPost,
-    content, // Add the raw content for reading duration calculation
+    content, // Raw content for the reading duration
   };
 }
 
 // Directory content utilities
-export async function getDirectoryItems() {
+export function getDirectoryItems() {
   const contentPath = path.join(process.cwd(), 'content', 'directory');
 
   if (!fs.existsSync(contentPath)) {
     return [];
   }
 
-  const files = fs
+  return fs
     .readdirSync(contentPath)
-    .filter((file) => file.endsWith('.mdx'));
-
-  const items = await Promise.all(
-    files.map(async (file) => {
-      const slug = file.replace(MDX_EXT_REGEX, '');
-      const item = await getDirectoryItemBySlug(slug);
-      return item.metaInformation;
-    })
-  );
-
-  return items.filter((item) => !item?.draft);
+    .filter((file) => file.endsWith('.mdx'))
+    .map((file) => getDirectoryItemMeta(file.replace(MDX_EXT_REGEX, '')))
+    .filter((item) => !item.draft);
 }
 
-export async function getDirectoryItemBySlug(slug: string) {
-  const contentPath = path.join(process.cwd(), 'content', 'directory');
-  const filePath = path.join(contentPath, `${slug}.mdx`);
+function getDirectoryItemMeta(slug: string): IPosts {
+  const filePath = path.join(
+    process.cwd(),
+    'content',
+    'directory',
+    `${slug}.mdx`
+  );
 
   if (!fs.existsSync(filePath)) {
     throw new Error(`Directory item not found: ${slug}`);
   }
 
-  const source = fs.readFileSync(filePath, 'utf-8');
-  const { data, content } = matter(source);
+  const { data } = matter(fs.readFileSync(filePath, 'utf-8'));
 
-  // Process wiki-links in content (ReDoS-safe with bounded quantifiers)
-  const WIKI_LINK_REGEX =
-    /\[\[(?<target>[^\]|]{1,500})(?:\|(?<displayText>[^\]]{1,500}))?\]\]/gu;
-  const NORMALIZE_REGEX = /[_\s]+/gu;
-  const processedContent = content.replace(
-    WIKI_LINK_REGEX,
-    (_match, target, displayText) => {
-      const normalized = target
-        .trim()
-        .toLowerCase()
-        .replace(NORMALIZE_REGEX, '-');
-      const display = displayText ? displayText.trim() : target.trim();
-      return `<WikiLink slug="${normalized}">${display}</WikiLink>`;
-    }
-  );
-
-  const mdxSource = await serialize(processedContent, {
-    scope: data,
-    mdxOptions: {
-      remarkPlugins: [remarkGfm],
-      rehypePlugins: [rehypeSlug],
-      development: false,
-    },
-  });
-
-  const metaInformation: IPosts = {
+  return {
     ...data,
     slug,
     title: data.title,
@@ -188,11 +159,14 @@ export async function getDirectoryItemBySlug(slug: string) {
     publishedAt: data.publishedAt,
     draft: data.draft,
   };
+}
 
+// `[[wiki-links]]` are turned into <WikiLink> elements at compile time by
+// src/lib/mdx/remark-wiki-link.mjs.
+export async function getDirectoryItemBySlug(slug: string) {
   return {
-    metaInformation,
-    mdxSource,
-    content: processedContent,
+    metaInformation: getDirectoryItemMeta(slug),
+    Content: await importMdx(`directory/${slug}`),
   };
 }
 

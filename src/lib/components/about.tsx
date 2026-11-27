@@ -1,26 +1,17 @@
 'use client';
 
 import { Avatar, Box, Flex, Heading, Separator, Stack } from '@chakra-ui/react';
-import type { MDXRemoteSerializeResult } from 'next-mdx-remote';
-import { MDXRemote } from 'next-mdx-remote';
-import { useEffect, useState } from 'react';
+import type { ReactNode } from 'react';
 
-import { MDXComponents } from '@/lib/components/mdx-components';
 import type { IPosts } from '@/lib/types/custom-types';
 
 export function AboutLayout({
-  mdxSource,
+  children,
   post,
 }: {
-  mdxSource: MDXRemoteSerializeResult;
+  children: ReactNode;
   post: IPosts;
 }) {
-  const [mounted, setMounted] = useState(false);
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
-
   // const { colorMode } = useColorMode();
   // const textColor = {
   //   light: 'gray.700',
@@ -53,13 +44,7 @@ export function AboutLayout({
           <Heading as="h1" letterSpacing="tight" mb={2} size="2xl">
             {post.title}
           </Heading>
-          {mounted ? (
-            <MDXRemote {...mdxSource} components={MDXComponents} />
-          ) : (
-            <Box color="gray.500" p={4}>
-              Loading content...
-            </Box>
-          )}
+          {children}
         </Stack>
       </Box>
     </Box>

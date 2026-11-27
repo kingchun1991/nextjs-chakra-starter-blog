@@ -1,24 +1,23 @@
-/* eslint-disable react/prop-types */
-/* eslint-disable react/no-unstable-nested-components */
-/* eslint-disable react/destructuring-assignment */
-
-'use client';
-
+import type { SystemStyleObject } from '@chakra-ui/react';
 import {
-  Box,
+  Blockquote,
   Code,
   Heading,
+  Image,
   List,
   Separator,
   Table,
   Text,
 } from '@chakra-ui/react';
-import Image from 'next/image';
+import type { MDXComponents } from 'mdx/types';
+import NextImage from 'next/image';
+import type { ComponentProps, ReactNode } from 'react';
+import { isValidElement } from 'react';
 
 import RepoCard from '@/components/repo/repo-card';
 import { Alert } from '@/components/ui/alert';
 import { Link } from '@/components/ui/link';
-import type { GitHubRepo } from '@/lib/types/github';
+import { WikiLink } from '@/lib/components/directory/wiki-link';
 
 import { ProductSimple } from './mdx-components/card';
 import { CodeBlock } from './mdx-components/code-block';
@@ -27,237 +26,216 @@ import { Mermaid } from './mdx-components/mermaid';
 import { TableOfContents } from './mdx-components/table-of-contents';
 import { Timeline, TimelineItem } from './mdx-components/timeline';
 
-interface ProductCardProps {
-  imgsrc: string;
-  price: string;
-  title: string;
-  url: string;
-}
+/*
+ * Maps the HTML elements MDX generates to Chakra UI components.
+ *
+ * This module has no 'use client' directive: the map is used by
+ * `src/mdx-components.tsx` while MDX renders on the server. Chakra components
+ * and the custom components below are client components already.
+ */
 
-const ProductCard = (props: ProductCardProps) => {
-  const { imgsrc, title, price, url } = props;
+const HEADING_SIZES = {
+  h1: '2xl',
+  h2: 'xl',
+  h3: 'lg',
+  h4: 'md',
+  h5: 'sm',
+  h6: 'xs',
+} as const;
+
+type HeadingLevel = keyof typeof HEADING_SIZES;
+
+const HEADING_ANCHOR_HOVER: SystemStyleObject = {
+  _before: {
+    content: '"#"',
+    position: 'relative',
+    marginLeft: '-1.2ch',
+    paddingRight: '0.2ch',
+  },
+};
+
+type MdxHeadingProps = ComponentProps<'h1'> & { level: HeadingLevel };
+
+// Chakra v3 `Heading` defaults to size "xl" whatever `as` is, so each level
+// needs an explicit size.
+const MdxHeading = ({ level, id, children }: MdxHeadingProps) => (
+  <Heading
+    _hover={id ? HEADING_ANCHOR_HOVER : undefined}
+    as={level}
+    id={id}
+    size={HEADING_SIZES[level]}
+  >
+    {children}
+  </Heading>
+);
+
+const MdxLink = ({ href = '', children }: ComponentProps<'a'>) => {
+  const isInternalLink = href.startsWith('/') || href.startsWith('#');
+
+  if (isInternalLink) {
+    return (
+      <Link color="blue.500" href={href}>
+        {children}
+      </Link>
+    );
+  }
+
   return (
-    <ProductSimple imgsrc={imgsrc} price={price} title={title} url={url} />
+    <Link
+      color="blue.500"
+      href={href}
+      rel="noopener noreferrer"
+      target="_blank"
+    >
+      {children}
+    </Link>
   );
 };
 
-interface RepoCardWrapperProps {
-  error?: string;
-  readme: string;
-  repo: GitHubRepo;
-}
+// Markdown images carry no width/height, which `next/image` requires, so they
+// render as a responsive, lazy-loaded Chakra `Image`. Authors who know the
+// dimensions can use the JSX `<Image>` component (next/image) instead.
+const MdxImage = ({ src, alt = '', title }: ComponentProps<'img'>) => (
+  <Image
+    alt={alt}
+    borderRadius="md"
+    decoding="async"
+    loading="lazy"
+    maxW="full"
+    src={typeof src === 'string' ? src : undefined}
+    title={title}
+  />
+);
 
-const RepoCardWrapper = (props: RepoCardWrapperProps) => {
-  const { repo, readme, error } = props;
-  return <RepoCard error={error} readme={readme} repo={repo} />;
+const LANGUAGE_CLASS_REGEX = /language-(?<language>\S+)/u;
+
+// The language class sits on the inner <code>, not on <pre>.
+const MdxPre = ({ children }: ComponentProps<'pre'>) => {
+  if (!isValidElement<{ className?: string; children?: ReactNode }>(children)) {
+    return <pre>{children}</pre>;
+  }
+
+  const { className = '', children: codeChildren } = children.props;
+  const language =
+    LANGUAGE_CLASS_REGEX.exec(className)?.groups?.language ?? 'text';
+  const code = typeof codeChildren === 'string' ? codeChildren.trim() : '';
+
+  if (language === 'mermaid') {
+    return <Mermaid code={code} />;
+  }
+
+  return <CodeBlock code={code} language={language} />;
 };
 
-interface CustomImageProps {
+const MdxBlockquote = ({ children }: ComponentProps<'blockquote'>) => (
+  <Blockquote.Root colorPalette="blue" my={4} variant="solid">
+    <Blockquote.Content color="fg.muted" fontStyle="italic">
+      {children}
+    </Blockquote.Content>
+  </Blockquote.Root>
+);
+
+const MdxTable = ({ children }: ComponentProps<'table'>) => (
+  <Table.ScrollArea borderRadius="md" borderWidth="1px" w="full">
+    <Table.Root bg="bg.panel" interactive size="md" variant="outline">
+      {children}
+    </Table.Root>
+  </Table.ScrollArea>
+);
+
+type CellProps = ComponentProps<'td'>;
+
+// MDX turns GFM column alignment into `style.textAlign`; older output used
+// the `align` attribute.
+const getCellAlign = ({ align, style }: CellProps) => {
+  const value = style?.textAlign ?? align;
+  return value === 'char' ? undefined : value;
+};
+
+const MdxTableCell = (props: CellProps) => (
+  <Table.Cell
+    fontSize="sm"
+    px={4}
+    py={3}
+    textAlign={getCellAlign(props) ?? 'start'}
+    verticalAlign="top"
+  >
+    {props.children}
+  </Table.Cell>
+);
+
+const MdxTableHeader = (props: ComponentProps<'th'>) => (
+  <Table.ColumnHeader
+    fontSize="sm"
+    fontWeight="semibold"
+    px={4}
+    py={3}
+    textAlign={getCellAlign(props) ?? 'start'}
+  >
+    {props.children}
+  </Table.ColumnHeader>
+);
+
+interface MdxNextImageProps {
   alt: string;
   height: number;
   src: string;
   width: number;
 }
 
-const CustomImage = (props: CustomImageProps) => {
-  const { width, height, src, alt } = props;
-  return <Image alt={alt} height={height} src={src} width={width} />;
-};
-
-interface CustomLinkProps {
-  children?: React.ReactNode;
-  href: string;
-  [key: string]: unknown;
-}
-
-const CustomLink = (props: CustomLinkProps) => {
-  const { href, ...rest } = props;
-  const isInternalLink = href && (href.startsWith('/') || href.startsWith('#'));
-
-  if (isInternalLink) {
-    return (
-      <Link
-        _dark={{ color: 'blue.500' }}
-        color="blue.500"
-        href={href}
-        {...rest}
-      />
-    );
-  }
-
-  return (
-    <Link
-      _dark={{ color: 'blue.500' }}
-      color="blue.500"
-      href={href}
-      rel="noopener noreferrer"
-      target="_blank"
-      {...rest}
-    />
-  );
-};
-
-const Quote = (props: React.ComponentPropsWithoutRef<typeof Box>) => (
-  <Box
-    as="blockquote"
-    borderColor="blue.500"
-    borderLeft="4px solid"
-    color="gray.600"
-    fontStyle="italic"
-    mb={4}
-    mt={4}
-    pl={4}
-    py={2}
-    {...props}
-  />
-);
-// Define a type for the props
-type CustomHeadingProps = React.ComponentPropsWithoutRef<typeof Heading> & {
-  as: React.ElementType;
-  id?: string; // Make id optional since it's not always required
-};
-
-const CustomHeading: React.FC<CustomHeadingProps> = ({ as, id, ...props }) => {
-  if (id) {
-    return (
-      <Heading
-        as={as}
-        id={id}
-        lineHeight="1em"
-        {...props}
-        _hover={{
-          _before: {
-            content: '"#"',
-            position: 'relative',
-            marginLeft: '-1.2ch',
-            paddingRight: '0.2ch',
-          },
-        }}
-      />
-    );
-  }
-  return <Heading as={as} {...props} />;
-};
-
-const Hr = () => (
-  <Separator
-    _dark={{ borderColor: 'gray.600' }}
-    borderColor="gray.200"
-    my={4}
-    w="100%"
-  />
+// For JSX `<Image src alt width height />` in MDX when the size is known.
+const MdxNextImage = ({ src, alt, width, height }: MdxNextImageProps) => (
+  <NextImage alt={alt} height={height} src={src} width={width} />
 );
 
-const MDXTable = (props: React.ComponentPropsWithoutRef<typeof Table.Root>) => (
-  <Table.ScrollArea borderWidth="1px" maxW="l">
-    <Table.Root
-      _dark={{ bg: 'gray.800' }}
-      bg="white"
-      borderRadius="md"
-      colorScheme="gray"
-      shadow="sm"
-      size="md"
-      variant="outline"
-      width="100%"
-      {...props}
-    />
-  </Table.ScrollArea>
-);
-
-const TableHead = (props: any) => (
-  <Table.Header _dark={{ bg: 'gray.700' }} bg="gray.50" {...props} />
-);
-
-const TableRow = (props: any) => (
-  <Table.Row
-    _hover={{
-      bg: 'gray.50',
-      _dark: { bg: 'gray.700' },
-    }}
-    transition="background-color 0.2s"
-    {...props}
-  />
-);
-
-const TableData = (props: any) => {
-  const { style, ...rest } = props;
-  const textAlign = style?.textAlign || props.align || 'left';
-
-  return (
-    <Table.Cell
-      _dark={{ borderColor: 'gray.600' }}
-      borderColor="gray.200"
-      fontSize="sm"
-      px={4}
-      py={3}
-      textAlign={textAlign}
-      verticalAlign="top"
-      {...rest}
-    />
-  );
-};
-
-const TableHeader = (props: any) => {
-  const { style, ...rest } = props;
-  const textAlign = style?.textAlign || props.align || 'left';
-
-  return (
-    <Table.ColumnHeader
-      _dark={{
-        color: 'gray.200',
-        borderColor: 'gray.600',
-      }}
-      borderColor="gray.200"
-      color="gray.700"
-      fontSize="sm"
-      fontWeight="semibold"
-      px={4}
-      py={3}
-      textAlign={textAlign}
-      {...rest}
-    />
-  );
-};
-
-const TableBody = (props: any) => <Table.Body {...props} />;
-
-export const MDXComponents = {
-  h1: (props: any) => <CustomHeading as="h1" {...props} />,
-  h2: (props: any) => <CustomHeading as="h2" {...props} />,
-  h3: (props: any) => <CustomHeading as="h3" {...props} />,
-  h4: (props: any) => <CustomHeading as="h4" {...props} />,
-  h5: (props: any) => <CustomHeading as="h5" {...props} />,
-  h6: (props: any) => <CustomHeading as="h6" {...props} />,
-  inlineCode: (props: any) => <Code {...props} />,
-  br: (props: any) => <Box height="24px" {...props} />,
-  p: (props: any) => <Text as="p" lineHeight="tall" mt={0} {...props} />,
-  ul: (props: any) => <List.Root as="ul" ml={2} pl={4} pt={2} {...props} />,
-  ol: (props: any) => <List.Root as="ol" ml={2} pl={4} pt={2} {...props} />,
-  li: (props: any) => <Box as="li" pb={1} {...props} />,
-  blockquote: Quote,
-  image: CustomImage,
-  hr: Hr,
-  a: CustomLink,
-  pre: (props: any) => {
-    const { children } = props;
-    if (children?.props?.className?.includes('language-mermaid')) {
-      return <Mermaid code={children.props.children.trim()} />;
-    }
-    return <CodeBlock {...props} />;
-  },
-  table: MDXTable,
-  thead: TableHead,
-  tbody: TableBody,
-  tr: TableRow,
-  th: TableHeader,
-  td: TableData,
+export const mdxComponents: MDXComponents = {
+  h1: (props) => <MdxHeading level="h1" {...props} />,
+  h2: (props) => <MdxHeading level="h2" {...props} />,
+  h3: (props) => <MdxHeading level="h3" {...props} />,
+  h4: (props) => <MdxHeading level="h4" {...props} />,
+  h5: (props) => <MdxHeading level="h5" {...props} />,
+  h6: (props) => <MdxHeading level="h6" {...props} />,
+  p: ({ children }) => (
+    <Text lineHeight="tall" mt={0}>
+      {children}
+    </Text>
+  ),
+  a: MdxLink,
+  code: ({ children }) => <Code>{children}</Code>,
+  pre: MdxPre,
+  img: MdxImage,
+  blockquote: MdxBlockquote,
+  hr: () => <Separator my={4} w="full" />,
+  ul: ({ children, className }) => (
+    <List.Root className={className} ml={2} pl={4} pt={2}>
+      {children}
+    </List.Root>
+  ),
+  ol: ({ children, className }) => (
+    <List.Root as="ol" className={className} ml={2} pl={4} pt={2}>
+      {children}
+    </List.Root>
+  ),
+  li: ({ children, className }) => (
+    <List.Item className={className} pb={1}>
+      {children}
+    </List.Item>
+  ),
+  table: MdxTable,
+  thead: ({ children }) => (
+    <Table.Header bg="bg.muted">{children}</Table.Header>
+  ),
+  tbody: ({ children }) => <Table.Body>{children}</Table.Body>,
+  tr: ({ children }) => <Table.Row>{children}</Table.Row>,
+  th: MdxTableHeader,
+  td: MdxTableCell,
   Alert,
-  ProductCard: (props: any) => ProductCard(props),
-  RepoCard: (props: any) => RepoCardWrapper(props),
+  EnhancedTable,
+  Image: MdxNextImage,
+  ProductCard: ProductSimple,
+  RepoCard,
   TableOfContents,
   Timeline,
   TimelineItem,
-  EnhancedTable,
+  WikiLink,
 };
-
-export { CustomLink };

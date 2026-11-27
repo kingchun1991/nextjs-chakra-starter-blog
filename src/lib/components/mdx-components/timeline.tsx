@@ -42,7 +42,11 @@ export const TimelineItem = ({
     <ChakraTimeline.Content>
       <ChakraTimeline.Title>{title}</ChakraTimeline.Title>
       <ChakraTimeline.Description>{subtitle}</ChakraTimeline.Description>
-      {children ? <Text textStyle="sm">{children}</Text> : null}
+      {children ? (
+        <Text as="div" textStyle="sm">
+          {children}
+        </Text>
+      ) : null}
     </ChakraTimeline.Content>
   </ChakraTimeline.Item>
 );
