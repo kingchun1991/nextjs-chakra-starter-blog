@@ -2,6 +2,7 @@
 
 import { IconButton } from '@chakra-ui/react';
 import { useLocale } from 'next-intl';
+import { useCallback } from 'react';
 import { LuLanguages } from 'react-icons/lu';
 
 import { localeLabels } from '@/i18n/locales';
@@ -10,7 +11,7 @@ import { routing, usePathname, useRouter } from '@/i18n/routing';
 const shouldShowLanguageSwitcher = routing.locales.length > 1;
 
 const getNextLocale = (currentLocale: string): string => {
-  const locales = routing.locales;
+  const { locales } = routing;
   const currentIndex = locales.indexOf(
     currentLocale as (typeof locales)[number]
   );
@@ -34,11 +35,11 @@ function LanguageSwitcherButton() {
   const nextLocale = getNextLocale(locale);
   const nextLocaleLabel = localeLabels[nextLocale] ?? nextLocale;
 
-  const switchLocale = () => {
+  const switchLocale = useCallback(() => {
     router.push(pathname, {
       locale: nextLocale as (typeof routing.locales)[number],
     });
-  };
+  }, [router, pathname, nextLocale]);
 
   return (
     <IconButton

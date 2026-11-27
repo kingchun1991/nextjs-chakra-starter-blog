@@ -12,6 +12,7 @@ import {
   useDisclosure,
 } from '@chakra-ui/react';
 import { useTranslations } from 'next-intl';
+import { useCallback } from 'react';
 import {
   LuChevronDown,
   LuChevronRight,
@@ -102,7 +103,7 @@ function DesktopNavContent({ getTranslatedTitle }: DesktopNavContentProps) {
               </Link>
             </HoverCardTrigger>
 
-            {navItem.children && (
+            {navItem.children ? (
               <HoverCardContent>
                 <HoverCardArrow />
                 <Stack gap={1}>
@@ -111,7 +112,7 @@ function DesktopNavContent({ getTranslatedTitle }: DesktopNavContentProps) {
                   ))}
                 </Stack>
               </HoverCardContent>
-            )}
+            ) : null}
           </HoverCardRoot>
         </Box>
       ))}
@@ -122,18 +123,19 @@ function DesktopNavContent({ getTranslatedTitle }: DesktopNavContentProps) {
 function DesktopNavWithTranslations() {
   const t = useTranslations('header');
 
-  const getTranslatedTitle = (navItem: NavItem) => {
-    return t(navItem.title.toLowerCase());
-  };
+  const getTranslatedTitle = useCallback(
+    (navItem: NavItem) => t(navItem.title.toLowerCase()),
+    [t]
+  );
 
   return <DesktopNavContent getTranslatedTitle={getTranslatedTitle} />;
 }
 
+const getNavItemTitle = (navItem: NavItem) => navItem.title;
+
 export function DesktopNav() {
   if (!i18nEnabled) {
-    return (
-      <DesktopNavContent getTranslatedTitle={(navItem) => navItem.title} />
-    );
+    return <DesktopNavContent getTranslatedTitle={getNavItemTitle} />;
   }
 
   return <DesktopNavWithTranslations />;
@@ -166,7 +168,7 @@ function MobileNavItemContent({
           <Text _dark={{ color: 'gray.200' }} color="gray.600" fontWeight={600}>
             {getTranslatedTitle()}
           </Text>
-          {children && (
+          {children ? (
             <Icon
               h={6}
               transform={open ? 'rotate(180deg)' : ''}
@@ -175,7 +177,7 @@ function MobileNavItemContent({
             >
               <LuChevronDown />
             </Icon>
-          )}
+          ) : null}
         </Flex>
       </Link>
 
@@ -210,11 +212,15 @@ function MobileNavItemWithTranslations({
   ...rest
 }: MobileNavItemWithTranslationsProps) {
   const t = useTranslations('header');
+  const getTranslatedTitle = useCallback(
+    () => t(title.toLowerCase()),
+    [t, title]
+  );
 
   return (
     <MobileNavItemContent
       {...rest}
-      getTranslatedTitle={() => t(title.toLowerCase())}
+      getTranslatedTitle={getTranslatedTitle}
       onClose={onClose}
       title={title}
     />
@@ -224,11 +230,14 @@ function MobileNavItemWithTranslations({
 type MobileNavItemProps = NavItem & { onClose: () => void };
 
 export function MobileNavItem({ onClose, ...props }: MobileNavItemProps) {
+  const { title } = props;
+  const getTitle = useCallback(() => title, [title]);
+
   if (!i18nEnabled) {
     return (
       <MobileNavItemContent
         {...props}
-        getTranslatedTitle={() => props.title}
+        getTranslatedTitle={getTitle}
         onClose={onClose}
       />
     );

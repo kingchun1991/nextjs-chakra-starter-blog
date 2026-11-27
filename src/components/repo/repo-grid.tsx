@@ -22,9 +22,9 @@ interface RepoGridProps {
 }
 
 interface RepoWithContent {
-  repo: GitHubRepo;
-  readme?: string | null;
   error?: string;
+  readme?: string | null;
+  repo: GitHubRepo;
 }
 
 function RepoCardSkeleton() {
@@ -164,9 +164,9 @@ export default function RepoGrid({ username }: RepoGridProps) {
 
   return (
     <SimpleGrid columns={{ base: 1, md: 2, lg: 3 }} gap={6}>
-      {repos.map(({ repo, readme, error }) => (
+      {repos.map(({ repo, readme, error: readmeError }) => (
         <RepoCard
-          error={error}
+          error={readmeError}
           key={repo.id}
           readme={readme || undefined}
           repo={repo}

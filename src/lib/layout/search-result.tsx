@@ -16,9 +16,7 @@ import { LuFileText, LuTags } from 'react-icons/lu';
 import { plainify, titleify } from '@/lib/utils/text-converter';
 
 export interface ISearchItem {
-  group: string;
-  slug: string;
-  locale: string | null;
+  content: string;
   frontmatter: {
     title: string;
     summary: string;
@@ -27,7 +25,9 @@ export interface ISearchItem {
     categories?: Array<string>;
     tags?: Array<string>;
   };
-  content: string;
+  group: string;
+  locale: string | null;
+  slug: string;
 }
 
 export interface ISearchGroup {
@@ -56,40 +56,34 @@ export function SearchResult({
 }) {
   // const router = useRouter();
 
-  const generateSearchGroup = (searchResult: Array<ISearchItem>) => {
-    return searchResult.reduce(
-      (groups, item) => {
-        const groupIndex = groups.findIndex(
-          (group) => group.group === item.group
-        );
-        if (groupIndex === -1) {
-          groups.push({
-            group: item.group,
-            groupItems: [item],
-          });
-        } else {
-          groups[groupIndex].groupItems.push(item);
-        }
-        return groups;
-      },
-      [] as Array<ISearchGroup>
-    );
-  };
+  const generateSearchGroup = (items: Array<ISearchItem>) =>
+    items.reduce<Array<ISearchGroup>>((groups, item) => {
+      const groupIndex = groups.findIndex(
+        (group) => group.group === item.group
+      );
+      if (groupIndex === -1) {
+        groups.push({
+          group: item.group,
+          groupItems: [item],
+        });
+      } else {
+        groups[groupIndex].groupItems.push(item);
+      }
+      return groups;
+    }, []);
 
   const finalResult = generateSearchGroup(searchResult);
 
-  const matchUnderline = (text: string, substring: string) => {
-    return (
-      <Highlight
-        query={substring}
-        styles={{
-          textDecoration: 'underline',
-        }}
-      >
-        {text}
-      </Highlight>
-    );
-  };
+  const matchUnderline = (text: string, substring: string) => (
+    <Highlight
+      query={substring}
+      styles={{
+        textDecoration: 'underline',
+      }}
+    >
+      {text}
+    </Highlight>
+  );
 
   // match marker
   const matchMarker = (text: string, substring: string) => {
@@ -115,7 +109,7 @@ export function SearchResult({
     // Find the start of the word containing the substring
     let wordStart = position;
     while (wordStart > 0 && plainContent[wordStart - 1] !== ' ') {
-      wordStart--;
+      wordStart -= 1;
     }
 
     const matches = plainContent.slice(wordStart, substring.length + position);
@@ -187,21 +181,21 @@ export function SearchResult({
                           {matchContent(item.frontmatter.title, searchString)}
                         </Heading>
                       </Link>
-                      {item.frontmatter.description && (
+                      {item.frontmatter.description ? (
                         <Text className="search-result-item-description">
                           {matchUnderline(
                             item.frontmatter.description,
                             searchString
                           )}
                         </Text>
-                      )}
-                      {item.content && (
+                      ) : null}
+                      {item.content ? (
                         <Text className="search-result-item-content">
                           {matchContent(item.content, searchString)}
                         </Text>
-                      )}
+                      ) : null}
                       <Box className="search-result-item-taxonomies">
-                        {item.frontmatter.categories && (
+                        {item.frontmatter.categories ? (
                           <HStack gap={2}>
                             <Icon>
                               <LuFileText />
@@ -218,8 +212,8 @@ export function SearchResult({
                               )
                             )}
                           </HStack>
-                        )}
-                        {item.frontmatter.tags && (
+                        ) : null}
+                        {item.frontmatter.tags ? (
                           <HStack gap={2}>
                             <Icon>
                               <LuTags />
@@ -233,7 +227,7 @@ export function SearchResult({
                               </Text>
                             ))}
                           </HStack>
-                        )}
+                        ) : null}
                       </Box>
                     </Box>
                   </Flex>

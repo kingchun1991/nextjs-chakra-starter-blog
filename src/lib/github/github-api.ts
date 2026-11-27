@@ -51,12 +51,12 @@ export async function fetchReadme(
 
     // Simple markdown to text conversion for preview
     return content
-      .replace(/#{1,6}\s+/g, '') // Remove headers
-      .replace(/\*\*(.*?)\*\*/g, '$1') // Remove bold
-      .replace(/\*(.*?)\*/g, '$1') // Remove italic
-      .replace(/`(.*?)`/g, '$1') // Remove inline code
-      .replace(/\[([^\]]{0,1000})\]\(([^)]{0,2000})\)/g, '$1') // Convert links to text (ReDoS-safe)
-      .replace(/\n{3,}/g, '\n\n') // Normalize line breaks
+      .replace(/#{1,6}\s+/gu, '') // Remove headers
+      .replace(/\*\*(?<text>.*?)\*\*/gu, '$<text>') // Remove bold
+      .replace(/\*(?<text>.*?)\*/gu, '$<text>') // Remove italic
+      .replace(/`(?<code>.*?)`/gu, '$<code>') // Remove inline code
+      .replace(/\[(?<text>[^\]]{0,1000})\]\((?:[^)]{0,2000})\)/gu, '$<text>') // Convert links to text (ReDoS-safe)
+      .replace(/\n{3,}/gu, '\n\n') // Normalize line breaks
       .trim();
   } catch (error) {
     console.error('Error fetching README:', error);

@@ -4,7 +4,7 @@ import path from 'node:path';
 import matter from 'gray-matter';
 import RSS from 'rss';
 
-const FILE_EXTENSION_REGEX = /\.[^/.]+$/;
+const FILE_EXTENSION_REGEX = /\.[^/.]+$/u;
 
 const CONTENT_DEPTH = 2;
 const JSON_FOLDER = './.json';
@@ -58,7 +58,7 @@ const formatJsonFiles = (filePaths) => {
 
 const getLocaleFromFilePath = (filepath) => {
   const relativePath = path.relative(BLOG_FOLDER, filepath);
-  const firstSegment = relativePath.split(path.sep)[0];
+  const [firstSegment] = relativePath.split(path.sep);
 
   if (
     !firstSegment ||

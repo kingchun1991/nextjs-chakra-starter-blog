@@ -8,7 +8,7 @@ import remarkGfm from 'remark-gfm';
 import { defaultLocale } from '@/i18n/locales';
 import type { IPosts } from '@/lib/types/custom-types';
 
-const MDX_EXT_REGEX = /\.mdx$/;
+const MDX_EXT_REGEX = /\.mdx$/u;
 const root = process.cwd();
 
 export function getFiles(type: string, locale = defaultLocale) {
@@ -28,7 +28,7 @@ export function getAllFilesFrontMatter(type: string, locale = defaultLocale) {
 
   const files = fs.readdirSync(contentPath);
 
-  return files.reduce(
+  return files.reduce<Array<IPosts>>(
     (allPosts: Array<IPosts>, postSlug: string) => {
       const source = fs.readFileSync(path.join(contentPath, postSlug), 'utf8');
 
@@ -50,7 +50,7 @@ export function getAllFilesFrontMatter(type: string, locale = defaultLocale) {
       allPosts.push(newPost);
       return allPosts;
     },
-    [] as Array<IPosts>
+    []
   );
 }
 
@@ -155,8 +155,9 @@ export async function getDirectoryItemBySlug(slug: string) {
   const { data, content } = matter(source);
 
   // Process wiki-links in content (ReDoS-safe with bounded quantifiers)
-  const WIKI_LINK_REGEX = /\[\[([^\]|]{1,500})(?:\|([^\]]{1,500}))?\]\]/g;
-  const NORMALIZE_REGEX = /[_\s]+/g;
+  const WIKI_LINK_REGEX =
+    /\[\[(?<target>[^\]|]{1,500})(?:\|(?<displayText>[^\]]{1,500}))?\]\]/gu;
+  const NORMALIZE_REGEX = /[_\s]+/gu;
   const processedContent = content.replace(
     WIKI_LINK_REGEX,
     (_match, target, displayText) => {
@@ -195,7 +196,7 @@ export async function getDirectoryItemBySlug(slug: string) {
   };
 }
 
-const MDX_FILE_REGEX = /\.mdx$/;
+const MDX_FILE_REGEX = /\.mdx$/u;
 
 export function getDirectoryItemSlugs() {
   const contentPath = path.join(process.cwd(), 'content', 'directory');

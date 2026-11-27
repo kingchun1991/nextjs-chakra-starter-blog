@@ -1,5 +1,4 @@
 /* eslint-disable react/jsx-key */
-/* eslint-disable @typescript-eslint/no-shadow */
 import { Box } from '@chakra-ui/react';
 import { Highlight, themes } from 'prism-react-renderer';
 import type React from 'react';
@@ -13,7 +12,7 @@ interface CodeBlockProps {
   className?: string;
 }
 
-const LANGUAGE_PREFIX_REGEX = /language-/;
+const LANGUAGE_PREFIX_REGEX = /language-/u;
 
 export const CodeBlock: React.FC<CodeBlockProps> = ({
   children,
@@ -46,8 +45,17 @@ export const CodeBlock: React.FC<CodeBlockProps> = ({
         language={language}
         theme={themes.nightOwl}
       >
-        {({ className, style, tokens, getLineProps, getTokenProps }) => (
-          <pre className={className} style={{ ...style, overflowX: 'auto' }}>
+        {({
+          className: highlightClassName,
+          style,
+          tokens,
+          getLineProps,
+          getTokenProps,
+        }) => (
+          <pre
+            className={highlightClassName}
+            style={{ ...style, overflowX: 'auto' }}
+          >
             {tokens.map((line, i) => (
               <Box key={i} {...getLineProps({ line })}>
                 {line.map((token, key) => (

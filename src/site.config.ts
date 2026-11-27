@@ -41,15 +41,7 @@ interface GiscusConfig {
 }
 
 interface SitesConfig {
-  title: string;
-  titleTemplate: string;
   description: string;
-  language: string;
-  url: string;
-  repoUrl: string;
-  donationUrl: string;
-  navigation: Array<NavItem>;
-  repoBranch: string;
   directory?: {
     enabled: boolean;
     type: string;
@@ -71,12 +63,20 @@ interface SitesConfig {
       minEdgeWeight: number;
     };
   };
+  donationUrl: string;
+  language: string;
+  navigation: Array<NavItem>;
+  repoBranch: string;
+  repoUrl: string;
+  title: string;
+  titleTemplate: string;
+  url: string;
 }
 
 export interface NavItem {
-  title: string;
-  url?: string;
+  children?: Array<NavItem>;
   external?: boolean;
   status?: string;
-  children?: Array<NavItem>;
+  title: string;
+  url?: string;
 }

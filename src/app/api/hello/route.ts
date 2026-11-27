@@ -2,6 +2,5 @@
 
 import { NextResponse } from 'next/server';
 
-export const GET = () => {
-  return NextResponse.json({ name: 'John Doe' }, { status: 200 });
-};
+export const GET = () =>
+  NextResponse.json({ name: 'John Doe' }, { status: 200 });

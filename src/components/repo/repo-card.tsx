@@ -55,6 +55,10 @@ const languageColors: Record<string, string> = {
   Kotlin: '#A97BFF',
 };
 
+const stopPropagation = (event: React.MouseEvent) => {
+  event.stopPropagation();
+};
+
 export default function RepoCard({ repo, readme, error }: RepoCardProps) {
   const [isExpanded, setIsExpanded] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
@@ -89,7 +93,7 @@ export default function RepoCard({ repo, readme, error }: RepoCardProps) {
   const formatReadmeContent = (content: string) => {
     return content.split('\n').map((line, index) => {
       // Use a combination of index and line content for a more stable key
-      const lineKey = `${index}-${line.slice(0, 20).replace(/\s/g, '-')}`;
+      const lineKey = `${index}-${line.slice(0, 20).replace(/\s/gu, '-')}`;
 
       // Headers
       if (line.startsWith('# ')) {
@@ -186,7 +190,18 @@ export default function RepoCard({ repo, readme, error }: RepoCardProps) {
   }, [modalOpen, handleCopy]);
 
   const readmePreview = readme ? truncateText(readme, 300) : null;
-  const hasMoreContent = readme && readme.length > 300;
+  const hasMoreContent = (readme?.length ?? 0) > 300;
+  const readmeText = isExpanded ? readme : readmePreview;
+
+  const handleToggleExpanded = useCallback((event: React.MouseEvent) => {
+    event.stopPropagation();
+    setIsExpanded((expanded) => !expanded);
+  }, []);
+
+  const handleModalOpenChange = useCallback(
+    ({ open }: { open: boolean }) => setModalOpen(open),
+    []
+  );
 
   const handleCardClick = (e: React.MouseEvent) => {
     // Don't open modal if clicking on interactive elements
@@ -237,7 +252,7 @@ export default function RepoCard({ repo, readme, error }: RepoCardProps) {
                 </Text>
                 <Text as="span">{repo.name}</Text>
               </Heading>
-              {repo.description && (
+              {repo.description ? (
                 <Text
                   _dark={{ color: 'gray.400' }}
                   color="gray.600"
@@ -252,7 +267,7 @@ export default function RepoCard({ repo, readme, error }: RepoCardProps) {
                 >
                   {repo.description}
                 </Text>
-              )}
+              ) : null}
             </Box>
             <Flex alignItems="center" gap={2}>
               <Badge
@@ -291,7 +306,7 @@ export default function RepoCard({ repo, readme, error }: RepoCardProps) {
             gap={3}
             mt={3}
           >
-            {repo.language && (
+            {repo.language ? (
               <Stack align="center" direction="row" gap={1}>
                 <Box
                   bg={languageColors[repo.language] || 'gray.500'}
@@ -301,7 +316,7 @@ export default function RepoCard({ repo, readme, error }: RepoCardProps) {
                 />
                 <Text>{repo.language}</Text>
               </Stack>
-            )}
+            ) : null}
             <Stack align="center" direction="row" gap={1}>
               <Icon as={FiStar} boxSize={4} />
               <Text fontWeight="medium">
@@ -353,7 +368,7 @@ export default function RepoCard({ repo, readme, error }: RepoCardProps) {
               </Text>
             </Stack>
 
-            {error && (
+            {error ? (
               <Stack
                 _dark={{ color: 'gray.400', bg: 'gray.700' }}
                 bg="gray.50"
@@ -367,9 +382,9 @@ export default function RepoCard({ repo, readme, error }: RepoCardProps) {
                 <Icon as={FiAlertCircle} boxSize={4} color="yellow.500" />
                 <Text>README not available</Text>
               </Stack>
-            )}
+            ) : null}
 
-            {readmePreview && (
+            {readmePreview ? (
               <Box>
                 <Text
                   _dark={{ color: 'gray.400' }}
@@ -388,7 +403,7 @@ export default function RepoCard({ repo, readme, error }: RepoCardProps) {
                   }
                   transition="all 0.2s"
                 >
-                  {isExpanded ? readme : readmePreview}
+                  {readmeText}
                 </Text>
 
                 {hasMoreContent && (
@@ -396,10 +411,7 @@ export default function RepoCard({ repo, readme, error }: RepoCardProps) {
                     fontSize="xs"
                     height="8"
                     mt={2}
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      setIsExpanded(!isExpanded);
-                    }}
+                    onClick={handleToggleExpanded}
                     size="sm"
                     variant="ghost"
                   >
@@ -411,7 +423,7 @@ export default function RepoCard({ repo, readme, error }: RepoCardProps) {
                   </Button>
                 )}
               </Box>
-            )}
+            ) : null}
 
             {!(readmePreview || error) && (
               <Text color="gray.500" fontSize="sm" fontStyle="italic">
@@ -430,7 +442,7 @@ export default function RepoCard({ repo, readme, error }: RepoCardProps) {
             <Button asChild colorScheme="blue" flex="1" size="sm">
               <a
                 href={repo.html_url}
-                onClick={(e) => e.stopPropagation()}
+                onClick={stopPropagation}
                 rel="noopener noreferrer"
                 target="_blank"
               >
@@ -441,7 +453,7 @@ export default function RepoCard({ repo, readme, error }: RepoCardProps) {
             <Button asChild flex="1" size="sm" variant="outline">
               <a
                 href={`${repo.html_url}/fork`}
-                onClick={(e) => e.stopPropagation()}
+                onClick={stopPropagation}
                 rel="noopener noreferrer"
                 target="_blank"
               >
@@ -457,7 +469,7 @@ export default function RepoCard({ repo, readme, error }: RepoCardProps) {
             >
               <a
                 href={repo.html_url}
-                onClick={(e) => e.stopPropagation()}
+                onClick={stopPropagation}
                 rel="noopener noreferrer"
                 target="_blank"
               >
@@ -470,7 +482,7 @@ export default function RepoCard({ repo, readme, error }: RepoCardProps) {
 
       {/* Full README Modal */}
       <DialogRoot
-        onOpenChange={({ open }) => setModalOpen(open)}
+        onOpenChange={handleModalOpenChange}
         open={modalOpen}
         size="xl"
       >
@@ -554,7 +566,7 @@ export default function RepoCard({ repo, readme, error }: RepoCardProps) {
                   <Icon as={LuGitFork} boxSize={4} />
                   <Text>{repo.forks_count.toLocaleString()} forks</Text>
                 </Stack>
-                {repo.language && (
+                {repo.language ? (
                   <Stack align="center" direction="row" gap={1}>
                     <Box
                       bg={languageColors[repo.language] || 'gray.500'}
@@ -564,7 +576,7 @@ export default function RepoCard({ repo, readme, error }: RepoCardProps) {
                     />
                     <Text>{repo.language}</Text>
                   </Stack>
-                )}
+                ) : null}
               </Stack>
 
               <Button asChild size="sm" variant="outline">

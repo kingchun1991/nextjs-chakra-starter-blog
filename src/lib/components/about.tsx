@@ -53,8 +53,9 @@ export function AboutLayout({
           <Heading as="h1" letterSpacing="tight" mb={2} size="2xl">
             {post.title}
           </Heading>
-          {mounted && <MDXRemote {...mdxSource} components={MDXComponents} />}
-          {!mounted && (
+          {mounted ? (
+            <MDXRemote {...mdxSource} components={MDXComponents} />
+          ) : (
             <Box color="gray.500" p={4}>
               Loading content...
             </Box>

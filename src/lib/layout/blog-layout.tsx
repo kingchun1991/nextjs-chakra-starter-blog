@@ -44,14 +44,14 @@ export function BlogLayout({
   const parseDate = (dateString: string) => {
     try {
       return format(parseISO(dateString), dateFormat);
-    } catch (_error) {
+    } catch {
       return '';
     }
   };
   // const similarPosts = similerItems(post, posts, post.slug!);
-  const publishedAt = post?.publishedAt ?? '';
+  const publishedAt = post.publishedAt ?? '';
   const formattedPublishedDate = parseDate(publishedAt);
-  const modifiedAt = post?.modifiedAt ?? '';
+  const modifiedAt = post.modifiedAt ?? '';
   const formattedModifyDate = parseDate(modifiedAt);
 
   return (
@@ -134,12 +134,12 @@ export function BlogLayout({
                 {readingDuration(content, {
                   wordsPerMinute: 200,
                   emoji: false,
-                }) ?? ''}
+                })}
               </Text>
             </Flex>
           </HStack>
         </Flex>
-        {mounted && (
+        {mounted ? (
           <MDXRemote
             {...mdxSource}
             components={
@@ -148,8 +148,7 @@ export function BlogLayout({
               >['components']
             }
           />
-        )}
-        {!mounted && (
+        ) : (
           <Box color="gray.500" p={4}>
             Loading content...
           </Box>

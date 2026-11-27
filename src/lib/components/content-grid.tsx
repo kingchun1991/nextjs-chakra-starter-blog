@@ -10,7 +10,7 @@ import {
   HStack,
   Separator,
 } from '@chakra-ui/react';
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 
 import { Link } from '@/components/ui/link';
 import {
@@ -23,15 +23,15 @@ import type { IPosts } from '@/lib/types/custom-types';
 import { slugify } from '@/lib/utils/text-converter';
 
 interface ContentGridProps {
+  columns?: number;
   items: Array<IPosts>;
   itemType: 'blog' | 'directory';
-  columns?: number;
-  showLoadMore?: boolean;
   pageSize?: number;
-  showSidebar?: boolean;
-  showPagination?: boolean;
-  tagSelected?: string;
   renderCard: (item: IPosts) => React.ReactNode;
+  showLoadMore?: boolean;
+  showPagination?: boolean;
+  showSidebar?: boolean;
+  tagSelected?: string;
 }
 
 export function ContentGrid({
@@ -43,6 +43,10 @@ export function ContentGrid({
   tagSelected = 'All',
 }: ContentGridProps) {
   const [currentPage, setCurrentPage] = useState(1);
+  const handlePageChange = useCallback(
+    ({ page }: { page: number }) => setCurrentPage(page),
+    []
+  );
 
   const filteredItems = items
     .filter((item: IPosts) => !item.draft)
@@ -52,7 +56,7 @@ export function ContentGrid({
         item.tags?.some((tag: string) =>
           tag
             .toLowerCase()
-            .includes(tagSelected.replace(/-/g, ' ').toLowerCase())
+            .includes(tagSelected.replace(/-/gu, ' ').toLowerCase())
         )
     )
     .sort((a: IPosts, b: IPosts) =>
@@ -93,7 +97,7 @@ export function ContentGrid({
         </Heading>
       )}
       <Box>
-        {showSidebar && <Separator />}
+        {showSidebar ? <Separator /> : null}
         <Grid
           m="0 auto 4rem auto"
           p="2"
@@ -101,7 +105,7 @@ export function ContentGrid({
           templateColumns="repeat(5, 1fr)"
           templateRows="repeat(2, 1fr)"
         >
-          {showSidebar && (
+          {showSidebar ? (
             <GridItem
               area="nav"
               colSpan={1}
@@ -140,7 +144,7 @@ export function ContentGrid({
                 ))}
               </Box>
             </GridItem>
-          )}
+          ) : null}
           <GridItem area="main" colSpan={{ base: 5, md: showSidebar ? 4 : 5 }}>
             <Flex flexDirection="column" height="100%" px={4}>
               {!currentItems.length && 'No posts found :('}
@@ -148,12 +152,12 @@ export function ContentGrid({
                 <Box key={item.slug || item.title}>{renderCard(item)}</Box>
               ))}
             </Flex>
-            {showPagination && (
+            {showPagination ? (
               <Center>
                 <PaginationRoot
                   count={filteredItems.length}
                   defaultPage={1}
-                  onPageChange={(e) => setCurrentPage(e.page)}
+                  onPageChange={handlePageChange}
                   pageSize={pageSize}
                   variant="solid"
                 >
@@ -164,7 +168,7 @@ export function ContentGrid({
                   </HStack>
                 </PaginationRoot>
               </Center>
-            )}
+            ) : null}
           </GridItem>
         </Grid>
       </Box>

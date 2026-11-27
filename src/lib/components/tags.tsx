@@ -18,7 +18,7 @@ export function Tags({ tags }: { tags: Array<string> }) {
           <LuTags />
         </Icon>
       </Flex>
-      {tags?.map((tag) => (
+      {tags.map((tag) => (
         <Flex align="flex-start" alignItems="center" key={tag}>
           <Link href={`/tags/${slugify(tag)}`}>
             <Tag colorPalette="teal" m={1} p="1" variant="solid">

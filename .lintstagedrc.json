@@ -1,5 +1,3 @@
 {
-  "*.{js,jsx,ts,tsx,json,jsonc,css,scss,md,mdx}": [
-    "biome check --write --no-errors-on-unmatched"
-  ]
+  "*.{js,jsx,ts,tsx,json,jsonc,css,scss,md,mdx}": ["ultracite fix"]
 }

@@ -5,7 +5,7 @@ import { defaultLocale, locales } from './src/i18n/locales';
 
 const i18nEnabled = locales.length > 1;
 const escapedDefaultLocale = defaultLocale.replace(
-  /[.*+?^${}()|[\]\\]/g,
+  /[.*+?^${}()|[\]\\]/gu,
   '\\$&'
 );
 

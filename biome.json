@@ -35,7 +35,7 @@
       "next": "recommended"
     },
     "rules": {
-      "recommended": true,
+      "preset": "recommended",
       "performance": {
         "noBarrelFile": "off"
       },

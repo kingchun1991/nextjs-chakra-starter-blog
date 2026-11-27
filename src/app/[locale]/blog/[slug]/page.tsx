@@ -11,23 +11,17 @@ type Props = {
   params: Promise<{ slug: string; locale: string }>;
 };
 
-const MDX_EXTENSION_REGEX = /\.mdx/;
+const MDX_EXTENSION_REGEX = /\.mdx/u;
 
-export async function generateStaticParams() {
+export function generateStaticParams() {
   const locales = ['en', 'zh-TW'];
-  const params: Array<{ locale: string; slug: string }> = [];
 
-  for (const locale of locales) {
-    const posts = await getFiles('blog', locale);
-    for (const post of posts) {
-      params.push({
-        locale,
-        slug: post.replace(MDX_EXTENSION_REGEX, ''),
-      });
-    }
-  }
-
-  return params;
+  return locales.flatMap((locale) =>
+    getFiles('blog', locale).map((post) => ({
+      locale,
+      slug: post.replace(MDX_EXTENSION_REGEX, ''),
+    }))
+  );
 }
 
 function getPost(slug: string, locale: string) {

@@ -2,17 +2,18 @@
 
 import { Table, Text } from '@chakra-ui/react';
 
+// Props come straight from MDX content, so either array may be missing.
 interface EnhancedTableProps {
-  data: Array<Record<string, string | number | React.ReactNode>>;
-  columns: Array<{
+  columns?: Array<{
     key: string;
     header: string;
     align?: 'left' | 'center' | 'right';
     width?: string;
   }>;
-  striped?: boolean;
-  hoverable?: boolean;
   compact?: boolean;
+  data?: Array<Record<string, string | number | React.ReactNode>>;
+  hoverable?: boolean;
+  striped?: boolean;
 }
 
 export function EnhancedTable({
@@ -23,14 +24,14 @@ export function EnhancedTable({
   compact = false,
 }: EnhancedTableProps) {
   // Defensive checks for required props
-  if (!(columns && Array.isArray(columns))) {
+  if (!Array.isArray(columns)) {
     console.error(
       'EnhancedTable: columns prop is required and must be an array'
     );
     return null;
   }
 
-  if (!(data && Array.isArray(data))) {
+  if (!Array.isArray(data)) {
     console.error('EnhancedTable: data prop is required and must be an array');
     return null;
   }

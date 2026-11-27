@@ -21,6 +21,7 @@ Do **NOT** put complex logic directly inside `src/app`.
 
 1.  **Create the Component**:
     Create a new folder in `src/lib/pages`, e.g., `src/lib/pages/about/index.tsx`.
+
     ```tsx
     export const About = () => {
       return <Box>About Page</Box>;
@@ -29,13 +30,12 @@ Do **NOT** put complex logic directly inside `src/app`.
 
 2.  **Create the Route**:
     Create the route in `src/app/about/page.tsx`.
+
     ```tsx
     import { About } from '@/lib/pages/about';
-    
-    // Define metadata here if needed
+        // Define metadata here if needed
     export const metadata = { title: 'About' };
-    
-    export default About; // Re-export the component
+        export default About; // Re-export the component
     ```
 
 ### 2. Styling

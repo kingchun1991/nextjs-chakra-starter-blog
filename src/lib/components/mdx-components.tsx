@@ -29,8 +29,8 @@ import { Timeline, TimelineItem } from './mdx-components/timeline';
 
 interface ProductCardProps {
   imgsrc: string;
-  title: string;
   price: string;
+  title: string;
   url: string;
 }
 
@@ -42,9 +42,9 @@ const ProductCard = (props: ProductCardProps) => {
 };
 
 interface RepoCardWrapperProps {
-  repo: GitHubRepo;
-  readme: string;
   error?: string;
+  readme: string;
+  repo: GitHubRepo;
 }
 
 const RepoCardWrapper = (props: RepoCardWrapperProps) => {
@@ -53,10 +53,10 @@ const RepoCardWrapper = (props: RepoCardWrapperProps) => {
 };
 
 interface CustomImageProps {
-  width: number;
+  alt: string;
   height: number;
   src: string;
-  alt: string;
+  width: number;
 }
 
 const CustomImage = (props: CustomImageProps) => {
@@ -65,8 +65,8 @@ const CustomImage = (props: CustomImageProps) => {
 };
 
 interface CustomLinkProps {
-  href: string;
   children?: React.ReactNode;
+  href: string;
   [key: string]: unknown;
 }
 
@@ -97,22 +97,20 @@ const CustomLink = (props: CustomLinkProps) => {
   );
 };
 
-const Quote = (props: React.ComponentPropsWithoutRef<typeof Box>) => {
-  return (
-    <Box
-      as="blockquote"
-      borderColor="blue.500"
-      borderLeft="4px solid"
-      color="gray.600"
-      fontStyle="italic"
-      mb={4}
-      mt={4}
-      pl={4}
-      py={2}
-      {...props}
-    />
-  );
-};
+const Quote = (props: React.ComponentPropsWithoutRef<typeof Box>) => (
+  <Box
+    as="blockquote"
+    borderColor="blue.500"
+    borderLeft="4px solid"
+    color="gray.600"
+    fontStyle="italic"
+    mb={4}
+    mt={4}
+    pl={4}
+    py={2}
+    {...props}
+  />
+);
 // Define a type for the props
 type CustomHeadingProps = React.ComponentPropsWithoutRef<typeof Heading> & {
   as: React.ElementType;
@@ -141,16 +139,14 @@ const CustomHeading: React.FC<CustomHeadingProps> = ({ as, id, ...props }) => {
   return <Heading as={as} {...props} />;
 };
 
-const Hr = () => {
-  return (
-    <Separator
-      _dark={{ borderColor: 'gray.600' }}
-      borderColor="gray.200"
-      my={4}
-      w="100%"
-    />
-  );
-};
+const Hr = () => (
+  <Separator
+    _dark={{ borderColor: 'gray.600' }}
+    borderColor="gray.200"
+    my={4}
+    w="100%"
+  />
+);
 
 const MDXTable = (props: React.ComponentPropsWithoutRef<typeof Table.Root>) => (
   <Table.ScrollArea borderWidth="1px" maxW="l">

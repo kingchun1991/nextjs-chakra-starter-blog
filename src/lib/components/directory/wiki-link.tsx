@@ -7,9 +7,9 @@ import { Link } from '@/components/ui/link';
 import { Tooltip } from '@/components/ui/tooltip';
 
 interface WikiLinkProps {
-  slug: string;
   broken?: boolean;
   children?: React.ReactNode;
+  slug: string;
 }
 
 export function WikiLink({ slug, broken = false, children }: WikiLinkProps) {
