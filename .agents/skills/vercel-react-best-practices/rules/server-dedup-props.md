@@ -15,18 +15,18 @@ RSC→client serialization deduplicates by object reference, not value. Same ref
 
 ```tsx
 // RSC: sends 6 strings (2 arrays × 3 items)
-<ClientList usernames={usernames} usernamesOrdered={usernames.toSorted()} />
+<ClientList usernames={usernames} usernamesOrdered={usernames.toSorted()} />;
 ```
 
 **Correct (sends 3 strings):**
 
 ```tsx
 // RSC: send once
-<ClientList usernames={usernames} />
+<ClientList usernames={usernames} />;
 
 // Client: transform there
-'use client'
-const sorted = useMemo(() => [...usernames].sort(), [usernames])
+('use client');
+const sorted = useMemo(() => [...usernames].sort(), [usernames]);
 ```
 
 **Nested deduplication behavior:**

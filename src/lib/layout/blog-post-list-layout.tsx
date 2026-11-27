@@ -12,7 +12,7 @@ import {
   HStack,
   Separator,
 } from '@chakra-ui/react';
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 
 import { Link } from '@/components/ui/link';
 import {
@@ -49,6 +49,10 @@ export function BlogPostListLayout({
   const postsPerPage = 5;
   // const totalPages = Math.ceil(filteredBlogPosts.length / postsPerPage);
   const [currentPage, setCurrentPage] = useState(1);
+  const handlePageChange = useCallback(
+    ({ page }: { page: number }) => setCurrentPage(page),
+    []
+  );
 
   const startIndex = (currentPage - 1) * postsPerPage;
   const endIndex = startIndex + postsPerPage;
@@ -139,7 +143,7 @@ export function BlogPostListLayout({
               <PaginationRoot
                 count={filteredBlogPosts.length}
                 defaultPage={1}
-                onPageChange={(e) => setCurrentPage(e.page)}
+                onPageChange={handlePageChange}
                 pageSize={postsPerPage}
                 variant="solid"
               >

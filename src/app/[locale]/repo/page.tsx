@@ -12,7 +12,7 @@ import {
   Text,
 } from '@chakra-ui/react';
 import type React from 'react';
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import { FiGithub, FiSearch } from 'react-icons/fi';
 
 import RepoGrid from '@/components/repo/repo-grid';
@@ -21,10 +21,17 @@ export default function Page() {
   const [username, setUsername] = useState('shadcn');
   const [searchInput, setSearchInput] = useState('shadcn');
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    setUsername(searchInput);
-  };
+  const handleSubmit = useCallback(
+    (e: React.FormEvent) => {
+      e.preventDefault();
+      setUsername(searchInput);
+    },
+    [searchInput]
+  );
+  const handleSearchInputChange = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => setSearchInput(e.target.value),
+    []
+  );
 
   return (
     <Box _dark={{ bg: 'gray.900' }} bg="gray.50" minH="100vh">
@@ -63,7 +70,7 @@ export default function Page() {
             <HStack gap={2}>
               <Input
                 flex="1"
-                onChange={(e) => setSearchInput(e.target.value)}
+                onChange={handleSearchInputChange}
                 placeholder="Enter GitHub username..."
                 value={searchInput}
               />

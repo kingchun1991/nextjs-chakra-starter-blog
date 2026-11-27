@@ -39,16 +39,16 @@ function formatGeneratedJsonFile(filePath) {
 function levenshteinDistance(str1, str2) {
   const matrix = [];
 
-  for (let i = 0; i <= str2.length; i++) {
+  for (let i = 0; i <= str2.length; i += 1) {
     matrix[i] = [i];
   }
 
-  for (let j = 0; j <= str1.length; j++) {
+  for (let j = 0; j <= str1.length; j += 1) {
     matrix[0][j] = j;
   }
 
-  for (let i = 1; i <= str2.length; i++) {
-    for (let j = 1; j <= str1.length; j++) {
+  for (let i = 1; i <= str2.length; i += 1) {
+    for (let j = 1; j <= str1.length; j += 1) {
       if (str2.charAt(i - 1) === str1.charAt(j - 1)) {
         matrix[i][j] = matrix[i - 1][j - 1];
       } else {
@@ -67,20 +67,22 @@ function levenshteinDistance(str1, str2) {
 function normalizeSlug(text) {
   return text
     .toLowerCase()
-    .replace(/[_\s]+/g, '-')
-    .replace(/[^\w-]/g, '');
+    .replace(/[_\s]+/gu, '-')
+    .replace(/[^\w-]/gu, '');
 }
 
 function extractWikiLinks(content) {
   // ReDoS-safe regex with bounded quantifiers
-  const wikiLinkRegex = /\[\[([^\]|]{1,500})(?:\|([^\]]{1,500}))?\]\]/g;
+  const wikiLinkRegex =
+    /\[\[(?<target>[^\]|]{1,500})(?:\|(?<displayText>[^\]]{1,500}))?\]\]/gu;
   const links = [];
   let match = wikiLinkRegex.exec(content);
 
   while (match !== null) {
+    const { target, displayText } = match.groups;
     links.push({
-      target: match[1].trim(),
-      displayText: match[2] ? match[2].trim() : match[1].trim(),
+      target: target.trim(),
+      displayText: (displayText ?? target).trim(),
     });
     match = wikiLinkRegex.exec(content);
   }
@@ -174,7 +176,7 @@ function processWikiLinks(files, slugMap) {
           });
         }
 
-        edgeWeights[edgeKey]++;
+        edgeWeights[edgeKey] += 1;
 
         // Track backlinks
         if (!backlinks[targetSlug]) {

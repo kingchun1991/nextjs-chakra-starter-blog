@@ -2,13 +2,11 @@ import { Avatar, Timeline as ChakraTimeline, Text } from '@chakra-ui/react';
 import type { ReactNode } from 'react';
 import { LuCheck } from 'react-icons/lu';
 
-export const Timeline = ({ children, ...props }: { children: ReactNode }) => {
-  return (
-    <ChakraTimeline.Root size="xl" {...props}>
-      {children}
-    </ChakraTimeline.Root>
-  );
-};
+export const Timeline = ({ children, ...props }: { children: ReactNode }) => (
+  <ChakraTimeline.Root size="xl" {...props}>
+    {children}
+  </ChakraTimeline.Root>
+);
 
 export const TimelineItem = ({
   title,
@@ -22,31 +20,29 @@ export const TimelineItem = ({
   children?: ReactNode;
   icon?: ReactNode;
   avatar?: string | ReactNode;
-}) => {
-  return (
-    <ChakraTimeline.Item {...props}>
-      <ChakraTimeline.Connector>
-        <ChakraTimeline.Separator />
-        <ChakraTimeline.Indicator>
-          {avatar ? (
-            typeof avatar === 'string' ? (
-              <Avatar.Root size="full">
-                <Avatar.Image src={avatar} />
-                <Avatar.Fallback name="avatar" />
-              </Avatar.Root>
-            ) : (
-              avatar
-            )
+}) => (
+  <ChakraTimeline.Item {...props}>
+    <ChakraTimeline.Connector>
+      <ChakraTimeline.Separator />
+      <ChakraTimeline.Indicator>
+        {avatar ? (
+          typeof avatar === 'string' ? (
+            <Avatar.Root size="full">
+              <Avatar.Image src={avatar} />
+              <Avatar.Fallback name="avatar" />
+            </Avatar.Root>
           ) : (
-            <LuCheck />
-          )}
-        </ChakraTimeline.Indicator>
-      </ChakraTimeline.Connector>
-      <ChakraTimeline.Content>
-        <ChakraTimeline.Title>{title}</ChakraTimeline.Title>
-        <ChakraTimeline.Description>{subtitle}</ChakraTimeline.Description>
-        {children && <Text textStyle="sm">{children}</Text>}
-      </ChakraTimeline.Content>
-    </ChakraTimeline.Item>
-  );
-};
+            avatar
+          )
+        ) : (
+          <LuCheck />
+        )}
+      </ChakraTimeline.Indicator>
+    </ChakraTimeline.Connector>
+    <ChakraTimeline.Content>
+      <ChakraTimeline.Title>{title}</ChakraTimeline.Title>
+      <ChakraTimeline.Description>{subtitle}</ChakraTimeline.Description>
+      {children ? <Text textStyle="sm">{children}</Text> : null}
+    </ChakraTimeline.Content>
+  </ChakraTimeline.Item>
+);

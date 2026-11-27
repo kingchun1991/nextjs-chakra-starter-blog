@@ -43,11 +43,11 @@ export const TableOfContents: React.FC<TableOfContentsProps> = ({
           <LuChevronDown />
         </IconButton>
       </Button>
-      {open && (
+      {open ? (
         <Box p={2} pr={6}>
           {children}
         </Box>
-      )}
+      ) : null}
     </Box>
   );
 };

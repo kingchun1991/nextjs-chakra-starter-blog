@@ -12,8 +12,8 @@ import {
 
 interface ProductSimpleProps {
   imgsrc: string;
-  title: string;
   price: string;
+  title: string;
   url: string;
 }
 
@@ -70,15 +70,12 @@ export function ProductSimple(props: ProductSimpleProps) {
             {data.title}
           </Heading>
           <Stack align="center" direction="row">
-            <Button
-              border="2px"
-              borderColor="dark.500"
-              onClick={() => window.open(data.url, '_blank')}
-              size="md"
-            >
-              <Text fontSize="xl" fontWeight={800}>
-                {data.price} from Amazon
-              </Text>
+            <Button asChild border="2px" borderColor="dark.500" size="md">
+              <a href={data.url} rel="noopener noreferrer" target="_blank">
+                <Text fontSize="xl" fontWeight={800}>
+                  {data.price} from Amazon
+                </Text>
+              </a>
             </Button>
           </Stack>
         </Stack>

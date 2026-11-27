@@ -18,11 +18,12 @@ async function getData(locale: string) {
 
 export async function generateStaticParams() {
   const locales = ['en', 'zh-TW'];
+  const postsByLocale = await Promise.all(
+    locales.map(async (locale) => ({ locale, posts: await getData(locale) }))
+  );
   const params: Array<{ locale: string; slug: string }> = [];
 
-  for (const locale of locales) {
-    const posts = (await getData(locale)) as Array<IPosts>;
-
+  for (const { locale, posts } of postsByLocale) {
     const filteredBlogPosts = posts
       .filter((post: IPosts) => !post.draft)
       .sort((a: IPosts, b: IPosts) =>

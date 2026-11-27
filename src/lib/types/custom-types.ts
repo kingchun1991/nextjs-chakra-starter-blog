@@ -1,33 +1,33 @@
 export interface IFrontMatter {
-  publishedAt: string;
+  author: string;
+  draft: boolean;
   modifiedAt: string;
+  publishedAt: string;
   slug: string;
   summary: string;
   title: string;
   wordCount: number;
-  draft: boolean;
-  author: string;
 }
 
 export interface IPosts {
-  publishedAt?: string;
+  author?: string;
+  categories?: Array<string>;
+  description?: string;
+  draft?: boolean;
+  image?: string;
   modifiedAt?: string;
+  publishedAt?: string;
   slug?: string;
   summary?: string;
-  title?: string;
-  image?: string;
-  categories?: Array<string>;
-  draft?: boolean;
-  author?: string;
   tags?: Array<string>;
-  description?: string;
+  title?: string;
 }
 
 export interface IAbout {
+  description: string;
+  image: string;
   meta_title: string;
   title: string;
-  image: string;
-  description: string;
 }
 
 export type Post = {

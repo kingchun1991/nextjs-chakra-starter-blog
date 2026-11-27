@@ -1,10 +1,9 @@
 'use client';
 
-/* eslint-disable @typescript-eslint/no-shadow */
 /* eslint-disable import/no-extraneous-dependencies */
 import { Box, Flex, IconButton, Input, Kbd, Spacer } from '@chakra-ui/react';
 import { useLocale } from 'next-intl';
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import { LuSearch } from 'react-icons/lu';
 
 import {
@@ -20,22 +19,30 @@ import {
 import { InputGroup } from '@/components/ui/input-group';
 
 import searchData from '../../../.json/search.json';
-import { type ISearchItem, SearchResult } from './search-result';
+import type { ISearchItem } from './search-result';
+import { SearchResult } from './search-result';
+
+// Characters with special meaning in a RegExp, escaped so the search matches
+// the typed text literally (and input like `(` or `[` cannot throw).
+const REGEX_SPECIAL_CHARACTERS = /[.*+?^${}()|[\]\\]/gu;
 
 export function SearchModal() {
   const [searchString, setSearchString] = useState('');
   const activeLocale = useLocale();
 
-  const handleSearch = (e: React.FormEvent<HTMLInputElement>) => {
+  const handleSearch = useCallback((e: React.FormEvent<HTMLInputElement>) => {
     setSearchString(e.currentTarget.value.replace('\\', '').toLowerCase());
-  };
+  }, []);
 
-  const doSearch = (searchData: Array<ISearchItem>) => {
-    const regex = new RegExp(`${searchString}`, 'gi');
+  const doSearch = (items: Array<ISearchItem>) => {
     if (searchString === '') {
       return [];
     }
-    return searchData.filter((item) => {
+    const regex = new RegExp(
+      searchString.replace(REGEX_SPECIAL_CHARACTERS, '\\$&'),
+      'giu'
+    );
+    return items.filter((item) => {
       const title = item.frontmatter.title.toLowerCase().match(regex);
       const description = item.frontmatter.description
         ?.toLowerCase()
@@ -93,12 +100,12 @@ export function SearchModal() {
 
         <DialogFooter>
           <Flex align="center" justify="space-between">
-            {searchString && (
+            {searchString ? (
               <Box>
                 <strong>{searchResult.length} </strong> results - in{' '}
                 <strong>{totalTime} </strong> seconds
               </Box>
-            )}
+            ) : null}
             <Spacer />
             <Box>
               <Kbd>ESC</Kbd> to close

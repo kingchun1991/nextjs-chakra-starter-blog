@@ -35,7 +35,7 @@ export function BlogPostCard({
   const parseDate = (dateString: string) => {
     try {
       return format(parseISO(dateString), dateFormat);
-    } catch (_error) {
+    } catch {
       return '';
     }
   };

@@ -4,9 +4,7 @@ import { slug } from 'github-slugger';
 import { marked } from 'marked';
 
 // slugify
-export const slugify = (content: string) => {
-  return slug(content);
-};
+export const slugify = (content: string) => slug(content);
 
 // // markdownify
 export const markdownify = (content: string, div?: boolean) => {
@@ -16,15 +14,14 @@ export const markdownify = (content: string, div?: boolean) => {
   return { __html: markdownContent };
 };
 
-const FIRST_LETTER_REGEX = /^[a-z]/;
+const FIRST_LETTER_REGEX = /^[a-z]/u;
 
 // humanize
-export const humanize = (content: string) => {
-  return content
-    .replace(/^[\s_]+|[\s_]+$/g, '')
-    .replace(/[_\s]+/g, ' ')
+export const humanize = (content: string) =>
+  content
+    .replace(/^[\s_]+|[\s_]+$/gu, '')
+    .replace(/[_\s]+/gu, ' ')
     .replace(FIRST_LETTER_REGEX, (m) => m.toUpperCase());
-};
 
 // titleify
 export const titleify = (content: string) => {
@@ -46,10 +43,8 @@ const htmlEntityDecoder = (htmlWithEntities: string): string => {
     '&#39;': "'",
   };
   const htmlWithoutEntities: string = htmlWithEntities.replace(
-    /(&amp;|&lt;|&gt;|&quot;|&#39;)/g,
-    (entity: string): string => {
-      return entityList[entity];
-    }
+    /&amp;|&lt;|&gt;|&quot;|&#39;/gu,
+    (entity: string): string => entityList[entity]
   );
   return htmlWithoutEntities;
 };
@@ -59,7 +54,7 @@ export const plainify = (content: string) => {
   const parseMarkdown: string | Promise<string> = marked.parse(content);
   const filterBrackets = parseMarkdown
     .toString()
-    .replace(/<\/?[^>]+(>|$)/gm, '');
-  const filterSpaces = filterBrackets.replace(/[\r\n]\s*[\r\n]/gm, '');
+    .replace(/<\/?[^>]+(?:>|$)/gmu, '');
+  const filterSpaces = filterBrackets.replace(/[\r\n]\s*[\r\n]/gmu, '');
   return htmlEntityDecoder(filterSpaces);
 };

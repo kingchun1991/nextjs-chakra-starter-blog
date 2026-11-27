@@ -17,64 +17,41 @@ export function Share({
   description?: string;
   slug: string;
 }) {
+  const postUrl = `${siteConfig.url}/blog/${slug}`;
+  const shareLinks = [
+    {
+      label: 'facebook share button',
+      href: `https://facebook.com/sharer/sharer.php?u=${postUrl}`,
+      icon: <FaFacebook />,
+    },
+    {
+      label: 'x share button',
+      href: `https://x.com/share?url=${postUrl}&text=${title}`,
+      icon: <FaXTwitter />,
+    },
+    {
+      label: 'linkedin share button',
+      href: `https://www.linkedin.com/shareArticle?mini=true&url=${postUrl}&title=${title}&summary=${description}&source=${siteConfig.url}`,
+      icon: <FaLinkedin />,
+    },
+    {
+      label: 'pinterest share button',
+      href: `https://pinterest.com/pin/create/button/?url=${postUrl}&media=&description=${description}`,
+      icon: <FaPinterest />,
+    },
+  ];
+
   return (
     <HStack gap="6" wrap="wrap">
-      <Box display="inline-block">
-        <IconButton
-          aria-label="facebook share button"
-          onClick={() =>
-            window.open(
-              `https://facebook.com/sharer/sharer.php?u=${siteConfig.url}/blog/${slug}`,
-              '_blank'
-            )
-          }
-          variant="plain"
-        >
-          <FaFacebook />
-        </IconButton>
-      </Box>
-      <Box display="inline-block">
-        <IconButton
-          aria-label="x share button"
-          onClick={() =>
-            window.open(
-              `https://x.com/share?url=${siteConfig.url}/blog/${slug}&text=${title}`,
-              '_blank'
-            )
-          }
-          variant="plain"
-        >
-          <FaXTwitter />
-        </IconButton>
-      </Box>
-      <Box display="inline-block">
-        <IconButton
-          aria-label="linkedin share button"
-          onClick={() =>
-            window.open(
-              `https://www.linkedin.com/shareArticle?mini=true&url=${siteConfig.url}/blog/${slug}&title=${title}&summary=${description}&source=${siteConfig.url}`,
-              '_blank'
-            )
-          }
-          variant="plain"
-        >
-          <FaLinkedin />
-        </IconButton>
-      </Box>
-      <Box display="inline-block">
-        <IconButton
-          aria-label="pinterest share button"
-          onClick={() =>
-            window.open(
-              `https://pinterest.com/pin/create/button/?url=${siteConfig.url}/blog/${slug}&media=&description=${description}`,
-              '_blank'
-            )
-          }
-          variant="plain"
-        >
-          <FaPinterest />
-        </IconButton>
-      </Box>
+      {shareLinks.map(({ label, href, icon }) => (
+        <Box display="inline-block" key={label}>
+          <IconButton aria-label={label} asChild variant="plain">
+            <a href={href} rel="noopener noreferrer" target="_blank">
+              {icon}
+            </a>
+          </IconButton>
+        </Box>
+      ))}
     </HStack>
   );
 }

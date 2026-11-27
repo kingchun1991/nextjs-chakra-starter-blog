@@ -41,12 +41,10 @@ export const viewport: Viewport = {
   themeColor: '#FFFFFF',
 };
 
-const RootLayout = ({ children }: RootLayoutProps) => {
-  return (
-    <html lang="en" suppressHydrationWarning>
-      <body>{children}</body>
-    </html>
-  );
-};
+const RootLayout = ({ children }: RootLayoutProps) => (
+  <html lang="en" suppressHydrationWarning>
+    <body>{children}</body>
+  </html>
+);
 
 export default RootLayout;

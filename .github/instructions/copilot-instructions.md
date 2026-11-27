@@ -33,11 +33,11 @@ pnpm generate-json # Creates blog metadata JSON files (required step)
 
 ```yaml
 ---
-title: 'Post Title'
-publishedAt: '2024-01-01'
-summary: 'Post summary'
-tags: ['tag1', 'tag2']
-author: 'Author Name'
+title: "Post Title"
+publishedAt: "2024-01-01"
+summary: "Post summary"
+tags: [ "tag1", "tag2" ]
+author: "Author Name"
 ---
 ```
 

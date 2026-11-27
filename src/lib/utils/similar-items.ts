@@ -7,18 +7,7 @@ const similerItems = (
   allItems: Array<Post>,
   slug: string
 ): Array<Post> => {
-  let categories: Array<string> = [];
-  let tags: Array<string> = [];
-
-  // set categories
-  if (currentItem.frontmatter.categories.length > 0) {
-    categories = currentItem.frontmatter.categories;
-  }
-
-  // set tags
-  if (currentItem.frontmatter.tags.length > 0) {
-    tags = currentItem.frontmatter.tags;
-  }
+  const { categories, tags } = currentItem.frontmatter;
 
   // filter by categories
   const filterByCategories = allItems.filter((item: Post) =>

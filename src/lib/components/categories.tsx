@@ -18,7 +18,7 @@ export function Categories({ categories }: { categories: Array<string> }) {
           <LuFolder />
         </Icon>
       </Flex>
-      {categories?.map((category) => (
+      {categories.map((category) => (
         <Flex align="flex-start" alignItems="center" key={category}>
           <Link href={`/categories/${slugify(category)}`}>
             <Tag colorPalette="teal" m={1} p="1" variant="solid">
